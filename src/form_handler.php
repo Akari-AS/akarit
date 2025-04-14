@@ -1,5 +1,10 @@
 <?php // src/form_handler.php
 
+ini_set('display_errors', 1); // Vis feil i nettleseren
+ini_set('display_startup_errors', 1); // Vis også feil som skjer før skriptet kjører
+error_reporting(E_ALL); // Vis alle typer feil
+// -- Resten av koden starter her (use PHPMailer etc.) --
+
 // Importer PHPMailer klasser inn i det globale navnerommet
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
