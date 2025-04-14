@@ -68,6 +68,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $mailFromName = getenv('MAIL_FROM_NAME') ?: 'Akarit Nettside';
     $mailRecipientAddress = getenv('MAIL_RECIPIENT_ADDRESS'); // E-post som mottar henvendelsen
 
+    // === Hent Mailgun-innstillinger ... (linjene før) ===
+
+    // --- DEBUGGING START ---
+    echo "<pre style='background: #eee; padding: 10px; border: 1px solid #ccc; color: #000; text-align: left; position: relative; z-index: 9999;'>"; // Lagt til styling for synlighet
+    echo "DEBUG - Environment Variables Check:\n";
+    echo "PHP Version: " . phpversion() . "\n"; // Nyttig info
+    echo "MAILGUN_SMTP_HOST: '" . htmlspecialchars(getenv('MAILGUN_SMTP_HOST') ?: 'IKKE SATT/TOM') . "'\n";
+    echo "MAILGUN_SMTP_PORT: '" . htmlspecialchars(getenv('MAILGUN_SMTP_PORT') ?: 'IKKE SATT/TOM') . "'\n";
+    echo "MAILGUN_SMTP_USERNAME: '" . htmlspecialchars(getenv('MAILGUN_SMTP_USERNAME') ?: 'IKKE SATT/TOM') . "'\n";
+    echo "MAILGUN_SMTP_PASSWORD: " . (getenv('MAILGUN_SMTP_PASSWORD') ? "'****** (Satt)'" : "'IKKE SATT/TOM'") . "\n"; // Ikke vis passordet!
+    echo "MAIL_FROM_ADDRESS: '" . htmlspecialchars(getenv('MAIL_FROM_ADDRESS') ?: 'IKKE SATT/TOM') . "'\n";
+    echo "MAIL_FROM_NAME: '" . htmlspecialchars(getenv('MAIL_FROM_NAME') ?: 'IKKE SATT/TOM') . "'\n";
+    echo "MAIL_RECIPIENT_ADDRESS: '" . htmlspecialchars(getenv('MAIL_RECIPIENT_ADDRESS') ?: 'IKKE SATT/TOM') . "'\n";
+    echo "</pre>";
+    // --- DEBUGGING SLUTT ---
+
+    // Sjekk om kritiske miljøvariabler er satt (denne linjen kommer etterpå)
+    if (empty($smtpUsername) || empty($smtpPassword) || empty($mailRecipientAddress)) {
+         // ... feilmeldingen din genereres her ...
+    }
+
+
     // Sjekk om kritiske miljøvariabler er satt
     if (empty($smtpUsername) || empty($smtpPassword) || empty($mailRecipientAddress)) {
          $errors[] = "Serverkonfigurasjonsfeil (manglende e-postinnstillinger).";
