@@ -1,10 +1,5 @@
 <?php // src/form_handler.php
 
-ini_set('display_errors', 1); // Vis feil i nettleseren
-ini_set('display_startup_errors', 1); // Vis også feil som skjer før skriptet kjører
-error_reporting(E_ALL); // Vis alle typer feil
-// -- Resten av koden starter her (use PHPMailer etc.) --
-
 // Importer PHPMailer klasser inn i det globale navnerommet
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
@@ -70,21 +65,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $mailRecipientAddress = getenv('MAIL_RECIPIENT_ADDRESS'); // E-post som mottar henvendelsen
 
     // === Hent Mailgun-innstillinger ... (linjene før) ===
-
-    // --- DEBUGGING START ---
-    echo "<pre style='background: #eee; padding: 10px; border: 1px solid #ccc; color: #000; text-align: left; position: relative; z-index: 9999;'>"; // Lagt til styling for synlighet
-    echo "DEBUG - Environment Variables Check:\n";
-    echo "PHP Version: " . phpversion() . "\n"; // Nyttig info
-    echo "MAILGUN_SMTP_HOST: '" . htmlspecialchars(getenv('MAILGUN_SMTP_HOST') ?: 'IKKE SATT/TOM') . "'\n";
-    echo "MAILGUN_SMTP_PORT: '" . htmlspecialchars(getenv('MAILGUN_SMTP_PORT') ?: 'IKKE SATT/TOM') . "'\n";
-    echo "MAILGUN_SMTP_USERNAME: '" . htmlspecialchars(getenv('MAILGUN_SMTP_USERNAME') ?: 'IKKE SATT/TOM') . "'\n";
-    echo "MAILGUN_SMTP_PASSWORD: " . (getenv('MAILGUN_SMTP_PASSWORD') ? "'****** (Satt)'" : "'IKKE SATT/TOM'") . "\n"; // Ikke vis passordet!
-    echo "MAIL_FROM_ADDRESS: '" . htmlspecialchars(getenv('MAIL_FROM_ADDRESS') ?: 'IKKE SATT/TOM') . "'\n";
-    echo "MAIL_FROM_NAME: '" . htmlspecialchars(getenv('MAIL_FROM_NAME') ?: 'IKKE SATT/TOM') . "'\n";
-    echo "MAIL_RECIPIENT_ADDRESS: '" . htmlspecialchars(getenv('MAIL_RECIPIENT_ADDRESS') ?: 'IKKE SATT/TOM') . "'\n";
-    echo "</pre>";
-    // --- DEBUGGING SLUTT ---
-
     // Sjekk om kritiske miljøvariabler er satt (denne linjen kommer etterpå)
     if (empty($smtpUsername) || empty($smtpPassword) || empty($mailRecipientAddress)) {
          // ... feilmeldingen din genereres her ...
