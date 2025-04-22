@@ -1,4 +1,4 @@
-/* --- CSS Styling (Akari Inspired - v11 - Mobilmeny/Scroll Fiks) --- */
+/* --- CSS Styling (Akari Inspired - v12 - Mobilmeny Fiks 2) --- */
 :root {
     --primary-color: #00a99d;
     --dark-color: #064f55;
@@ -11,6 +11,7 @@
     --border-radius: 15px;
     --header-height-desktop: 70px; /* Høyde for desktop */
     --scroll-padding-top: 90px; /* Global padding for scroll-anker (header + litt luft) */
+    --akarit-sublogo: #01938b; /* Farge for sub-logo og nå hamburger */
 }
 
 /* Grunnleggende Reset & Body */
@@ -20,13 +21,12 @@ html, body { margin: 0; padding: 0; width: 100%; overflow-x: hidden; }
 body {
     font-family: var(--body-font); line-height: 1.7; color: var(--text-color);
     background-color: var(--light-green-bg); font-weight: 400;
-    /* FJERN padding-top: var(--header-height-desktop); - Trengs ikke med sticky header */
+    /* Ingen body padding-top nødvendig med sticky header */
 }
 
 html {
     scroll-behavior: smooth; /* Native smooth scroll */
-    /* Legg til scroll-padding for å kompensere for sticky header globalt */
-    scroll-padding-top: var(--scroll-padding-top);
+    scroll-padding-top: var(--scroll-padding-top); /* Global offset for sticky header */
 }
 
 .container { max-width: 1140px; margin: 0 auto; padding: 0 20px; }
@@ -35,8 +35,8 @@ html {
 header {
     background-color: var(--dark-color);
     padding: 15px 0;
-    position: sticky; /* ENDRET fra fixed til sticky */
-    top: 0; /* Fest til toppen når man scroller forbi */
+    position: sticky; /* Bruker sticky */
+    top: 0;
     left: 0;
     width: 100%;
     z-index: 1000;
@@ -53,7 +53,7 @@ header .header-container {
     width: 100%;
 }
 .logo { font-size: 1.9em; font-weight: 700; color: #fff; text-decoration: none; letter-spacing: 0.5px; display: flex; align-items: baseline; }
-.logo .sub-logo { font-size: 0.45em; opacity: 0.8; font-weight: 400; margin-left: 7px; white-space: nowrap; color: #01938b; }
+.logo .sub-logo { font-size: 0.45em; opacity: 0.8; font-weight: 400; margin-left: 7px; white-space: nowrap; color: var(--akarit-sublogo); }
 
 /* --- Desktop Navigasjon --- */
 nav.desktop-nav { display: none; }
@@ -65,24 +65,38 @@ nav.desktop-nav { display: none; }
     nav.desktop-nav li a:hover, nav.desktop-nav li a.active { color: #fff; border-bottom-color: var(--primary-color); }
 }
 
-/* --- Mobilmeny Knappe-styling --- */
+/* --- Mobilmeny Knappe-styling (Oppdatert) --- */
 .mobile-menu-button-container { display: none; }
 @media (max-width: 767px) {
     .mobile-menu-button-container { display: block; }
-    header { min-height: 60px; } /* Juster etter behov */
-     :root { --scroll-padding-top: 80px; /* Reduser scroll padding på mobil */ }
+    header { min-height: 60px; }
+     :root { --scroll-padding-top: 80px; }
 }
 
-#mobile-menu-button { background: none; border: none; padding: 8px; cursor: pointer; color: #e0e0e0; line-height: 0; }
-#mobile-menu-button:hover { color: #fff; }
-#mobile-menu-button svg { width: 24px; height: 24px; stroke: currentColor; display: block; }
-#mobile-menu-button .close-icon { display: none; }
-#mobile-menu-button.menu-open .close-icon { display: block; }
-#mobile-menu-button.menu-open .hamburger-icon { display: none; }
+#mobile-menu-button {
+    background: none;
+    border: none;
+    padding: 8px;
+    cursor: pointer;
+    color: var(--akarit-sublogo); /* Bruker sublogo-farge */
+    line-height: 0;
+    transition: color 0.2s ease;
+}
+#mobile-menu-button:hover {
+    color: #fff; /* Lysere ved hover */
+}
+#mobile-menu-button svg.hamburger-icon { /* Style spesifikt hamburger */
+    width: 28px;
+    height: 28px;
+    stroke: currentColor;
+    display: block;
+}
+/* Ingen regler for .close-icon eller .menu-open nødvendig lenger */
+
 
 /* --- Mobilmeny Panel Styling --- */
 .mobile-menu-panel {
-    display: none;
+    display: none; /* Skjult som standard */
     position: absolute;
     top: 100%;
     left: 0;
@@ -91,8 +105,10 @@ nav.desktop-nav { display: none; }
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     z-index: 990;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
+    max-height: calc(100vh - 70px); /* Begrens høyde til viewport minus header */
+    overflow-y: auto; /* Legg til scroll hvis innholdet er for høyt */
 }
-.mobile-menu-panel.open { display: block; }
+.mobile-menu-panel.open { display: block; } /* Vises med JS */
 
 .mobile-menu-panel ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; align-items: center; padding: 10px 0; }
 .mobile-menu-panel li { width: 100%; text-align: center; }
@@ -130,7 +146,6 @@ section:not(.hero) .cta-button.secondary:hover { background-color: var(--primary
 
 
 /* --- Seksjoner --- */
-/* Fjernet scroll-margin-top her, bruker scroll-padding-top på html istedenfor */
 section { padding: 80px 0; width: 100%; }
 section:nth-of-type(even):not(.hero) { background-color: var(--light-green-bg-darker); }
 #kontakt { background-color: var(--light-green-bg); }
@@ -183,14 +198,14 @@ footer a:hover { text-decoration: underline; }
 }
 
 @media (max-width: 767px) { /* Grensen hvor mobilmeny vises */
-    .container { max-width: 100%; padding: 0 15px; /* Full bredde container på mobil */}
-    header { min-height: 60px; } /* Header høyde på mobil */
+    .container { max-width: 100%; padding: 0 15px; }
+    header { min-height: 60px; }
     .logo { font-size: 1.7em; }
-    .hero { padding-top: 80px; padding-bottom: 100px; } /* Juster hero padding mtp header */
+    .hero { padding-top: 80px; padding-bottom: 100px; }
     .hero h1 { font-size: 2.2em; } .hero p { font-size: 1.1em; max-width: 95%; }
     section h2 { font-size: 2em; }
     .features-grid, .products-grid { grid-template-columns: 1fr; gap: 25px; }
-    .contact-form { padding: 40px 25px; margin: 40px 15px 0 15px; /* Litt margin på sidene */}
+    .contact-form { padding: 40px 25px; margin: 40px 15px 0 15px; }
 }
 
 @media (max-width: 576px) {

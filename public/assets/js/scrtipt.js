@@ -8,42 +8,40 @@ document.addEventListener('DOMContentLoaded', function() {
     if (mobileMenuButton && mobileMenu) {
         mobileMenuButton.addEventListener('click', (e) => {
             e.stopPropagation(); // Forhindre at klikket propagerer til dokumentet
-            const isOpen = mobileMenu.classList.toggle('open');
+            const isOpen = mobileMenu.classList.toggle('open'); // Veksler .open klassen for synlighet
             mobileMenuButton.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-            mobileMenuButton.classList.toggle('menu-open', isOpen);
+             // Ingen behov for .menu-open klasse på knappen nå
         });
+    } else {
+        if (!mobileMenuButton) console.error("Element med ID 'mobile-menu-button' ble ikke funnet.");
+        if (!mobileMenu) console.error("Element med ID 'mobile-menu' ble ikke funnet.");
     }
 
     function closeMobileMenu() {
         if (mobileMenu && mobileMenu.classList.contains('open')) {
             mobileMenu.classList.remove('open');
             mobileMenuButton?.setAttribute('aria-expanded', 'false');
-            mobileMenuButton?.classList.remove('menu-open');
         }
     }
 
     // --- Jevn Rulling for Navigasjonslenker ---
     // Bruker nå nettleserens innebygde smooth scroll via CSS `scroll-behavior` og `scroll-padding-top`
-    // Vi trenger kun å lukke menyen og håndtere aktiv klasse her.
     const scrollLinks = document.querySelectorAll('header nav.desktop-nav a[href^="#"], #mobile-menu a[href^="#"], footer a[href^="#"], a.cta-button[href^="#"]');
 
     scrollLinks.forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             const targetId = this.getAttribute('href');
-            // Sjekk om det er en intern lenke
+            // Sjekk om det er en intern lenke (#...) og ikke bare #
             if (targetId && targetId.startsWith('#') && targetId.length > 1) {
                 const targetElement = document.querySelector(targetId);
                 if (targetElement) {
-                    // Vi lar preventDefault være kommentert ut foreløpig
-                    // for å la nettleseren håndtere scrollingen naturlig med scroll-padding-top.
-                    // Hvis det oppstår problemer, kan vi aktivere den og JS-scrolling igjen.
-                    // e.preventDefault();
-
-                    // Lukk mobilmenyen uansett
+                    // La nettleseren håndtere scroll via CSS scroll-padding-top.
+                    // Vi trenger KUN å lukke mobilmenyen.
                     closeMobileMenu();
 
-                    // Sett aktiv klasse (kan gjøres umiddelbart eller via scroll-event)
-                    // La scroll-event håndtere det for konsistens.
+                    // La scroll-event listeneren håndtere aktiv klasse for konsistens.
+                } else {
+                    console.warn("Scroll target not found:", targetId);
                 }
             }
         });
@@ -58,34 +56,38 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function updateScrollPadding() {
         const rootStyle = getComputedStyle(document.documentElement);
-        const paddingValue = rootStyle.getPropertyValue('--scroll-padding-top').trim();
-        if (paddingValue) {
-             scrollPaddingTop = parseInt(paddingValue, 10) || 90;
+        // Hent verdien, fjern 'px' og konverter til tall
+        const paddingValue = rootStyle.getPropertyValue('--scroll-padding-top').trim().replace('px', '');
+        if (paddingValue && !isNaN(parseInt(paddingValue, 10))) {
+             scrollPaddingTop = parseInt(paddingValue, 10);
+        } else {
+             scrollPaddingTop = 90; // Fallback
         }
     }
 
     function setActiveLink() {
         updateScrollPadding(); // Oppdater padding før sjekk
         let currentSectionId = '';
-        // Legg til litt ekstra buffer for å aktivere litt før seksjonen når toppen
+        // Legg til litt ekstra buffer for å aktivere litt FØR seksjonen når toppen
         const scrollBuffer = 50;
-        const scrollPosition = window.pageYOffset + scrollPaddingTop + scrollBuffer;
+        // Legg til 1px for å unngå "flimmer" ved nøyaktig grense
+        const scrollPosition = window.pageYOffset + scrollPaddingTop + 1;
 
         sections.forEach(section => {
+            // Aktiver hvis toppen av seksjonen er over den justerte scroll-posisjonen
             if (scrollPosition >= section.offsetTop) {
                 currentSectionId = section.getAttribute('id');
             }
         });
 
         // Håndter toppen av siden
-        if (window.pageYOffset < sections[0].offsetTop - scrollPaddingTop * 1.5) {
+        if (window.pageYOffset < sections[0].offsetTop - scrollPaddingTop) {
              currentSectionId = '';
         }
-        // Håndter bunnen av siden (ingen endring nødvendig her)
+        // Håndter bunnen av siden
         if ((window.innerHeight + window.pageYOffset) >= document.body.offsetHeight - 50) {
-             // Behold siste aktive eller sett siste manuelt hvis currentSectionId er tom
-             if (!currentSectionId && sections.length > 0) {
-                  currentSectionId = sections[sections.length - 1].getAttribute('id');
+             if (sections.length > 0) { // Sikrer at det finnes seksjoner
+                currentSectionId = sections[sections.length - 1].getAttribute('id');
              }
         }
 
@@ -94,7 +96,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const allNavLinks = [...desktopNavLinks, ...mobileNavLinks];
         allNavLinks.forEach(link => {
             link.classList.remove('active');
-            // Sjekk om linkens href matcher OG at currentSectionId ikke er tom
             if (currentSectionId && link.getAttribute('href')?.slice(1) === currentSectionId) {
                 link.classList.add('active');
             }
@@ -104,22 +105,18 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialiser og legg til lyttere
     setActiveLink();
     window.addEventListener('scroll', setActiveLink);
-    window.addEventListener('resize', () => {
-        setActiveLink();
-        closeMobileMenu(); // Lukk meny ved resize for enkelhets skyld
-    });
+    window.addEventListener('resize', () => { setActiveLink(); closeMobileMenu(); });
 
-    // Lukk menyen hvis man klikker utenfor
+    // Lukk menyen hvis man klikker utenfor body/main
     document.addEventListener('click', function(event) {
         if (mobileMenu && mobileMenuButton) {
-             const isClickInsideMenu = mobileMenu.contains(event.target);
-             const isClickOnButton = mobileMenuButton.contains(event.target);
-             // Lukk kun hvis klikket er UTENFOR BÅDE menyen OG knappen
-             if (!isClickInsideMenu && !isClickOnButton && mobileMenu.classList.contains('open')) {
+             const isClickInsideHeader = header?.contains(event.target); // Sjekk om klikket er i headeren
+             // Lukk hvis klikket er UTENFOR header OG menyen er åpen
+             if (!isClickInsideHeader && mobileMenu.classList.contains('open')) {
                  closeMobileMenu();
              }
         }
     });
 
-    console.log("Akarit Google Workspace side lastet (v11 - Mobilmeny/Scroll Fiks).");
+    console.log("Akarit Google Workspace side lastet (v12 - Mobilmeny Fiks).");
 });
