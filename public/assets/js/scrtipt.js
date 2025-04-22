@@ -1,7 +1,34 @@
 document.addEventListener('DOMContentLoaded', function() {
 
+    const header = document.querySelector('header');
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    // --- Mobilmeny Toggle ---
+    if (mobileMenuButton && mobileMenu) {
+        mobileMenuButton.addEventListener('click', () => {
+            const isOpen = mobileMenu.classList.toggle('open'); // Bruker klasse for synlighet
+            mobileMenuButton.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+            // Bytt ikon på knappen
+            mobileMenuButton.classList.toggle('menu-open', isOpen);
+
+             // Legg til/fjern klasse på body for å hindre scrolling når meny er åpen (valgfritt)
+             // document.body.classList.toggle('overflow-hidden', isOpen);
+        });
+    }
+
+    function closeMobileMenu() {
+        if (mobileMenu && mobileMenu.classList.contains('open')) {
+            mobileMenu.classList.remove('open');
+            mobileMenuButton?.setAttribute('aria-expanded', 'false');
+            mobileMenuButton?.classList.remove('menu-open');
+            // document.body.classList.remove('overflow-hidden');
+        }
+    }
+
     // --- Jevn Rulling for Navigasjonslenker ---
-    const scrollLinks = document.querySelectorAll('header nav a[href^="#"], footer a[href^="#"], a.cta-button[href^="#"], #mobile-menu a[href^="#"]'); // Inkluder mobilmeny-lenker
+    // Inkluderer nå lenker fra BÅDE desktop og mobilmeny
+    const scrollLinks = document.querySelectorAll('header nav.desktop-nav a[href^="#"], #mobile-menu a[href^="#"], footer a[href^="#"], a.cta-button[href^="#"]');
 
     scrollLinks.forEach(anchor => {
         anchor.addEventListener('click', function (e) {
@@ -11,24 +38,27 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (targetElement) {
                     e.preventDefault();
 
-                    const headerOffset = document.querySelector('header')?.offsetHeight || 70;
+                    // Beregn header høyde mer dynamisk ved klikk
+                    let headerOffset = 70; // Default/fallback
+                    if(header && window.getComputedStyle(header).position === 'fixed') {
+                        headerOffset = header.offsetHeight;
+                    }
+
                     const elementPosition = targetElement.getBoundingClientRect().top;
-                    const offsetPosition = window.pageYOffset + elementPosition - headerOffset - 25;
+                    // Justert offset for å gi litt mer luft (f.eks. 20px)
+                    const offsetPosition = window.pageYOffset + elementPosition - headerOffset - 20;
 
-                    window.scrollTo({ top: offsetPosition });
+                    window.scrollTo({ top: offsetPosition }); // La CSS håndtere smooth
 
-                    // Lukk mobilmeny hvis den er åpen
+                    // Lukk mobilmenyen etter klikk på en lenke der
                     closeMobileMenu();
 
-                    // Oppdater aktiv link umiddelbart (valgfritt men smooth)
-                    document.querySelectorAll('header nav a, #mobile-menu a').forEach(link => link.classList.remove('active'));
-                     // Finn korresponderende desktop/mobil link for å sette aktiv klasse
-                     try {
-                          document.querySelector(`header nav a[href="${targetId}"]`)?.classList.add('active');
-                          document.querySelector(`#mobile-menu a[href="${targetId}"]`)?.classList.add('active');
-                     } catch (error) {
-                         console.warn("Kunne ikke sette aktiv klasse umiddelbart:", error);
-                     }
+                    // Forsøk å sette aktiv klasse umiddelbart (uendret logikk)
+                    try {
+                        document.querySelectorAll('header nav.desktop-nav a, #mobile-menu a').forEach(link => link.classList.remove('active'));
+                        document.querySelector(`header nav.desktop-nav a[href="${targetId}"]`)?.classList.add('active');
+                        document.querySelector(`#mobile-menu a[href="${targetId}"]`)?.classList.add('active');
+                    } catch (error) { /* Ignorer feil */ }
                 }
             }
         });
@@ -36,23 +66,43 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // --- Aktiv Link ved Scrolling ---
     const sections = document.querySelectorAll('section[id]');
-    const desktopNavLinks = document.querySelectorAll('header nav a');
-    const mobileNavLinks = document.querySelectorAll('#mobile-menu a'); // Velg mobil-lenker
-    const headerHeightEstimate = 90;
+    const desktopNavLinks = document.querySelectorAll('header nav.desktop-nav a');
+    const mobileNavLinks = document.querySelectorAll('#mobile-menu a');
+    let scrollCheckHeaderOffset = 75; // Estimat for scroll-sjekk
+
+    function updateScrollCheckOffset() {
+         // Bruk faktisk høyde hvis header er sticky/fixed og synlig
+         if (header && (window.getComputedStyle(header).position === 'sticky' || window.getComputedStyle(header).position === 'fixed')) {
+              scrollCheckHeaderOffset = header.offsetHeight + 10; // Legg til litt buffer
+         } else {
+              scrollCheckHeaderOffset = 75; // Fallback hvis header ikke er sticky/fixed
+         }
+    }
 
     function setActiveLink() {
+        updateScrollCheckOffset(); // Oppdater offset før sjekk
         let currentSectionId = '';
         const scrollPosition = window.pageYOffset;
 
         sections.forEach(section => {
-            const sectionTop = section.offsetTop - headerHeightEstimate;
+            const sectionTop = section.offsetTop - scrollCheckHeaderOffset;
             const sectionHeight = section.offsetHeight;
-            if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+             // Bedre logikk for å finne aktiv seksjon (inkluderer bunnen av siden)
+             // Sjekk om toppen av seksjonen er over ELLER lik nåværende scroll + en liten buffer
+             // OG at bunnen av seksjonen er under nåværende scroll
+            if (scrollPosition >= sectionTop && scrollPosition < (section.offsetTop + sectionHeight - scrollCheckHeaderOffset)) {
                  currentSectionId = section.getAttribute('id');
             }
         });
-        if (scrollPosition < sections[0].offsetTop - headerHeightEstimate * 1.5) { currentSectionId = ''; }
-        if ((window.innerHeight + window.pageYOffset) >= document.body.offsetHeight - 50) { currentSectionId = sections[sections.length - 1].getAttribute('id'); }
+
+        // Håndter toppen av siden
+        if (scrollPosition < sections[0].offsetTop - scrollCheckHeaderOffset * 1.5) {
+             currentSectionId = '';
+        }
+        // Håndter bunnen av siden
+        if ((window.innerHeight + window.pageYOffset) >= document.body.offsetHeight - 50) {
+            currentSectionId = sections[sections.length - 1].getAttribute('id');
+        }
 
         // Oppdater både desktop og mobil-lenker
         [...desktopNavLinks, ...mobileNavLinks].forEach(link => {
@@ -62,40 +112,20 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
-    setActiveLink();
+    setActiveLink(); // Kjør en gang ved lasting
     window.addEventListener('scroll', setActiveLink);
+    window.addEventListener('resize', setActiveLink); // Oppdater ved resize
 
-    // --- Mobilmeny Toggle ---
-    const menuButton = document.getElementById('mobile-menu-button');
-    const mobileMenu = document.getElementById('mobile-menu');
-
-    if (menuButton && mobileMenu) {
-        menuButton.addEventListener('click', () => {
-             // Bytt mellom display: block og display: none
-             const isHidden = mobileMenu.style.display === 'none' || mobileMenu.style.display === '';
-             mobileMenu.style.display = isHidden ? 'block' : 'none';
-             // Oppdater aria-expanded for tilgjengelighet
-             menuButton.setAttribute('aria-expanded', isHidden ? 'true' : 'false');
-        });
-    }
-
-    function closeMobileMenu() {
-        if (mobileMenu && mobileMenu.style.display !== 'none') {
-            mobileMenu.style.display = 'none';
-            menuButton?.setAttribute('aria-expanded', 'false');
-        }
-    }
-
-    // Lukk menyen hvis man klikker utenfor
+    // Lukk menyen hvis man klikker utenfor (uendret)
     document.addEventListener('click', function(event) {
-        if (mobileMenu && menuButton) {
+        if (mobileMenu && mobileMenuButton) {
              const isClickInsideMenu = mobileMenu.contains(event.target);
-             const isClickOnButton = menuButton.contains(event.target);
-             if (!isClickInsideMenu && !isClickOnButton && mobileMenu.style.display !== 'none') {
+             const isClickOnButton = mobileMenuButton.contains(event.target);
+             if (!isClickInsideMenu && !isClickOnButton && mobileMenu.classList.contains('open')) {
                  closeMobileMenu();
              }
         }
     });
 
-    console.log("Akarit Google Workspace side lastet (Strukturert u/ Tailwind).");
+    console.log("Akarit Google Workspace side lastet (v10 - Mobilmeny implementert).");
 });

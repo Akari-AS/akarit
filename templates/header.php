@@ -15,14 +15,15 @@
     <link rel="stylesheet" href="/assets/css/style.css">
 
 </head>
-<body> <?php // Body tag startes her ?>
+<body class="bg-akarit-light-green text-gray-800 font-body antialiased"> <?php // Lagt til klasser her for enkelhet ?>
 
 <header>
-     <div class="container">
+     <div class="container header-container"> <?php // Lagt til klasse for enklere mobil-styling ?>
         <!-- Logo -->
         <a href="#hjem" class="logo">Akarit <span class="sub-logo">av Akari</span></a>
-        <!-- Desktop Navigasjon -->
-        <nav>
+
+        <!-- Desktop Navigasjon (skjules på mobil med CSS) -->
+        <nav class="desktop-nav">
             <ul>
                 <li><a href="#fordeler">Fordeler</a></li>
                 <li><a href="#produkter">Produkter</a></li>
@@ -30,17 +31,26 @@
                 <li><a href="#kontakt">Kontakt</a></li>
             </ul>
         </nav>
-         <!-- Mobilmeny-knapp -->
+
+         <!-- Mobilmeny-knapp (vises kun på mobil med CSS) -->
          <div class="mobile-menu-button-container">
-             <button id="mobile-menu-button" aria-label="Åpne meny" aria-expanded="false">
-                 <svg class="h-6 w-6 text-gray-300 hover:text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+             <button id="mobile-menu-button" aria-label="Åpne meny" aria-expanded="false" aria-controls="mobile-menu">
+                  <?php // Hamburger Ikon (SVG) ?>
+                 <svg class="hamburger-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                     <line x1="3" y1="12" x2="21" y2="12"></line>
+                     <line x1="3" y1="6" x2="21" y2="6"></line>
+                     <line x1="3" y1="18" x2="21" y2="18"></line>
                  </svg>
+                   <?php // Lukk Ikon (SVG - vises når meny er åpen via JS/CSS) ?>
+                  <svg class="close-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <line x1="18" y1="6" x2="6" y2="18"></line>
+                      <line x1="6" y1="6" x2="18" y2="18"></line>
+                  </svg>
              </button>
          </div>
     </div>
-     <!-- Mobilmeny -->
-     <div id="mobile-menu">
+     <!-- Mobilmeny (Container - innholdet er likt, men skjules/vises med JS/CSS) -->
+     <div id="mobile-menu" class="mobile-menu-panel">
          <ul>
              <li><a href="#fordeler">Fordeler</a></li>
              <li><a href="#produkter">Produkter</a></li>
