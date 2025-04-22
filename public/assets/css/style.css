@@ -1,4 +1,4 @@
-/* --- CSS Styling (Akari Inspired - v14 - Mobilmeny Toggle) --- */
+/* --- CSS Styling (Akari Inspired - v15 - Best Practice Mobilmeny) --- */
 :root {
     --primary-color: #00a99d;
     --dark-color: #064f55;
@@ -11,17 +11,14 @@
     --border-radius: 15px;
     --header-height-desktop: 70px;
     --scroll-padding-top: 90px;
-    --akarit-sublogo: #01938b; /* Farge for sub-logo og hamburger */
+    --akarit-sublogo: #01938b;
 }
 
 /* Grunnleggende Reset & Body */
 html, body { margin: 0; padding: 0; width: 100%; }
 * { box-sizing: border-box; }
 
-body {
-    font-family: var(--body-font); line-height: 1.7; color: var(--text-color);
-    background-color: var(--light-green-bg); font-weight: 400;
-}
+body { font-family: var(--body-font); line-height: 1.7; color: var(--text-color); background-color: var(--light-green-bg); font-weight: 400; }
 body.mobile-menu-is-open { overflow: hidden; }
 html { scroll-behavior: smooth; scroll-padding-top: var(--scroll-padding-top); }
 .container { max-width: 1140px; margin: 0 auto; padding: 0 20px; }
@@ -50,24 +47,24 @@ nav.desktop-nav { display: none; }
      :root { --scroll-padding-top: 80px; }
 }
 
-#mobile-menu-button {
-    background: none;
-    border: none;
-    padding: 8px;
-    cursor: pointer;
-    color: var(--akarit-sublogo); /* Setter fargen her */
-    line-height: 0;
-    transition: color 0.2s ease;
-}
+#mobile-menu-button { background: none; border: none; padding: 8px; cursor: pointer; color: var(--akarit-sublogo); line-height: 0; transition: color 0.2s ease; }
 #mobile-menu-button:hover { color: #fff; }
-#mobile-menu-button svg.hamburger-icon { width: 28px; height: 28px; stroke: currentColor; display: block; }
+#mobile-menu-button svg { width: 28px; height: 28px; stroke: currentColor; display: block; }
+
+/* Styling for ikonbytte basert på .menu-open klasse på knappen */
+#mobile-menu-button .hamburger-icon { display: block; } /* Vis hamburger som standard */
+#mobile-menu-button .close-icon { display: none; }  /* Skjul kryss som standard */
+
+#mobile-menu-button.menu-open .hamburger-icon { display: none; } /* Skjul hamburger når menyen er åpen */
+#mobile-menu-button.menu-open .close-icon { display: block; } /* Vis kryss når menyen er åpen */
+
 
 /* --- Mobilmeny Panel Styling (Fullskjerm) --- */
 .mobile-menu-panel { display: flex; flex-direction: column; justify-content: center; align-items: center; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: var(--dark-color); z-index: 1100; opacity: 0; visibility: hidden; transform: scale(1.05); transition: opacity 0.3s ease-in-out, visibility 0s linear 0.3s, transform 0.3s ease-in-out; overflow-y: auto; }
 .mobile-menu-panel.open { opacity: 1; visibility: visible; transform: scale(1); transition: opacity 0.3s ease-in-out, visibility 0s linear 0s, transform 0.3s ease-in-out; }
-#mobile-menu-close-button { position: absolute; top: 20px; right: 20px; background: none; border: none; padding: 10px; cursor: pointer; color: #e0e0e0; line-height: 0; z-index: 1110; }
-#mobile-menu-close-button:hover { color: #fff; }
-#mobile-menu-close-button svg { width: 28px; height: 28px; stroke: currentColor; }
+
+/* Fjernet styling for #mobile-menu-close-button siden den er borte */
+
 .mobile-menu-panel ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; align-items: center; width: 100%;}
 .mobile-menu-panel li { width: 100%; text-align: center; }
 .mobile-menu-panel li a { display: block; padding: 18px 20px; color: #e0e0e0; font-weight: 600; font-size: 1.4em; transition: background-color 0.2s ease, color 0.2s ease; text-decoration: none; border-bottom: 1px solid rgba(255, 255, 255, 0.1); width: 100%; }
@@ -132,7 +129,6 @@ section h2 + p { text-align: center; max-width: 800px; margin: 0 auto 50px auto;
 .form-message { padding: 15px 20px; margin-bottom: 25px; border-radius: var(--border-radius); text-align: center; font-weight: 600; font-size: 1.05em; border: 1px solid transparent;}
 .form-message.success { background-color: #e0f2f1; color: #00695c; border-color: #b2dfdb; }
 .form-message.error { background-color: #fdecea; color: #c62828; border-color: #f9bdbb; }
-
 
 /* --- Footer --- */
 footer { background-color: var(--dark-color); color: #c0c0c0; text-align: center; padding: 40px 0; margin-top: 80px; width: 100%; }

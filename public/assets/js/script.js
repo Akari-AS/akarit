@@ -1,66 +1,52 @@
 document.addEventListener('DOMContentLoaded', function() {
-    console.log("Akarit JS Initializing (v14)...");
+    console.log("Akarit JS Initializing (v15 - Best Practice Toggle)...");
 
     const header = document.querySelector('header');
     const mobileMenuButton = document.getElementById('mobile-menu-button');
     const mobileMenu = document.getElementById('mobile-menu');
-    const mobileMenuCloseButton = document.getElementById('mobile-menu-close-button');
+    // Fjernet referanse til close button inne i menyen
+    // const mobileMenuCloseButton = document.getElementById('mobile-menu-close-button');
     const body = document.body;
 
-    // Sjekk om elementene finnes FØR vi legger til lyttere
-    if (!mobileMenuButton) {
-        console.error("FATAL: Mobilmeny-KNAPP (#mobile-menu-button) ble ikke funnet!");
-        return; // Stopp videre JS hvis knappen mangler
-    }
-    if (!mobileMenu) {
-        console.error("FATAL: Mobilmeny-PANEL (#mobile-menu) ble ikke funnet!");
-        return; // Stopp videre JS hvis panelet mangler
-    }
-     if (!mobileMenuCloseButton) {
-        console.warn("Advarsel: Lukkeknapp i meny (#mobile-menu-close-button) ble ikke funnet.");
-    }
+    if (!mobileMenuButton) console.error("FATAL: Mobilmeny-KNAPP (#mobile-menu-button) ble ikke funnet!");
+    if (!mobileMenu) console.error("FATAL: Mobilmeny-PANEL (#mobile-menu) ble ikke funnet!");
 
 
-    // Funksjon for å åpne meny
-    function openMobileMenu() {
-        console.log("openMobileMenu function called.");
-        mobileMenu.classList.add('open');
-        mobileMenuButton.setAttribute('aria-expanded', 'true');
-        body.classList.add('mobile-menu-is-open');
-        console.log("Menu should now have 'open' class and body 'mobile-menu-is-open'.");
+    // Funksjon for å veksle menyen
+    function toggleMobileMenu() {
+        if (!mobileMenu || !mobileMenuButton) return; // Sjekk om elementene finnes
+
+        const isOpen = mobileMenu.classList.toggle('open'); // Veksler .open på panelet
+        mobileMenuButton.classList.toggle('menu-open', isOpen); // Veksler .menu-open på knappen (for ikonbytte)
+        mobileMenuButton.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        body.classList.toggle('mobile-menu-is-open', isOpen); // Veksler body-klassen
+        console.log(`Mobilmeny ${isOpen ? 'åpnet' : 'lukket'}.`);
     }
 
-    // Funksjon for å lukke meny
+    // Funksjon for å lukke meny (hvis den er åpen)
     function closeMobileMenu() {
-        console.log("closeMobileMenu function called.");
-        mobileMenu.classList.remove('open');
-        mobileMenuButton.setAttribute('aria-expanded', 'false');
-        body.classList.remove('mobile-menu-is-open');
-         console.log("Menu should now NOT have 'open' class and body NOT 'mobile-menu-is-open'.");
+        if (mobileMenu && mobileMenu.classList.contains('open')) {
+            console.log("closeMobileMenu function called.");
+            mobileMenu.classList.remove('open');
+            mobileMenuButton?.classList.remove('menu-open'); // Fjern klasse fra knapp også
+            mobileMenuButton?.setAttribute('aria-expanded', 'false');
+            body.classList.remove('mobile-menu-is-open');
+             console.log("Mobile menu explicitly closed.");
+        }
     }
 
     // --- Legg til Hoved-lyttere ---
 
-    // Lytter for hamburger-knapp
-    mobileMenuButton.addEventListener('click', (e) => {
-        e.stopPropagation();
-        console.log("Hamburger button click event fired!");
-        // Enkel toggle: Hvis menyen har 'open', lukk den, ellers åpne den.
-        if (mobileMenu.classList.contains('open')) {
-            closeMobileMenu();
-        } else {
-            openMobileMenu();
-        }
-    });
-
-    // Lytter for lukkeknapp inne i menyen (hvis den finnes)
-    if (mobileMenuCloseButton) {
-        mobileMenuCloseButton.addEventListener('click', (e) => {
+    // Lytter for hamburger/kryss-knapp
+    if (mobileMenuButton) {
+        mobileMenuButton.addEventListener('click', (e) => {
             e.stopPropagation();
-            console.log("Close button inside menu click event fired!");
-            closeMobileMenu();
+            console.log("Toggle button clicked!");
+            toggleMobileMenu(); // Kall veksle-funksjonen
         });
     }
+
+    // Fjernet lytter for intern lukkeknapp
 
     // --- Jevn Rulling for Navigasjonslenker ---
     const scrollLinks = document.querySelectorAll('header nav.desktop-nav a[href^="#"], #mobile-menu a[href^="#"], footer a[href^="#"], a.cta-button[href^="#"]');
@@ -74,7 +60,7 @@ document.addEventListener('DOMContentLoaded', function() {
                      console.log("Link clicked, closing menu and allowing scroll to:", targetId);
                     // Lukk menyen FØR scrolling
                     closeMobileMenu();
-                    // La CSS håndtere scrolling (pga. scroll-padding-top og scroll-behavior)
+                    // La CSS håndtere scrollingen
                 } else {
                     console.warn("Scroll target not found:", targetId);
                     closeMobileMenu(); // Lukk meny uansett
@@ -84,7 +70,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
 
-    // --- Aktiv Link ved Scrolling (Beholdt som før, men kan forenkles senere) ---
+    // --- Aktiv Link ved Scrolling (Uendret) ---
     const sections = document.querySelectorAll('section[id]');
     const desktopNavLinks = document.querySelectorAll('header nav.desktop-nav a');
     const mobileNavLinks = document.querySelectorAll('#mobile-menu a');
@@ -116,18 +102,16 @@ document.addEventListener('DOMContentLoaded', function() {
         allNavLinks.forEach(link => {
             const linkHref = link.getAttribute('href')?.slice(1);
             const isActive = currentSectionId && linkHref === currentSectionId;
-            link.classList.toggle('active', isActive); // Enklere toggle av klasse
+            link.classList.toggle('active', isActive);
         });
     }
-    setActiveLink(); // Kjør ved lasting
+    setActiveLink();
     window.addEventListener('scroll', setActiveLink, { passive: true });
     window.addEventListener('resize', () => { updateScrollPadding(); setActiveLink(); closeMobileMenu(); });
 
     // Lukk menyen hvis man klikker utenfor selve meny-panelet
-    // Endret til å lytte på body, men sjekke target
-     body.addEventListener('click', function(event) {
+     document.addEventListener('click', function(event) {
          if (mobileMenu && mobileMenu.classList.contains('open') && mobileMenuButton) {
-              // Sjekk om klikket var på menyen ELLER på knappen som åpnet den
               const isClickInsidePanel = mobileMenu.contains(event.target);
               const isClickOnButton = mobileMenuButton.contains(event.target);
 
@@ -139,5 +123,5 @@ document.addEventListener('DOMContentLoaded', function() {
      });
 
 
-    console.log("Akarit JS Initialization Complete (v14).");
+    console.log("Akarit JS Initialization Complete (v15 - Best Practice Toggle).");
 });
