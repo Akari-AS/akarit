@@ -1,4 +1,4 @@
-/* --- CSS Styling (Akari Inspired - v13 - Fullskjerm Mobilmeny) --- */
+/* --- CSS Styling (Akari Inspired - v14 - Mobilmeny Forsøk 3) --- */
 :root {
     --primary-color: #00a99d;
     --dark-color: #064f55;
@@ -15,7 +15,7 @@
 }
 
 /* Grunnleggende Reset & Body */
-html, body { margin: 0; padding: 0; width: 100%; /* Fjern overflow-x her, håndteres ved behov */ }
+html, body { margin: 0; padding: 0; width: 100%; /* Fjernet overflow-x, kan forårsake problemer */ }
 * { box-sizing: border-box; }
 
 body {
@@ -24,9 +24,8 @@ body {
 }
 /* Body klasse for når meny er åpen (hindre scroll) */
 body.mobile-menu-is-open {
-    overflow: hidden;
+    overflow: hidden; /* Hindre scrolling av body når menyen er åpen */
 }
-
 
 html {
     scroll-behavior: smooth;
@@ -43,7 +42,7 @@ header {
     top: 0;
     left: 0;
     width: 100%;
-    z-index: 1000; /* Header over innhold */
+    z-index: 1000; /* Header over vanlig innhold */
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     min-height: var(--header-height-desktop);
     display: flex;
@@ -65,7 +64,7 @@ nav.desktop-nav { display: none; }
 }
 
 /* --- Mobilmeny Knappe-styling --- */
-.mobile-menu-button-container { display: none; z-index: 1200; /* Høy z-index for å være over alt */ position: relative; /* Nødvendig for z-index */}
+.mobile-menu-button-container { display: none; z-index: 1200; /* Høyere enn menyen */ position: relative; }
 @media (max-width: 767px) {
     .mobile-menu-button-container { display: block; }
     header { min-height: 60px; }
@@ -76,64 +75,46 @@ nav.desktop-nav { display: none; }
 #mobile-menu-button:hover { color: #fff; }
 #mobile-menu-button svg.hamburger-icon { width: 28px; height: 28px; stroke: currentColor; display: block; }
 
-
 /* --- Mobilmeny Panel Styling (Fullskjerm) --- */
 .mobile-menu-panel {
-    display: flex; /* Bruk flex for sentrering */
+    display: flex;
     flex-direction: column;
-    justify-content: center; /* Sentrer vertikalt */
-    align-items: center; /* Sentrer horisontalt */
-    position: fixed; /* Dekker hele skjermen */
+    justify-content: center;
+    align-items: center;
+    position: fixed;
     top: 0;
     left: 0;
-    width: 100vw;
-    height: 100vh;
+    width: 100%; /* Bruk 100% istedenfor vw for å unngå scrollbar-issues */
+    height: 100%; /* Bruk 100% istedenfor vh */
     background-color: var(--dark-color);
-    z-index: 1100; /* Over header, men under knappen? Eller motsatt */
-    opacity: 0; /* Skjult som standard */
-    visibility: hidden; /* Skjult som standard */
-    transform: translateY(-10px); /* Start litt over for fade-in effekt */
-    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out, transform 0.3s ease-in-out;
-    overflow-y: auto; /* Scroll hvis innholdet er for høyt */
+    z-index: 1100; /* Lavere enn knappen, men over innhold */
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(1.05); /* Litt "zoom ut" effekt */
+    transition: opacity 0.3s ease-in-out, visibility 0s linear 0.3s, transform 0.3s ease-in-out; /* Visibility forsinkes */
+    overflow-y: auto;
 }
-/* Vises når .open klassen legges til */
 .mobile-menu-panel.open {
     opacity: 1;
     visibility: visible;
-    transform: translateY(0);
+    transform: scale(1);
+    transition: opacity 0.3s ease-in-out, visibility 0s linear 0s, transform 0.3s ease-in-out;
 }
 
 /* Lukkeknapp inne i panelet */
-#mobile-menu-close-button {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    background: none;
-    border: none;
-    padding: 10px;
-    cursor: pointer;
-    color: #e0e0e0;
-    line-height: 0;
-}
-#mobile-menu-close-button:hover {
-    color: #fff;
-}
-#mobile-menu-close-button svg {
-     width: 28px;
-     height: 28px;
-     stroke: currentColor;
-}
-
+#mobile-menu-close-button { position: absolute; top: 20px; right: 20px; background: none; border: none; padding: 10px; cursor: pointer; color: #e0e0e0; line-height: 0; z-index: 1110; /* Over menyinnhold */}
+#mobile-menu-close-button:hover { color: #fff; }
+#mobile-menu-close-button svg { width: 28px; height: 28px; stroke: currentColor; }
 
 /* Styling av lenker i mobilmeny */
 .mobile-menu-panel ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; align-items: center; width: 100%;}
 .mobile-menu-panel li { width: 100%; text-align: center; }
-.mobile-menu-panel li a { display: block; padding: 18px 20px; /* Mer padding */ color: #e0e0e0; font-weight: 600; font-size: 1.4em; /* Større font */ transition: background-color 0.2s ease, color 0.2s ease; text-decoration: none; border-bottom: 1px solid rgba(255, 255, 255, 0.1); width: 100%; }
+.mobile-menu-panel li a { display: block; padding: 18px 20px; color: #e0e0e0; font-weight: 600; font-size: 1.4em; transition: background-color 0.2s ease, color 0.2s ease; text-decoration: none; border-bottom: 1px solid rgba(255, 255, 255, 0.1); width: 100%; }
 .mobile-menu-panel li:last-child a { border-bottom: none; }
-.mobile-menu-panel li a:hover, .mobile-menu-panel li a.active { background-color: rgba(255, 255, 255, 0.1); color: var(--primary-color); /* Fremhev aktiv/hover */ }
+.mobile-menu-panel li a:hover, .mobile-menu-panel li a.active { background-color: rgba(255, 255, 255, 0.1); color: var(--primary-color); }
 
 
-/* --- Hero Section (Ingen endringer nødvendig) --- */
+/* --- Hero Section (Ingen endringer) --- */
 .hero { position: relative; padding: 100px 0 120px 0; text-align: center; overflow: hidden; color: var(--text-color-light); width: 100%; }
 @media (min-width: 768px) { .hero { padding-top: 140px; padding-bottom: 120px; } }
 .video-background-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; overflow: hidden; pointer-events: none; }
@@ -145,8 +126,7 @@ nav.desktop-nav { display: none; }
 .hero p { font-size: 1.1em; color: var(--text-color-light); max-width: 780px; margin: 0 auto 40px auto; line-height: 1.8; }
 @media (min-width: 768px) { .hero h1 { font-size: 3.2em; } .hero p { font-size: 1.25em; } }
 
-
-/* --- Knapper (Ingen endringer nødvendig) --- */
+/* --- Knapper (Ingen endringer) --- */
 .cta-button { display: inline-block; background-color: var(--primary-color); color: #fff; padding: 15px 35px; text-decoration: none; border-radius: var(--border-radius); font-weight: 600; transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease; font-size: 1.1em; border: none; box-shadow: 0 4px 10px rgba(0, 169, 157, 0.3); cursor: pointer; }
 .cta-button:hover { background-color: #008a7d; transform: translateY(-3px); box-shadow: 0 6px 15px rgba(0, 169, 157, 0.4); }
 .cta-button.secondary { background-color: rgba(255, 255, 255, 0.15); color: var(--text-color-light); border: 2px solid var(--text-color-light); box-shadow: none; }
@@ -156,7 +136,7 @@ section:not(.hero) .cta-button.secondary:hover { background-color: var(--primary
 .hero .cta-button + .cta-button { margin-left: 15px; }
 
 
-/* --- Seksjoner (Ingen endringer nødvendig) --- */
+/* --- Seksjoner (Ingen endringer) --- */
 section { padding: 80px 0; width: 100%; }
 section:nth-of-type(even):not(.hero) { background-color: var(--light-green-bg-darker); }
 #kontakt { background-color: var(--light-green-bg); }
@@ -165,7 +145,7 @@ section h2::after { content: ''; position: absolute; bottom: 0; left: 50%; trans
 section#kontakt h2::after { display: none; }
 section h2 + p { text-align: center; max-width: 800px; margin: 0 auto 50px auto; font-size: 1.1em; color: #555; }
 
-/* --- Kort (Funksjoner & Produkter) (Ingen endringer nødvendig) --- */
+/* --- Kort (Funksjoner & Produkter) (Ingen endringer) --- */
 .features-grid, .products-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 35px; margin-top: 40px; }
 .feature-item, .product-card { background-color: #fff; padding: 40px; border-radius: var(--border-radius); box-shadow: 0 5px 20px rgba(0,0,0,0.07); text-align: center; transition: transform 0.3s ease, box-shadow 0.3s ease; border: none; display: flex; flex-direction: column; align-items: center; }
 .feature-item:hover, .product-card:hover { transform: translateY(-6px); box-shadow: 0 8px 25px rgba(0,0,0,0.1); }
@@ -175,14 +155,14 @@ section h2 + p { text-align: center; max-width: 800px; margin: 0 auto 50px auto;
 .feature-item p, .product-card p { font-size: 1em; color: var(--text-color); flex-grow: 1; }
 #fordeler .feature-item img { filter: invert(48%) sepia(98%) saturate(1431%) hue-rotate(135deg) brightness(95%) contrast(101%); opacity: 0.8; }
 
-/* --- "Hvorfor Oss" Seksjon (Ingen endringer nødvendig) --- */
+/* --- "Hvorfor Oss" Seksjon (Ingen endringer) --- */
 #hvorfor-oss { background-color: var(--light-green-bg-darker); }
 #hvorfor-oss ul { list-style: none; max-width: 850px; margin: 40px auto 0 auto; padding-left: 0; }
 #hvorfor-oss li { margin-bottom: 20px; font-size: 1.1em; position: relative; padding-left: 35px; line-height: 1.6; }
 #hvorfor-oss li::before { content: '✔'; color: var(--primary-color); position: absolute; left: 0; top: 0.15em; font-size: 1.4em; font-weight: bold; line-height: 1; }
 #hvorfor-oss li strong { display: inline; margin-right: 0.4em; }
 
-/* --- Kontakt Skjema (Ingen endringer nødvendig) --- */
+/* --- Kontakt Skjema (Ingen endringer) --- */
 .contact-form { max-width: 700px; margin: 50px auto 0 auto; background-color: #fff; padding: 50px 60px; border-radius: var(--border-radius); box-shadow: 0 5px 20px rgba(0,0,0,0.08); border: none; }
 .form-group { margin-bottom: 25px; }
 .form-group label { display: block; margin-bottom: 8px; font-weight: 600; color: var(--dark-color); }
@@ -194,42 +174,13 @@ section h2 + p { text-align: center; max-width: 800px; margin: 0 auto 50px auto;
 .form-message.error { background-color: #fdecea; color: #c62828; border-color: #f9bdbb; }
 
 
-/* --- Footer (Ingen endringer nødvendig) --- */
+/* --- Footer (Ingen endringer) --- */
 footer { background-color: var(--dark-color); color: #c0c0c0; text-align: center; padding: 40px 0; margin-top: 80px; width: 100%; }
 footer p { margin: 0; font-size: 0.95em; }
 footer a { color: var(--primary-color); text-decoration: none; }
 footer a:hover { text-decoration: underline; }
 
-/* --- Responsive Design Justeringer --- */
-@media (max-width: 992px) {
-     .container { max-width: 960px; }
-     .hero h1 { font-size: 2.8em; }
-     .hero p { font-size: 1.2em; }
-     section h2 { font-size: 2.2em; }
-}
-
-@media (max-width: 767px) { /* Grensen hvor mobilmeny vises */
-    .container { max-width: 100%; padding: 0 15px; }
-    header { min-height: 60px; }
-    .logo { font-size: 1.7em; }
-    .hero { padding-top: 80px; padding-bottom: 100px; }
-    .hero h1 { font-size: 2.2em; } .hero p { font-size: 1.1em; max-width: 95%; }
-    section h2 { font-size: 2em; }
-    .features-grid, .products-grid { grid-template-columns: 1fr; gap: 25px; }
-    .contact-form { padding: 40px 25px; margin: 40px 15px 0 15px; }
-}
-
-@media (max-width: 576px) {
-    .hero { padding-top: 70px; padding-bottom: 80px; }
-    .hero h1 { font-size: 1.9em; } .hero p { font-size: 1em; }
-    .hero .cta-button { display: block; width: fit-content; max-width: 90%; margin: 15px auto; padding: 14px 30px; font-size: 1em; }
-    .hero .cta-button + .cta-button { margin-left: auto; }
-    section h2 { font-size: 1.8em; }
-    section h2 + p { font-size: 1em; margin-bottom: 40px; }
-    .cta-button { padding: 14px 30px; font-size: 1em; }
-    .contact-form { padding: 30px 20px; }
-    .feature-item, .product-card { padding: 30px 25px; }
-    #hvorfor-oss ul { max-width: 100%; padding-left: 10px; }
-    #hvorfor-oss li { font-size: 1em; padding-left: 30px; }
-     #hvorfor-oss li::before { font-size: 1.2em; top: 0.25em; }
-}
+/* --- Responsive Design Justeringer (Ingen endringer) --- */
+@media (max-width: 992px) { .container { max-width: 960px; } .hero h1 { font-size: 2.8em; } .hero p { font-size: 1.2em; } section h2 { font-size: 2.2em; } }
+@media (max-width: 767px) { .container { max-width: 100%; padding: 0 15px; } header { min-height: 60px; } .logo { font-size: 1.7em; } .hero { padding-top: 80px; padding-bottom: 100px; } .hero h1 { font-size: 2.2em; } .hero p { font-size: 1.1em; max-width: 95%; } section h2 { font-size: 2em; } .features-grid, .products-grid { grid-template-columns: 1fr; gap: 25px; } .contact-form { padding: 40px 25px; margin: 40px 15px 0 15px; } }
+@media (max-width: 576px) { .hero { padding-top: 70px; padding-bottom: 80px; } .hero h1 { font-size: 1.9em; } .hero p { font-size: 1em; } .hero .cta-button { display: block; width: fit-content; max-width: 90%; margin: 15px auto; padding: 14px 30px; font-size: 1em; } .hero .cta-button + .cta-button { margin-left: auto; } section h2 { font-size: 1.8em; } section h2 + p { font-size: 1em; margin-bottom: 40px; } .cta-button { padding: 14px 30px; font-size: 1em; } .contact-form { padding: 30px 20px; } .feature-item, .product-card { padding: 30px 25px; } #hvorfor-oss ul { max-width: 100%; padding-left: 10px; } #hvorfor-oss li { font-size: 1em; padding-left: 30px; } #hvorfor-oss li::before { font-size: 1.2em; top: 0.25em; } }

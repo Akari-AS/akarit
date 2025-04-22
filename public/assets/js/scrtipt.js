@@ -1,56 +1,66 @@
 document.addEventListener('DOMContentLoaded', function() {
-    console.log("DOM Loaded. Initializing scripts..."); // Bekreft at scriptet starter
+    console.log("Akarit JS Initializing..."); // Startmelding
 
     const header = document.querySelector('header');
     const mobileMenuButton = document.getElementById('mobile-menu-button');
     const mobileMenu = document.getElementById('mobile-menu');
     const mobileMenuCloseButton = document.getElementById('mobile-menu-close-button');
+    const body = document.body;
 
-    // --- Mobilmeny Toggle ---
-    if (mobileMenuButton && mobileMenu) {
-        console.log("Mobilmeny-knapp og panel funnet."); // Bekreft at elementene finnes
-
-        mobileMenuButton.addEventListener('click', (e) => {
-            e.stopPropagation(); // Forhindre at klikket propagerer
-            console.log("Hamburger-knapp klikket!"); // Bekreft klikk
-            openMobileMenu();
-        });
-
-        // Legg til lytter for lukkeknapp inne i menyen
-        if (mobileMenuCloseButton) {
-            mobileMenuCloseButton.addEventListener('click', (e) => {
-                e.stopPropagation();
-                console.log("Lukkeknapp i meny klikket!");
-                closeMobileMenu();
-            });
-        } else {
-             console.error("Element med ID 'mobile-menu-close-button' ble ikke funnet.");
-        }
-
-    } else {
-        if (!mobileMenuButton) console.error("Element med ID 'mobile-menu-button' ble ikke funnet.");
-        if (!mobileMenu) console.error("Element med ID 'mobile-menu' ble ikke funnet.");
-    }
-
+    // Funksjon for å åpne meny
     function openMobileMenu() {
-        if (mobileMenu && !mobileMenu.classList.contains('open')) {
+        if (mobileMenu && mobileMenuButton) {
+            console.log("Attempting to open mobile menu...");
             mobileMenu.classList.add('open');
-            mobileMenuButton?.setAttribute('aria-expanded', 'true');
-            document.body.classList.add('mobile-menu-is-open'); // Hindre body scroll
-            console.log("Mobilmeny åpnet.");
+            mobileMenuButton.setAttribute('aria-expanded', 'true');
+            body.classList.add('mobile-menu-is-open');
+            console.log("Mobile menu should be open.");
+        } else {
+            console.error("Cannot open menu: Button or Panel not found.");
         }
     }
 
+    // Funksjon for å lukke meny
     function closeMobileMenu() {
         if (mobileMenu && mobileMenu.classList.contains('open')) {
+            console.log("Attempting to close mobile menu...");
             mobileMenu.classList.remove('open');
             mobileMenuButton?.setAttribute('aria-expanded', 'false');
-             document.body.classList.remove('mobile-menu-is-open'); // Tillat body scroll igjen
-             console.log("Mobilmeny lukket.");
+            body.classList.remove('mobile-menu-is-open');
+            console.log("Mobile menu closed.");
         }
     }
 
-    // --- Jevn Rulling for Navigasjonslenker ---
+    // --- Legg til lyttere ETTER at funksjonene er definert ---
+
+    // Lytter for hamburger-knapp
+    if (mobileMenuButton) {
+        mobileMenuButton.addEventListener('click', (e) => {
+            e.stopPropagation(); // Forhindre bobling
+            console.log("Hamburger button clicked!");
+            // Veksle menyen basert på nåværende tilstand
+            if (mobileMenu && mobileMenu.classList.contains('open')) {
+                closeMobileMenu();
+            } else {
+                openMobileMenu();
+            }
+        });
+    } else {
+        console.error("Mobile menu button not found on page load.");
+    }
+
+    // Lytter for lukkeknapp inne i menyen
+    if (mobileMenuCloseButton) {
+        mobileMenuCloseButton.addEventListener('click', (e) => {
+            e.stopPropagation();
+            console.log("Close button inside menu clicked!");
+            closeMobileMenu();
+        });
+    } else {
+        console.warn("Mobile menu close button not found (optional)."); // Mindre kritisk
+    }
+
+    // --- Jevn Rulling for Navigasjonslenker (inkl. mobilmeny) ---
     const scrollLinks = document.querySelectorAll('header nav.desktop-nav a[href^="#"], #mobile-menu a[href^="#"], footer a[href^="#"], a.cta-button[href^="#"]');
 
     scrollLinks.forEach(anchor => {
@@ -59,90 +69,93 @@ document.addEventListener('DOMContentLoaded', function() {
             if (targetId && targetId.startsWith('#') && targetId.length > 1) {
                 const targetElement = document.querySelector(targetId);
                 if (targetElement) {
-                     console.log("Scrolling til:", targetId);
-                    // Lukk mobilmenyen FØR scrolling for å unngå hopp
+                    console.log("Link clicked, closing menu and allowing scroll to:", targetId);
+                    // Viktig: Lukk menyen FØR nettleseren prøver å scrolle
                     closeMobileMenu();
 
-                    // La CSS håndtere selve scrollingen via scroll-padding-top
-                    // Vi trenger ikke preventDefault hvis vi lar href="#" gjøre jobben sammen med CSS.
-                    // e.preventDefault();
-
-                    // Sett aktiv klasse manuelt umiddelbart for bedre respons (valgfritt)
-                     try {
-                         document.querySelectorAll('header nav.desktop-nav a, #mobile-menu a').forEach(link => link.classList.remove('active'));
-                         document.querySelector(`header nav.desktop-nav a[href="${targetId}"]`)?.classList.add('active');
-                         document.querySelector(`#mobile-menu a[href="${targetId}"]`)?.classList.add('active');
-                     } catch (error) { /* Ignorer feil */ }
-
+                    // La nettleseren håndtere scroll via CSS scroll-padding-top
+                    // Vi trenger ikke e.preventDefault() eller manuell scroll
                 } else {
                     console.warn("Scroll target not found:", targetId);
+                    // Vurder om vi skal lukke menyen selv om målet ikke finnes?
+                    closeMobileMenu();
                 }
             }
         });
     });
 
 
-    // --- Aktiv Link ved Scrolling (Logikk beholdt, men kan finjusteres) ---
+    // --- Aktiv Link ved Scrolling (Beholdt som før, kan finjusteres) ---
     const sections = document.querySelectorAll('section[id]');
     const desktopNavLinks = document.querySelectorAll('header nav.desktop-nav a');
     const mobileNavLinks = document.querySelectorAll('#mobile-menu a');
     let scrollPaddingTop = 90;
 
     function updateScrollPadding() {
-        const rootStyle = getComputedStyle(document.documentElement);
-        const paddingValue = rootStyle.getPropertyValue('--scroll-padding-top').trim().replace('px', '');
-        if (paddingValue && !isNaN(parseInt(paddingValue, 10))) {
-             scrollPaddingTop = parseInt(paddingValue, 10);
-        } else {
-             scrollPaddingTop = 90; // Fallback
+        try {
+            const rootStyle = getComputedStyle(document.documentElement);
+            const paddingValue = rootStyle.getPropertyValue('--scroll-padding-top').trim().replace('px', '');
+            if (paddingValue && !isNaN(parseInt(paddingValue, 10))) {
+                 scrollPaddingTop = parseInt(paddingValue, 10);
+            } else {
+                 scrollPaddingTop = 90; // Fallback
+            }
+        } catch (err) {
+             console.warn("Could not read --scroll-padding-top, using fallback.", err);
+             scrollPaddingTop = 90;
         }
     }
 
     function setActiveLink() {
-        // Kanskje ikke oppdater padding HVER scroll for ytelse? Kun ved resize?
-        // updateScrollPadding();
+        updateScrollPadding();
         let currentSectionId = '';
         const scrollBuffer = 50;
-        const scrollPosition = window.pageYOffset + scrollPaddingTop + scrollBuffer;
+        const scrollPosition = window.pageYOffset + scrollPaddingTop + 1; // +1 for å unngå likhetsfeil
 
         sections.forEach(section => {
             if (scrollPosition >= section.offsetTop) {
                 currentSectionId = section.getAttribute('id');
             }
         });
-        if (window.pageYOffset < sections[0].offsetTop - scrollPaddingTop * 1.5) { currentSectionId = ''; }
-        if ((window.innerHeight + window.pageYOffset) >= document.body.offsetHeight - 50) {
+        if (window.pageYOffset < sections[0].offsetTop - scrollPaddingTop) { // Justert betingelse
+             currentSectionId = '';
+        }
+        if ((window.innerHeight + Math.ceil(window.pageYOffset)) >= document.body.offsetHeight - 2) { // Sjekk nær bunnen
              if (sections.length > 0) { currentSectionId = sections[sections.length - 1].getAttribute('id'); }
         }
 
         const allNavLinks = [...desktopNavLinks, ...mobileNavLinks];
         allNavLinks.forEach(link => {
-            link.classList.remove('active');
-            if (currentSectionId && link.getAttribute('href')?.slice(1) === currentSectionId) {
-                link.classList.add('active');
+            const linkHref = link.getAttribute('href')?.slice(1);
+            if (currentSectionId && linkHref === currentSectionId) {
+                 if (!link.classList.contains('active')) { // Sett kun hvis ikke allerede aktiv
+                    link.classList.add('active');
+                 }
+            } else {
+                 if (link.classList.contains('active')) { // Fjern kun hvis aktiv
+                    link.classList.remove('active');
+                 }
             }
         });
     }
-    // Kjør ved lasting, scroll og resize
-    updateScrollPadding(); // Kjør én gang for å få riktig padding
-    setActiveLink();
-    window.addEventListener('scroll', setActiveLink);
+    setActiveLink(); // Kjør en gang ved lasting
+    window.addEventListener('scroll', setActiveLink, { passive: true }); // Bruk passive listener for ytelse
     window.addEventListener('resize', () => { updateScrollPadding(); setActiveLink(); closeMobileMenu(); });
 
     // Lukk menyen hvis man klikker utenfor selve meny-panelet
     document.addEventListener('click', function(event) {
-        if (mobileMenu && mobileMenuButton) {
-             // Sjekk om klikket var på selve panelet eller knappen
+        // Sjekk om menyen finnes og er åpen FØR vi sjekker klikk
+        if (mobileMenu && mobileMenu.classList.contains('open') && mobileMenuButton) {
              const isClickInsidePanel = mobileMenu.contains(event.target);
              const isClickOnButton = mobileMenuButton.contains(event.target);
 
-             // Lukk hvis menyen er åpen OG klikket var UTENFOR panelet OG UTENFOR knappen
-             if (mobileMenu.classList.contains('open') && !isClickInsidePanel && !isClickOnButton) {
+             // Lukk kun hvis klikket er UTENFOR panelet OG UTENFOR knappen
+             if (!isClickInsidePanel && !isClickOnButton) {
                  console.log("Klikk utenfor meny og knapp - lukker menyen.");
                  closeMobileMenu();
              }
         }
     });
 
-    console.log("Akarit Google Workspace side lastet (v13 - Fullskjerm Mobilmeny).");
+    console.log("Akarit JS Initialization Complete.");
 });
