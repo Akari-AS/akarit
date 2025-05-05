@@ -1,4 +1,5 @@
 <?php
+// Fremprovosert endring
 // Inkluder form håndtering KUN hvis det er en POST request
 $formResult = ['message' => '', 'success' => false, 'data' => []];
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
