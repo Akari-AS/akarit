@@ -1,0 +1,408 @@
+
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Våre Prispakker - Google Workspace</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Globale variabler for farger */
+        :root {
+            --primary-color: #064F55; /* Primærfarge fra bruker */
+            --secondary-color: #1DD1B6; /* Sekundærfarge fra bruker */
+            --text-color: #333;
+            --light-text-color: #fff;
+            --background-color: #f4f7f6; /* Litt endret for bedre kontrast med kortene */
+            --border-color: #e0e0e0;
+            --card-background: #fff;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-color);
+            line-height: 1.6;
+        }
+
+        .gw-pricing-container {
+            padding: 20px 15px; /* Litt mindre padding på sidene for mobil */
+            max-width: 1200px;
+            margin: 30px auto;
+            border-radius: 8px;
+        }
+
+        .gw-pricing-intro, .gw-pricing-outro {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 0 15px;
+        }
+
+        .gw-pricing-intro h2 {
+            color: var(--primary-color);
+            font-size: clamp(1.8em, 4vw, 2.2em); /* Responsiv fontstørrelse */
+            margin-bottom: 15px;
+        }
+
+        .gw-pricing-intro p, .gw-pricing-outro p {
+            font-size: clamp(0.95em, 2.5vw, 1.1em); /* Responsiv fontstørrelse */
+            line-height: 1.7;
+            color: #555;
+        }
+        .gw-pricing-outro p em {
+            font-size: 0.9em;
+            color: #777;
+        }
+         .gw-pricing-outro strong {
+            color: var(--primary-color);
+        }
+
+
+        .gw-pricing-table {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 25px; /* Mellomrom mellom kortene */
+        }
+
+        .gw-pricing-plan {
+            background-color: var(--card-background);
+            border: 1px solid var(--border-color);
+            border-radius: 12px; /* Mykere kanter */
+            padding: 25px;
+            width: 100%; /* Full bredde på små skjermer */
+            max-width: 340px; /* Maks bredde for kortene */
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative; /* For "Mest Populær"-badge */
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            margin-bottom: 20px; /* For å unngå at de klistrer seg på mobil */
+        }
+
+        .gw-pricing-plan:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.1);
+        }
+
+        .gw-plan-recommended {
+            border-top: 6px solid var(--secondary-color); /* Tykkere og mer fremtredende */
+            box-shadow: 0 8px 25px rgba(29, 209, 182, 0.25); /* Litt mer skygge fra sekundærfargen */
+        }
+
+        .gw-plan-badge {
+            position: absolute;
+            top: -18px; /* Juster plassering for tykkere bord */
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--secondary-color);
+            color: var(--primary-color); /* God kontrast */
+            padding: 6px 18px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: 700; /* Tykkere tekst */
+            box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+            z-index: 10;
+        }
+
+        .gw-plan-header {
+            text-align: center;
+            margin-bottom: 20px;
+            border-bottom: 1px dashed #d0d0d0; /* Litt mykere dash */
+            padding-bottom: 20px;
+        }
+
+        .gw-plan-header h3 {
+            color: var(--primary-color);
+            font-size: clamp(1.4em, 3.5vw, 1.7em); /* Responsiv fontstørrelse */
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .gw-plan-price {
+            color: var(--primary-color);
+        }
+
+        .gw-price-amount {
+            font-size: clamp(2.2em, 6vw, 2.8em); /* Responsiv fontstørrelse */
+            font-weight: 700;
+            display: block;
+            line-height: 1.1; /* Litt tettere */
+        }
+
+        .gw-price-term {
+            font-size: 0.9em;
+            color: #777;
+        }
+
+        .gw-plan-storage {
+            text-align: center;
+            font-size: 1.1em;
+            font-weight: 600; /* Tykkere for tydelighet */
+            color: var(--primary-color);
+            background-color: #eaf3f2; /* Lysere bakgrunn for lagring, matcher primærfargen */
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+        }
+
+        .gw-plan-features {
+            list-style: none;
+            padding-left: 0;
+            margin-bottom: 25px; /* Mer luft */
+            flex-grow: 1; /* Sørger for at features tar opp ledig plass */
+        }
+
+        .gw-plan-features li {
+            padding: 10px 0; /* Mer luft mellom punktene */
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 0.95em;
+            line-height: 1.5;
+            display: flex; /* For bedre justering av ikon og tekst */
+            align-items: center;
+        }
+
+        .gw-plan-features li:last-child {
+            border-bottom: none;
+        }
+
+        .gw-plan-features li::before {
+            content: '✓'; /* Hake-symbol */
+            color: var(--secondary-color);
+            font-weight: bold;
+            margin-right: 12px; /* Mer plass */
+            font-size: 1.1em;
+        }
+
+        .gw-plan-description {
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 30px; /* Mer luft */
+            line-height: 1.6;
+            min-height: 70px; /* Sørger for lik høyde før knappen */
+        }
+        .gw-plan-description p strong {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .gw-plan-footer {
+            text-align: center;
+            margin-top: auto; /* Skyver knappen til bunnen */
+        }
+
+        .gw-btn {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: var(--light-text-color);
+            padding: 14px 35px; /* Større knapp */
+            text-decoration: none;
+            border-radius: 30px; /* Mer avrundet */
+            font-weight: 600;
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            font-size: 1em;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .gw-btn:hover {
+            background-color: #043a3e; /* Mørkere nyanse av primærfargen */
+            transform: translateY(-3px); /* Litt mer løft */
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+
+        .gw-btn-recommended {
+            background-color: var(--secondary-color);
+            color: var(--primary-color); /* God kontrast */
+        }
+
+        .gw-btn-recommended:hover {
+            background-color: #17b8a0; /* Mørkere nyanse av sekundærfargen */
+            color: var(--primary-color);
+        }
+
+        /* Responsivitet for tabeller og mindre skjermer */
+        @media (min-width: 768px) { /* For nettbrett og oppover */
+            .gw-pricing-plan {
+                width: calc(50% - 12.5px - 12.5px); /* To kort i bredden, justert for gap */
+            }
+            .gw-pricing-plan:nth-child(odd) {
+                 /* margin-right: 25px; Fjerner denne, bruker gap */
+            }
+             .gw-pricing-plan:nth-child(even) {
+                 /* margin-left: 0; Fjerner denne, bruker gap */
+            }
+        }
+
+        @media (min-width: 1024px) { /* For desktop */
+             .gw-pricing-plan {
+                width: calc(33.333% - 16.66px - 16.66px); /* Tre kort i bredden, justert for gap */
+                /* margin-right: 25px; Fjerner denne, bruker gap */
+            }
+            /* .gw-pricing-plan:nth-child(3n) {
+                margin-right: 0; Fjerner denne, bruker gap
+            } */
+        }
+
+
+        @media (max-width: 767px) {
+            .gw-pricing-table {
+                flex-direction: column;
+                align-items: center;
+            }
+            .gw-pricing-plan {
+                width: 90%; /* Bredere kort på mindre skjermer */
+                max-width: 400px; /* Men ikke for bredt */
+                margin-bottom: 30px; /* Mer luft mellom kortene vertikalt */
+            }
+            .gw-pricing-plan:last-child {
+                margin-bottom: 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .gw-pricing-intro h2 {
+                font-size: 1.6em;
+            }
+            .gw-pricing-intro p, .gw-pricing-outro p {
+                font-size: 0.9em;
+            }
+            .gw-plan-header h3 {
+                font-size: 1.3em;
+            }
+             .gw-price-amount {
+                font-size: 2em;
+            }
+            .gw-btn {
+                padding: 12px 25px;
+                font-size: 0.95em;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="gw-pricing-container">
+        <div class="gw-pricing-intro">
+            <h2>Lei av kompliserte IT-fakturaer?</h2>
+            <p>Hos oss får du Google Workspace til en fast, oversiktlig pris per bruker per måned. Inkludert i prisen er enkel drift og teknisk support. Enkelt og greit – det er tanken!</p>
+        </div>
+
+        <div class="gw-pricing-table">
+            <div class="gw-pricing-plan">
+                <div class="gw-plan-header">
+                    <h3>Startpakken</h3>
+                    <div class="gw-plan-price">
+                        <span class="gw-price-amount">200kr</span>
+                        <span class="gw-price-term">/mnd per bruker</span>
+                    </div>
+                </div>
+                <div class="gw-plan-storage">30GB lagring</div>
+                <ul class="gw-plan-features">
+                    <li>Profesjonell e-post (@dittfirma.no)</li>
+                    <li>Google Docs, Sheets, Slides</li>
+                    <li>Google Meet (videomøter)</li>
+                    <li>Google Calendar</li>
+                    <li>Enkel drift & teknisk support</li>
+                    <li>Forutsigbar, fast faktura</li>
+                </ul>
+                <div class="gw-plan-description">
+                    <p><strong>Passer for:</strong> Nystartede, mindre bedrifter (1-10 ansatte) og de med grunnleggende behov for e-post og dokumenthåndtering.</p>
+                </div>
+                <div class="gw-plan-footer">
+                    <a href="#kontakt" class="gw-btn">Velg Pakke</a>
+                </div>
+            </div>
+
+            <div class="gw-pricing-plan gw-plan-recommended">
+                <div class="gw-plan-badge">Mest Populær</div>
+                <div class="gw-plan-header">
+                    <h3>Standardpakken</h3>
+                    <div class="gw-plan-price">
+                        <span class="gw-price-amount">350kr</span>
+                        <span class="gw-price-term">/mnd per bruker</span>
+                    </div>
+                </div>
+                <div class="gw-plan-storage">2TB lagring</div>
+                <ul class="gw-plan-features">
+                    <li>Alt i Startpakken</li>
+                    <li><strong>Rikelig med lagringsplass (2TB)</strong></li>
+                    <li>Møteopptak i Google Meet*</li>
+                    <li>Avanserte søkefunksjoner</li>
+                    <li>Perfekt for voksende team</li>
+                    <li>Enkel drift & teknisk support</li>
+                </ul>
+                <div class="gw-plan-description">
+                    <p><strong>Passer for:</strong> Voksende bedrifter, team som jobber med større filer (design, video, store dokumenter) og de som trenger mer samarbeidsplass.</p>
+                </div>
+                <div class="gw-plan-footer">
+                    <a href="#kontakt" class="gw-btn gw-btn-recommended">Velg Pakke</a>
+                </div>
+            </div>
+
+            <div class="gw-pricing-plan">
+                <div class="gw-plan-header">
+                    <h3>Premiumpakken</h3>
+                    <div class="gw-plan-price">
+                        <span class="gw-price-amount">550kr</span>
+                        <span class="gw-price-term">/mnd per bruker</span>
+                    </div>
+                </div>
+                <div class="gw-plan-storage">5TB lagring</div>
+                <ul class="gw-plan-features">
+                    <li>Alt i Standardpakken</li>
+                    <li><strong>Massiv lagringskapasitet (5TB)</strong></li>
+                    <li>Google Vault for arkivering*</li>
+                    <li>Avanserte sikkerhetskontroller*</li>
+                    <li>For de mest krevende brukerne</li>
+                    <li>Enkel drift & teknisk support</li>
+                </ul>
+                <div class="gw-plan-description">
+                    <p><strong>Passer for:</strong> Bedrifter med store datamengder (videoproduksjon, mediehus), strenge arkiveringskrav og behov for maksimal kapasitet.</p>
+                </div>
+                <div class="gw-plan-footer">
+                    <a href="#kontakt" class="gw-btn">Velg Pakke</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="gw-pricing-outro">
+            <p><em>*Enkelte avanserte funksjoner som møteopptak og Google Vault avhenger av den underliggende Google Workspace-lisensen. Vi hjelper deg å velge riktig!</em></p>
+            <p><strong>Alltid inkludert:</strong> Enkel drift og teknisk support. <br><strong>Din fordel:</strong> Én pris, én faktura – ingen overraskelser!</p>
+        </div>
+    </div>
+
+    <script>
+        // Enkel JavaScript for "smooth scroll" til kontaktseksjonen
+        document.addEventListener('DOMContentLoaded', function() {
+            const selectPackageButtons = document.querySelectorAll('.gw-btn');
+
+            selectPackageButtons.forEach(button => {
+                button.addEventListener('click', function(event) {
+                    const targetId = this.getAttribute('href');
+                    // Sjekk om det er en intern lenke (#)
+                    if (targetId && targetId.startsWith('#')) {
+                        const targetElement = document.querySelector(targetId);
+                        if (targetElement) {
+                            event.preventDefault(); // Forhindre standard hopp
+                            targetElement.scrollIntoView({
+                                behavior: 'smooth', // Gir myk scrolling
+                                block: 'start' // Scroller til toppen av elementet
+                            });
+                        } else {
+                            // Fallback hvis elementet ikke finnes, eller for å teste
+                            console.warn('Målelement ' + targetId + ' ikke funnet. Sørg for at du har en seksjon med denne IDen, f.eks. <div id="kontakt"></div>');
+                        }
+                    }
+                    // Hvis det er en full URL, la nettleseren håndtere det normalt
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
