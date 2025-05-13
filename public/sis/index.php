@@ -74,23 +74,61 @@
     </header>
 
     <nav class="sticky-nav">
-        <div class="container mx-auto max-w-6xl px-4"> {/* Justert max-w for flere lenker */}
+        <div class="container mx-auto max-w-6xl px-4">
             <ul class="flex flex-wrap justify-center sm:justify-around py-3">
+                <li><a href="#palette6" class="nav-link font-medium text-sm sm:text-base">Eiriks Palett</a></li>
                 <li><a href="#palette1" class="nav-link font-medium text-sm sm:text-base">Blåtoner</a></li>
                 <li><a href="#palette2" class="nav-link font-medium text-sm sm:text-base">Pasteller</a></li>
                 <li><a href="#palette3" class="nav-link font-medium text-sm sm:text-base">Jordfarger</a></li>
                 <li><a href="#palette4" class="nav-link font-medium text-sm sm:text-base">Grønn Palett</a></li>
                 <li><a href="#palette5" class="nav-link font-medium text-sm sm:text-base">Optimistiske Aksenter</a></li>
-                <li><a href="#palette6" class="nav-link font-medium text-sm sm:text-base">Eiriks Palett</a></li>
             </ul>
         </div>
     </nav>
 
     <main class="container mx-auto max-w-5xl p-4 sm:p-8">
 
+        <section id="palette6" class="palette-section">
+            <h2 class="text-3xl font-semibold text-center text-gray-700 mb-10">
+                1. Eiriks Utvalgte Palett
+            </h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="color-box color-box-light-text" style="background-color: #2D978D;">
+                    <h3 class="text-xl font-semibold">Primærfarge</h3>
+                    <p>Frisk Sjøgrønn</p>
+                    <p class="font-mono text-md mt-1">#2D978D</p>
+                </div>
+                <div class="color-box color-box-dark-text" style="background-color: #97BEAB;">
+                    <h3 class="text-xl font-semibold">Sekundærfarge</h3>
+                    <p>Demped Salvie</p>
+                    <p class="font-mono text-md mt-1">#97BEAB</p>
+                </div>
+                <div class="color-box color-box-dark-text" style="background-color: #EBE7DE;">
+                    <h3 class="text-xl font-semibold">Støttefarge 1</h3>
+                    <p>Lys Lin</p>
+                    <p class="font-mono text-md mt-1">#EBE7DE</p>
+                </div>
+                <div class="color-box color-box-dark-text" style="background-color: #F2F2F2;">
+                    <h3 class="text-xl font-semibold">Støttefarge 2</h3>
+                    <p>Klar Gråhvit</p>
+                    <p class="font-mono text-md mt-1">#F2F2F2</p>
+                </div>
+                <div class="color-box color-box-dark-text" style="background-color: #FF6F61;">
+                    <h3 class="text-xl font-semibold">Kontrastfarge</h3>
+                    <p>Varm Korall</p>
+                    <p class="font-mono text-md mt-1">#FF6F61</p>
+                </div>
+            </div>
+            <div class="mt-10 p-6 bg-white rounded-lg shadow-sm">
+                <h4 class="text-lg font-semibold text-gray-700 mb-3">Eksempler på bruk:</h4>
+                <p class="mb-2"><span style="color: #FFFFFF; background-color: #2D978D; padding: 0.25rem 0.5rem; border-radius: 0.25rem;">Hvit tekst</span> på Primærfarge.</p>
+                <p class="mb-2"><span style="color: #1f2937; background-color: #FF6F61; padding: 0.25rem 0.5rem; border-radius: 0.25rem;">Mørk tekst</span> på Kontrastfarge (knapp/CTA).</p>
+            </div>
+        </section>
+
         <section id="palette1" class="palette-section">
             <h2 class="text-3xl font-semibold text-center text-gray-700 mb-10">
-                1. Myke og Luftige Blåtoner
+                2. Myke og Luftige Blåtoner
             </h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 <div class="color-box color-box-dark-text" style="background-color: #A0D2DB;">
@@ -128,7 +166,7 @@
 
         <section id="palette2" class="palette-section">
             <h2 class="text-3xl font-semibold text-center text-gray-700 mb-10">
-                2. Dempede Pasteller
+                3. Dempede Pasteller
             </h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 <div class="color-box color-box-dark-text" style="background-color: #D4C4E0;">
@@ -166,7 +204,7 @@
 
         <section id="palette3" class="palette-section">
             <h2 class="text-3xl font-semibold text-center text-gray-700 mb-10">
-                3. Jordfarger i Sentrum
+                4. Jordfarger i Sentrum
             </h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 <div class="color-box color-box-light-text" style="background-color: #B87333;">
@@ -204,7 +242,7 @@
 
         <section id="palette4" class="palette-section">
             <h2 class="text-3xl font-semibold text-center text-gray-700 mb-10">
-                4. Naturens Grønne Palett
+                5. Naturens Grønne Palett
             </h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 <div class="color-box color-box-light-text" style="background-color: #3A5F0B;">
@@ -242,7 +280,7 @@
 
         <section id="palette5" class="palette-section">
             <h2 class="text-3xl font-semibold text-center text-gray-700 mb-10">
-                5. Varme og Optimistiske Aksenter
+                6. Varme og Optimistiske Aksenter
             </h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 <div class="color-box color-box-dark-text" style="background-color: #FFD700;">
@@ -250,7 +288,8 @@
                     <p>Solgul</p>
                     <p class="font-mono text-md mt-1">#FFD700</p>
                 </div>
-                <div class="color-box color-box-dark-text" style="background-color: #FF6347;"> <h3 class="text-xl font-semibold">Sekundærfarge</h3>
+                <div class="color-box color-box-dark-text" style="background-color: #FF6347;">
+                    <h3 class="text-xl font-semibold">Sekundærfarge</h3>
                     <p>Livlig Korall</p>
                     <p class="font-mono text-md mt-1">#FF6347</p>
                 </div>
@@ -274,43 +313,6 @@
                 <h4 class="text-lg font-semibold text-gray-700 mb-3">Eksempler på bruk:</h4>
                 <p class="mb-2"><span style="color: #1f2937; background-color: #FFD700; padding: 0.25rem 0.5rem; border-radius: 0.25rem;">Mørk grå tekst</span> på Primærfarge.</p>
                 <p class="mb-2"><span style="color: #1f2937; background-color: #87CEFA; padding: 0.25rem 0.5rem; border-radius: 0.25rem;">Mørk grå tekst</span> på Kontrastfarge (knapp/CTA).</p>
-            </div>
-        </section>
-
-        <section id="palette6" class="palette-section">
-            <h2 class="text-3xl font-semibold text-center text-gray-700 mb-10">
-                6. Eiriks Utvalgte Palett
-            </h2>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div class="color-box color-box-light-text" style="background-color: #2D978D;">
-                    <h3 class="text-xl font-semibold">Primærfarge</h3>
-                    <p>Frisk Sjøgrønn</p>
-                    <p class="font-mono text-md mt-1">#2D978D</p>
-                </div>
-                <div class="color-box color-box-dark-text" style="background-color: #97BEAB;">
-                    <h3 class="text-xl font-semibold">Sekundærfarge</h3>
-                    <p>Demped Salvie</p>
-                    <p class="font-mono text-md mt-1">#97BEAB</p>
-                </div>
-                <div class="color-box color-box-dark-text" style="background-color: #EBE7DE;">
-                    <h3 class="text-xl font-semibold">Støttefarge 1</h3>
-                    <p>Lys Lin</p>
-                    <p class="font-mono text-md mt-1">#EBE7DE</p>
-                </div>
-                <div class="color-box color-box-dark-text" style="background-color: #F2F2F2;">
-                    <h3 class="text-xl font-semibold">Støttefarge 2</h3>
-                    <p>Klar Gråhvit</p>
-                    <p class="font-mono text-md mt-1">#F2F2F2</p>
-                </div>
-                <div class="color-box color-box-dark-text" style="background-color: #FF6F61;"> <h3 class="text-xl font-semibold">Kontrastfarge</h3>
-                    <p>Varm Korall</p>
-                    <p class="font-mono text-md mt-1">#FF6F61</p>
-                </div>
-            </div>
-            <div class="mt-10 p-6 bg-white rounded-lg shadow-sm">
-                <h4 class="text-lg font-semibold text-gray-700 mb-3">Eksempler på bruk:</h4>
-                <p class="mb-2"><span style="color: #FFFFFF; background-color: #2D978D; padding: 0.25rem 0.5rem; border-radius: 0.25rem;">Hvit tekst</span> på Primærfarge.</p>
-                <p class="mb-2"><span style="color: #1f2937; background-color: #FF6F61; padding: 0.25rem 0.5rem; border-radius: 0.25rem;">Mørk tekst</span> på Kontrastfarge (knapp/CTA).</p>
             </div>
         </section>
 
