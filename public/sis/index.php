@@ -74,13 +74,14 @@
     </header>
 
     <nav class="sticky-nav">
-        <div class="container mx-auto max-w-5xl px-4">
+        <div class="container mx-auto max-w-6xl px-4"> {/* Justert max-w for flere lenker */}
             <ul class="flex flex-wrap justify-center sm:justify-around py-3">
-                <li><a href="#palette1" class="nav-link font-medium">Blåtoner</a></li>
-                <li><a href="#palette2" class="nav-link font-medium">Pasteller</a></li>
-                <li><a href="#palette3" class="nav-link font-medium">Jordfarger</a></li>
-                <li><a href="#palette4" class="nav-link font-medium">Grønn Palett</a></li>
-                <li><a href="#palette5" class="nav-link font-medium">Optimistiske Aksenter</a></li>
+                <li><a href="#palette1" class="nav-link font-medium text-sm sm:text-base">Blåtoner</a></li>
+                <li><a href="#palette2" class="nav-link font-medium text-sm sm:text-base">Pasteller</a></li>
+                <li><a href="#palette3" class="nav-link font-medium text-sm sm:text-base">Jordfarger</a></li>
+                <li><a href="#palette4" class="nav-link font-medium text-sm sm:text-base">Grønn Palett</a></li>
+                <li><a href="#palette5" class="nav-link font-medium text-sm sm:text-base">Optimistiske Aksenter</a></li>
+                <li><a href="#palette6" class="nav-link font-medium text-sm sm:text-base">Eiriks Palett</a></li>
             </ul>
         </div>
     </nav>
@@ -121,7 +122,7 @@
             <div class="mt-10 p-6 bg-white rounded-lg shadow-sm">
                 <h4 class="text-lg font-semibold text-gray-700 mb-3">Eksempler på bruk:</h4>
                 <p class="mb-2"><span style="color: #333333; background-color: #A0D2DB; padding: 0.25rem 0.5rem; border-radius: 0.25rem;">Mørk grå tekst</span> på Primærfarge.</p>
-                <p class="mb-2"><span style="color: #FFFFFF; background-color: #FFB38A; padding: 0.25rem 0.5rem; border-radius: 0.25rem;">Hvit tekst</span> på Kontrastfarge (knapp/CTA).</p>
+                <p class="mb-2"><span style="color: #1f2937; background-color: #FFB38A; padding: 0.25rem 0.5rem; border-radius: 0.25rem;">Mørk tekst</span> på Kontrastfarge (knapp/CTA).</p>
             </div>
         </section>
 
@@ -183,7 +184,8 @@
                     <p>Lys Sand</p>
                     <p class="font-mono text-md mt-1">#EDE0C8</p>
                 </div>
-                <div class="color-box color-box-light-text" style="background-color: #AFA090;"> <h3 class="text-xl font-semibold">Støttefarge 2</h3>
+                <div class="color-box color-box-light-text" style="background-color: #AFA090;">
+                    <h3 class="text-xl font-semibold">Støttefarge 2</h3>
                     <p>Dempet Leire</p>
                     <p class="font-mono text-md mt-1">#AFA090</p>
                 </div>
@@ -248,7 +250,7 @@
                     <p>Solgul</p>
                     <p class="font-mono text-md mt-1">#FFD700</p>
                 </div>
-                <div class="color-box color-box-light-text" style="background-color: #FF6347;"> <h3 class="text-xl font-semibold">Sekundærfarge</h3>
+                <div class="color-box color-box-dark-text" style="background-color: #FF6347;"> <h3 class="text-xl font-semibold">Sekundærfarge</h3>
                     <p>Livlig Korall</p>
                     <p class="font-mono text-md mt-1">#FF6347</p>
                 </div>
@@ -275,6 +277,43 @@
             </div>
         </section>
 
+        <section id="palette6" class="palette-section">
+            <h2 class="text-3xl font-semibold text-center text-gray-700 mb-10">
+                6. Eiriks Utvalgte Palett
+            </h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="color-box color-box-light-text" style="background-color: #2D978D;">
+                    <h3 class="text-xl font-semibold">Primærfarge</h3>
+                    <p>Frisk Sjøgrønn</p>
+                    <p class="font-mono text-md mt-1">#2D978D</p>
+                </div>
+                <div class="color-box color-box-dark-text" style="background-color: #97BEAB;">
+                    <h3 class="text-xl font-semibold">Sekundærfarge</h3>
+                    <p>Demped Salvie</p>
+                    <p class="font-mono text-md mt-1">#97BEAB</p>
+                </div>
+                <div class="color-box color-box-dark-text" style="background-color: #EBE7DE;">
+                    <h3 class="text-xl font-semibold">Støttefarge 1</h3>
+                    <p>Lys Lin</p>
+                    <p class="font-mono text-md mt-1">#EBE7DE</p>
+                </div>
+                <div class="color-box color-box-dark-text" style="background-color: #F2F2F2;">
+                    <h3 class="text-xl font-semibold">Støttefarge 2</h3>
+                    <p>Klar Gråhvit</p>
+                    <p class="font-mono text-md mt-1">#F2F2F2</p>
+                </div>
+                <div class="color-box color-box-dark-text" style="background-color: #FF6F61;"> <h3 class="text-xl font-semibold">Kontrastfarge</h3>
+                    <p>Varm Korall</p>
+                    <p class="font-mono text-md mt-1">#FF6F61</p>
+                </div>
+            </div>
+            <div class="mt-10 p-6 bg-white rounded-lg shadow-sm">
+                <h4 class="text-lg font-semibold text-gray-700 mb-3">Eksempler på bruk:</h4>
+                <p class="mb-2"><span style="color: #FFFFFF; background-color: #2D978D; padding: 0.25rem 0.5rem; border-radius: 0.25rem;">Hvit tekst</span> på Primærfarge.</p>
+                <p class="mb-2"><span style="color: #1f2937; background-color: #FF6F61; padding: 0.25rem 0.5rem; border-radius: 0.25rem;">Mørk tekst</span> på Kontrastfarge (knapp/CTA).</p>
+            </div>
+        </section>
+
     </main>
 
     <footer class="text-center py-8 mt-8 bg-gray-800 text-gray-300">
@@ -295,7 +334,7 @@
                 const targetElement = document.querySelector(targetId);
                 if (targetElement) {
                     // Justerer for høyden på sticky nav + litt ekstra margin
-                    const offsetTop = targetElement.offsetTop - 80; // 80px er en ca. verdi, juster etter behov
+                    const offsetTop = targetElement.offsetTop - 80; // 80px er en ca. verdi, juster etter behov for nav høyde
                     window.scrollTo({
                         top: offsetTop,
                         behavior: 'smooth'
