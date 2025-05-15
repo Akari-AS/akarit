@@ -1,5 +1,121 @@
 /* --- Footer --- */
-footer { background-color: var(--dark-color); color: #c0c0c0; text-align: center; padding: 40px 0; margin-top: 80px; width: 100%; }
-footer p { margin: 0; font-size: 0.95em; }
-footer a { color: var(--primary-color); text-decoration: none; }
-footer a:hover { text-decoration: underline; }
+.site-footer {
+    background-color: var(--dark-color); 
+    color: #c0c0c0; 
+    padding: 60px 0 0 0; 
+    margin-top: 0; /* Fjernet margin-top for å fjerne skillet */
+    width: 100%;
+    font-size: 0.9em; 
+}
+
+.footer-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 30px; 
+    padding-bottom: 40px;
+}
+
+.footer-column {
+    flex: 1;
+    min-width: 220px; 
+    padding: 0 15px; 
+}
+
+.footer-column h4 {
+    font-family: var(--heading-font);
+    font-size: 1.1em;
+    color: #ffffff; 
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.footer-column ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 25px 0; 
+}
+
+.footer-column ul li {
+    margin-bottom: 8px;
+}
+
+.footer-column a {
+    color: #c0c0c0; 
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-column a:hover {
+    color: var(--primary-color); 
+    text-decoration: underline;
+}
+
+.footer-column p {
+    margin-bottom: 15px;
+    line-height: 1.6;
+}
+
+.footer-column-brand {
+    text-align: right; 
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end; 
+}
+
+.footer-logo {
+    height: 70px; /* ØKT STØRRELSE - Juster denne verdien etter behov (f.eks. 60px, 80px, 90px) */
+    width: auto;
+    margin-bottom: 20px;
+}
+
+.footer-locations {
+    font-size: 0.95em;
+    color: #a0a0a0; 
+}
+
+.footer-bottom {
+    background-color: rgba(0,0,0,0.1); 
+    padding: 20px 0;
+    text-align: center;
+    font-size: 0.85em;
+}
+
+.footer-bottom p {
+    margin: 0;
+    color: #a0a0a0;
+}
+
+/* Responsive justeringer for footer */
+@media (max-width: 992px) {
+    .footer-column-brand {
+        text-align: left; 
+        align-items: flex-start;
+        margin-top: 20px; 
+        width: 100%; 
+    }
+}
+
+@media (max-width: 767px) {
+    .footer-container {
+        flex-direction: column;
+        text-align: center; 
+    }
+    .footer-column {
+        min-width: 100%;
+        padding: 0; 
+        margin-bottom: 30px;
+    }
+    .footer-column:last-child {
+        margin-bottom: 0;
+    }
+    .footer-column-brand {
+        align-items: center; 
+        margin-top: 10px;
+    }
+    .footer-logo {
+        margin-left: auto;
+        margin-right: auto;
+        height: 60px; /* Juster for mobil også om nødvendig */
+    }
+}
