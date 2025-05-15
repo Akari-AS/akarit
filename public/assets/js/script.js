@@ -1,127 +1,86 @@
 document.addEventListener('DOMContentLoaded', function() {
-    console.log("Akarit JS Initializing (v15 - Best Practice Toggle)...");
-
-    const header = document.querySelector('header');
     const mobileMenuButton = document.getElementById('mobile-menu-button');
-    const mobileMenu = document.getElementById('mobile-menu');
-    // Fjernet referanse til close button inne i menyen
-    // const mobileMenuCloseButton = document.getElementById('mobile-menu-close-button');
+    const mobileMenuPanel = document.getElementById('mobile-menu');
     const body = document.body;
 
-    if (!mobileMenuButton) console.error("FATAL: Mobilmeny-KNAPP (#mobile-menu-button) ble ikke funnet!");
-    if (!mobileMenu) console.error("FATAL: Mobilmeny-PANEL (#mobile-menu) ble ikke funnet!");
+    if (mobileMenuButton && mobileMenuPanel) {
+        mobileMenuButton.addEventListener('click', function() {
+            const isExpanded = mobileMenuButton.getAttribute('aria-expanded') === 'true' || false;
+            mobileMenuButton.setAttribute('aria-expanded', !isExpanded);
+            mobileMenuButton.classList.toggle('menu-open'); // For ikonbytte
+            mobileMenuPanel.classList.toggle('open');
+            body.classList.toggle('mobile-menu-is-open'); // For å hindre scrolling på body
 
-
-    // Funksjon for å veksle menyen
-    function toggleMobileMenu() {
-        if (!mobileMenu || !mobileMenuButton) return; // Sjekk om elementene finnes
-
-        const isOpen = mobileMenu.classList.toggle('open'); // Veksler .open på panelet
-        mobileMenuButton.classList.toggle('menu-open', isOpen); // Veksler .menu-open på knappen (for ikonbytte)
-        mobileMenuButton.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-        body.classList.toggle('mobile-menu-is-open', isOpen); // Veksler body-klassen
-        console.log(`Mobilmeny ${isOpen ? 'åpnet' : 'lukket'}.`);
-    }
-
-    // Funksjon for å lukke meny (hvis den er åpen)
-    function closeMobileMenu() {
-        if (mobileMenu && mobileMenu.classList.contains('open')) {
-            console.log("closeMobileMenu function called.");
-            mobileMenu.classList.remove('open');
-            mobileMenuButton?.classList.remove('menu-open'); // Fjern klasse fra knapp også
-            mobileMenuButton?.setAttribute('aria-expanded', 'false');
-            body.classList.remove('mobile-menu-is-open');
-             console.log("Mobile menu explicitly closed.");
-        }
-    }
-
-    // --- Legg til Hoved-lyttere ---
-
-    // Lytter for hamburger/kryss-knapp
-    if (mobileMenuButton) {
-        mobileMenuButton.addEventListener('click', (e) => {
-            e.stopPropagation();
-            console.log("Toggle button clicked!");
-            toggleMobileMenu(); // Kall veksle-funksjonen
+            // Skjul/vis ikoner
+            // Dette håndteres nå primært av CSS basert på .menu-open klassen på knappen
         });
-    }
 
-    // Fjernet lytter for intern lukkeknapp
-
-    // --- Jevn Rulling for Navigasjonslenker ---
-    const scrollLinks = document.querySelectorAll('header nav.desktop-nav a[href^="#"], #mobile-menu a[href^="#"], footer a[href^="#"], a.cta-button[href^="#"]');
-
-    scrollLinks.forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            const targetId = this.getAttribute('href');
-            if (targetId && targetId.startsWith('#') && targetId.length > 1) {
-                const targetElement = document.querySelector(targetId);
-                if (targetElement) {
-                     console.log("Link clicked, closing menu and allowing scroll to:", targetId);
-                    // Lukk menyen FØR scrolling
-                    closeMobileMenu();
-                    // La CSS håndtere scrollingen
-                } else {
-                    console.warn("Scroll target not found:", targetId);
-                    closeMobileMenu(); // Lukk meny uansett
+        // Lukk mobilmenyen når man klikker på en lenke i den
+        const mobileMenuLinks = mobileMenuPanel.querySelectorAll('a');
+        mobileMenuLinks.forEach(function(link) {
+            link.addEventListener('click', function() {
+                if (mobileMenuPanel.classList.contains('open')) {
+                    mobileMenuButton.setAttribute('aria-expanded', 'false');
+                    mobileMenuButton.classList.remove('menu-open');
+                    mobileMenuPanel.classList.remove('open');
+                    body.classList.remove('mobile-menu-is-open');
                 }
-            }
+            });
         });
-    });
-
-
-    // --- Aktiv Link ved Scrolling (Uendret) ---
-    const sections = document.querySelectorAll('section[id]');
-    const desktopNavLinks = document.querySelectorAll('header nav.desktop-nav a');
-    const mobileNavLinks = document.querySelectorAll('#mobile-menu a');
-    let scrollPaddingTop = 90;
-
-    function updateScrollPadding() {
-        try {
-            const rootStyle = getComputedStyle(document.documentElement);
-            const paddingValue = rootStyle.getPropertyValue('--scroll-padding-top').trim().replace('px', '');
-            scrollPaddingTop = !isNaN(parseInt(paddingValue, 10)) ? parseInt(paddingValue, 10) : 90;
-        } catch (err) { scrollPaddingTop = 90; }
     }
 
-    function setActiveLink() {
-        updateScrollPadding();
-        let currentSectionId = '';
-        const scrollBuffer = 50;
-        const scrollPosition = window.pageYOffset + scrollPaddingTop + 1;
+    // Aktiv lenke i navigasjonen basert på scrolling
+    const sections = document.querySelectorAll('section[id]');
+    const navLinksDesktop = document.querySelectorAll('nav.desktop-nav ul li a');
+    const navLinksMobile = document.querySelectorAll('.mobile-menu-panel ul li a');
 
-        sections.forEach(section => {
-            if (scrollPosition >= section.offsetTop) { currentSectionId = section.getAttribute('id'); }
+    function changeLinkState(navLinks) {
+        let index = sections.length;
+
+        while(--index && window.scrollY + 100 < sections[index].offsetTop) {} // +100 for litt offset
+        
+        navLinks.forEach((link) => link.classList.remove('active'));
+        // Sjekk om det finnes en lenke som matcher før vi prøver å legge til klassen
+        if (navLinks[index]) {
+            navLinks[index].classList.add('active');
+        }
+    }
+
+    // Initial sjekk ved lasting av siden
+    if (sections.length > 0) {
+        changeLinkState(navLinksDesktop);
+        changeLinkState(navLinksMobile); // Sørg for at mobil også sjekkes ved lasting
+
+        window.addEventListener('scroll', function() {
+            changeLinkState(navLinksDesktop);
+            changeLinkState(navLinksMobile);
         });
-        if (window.pageYOffset < sections[0].offsetTop - scrollPaddingTop) { currentSectionId = ''; }
-        if ((window.innerHeight + Math.ceil(window.pageYOffset)) >= document.body.offsetHeight - 2) {
-             if (sections.length > 0) { currentSectionId = sections[sections.length - 1].getAttribute('id'); }
+    }
+
+
+    // Tegn-teller for kontaktskjemaets meldingsfelt
+    const messageTextarea = document.getElementById('message');
+    const charCounter = document.querySelector('.char-counter'); // Endret til querySelector for klasse
+    const maxLength = 600; // Synkroniser med HTML hvis du endrer maks
+
+    if (messageTextarea && charCounter) {
+        // Funksjon for å oppdatere telleren
+        function updateCharCounter() {
+            const currentLength = messageTextarea.value.length;
+            charCounter.textContent = currentLength + ' av ' + maxLength + ' maks tegn';
+
+            if (currentLength > maxLength) {
+                charCounter.style.color = 'red'; // Visuelt hint om overskridelse
+                // Du kan også vurdere å deaktivere submit-knappen her
+            } else {
+                charCounter.style.color = '#777'; // Tilbake til normal farge
+            }
         }
 
-        const allNavLinks = [...desktopNavLinks, ...mobileNavLinks];
-        allNavLinks.forEach(link => {
-            const linkHref = link.getAttribute('href')?.slice(1);
-            const isActive = currentSectionId && linkHref === currentSectionId;
-            link.classList.toggle('active', isActive);
-        });
+        messageTextarea.addEventListener('input', updateCharCounter);
+        
+        // Kjør en gang ved lasting for å vise initialt antall hvis det er forhåndsutfylt tekst
+        updateCharCounter(); 
     }
-    setActiveLink();
-    window.addEventListener('scroll', setActiveLink, { passive: true });
-    window.addEventListener('resize', () => { updateScrollPadding(); setActiveLink(); closeMobileMenu(); });
 
-    // Lukk menyen hvis man klikker utenfor selve meny-panelet
-     document.addEventListener('click', function(event) {
-         if (mobileMenu && mobileMenu.classList.contains('open') && mobileMenuButton) {
-              const isClickInsidePanel = mobileMenu.contains(event.target);
-              const isClickOnButton = mobileMenuButton.contains(event.target);
-
-              if (!isClickInsidePanel && !isClickOnButton) {
-                  console.log("Klikk utenfor meny og knapp (på body) - lukker menyen.");
-                  closeMobileMenu();
-              }
-         }
-     });
-
-
-    console.log("Akarit JS Initialization Complete (v15 - Best Practice Toggle).");
 });

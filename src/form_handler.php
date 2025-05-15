@@ -5,87 +5,77 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
-/**
- * VIKTIG: Sørg for at Composer autoloaderen inkluderes korrekt.
- * Stien her antar at vendor/ ligger i rotmappen, ETT NIVÅ OPP fra mappen der denne filen (form_handler.php) ligger.
- * Juster stien ('/../') om nødvendig, basert på din faktiske mappestruktur på serveren.
- * Eksempel: Hvis src/ og vendor/ ligger i samme mappe, fjern '/..' -> require __DIR__ . '/vendor/autoload.php';
- */
 require __DIR__ . '/../vendor/autoload.php';
 
-// Standardverdier for retur
 $formResult = [
     'message' => '',
     'success' => false,
-    'data' => [], // For å sende tilbake data ved feil (pre-fill form)
+    'data' => [], 
 ];
 
-// Prosesser kun hvis det er en POST-forespørsel
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Hent og rens brukerinput
-      $name = htmlspecialchars(trim($_POST['name'] ?? ''), ENT_QUOTES, 'UTF-8');
-      $email = filter_var(trim($_POST['email'] ?? ''), FILTER_SANITIZE_EMAIL); // Fortsatt OK
-      $company = htmlspecialchars(trim($_POST['company'] ?? ''), ENT_QUOTES, 'UTF-8');
-      $message = htmlspecialchars(trim($_POST['message'] ?? ''), ENT_QUOTES, 'UTF-8');
+    $firstname = htmlspecialchars(trim($_POST['firstname'] ?? ''), ENT_QUOTES, 'UTF-8');
+    $lastname = htmlspecialchars(trim($_POST['lastname'] ?? ''), ENT_QUOTES, 'UTF-8');
+    $fullname = trim($firstname . ' ' . $lastname); // Kombiner fornavn og etternavn
 
-    // Lagre innsendt data for evt. pre-fill ved valideringsfeil
+    $email = filter_var(trim($_POST['email'] ?? ''), FILTER_SANITIZE_EMAIL);
+    $company = htmlspecialchars(trim($_POST['company'] ?? ''), ENT_QUOTES, 'UTF-8');
+    $phone = htmlspecialchars(trim($_POST['phone'] ?? ''), ENT_QUOTES, 'UTF-8');
+    $package_interest = htmlspecialchars(trim($_POST['package_interest'] ?? ''), ENT_QUOTES, 'UTF-8');
+    $message_content = htmlspecialchars(trim($_POST['message'] ?? ''), ENT_QUOTES, 'UTF-8'); // Endret variabelnavn for klarhet
+    $privacy_policy_agreed = isset($_POST['privacy']);
+
     $formResult['data'] = [
-        'name' => $name,
-        'email' => $email, // Behold opprinnelig e-post hvis den er ugyldig
+        'firstname' => $firstname,
+        'lastname' => $lastname,
+        'email' => $email,
         'company' => $company,
-        'message' => $message,
+        'phone' => $phone,
+        'package_interest' => $package_interest,
+        'message' => $message_content, // Bruker 'message' her for old_value()
+        'privacy' => $privacy_policy_agreed,
     ];
 
-    // === Input Validering ===
     $errors = [];
-    if (empty($name)) {
-        $errors[] = "Navn er påkrevd.";
+    if (empty($firstname)) { // Endret fra 'name' til 'firstname'
+        $errors[] = "Fornavn er påkrevd.";
     }
     if (empty($email)) {
         $errors[] = "E-post er påkrevd.";
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $errors[] = "Vennligst oppgi en gyldig e-postadresse.";
-        // Behold feilaktig e-post for korrigering
         $formResult['data']['email'] = $_POST['email'] ?? '';
     }
-    if (empty($message)) {
+    if (empty($phone)) {
+        $errors[] = "Telefonnummer er påkrevd.";
+    }
+    if (empty($message_content)) {
         $errors[] = "Melding er påkrevd.";
     }
-
-    // === Hent Mailgun-innstillinger fra Miljøvariabler (Forge Environment) ===
-    // Bruk standardverdier (fallbacks) i tilfelle miljøvariabelen ikke er satt
-    // (selv om den BØR være satt i Forge).
-    $smtpHost = getenv('MAILGUN_SMTP_HOST') ?: 'smtp.eu.mailgun.org'; // Bruk din region!
-    $smtpPort = getenv('MAILGUN_SMTP_PORT') ?: 587;
-    $smtpUsername = getenv('MAILGUN_SMTP_USERNAME'); // Ingen god standardverdi for disse
-    $smtpPassword = getenv('MAILGUN_SMTP_PASSWORD');
-    $mailFromAddress = getenv('MAIL_FROM_ADDRESS') ?: 'noreply@akari.no'; // Standard avsender - Endret fra akarit.no
-    $mailFromName = getenv('MAIL_FROM_NAME') ?: 'Akari Nettside'; // Endret fra Akarit
-    $mailRecipientAddress = getenv('MAIL_RECIPIENT_ADDRESS'); // E-post som mottar henvendelsen
-
-    // === Hent Mailgun-innstillinger ... (linjene før) ===
-    // Sjekk om kritiske miljøvariabler er satt (denne linjen kommer etterpå)
-    if (empty($smtpUsername) || empty($smtpPassword) || empty($mailRecipientAddress)) {
-         // ... feilmeldingen din genereres her ...
+    if (!$privacy_policy_agreed) {
+        $errors[] = "Du må godta personvernerklæringen.";
     }
 
+    $smtpHost = getenv('MAILGUN_SMTP_HOST') ?: 'smtp.eu.mailgun.org';
+    $smtpPort = getenv('MAILGUN_SMTP_PORT') ?: 587;
+    $smtpUsername = getenv('MAILGUN_SMTP_USERNAME');
+    $smtpPassword = getenv('MAILGUN_SMTP_PASSWORD');
+    $mailFromAddress = getenv('MAIL_FROM_ADDRESS') ?: 'noreply@akari.no';
+    $mailFromName = getenv('MAIL_FROM_NAME') ?: 'Akari Nettside';
+    $mailRecipientAddress = getenv('MAIL_RECIPIENT_ADDRESS');
 
-    // Sjekk om kritiske miljøvariabler er satt
     if (empty($smtpUsername) || empty($smtpPassword) || empty($mailRecipientAddress)) {
          $errors[] = "Serverkonfigurasjonsfeil (manglende e-postinnstillinger).";
-         // Logg dette for deg selv
-         error_log("Mailgun SMTP credentials or recipient address missing in environment variables for akari.no"); // Logg for akari.no
+         error_log("Mailgun SMTP credentials or recipient address missing in environment variables for akari.no");
     }
 
-
-    // === Send E-post (hvis ingen valideringsfeil) ===
     if (empty($errors)) {
-        $mail = new PHPMailer(true); // Aktiverer unntak
+        $mail = new PHPMailer(true);
 
         try {
-            // Serverinnstillinger
-            //$mail->SMTPDebug = SMTP::DEBUG_SERVER; // Aktiver for feilsøking under utvikling
+            // $mail->SMTPDebug = SMTP::DEBUG_SERVER;
             $mail->isSMTP();
             $mail->Host       = $smtpHost;
             $mail->SMTPAuth   = true;
@@ -93,53 +83,44 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $mail->Password   = $smtpPassword;
             $mail->SMTPSecure = ($smtpPort == 465) ? PHPMailer::ENCRYPTION_SMTPS : PHPMailer::ENCRYPTION_STARTTLS;
             $mail->Port       = $smtpPort;
-            $mail->CharSet    = PHPMailer::CHARSET_UTF8; // Bruk PHPMailer konstant
+            $mail->CharSet    = PHPMailer::CHARSET_UTF8;
 
-            // Avsender og Mottakere
-            $mail->setFrom($mailFromAddress, $mailFromName);    // Avsender (fra ditt domene)
-            $mail->addAddress($mailRecipientAddress);           // Mottaker (din interne e-post)
-            $mail->addReplyTo($email, $name);                   // Sett brukerens e-post som Reply-To
+            $mail->setFrom($mailFromAddress, $mailFromName);
+            $mail->addAddress($mailRecipientAddress);
+            $mail->addReplyTo($email, $fullname); // Bruker $fullname her
 
-            // Innhold
-            $mail->isHTML(false); // Send som ren tekst
-            $mail->Subject = 'Google Workspace Henvendelse fra Akari.no'; // Endret fra Akarit.no
+            $mail->isHTML(false); 
+            $mail->Subject = 'Google Workspace Henvendelse fra Akari.no - ' . $fullname; // Lagt til navn i emne
 
-            // Bygg e-post body
             $emailBody = "Ny Google Workspace henvendelse:\n\n";
-            $emailBody .= "Navn: " . $name . "\n";
+            $emailBody .= "Navn: " . $fullname . "\n"; // Bruker $fullname
             $emailBody .= "Firma: " . (!empty($company) ? $company : "Ikke oppgitt") . "\n";
-            $emailBody .= "E-post: " . $email . "\n\n";
-            $emailBody .= "Melding:\n" . $message . "\n";
+            $emailBody .= "E-post: " . $email . "\n";
+            $emailBody .= "Telefon: " . $phone . "\n";
+            $emailBody .= "Interessert i pakke: " . (!empty($package_interest) ? $package_interest : "Ikke spesifisert") . "\n\n";
+            $emailBody .= "Melding:\n" . $message_content . "\n\n";
+            $emailBody .= "Personvernerklæring godtatt: Ja\n";
             $mail->Body = $emailBody;
 
-            // Send e-posten
             if ($mail->send()) {
                  $formResult['message'] = 'Takk! Meldingen din er sendt. Vi tar kontakt med deg snart.';
                  $formResult['success'] = true;
-                 $formResult['data'] = []; // Tøm innsendt data ved suksess
+                 $formResult['data'] = []; 
             } else {
-                 // $mail->send() returnerer false, men unntak bør fanges opp
                  $formResult['message'] = "Meldingen kunne ikke sendes. (Ukjent feil)";
-                 error_log("PHPMailer send() returned false without Exception for akari.no"); // Logg for akari.no
+                 error_log("PHPMailer send() returned false without Exception for akari.no");
             }
 
         } catch (Exception $e) {
             $formResult['message'] = "Beklager, meldingen kunne ikke sendes. Kontakt oss direkte.";
-            // Logg den faktiske feilen for deg selv (viktig for feilsøking!)
-            error_log("PHPMailer Exception for akari.no: " . $mail->ErrorInfo . " | Exception: " . $e->getMessage()); // Logg for akari.no
+            error_log("PHPMailer Exception for akari.no: " . $mail->ErrorInfo . " | Exception: " . $e->getMessage());
         }
 
     } else {
-        // Det var valideringsfeil, sett feilmelding
-        $formResult['message'] = implode(" ", $errors); // Kombiner alle feilmeldinger
+        $formResult['message'] = implode(" ", $errors);
         $formResult['success'] = false;
-        // $formResult['data'] inneholder allerede brukerens input
     }
-
-} // End if ($_SERVER["REQUEST_METHOD"] == "POST")
-
-
-// Returner resultatet slik at index.php kan bruke det
+}
 return $formResult;
 
 ?>
