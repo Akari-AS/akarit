@@ -22,6 +22,113 @@ $youtubeVideoId = "AwwZMoYNK2o"; // <--- DENNE LINJEN MANGLER I DIN KODE
 $pageTitle = 'Google Workspace for Bedrifter | Akarit';
 $pageDescription = 'Styrk bedriften med Google Workspace. Akarit tilbyr ekspertise.';
 
+// Data for Gemini AI-seksjonen
+$workspaceToolsData = [
+    [
+        'id' => 'gmail',
+        'name' => 'Gmail',
+        'imageUrl' => 'https://www.gstatic.com/images/branding/product/1x/gmail_2020q4_48dp.png',
+        'features' => [
+            [
+                'title' => 'Hjelp meg å skrive',
+                'description' => 'Skriv og forbedre e-postene dine uten problemer, fra å finpusse tonen med et enkelt klikk til å generere nye utkast fra bunnen av.'
+            ],
+            [
+                'title' => 'Oppsummer e-poster',
+                'description' => 'Få et sammendrag direkte fra en e-postmelding eller e-posttråd, som fremhever nøkkelpunkter og sparer deg tid.'
+            ],
+            [
+                'title' => 'Gemini i Gmail-sidepanelet',
+                'description' => 'Lag utkast til e-postsvar, still spørsmål til e-postene dine (f.eks. "Oppdater meg på e-poster om Prosjekt Alfa"), og oppsummer lange e-poster og tråder.'
+            ]
+        ]
+    ],
+    [
+        'id' => 'docs',
+        'name' => 'Google Docs',
+        'imageUrl' => 'https://www.gstatic.com/images/branding/product/1x/docs_2020q4_48dp.png',
+        'features' => [
+            [
+                'title' => 'Gemini i Docs-sidepanelet',
+                'description' => 'Oppsummer hovedpunktene i et langt dokument, lag en disposisjon for en salgspresentasjon, eller brainstorm ideer for en ny markedsføringskampanje. Poler enkelt dokumentene dine med skrive-, grammatikk- og formateringsforslag fra Gemini.'
+            ],
+            [
+                'title' => 'Generer bilder',
+                'description' => 'Lag unike innebygde bilder og fullformats forsidebilder direkte i dokumentet ditt for en rekke behov, som en reklamebrosjyre, en kampanjeoversikt, eller en restaurantmeny.'
+            ],
+            [
+                'title' => 'Hjelp meg å skrive (med ledetekst)',
+                'description' => 'Bare legg til en ledetekst, som "Lag en prosjektoversikt, inkludert forsknings-, design-, test- og produksjonsfaser", og et utkast vil umiddelbart bli generert.'
+            ],
+        ]
+    ],
+    [
+        'id' => 'meet',
+        'name' => 'Google Meet',
+        'imageUrl' => 'https://www.gstatic.com/images/branding/product/1x/meet_2020q4_48dp.png',
+        'features' => [
+            [
+                'title' => 'Ta notater for meg i Meet',
+                'description' => 'Ta møtenotater automatisk, organiser dem i Google Docs, og del dem med teamet ditt. De som kommer sent, kan oppdatere seg under møtet med "Sammendrag så langt".'
+            ],
+            [
+                'title' => 'Adaptiv lyd',
+                'description' => 'Adaptiv lyd lar team delta i møter fra flere bærbare datamaskiner i nærheten uten forstyrrende ekko eller tilbakekobling, noe som er nyttig når konferanserom eller møteutstyr er mangelvare.'
+            ],
+            [
+                'title' => 'Oversatte tekstinger',
+                'description' => 'Oversatte tekstinger gir sanntidsoversettelser av talerens språk, noe som bidrar til å gjøre møter mer inkluderende og effektive for globale team.'
+            ]
+        ]
+    ],
+    [
+        'id' => 'drive',
+        'name' => 'Google Drive',
+        'imageUrl' => 'https://www.gstatic.com/images/branding/product/1x/drive_2020q4_48dp.png',
+        'features' => [
+            [
+                'title' => 'Gemini i Drive-sidepanelet',
+                'description' => 'Oppsummer flere dokumenter, generer innsikt om et spesifikt emne, få hjelp til å finne filer raskere, og mer, direkte fra Drive-grensesnittet.'
+            ],
+            [
+                'title' => 'Jobb med PDF-er i Drive',
+                'description' => 'Gemini kan oppsummere lange PDF-filer, generere innsikt fra innholdet, eller bruke PDF-en som grunnlag for å lage noe nytt, som en studieplan eller et e-postutkast.'
+            ],
+        ]
+    ],
+    [
+        'id' => 'sheets',
+        'name' => 'Google Sheets',
+        'imageUrl' => 'https://www.gstatic.com/images/branding/product/1x/sheets_2020q4_48dp.png',
+        'features' => [
+            [
+                'title' => 'Gemini i Sheets-sidepanelet',
+                'description' => 'Lag raskt tabeller (f.eks. en utgiftssporing), generer innsikt og visualiseringer basert på regnearkdata, og automatiser oppgaver ved hjelp av naturlig språk.'
+            ],
+            [
+                'title' => 'Hjelp meg å organisere',
+                'description' => 'Få hjelp til å lage maler og strukturere dataene dine. For eksempel, be om en "prosjektplanlegger med kolonner for oppgave, ansvarlig, tidsfrist og status".'
+            ]
+        ]
+    ],
+    [
+        'id' => 'slides',
+        'name' => 'Google Slides',
+        'imageUrl' => 'https://www.gstatic.com/images/branding/product/1x/slides_2020q4_48dp.png',
+        'features' => [
+            [
+                'title' => 'Hjelp meg å lage et bilde',
+                'description' => 'Med en enkel ledetekst kan du enkelt lage originale bilder for presentasjonene dine, som konsepter for digitale markedsføringskampanjer eller illustrasjoner for å forbedre forslaget til årsplanlegging.'
+            ],
+            [
+                'title' => 'Gemini i Slides-sidepanelet',
+                'description' => 'Generer raskt nye lysbilder (f.eks. en møteagenda), lag tilpassede bilder for presentasjonene dine, omskriv innhold for klarhet eller tone, og få hjelp til å oppsummere presentasjonen.'
+            ]
+        ]
+    ],
+];
+
+
 // Inkluder header
 require __DIR__ . '/../templates/header.php';
 ?>
@@ -124,6 +231,128 @@ require __DIR__ . '/../templates/header.php';
         </div>
     </div>
 </section>
+
+<!-- Google Workspace AI (Gemini) Seksjon -->
+<section id="ai-funksjoner">
+    <div class="container">
+        <h2>Google Workspace Superladet med Gemini AI</h2>
+        <p>Oppdag hvordan kunstig intelligens (AI) fra Gemini forvandler Google Workspace-verktøyene du bruker hver dag, og gjør dem smartere og mer effektive.</p>
+        <div class="ai-tools-grid">
+            <?php foreach ($workspaceToolsData as $tool): ?>
+            <div class="ai-tool-card">
+                <div class="ai-tool-header">
+                    <?php if (!empty($tool['imageUrl'])): ?>
+                        <img src="<?php echo htmlspecialchars($tool['imageUrl']); ?>" alt="<?php echo htmlspecialchars($tool['name']); ?> ikon" class="ai-tool-icon-img">
+                    <?php endif; ?>
+                    <h3><?php echo htmlspecialchars($tool['name']); ?></h3>
+                </div>
+                <div class="ai-tool-features">
+                    <?php foreach ($tool['features'] as $feature): ?>
+                    <div class="ai-feature-item">
+                        <h4><?php echo htmlspecialchars($feature['title']); ?></h4>
+                        <p><?php echo htmlspecialchars($feature['description']); ?></p>
+                    </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+</section>
+
+<!-- Prispakker Seksjon -->
+<section id="prispakker">
+    <div class="pk-pricing-container container">
+        <div class="pk-pricing-intro">
+            <h2>Lei av kompliserte IT-fakturaer?</h2>
+            <p>Hos oss får du Google Workspace til en fast, oversiktlig pris per bruker per måned. Inkludert i prisen er enkel drift og teknisk support. Enkelt og greit – det er tanken!</p>
+        </div>
+
+        <div class="pk-pricing-table">
+            <div class="pk-pricing-plan">
+                <div class="pk-plan-header">
+                    <h3>Startpakken</h3>
+                    <div class="pk-plan-price">
+                        <span class="pk-price-amount">200kr</span>
+                        <span class="pk-price-term">/mnd per bruker</span>
+                    </div>
+                </div>
+                <div class="pk-plan-storage">30GB lagring</div>
+                <ul class="pk-plan-features">
+                    <li>Profesjonell e-post (@dittfirma.no)</li>
+                    <li>Google Docs, Sheets, Slides</li>
+                    <li>Google Meet (videomøter)</li>
+                    <li>Google Calendar</li>
+                    <li>Enkel drift & teknisk support</li>
+                    <li>Forutsigbar, fast faktura</li>
+                </ul>
+                <div class="pk-plan-description">
+                    <p><strong>Passer for:</strong> Nystartede, mindre bedrifter (1-10 ansatte) og de med grunnleggende behov for e-post og dokumenthåndtering.</p>
+                </div>
+                <div class="pk-plan-footer">
+                    <a href="#kontakt" class="cta-button pk-btn">Velg Pakke</a>
+                </div>
+            </div>
+
+            <div class="pk-pricing-plan pk-plan-recommended">
+                <div class="pk-plan-badge">Mest Populær</div>
+                <div class="pk-plan-header">
+                    <h3>Standardpakken</h3>
+                    <div class="pk-plan-price">
+                        <span class="pk-price-amount">350kr</span>
+                        <span class="pk-price-term">/mnd per bruker</span>
+                    </div>
+                </div>
+                <div class="pk-plan-storage">2TB lagring</div>
+                <ul class="pk-plan-features">
+                    <li>Alt i Startpakken</li>
+                    <li><strong>Rikelig med lagringsplass (2TB)</strong></li>
+                    <li>Møteopptak i Google Meet*</li>
+                    <li>Avanserte søkefunksjoner</li>
+                    <li>Perfekt for voksende team</li>
+                    <li>Enkel drift & teknisk support</li>
+                </ul>
+                <div class="pk-plan-description">
+                    <p><strong>Passer for:</strong> Voksende bedrifter, team som jobber med større filer (design, video, store dokumenter) og de som trenger mer samarbeidsplass.</p>
+                </div>
+                <div class="pk-plan-footer">
+                    <a href="#kontakt" class="cta-button pk-btn pk-btn-recommended">Velg Pakke</a>
+                </div>
+            </div>
+
+            <div class="pk-pricing-plan">
+                <div class="pk-plan-header">
+                    <h3>Premiumpakken</h3>
+                    <div class="pk-plan-price">
+                        <span class="pk-price-amount">550kr</span>
+                        <span class="pk-price-term">/mnd per bruker</span>
+                    </div>
+                </div>
+                <div class="pk-plan-storage">5TB lagring</div>
+                <ul class="pk-plan-features">
+                    <li>Alt i Standardpakken</li>
+                    <li><strong>Massiv lagringskapasitet (5TB)</strong></li>
+                    <li>Google Vault for arkivering*</li>
+                    <li>Avanserte sikkerhetskontroller*</li>
+                    <li>For de mest krevende brukerne</li>
+                    <li>Enkel drift & teknisk support</li>
+                </ul>
+                <div class="pk-plan-description">
+                    <p><strong>Passer for:</strong> Bedrifter med store datamengder (videoproduksjon, mediehus), strenge arkiveringskrav og behov for maksimal kapasitet.</p>
+                </div>
+                <div class="pk-plan-footer">
+                    <a href="#kontakt" class="cta-button pk-btn">Velg Pakke</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="pk-pricing-outro">
+            <p><em>*Enkelte avanserte funksjoner som møteopptak og Google Vault avhenger av den underliggende Google Workspace-lisensen. Vi hjelper deg å velge riktig!</em></p>
+            <p><strong>Alltid inkludert:</strong> Enkel drift og teknisk support. <br><strong>Din fordel:</strong> Én pris, én faktura – ingen overraskelser!</p>
+        </div>
+    </div>
+</section>
+
 
 <!-- Hvorfor Oss Seksjon -->
 <section id="hvorfor-oss">

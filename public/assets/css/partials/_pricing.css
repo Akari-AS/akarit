@@ -1,0 +1,33 @@
+/* --- Prispakker Seksjon (GW-Pakketering) --- */
+.pk-pricing-container { padding: 20px 0; }
+.pk-pricing-intro, .pk-pricing-outro { text-align: center; margin-bottom: 40px; }
+.pk-pricing-intro p, .pk-pricing-outro p { font-size: clamp(0.95em, 2.5vw, 1.1em); line-height: 1.7; color: #555; max-width: 800px; margin-left: auto; margin-right: auto; }
+.pk-pricing-outro p em { font-size: 0.9em; color: #777; }
+.pk-pricing-outro strong { color: var(--dark-color); }
+
+.pk-pricing-table { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 35px; margin-top: 40px; }
+.pk-pricing-plan { background-color: #fff; border: 1px solid #e0e0e0; border-radius: var(--border-radius); padding: 30px; display: flex; flex-direction: column; transition: transform 0.3s ease, box-shadow 0.3s ease; position: relative; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+.pk-pricing-plan:hover { transform: translateY(-8px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+
+.pk-plan-recommended { border-top: 6px solid var(--primary-color); box-shadow: 0 8px 25px rgba(0, 169, 157, 0.25); }
+.pk-plan-badge { position: absolute; top: -18px; left: 50%; transform: translateX(-50%); background-color: var(--primary-color); padding: 6px 18px; border-radius: 20px; font-size: 0.8em; font-weight: 700; box-shadow: 0 2px 5px rgba(0,0,0,0.15); z-index: 10; color: var(--text-color-light); }
+
+.pk-plan-header { text-align: center; margin-bottom: 20px; border-bottom: 1px dashed #d0d0d0; padding-bottom: 20px; }
+.pk-plan-header h3 { color: var(--dark-color); font-size: 1.6em; margin-bottom: 12px; font-weight: 600; font-family: var(--heading-font); }
+.pk-plan-price { color: var(--dark-color); }
+.pk-price-amount { font-size: 2.4em; font-weight: 700; display: block; line-height: 1.1; }
+.pk-price-term { font-size: 0.9em; color: #777; }
+.pk-plan-storage { text-align: center; font-size: 1.1em; font-weight: 600; color: var(--dark-color); background-color: var(--light-green-bg); padding: 12px; border-radius: 6px; margin-bottom: 20px; }
+
+.pk-plan-features { list-style: none; padding-left: 0; margin-bottom: 25px; flex-grow: 1; }
+.pk-plan-features li { padding: 10px 0; border-bottom: 1px solid #f0f0f0; font-size: 0.95em; line-height: 1.5; display: flex; align-items: center; }
+.pk-plan-features li:last-child { border-bottom: none; }
+.pk-plan-features li::before { content: '✓'; color: var(--primary-color); font-weight: bold; margin-right: 12px; font-size: 1.1em; }
+
+.pk-plan-description { font-size: 0.9em; color: #666; margin-bottom: 30px; line-height: 1.6; min-height: 70px; }
+.pk-plan-description p strong { color: var(--dark-color); font-weight: 600; }
+
+.pk-plan-footer { text-align: center; margin-top: auto; }
+.pk-btn.pk-btn-recommended { background-color: var(--primary-color); }
+.pk-btn.pk-btn-recommended:hover { background-color: #008a7d; }
+/* Responsive for pricing in _responsive.css */

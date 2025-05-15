@@ -1,0 +1,6 @@
+/* --- "Hvorfor Oss" Seksjon --- */
+#hvorfor-oss ul { list-style: none; max-width: 850px; margin: 40px auto 0 auto; padding-left: 0; }
+#hvorfor-oss li { margin-bottom: 20px; font-size: 1.1em; position: relative; padding-left: 35px; line-height: 1.6; }
+#hvorfor-oss li::before { content: '✔'; color: var(--primary-color); position: absolute; left: 0; top: 0.15em; font-size: 1.4em; font-weight: bold; line-height: 1; }
+#hvorfor-oss li strong { display: inline; margin-right: 0.4em; }
+/* Responsive for why-us in _responsive.css */

@@ -1,0 +1,56 @@
+/* --- Responsive Design Justeringer --- */
+
+/* Desktop Navigasjon - Vises fra 768px og oppover */
+@media (min-width: 768px) {
+    nav.desktop-nav { display: block; }
+    nav.desktop-nav ul { list-style: none; display: flex; margin: 0; padding: 0; }
+    nav.desktop-nav li { margin-left: 25px; }
+    nav.desktop-nav li a { text-decoration: none; color: #e0e0e0; font-weight: 600; transition: color 0.3s ease, border-bottom-color 0.3s ease; padding-bottom: 5px; border-bottom: 2px solid transparent; }
+    nav.desktop-nav li a:hover, nav.desktop-nav li a.active { color: #fff; border-bottom-color: var(--primary-color); }
+}
+
+/* Justeringer for mindre skjermer - under 992px */
+@media (max-width: 992px) {
+    .container { max-width: 960px; }
+    .hero h1 { font-size: 2.8em; }
+    .hero p { font-size: 1.2em; }
+    section h2 { font-size: 2.2em; }
+}
+
+/* Justeringer for nettbrett og mindre - under 768px */
+@media (max-width: 767px) {
+    :root { --scroll-padding-top: 80px; } /* Juster scroll padding for mobil header */
+    .container { max-width: 100%; padding: 0 15px; }
+    header { min-height: 60px; }
+    .logo { font-size: 1.7em; }
+    .mobile-menu-button-container { display: block; }
+    nav.desktop-nav { display: none; } /* Sørger for at desktop-nav er skjult */
+
+    .hero { padding-top: 80px; padding-bottom: 100px; }
+    .hero h1 { font-size: 2.2em; }
+    .hero p { font-size: 1.1em; max-width: 95%; }
+    section h2 { font-size: 2em; }
+    .features-grid, .products-grid, .ai-tools-grid, .pk-pricing-table { grid-template-columns: 1fr; gap: 25px; }
+    .contact-form { padding: 40px 25px; margin: 40px 15px 0 15px; }
+    .pk-pricing-plan { max-width: 90%; }
+}
+
+/* Justeringer for mobil - under 576px */
+@media (max-width: 576px) {
+    .hero { padding-top: 70px; padding-bottom: 80px; }
+    .hero h1 { font-size: 1.9em; }
+    .hero p { font-size: 1em; }
+    .hero .cta-button { display: block; width: fit-content; max-width: 90%; margin: 15px auto; padding: 14px 30px; font-size: 1em; }
+    .hero .cta-button + .cta-button { margin-left: auto; } /* For to knapper i hero */
+    section h2 { font-size: 1.8em; }
+    section h2 + p { font-size: 1em; margin-bottom: 40px; }
+    .cta-button { padding: 14px 30px; font-size: 1em; }
+    .contact-form { padding: 30px 20px; }
+    .feature-item, .product-card, .ai-tool-card, .pk-pricing-plan { padding: 30px 25px; }
+    #hvorfor-oss ul { max-width: 100%; padding-left: 10px; }
+    #hvorfor-oss li { font-size: 1em; padding-left: 30px; }
+    #hvorfor-oss li::before { font-size: 1.2em; top: 0.25em; }
+
+    .pk-plan-header h3 { font-size: 1.4em; }
+    .pk-price-amount { font-size: 2.2em; }
+}

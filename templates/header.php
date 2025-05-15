@@ -8,10 +8,10 @@
 
     <!-- Start cookieyes banner --> <script id="cookieyes" type="text/javascript" src="https://cdn-cookieyes.com/client_data/edac3f0861b009c0f5dbf4b9/script.js"></script> <!-- End cookieyes banner -->
 
-    <!-- Google Fonts (Poppins) -->
+    <!-- Google Fonts (Red Hat Display) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Link til VÅR CSS-fil -->
     <link rel="stylesheet" href="/assets/css/style.css">
@@ -29,6 +29,8 @@
             <ul>
                 <li><a href="#fordeler">Fordeler</a></li>
                 <li><a href="#produkter">Produkter</a></li>
+                <li><a href="#ai-funksjoner">AI-Funksjoner</a></li>
+                <li><a href="#prispakker">Prispakker</a></li>
                 <li><a href="#hvorfor-oss">Hvorfor Akarit?</a></li>
                 <li><a href="#kontakt">Kontakt</a></li>
             </ul>
@@ -56,6 +58,8 @@
          <ul>
              <li><a href="#fordeler">Fordeler</a></li>
              <li><a href="#produkter">Produkter</a></li>
+             <li><a href="#ai-funksjoner">AI-Funksjoner</a></li>
+             <li><a href="#prispakker">Prispakker</a></li>
              <li><a href="#hvorfor-oss">Hvorfor Akarit?</a></li>
              <li><a href="#kontakt">Kontakt</a></li>
          </ul>

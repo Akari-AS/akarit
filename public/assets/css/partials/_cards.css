@@ -1,0 +1,10 @@
+/* --- Kort (Funksjoner & Produkter) --- */
+.features-grid, .products-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 35px; margin-top: 40px; }
+.feature-item, .product-card { background-color: #fff; padding: 40px; border-radius: var(--border-radius); box-shadow: 0 5px 20px rgba(0,0,0,0.07); text-align: center; transition: transform 0.3s ease, box-shadow 0.3s ease; border: none; display: flex; flex-direction: column; align-items: center; }
+.feature-item:hover, .product-card:hover { transform: translateY(-6px); box-shadow: 0 8px 25px rgba(0,0,0,0.1); }
+.feature-item i, .product-card img { color: var(--primary-color); margin-bottom: 25px; height: 48px; width: auto; }
+.feature-item i { font-size: 3em; } /* Spesifikk for font-ikon */
+.feature-item h3, .product-card h3 { font-family: var(--heading-font); font-size: 1.5em; font-weight: 600; color: var(--primary-color); margin-bottom: 15px; }
+.feature-item p, .product-card p { font-size: 1em; color: var(--text-color); flex-grow: 1; }
+#fordeler .feature-item img { filter: invert(48%) sepia(98%) saturate(1431%) hue-rotate(135deg) brightness(95%) contrast(101%); opacity: 0.8; } /* Spesifikk for Fordeler-ikoner */
+/* Responsive for cards in _responsive.css */

@@ -1,0 +1,11 @@
+/* --- Kontakt Skjema --- */
+.contact-form { max-width: 700px; margin: 50px auto 0 auto; background-color: #fff; padding: 50px 60px; border-radius: var(--border-radius); box-shadow: 0 5px 20px rgba(0,0,0,0.08); border: none; }
+.form-group { margin-bottom: 25px; }
+.form-group label { display: block; margin-bottom: 8px; font-weight: 600; color: var(--dark-color); }
+.form-group input[type="text"], .form-group input[type="email"], .form-group textarea { width: 100%; padding: 15px; border: 1px solid #dcdcdc; border-radius: var(--border-radius); font-size: 1em; font-family: var(--body-font); background-color: #fff; transition: border-color 0.3s ease, box-shadow 0.3s ease; }
+.form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--primary-color); box-shadow: 0 0 0 4px rgba(0, 169, 157, 0.2); }
+.form-group textarea { resize: vertical; min-height: 140px; }
+.form-message { padding: 15px 20px; margin-bottom: 25px; border-radius: var(--border-radius); text-align: center; font-weight: 600; font-size: 1.05em; border: 1px solid transparent;}
+.form-message.success { background-color: #e0f2f1; color: #00695c; border-color: #b2dfdb; }
+.form-message.error { background-color: #fdecea; color: #c62828; border-color: #f9bdbb; }
+/* Responsive for contact in _responsive.css */

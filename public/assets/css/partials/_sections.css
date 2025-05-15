@@ -1,0 +1,20 @@
+/* --- Seksjoner --- */
+section { padding: 80px 0; width: 100%; }
+section:nth-of-type(even):not(.hero) { background-color: var(--light-green-bg-darker); }
+/* Spesifikke bakgrunner for seksjoner settes direkte på seksjons-ID nedenfor om nødvendig */
+#kontakt { background-color: var(--light-green-bg); }
+#ai-funksjoner { background-color: var(--light-green-bg); }
+#prispakker { background-color: var(--light-green-bg-darker); }
+#hvorfor-oss { background-color: var(--light-green-bg-darker); }
+
+
+section h2 { font-family: var(--heading-font); text-align: center; font-size: 2.4em; font-weight: 700; color: var(--dark-color); margin-bottom: 25px; padding-bottom: 15px; position: relative; }
+section h2::after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 80px; height: 3px; background-color: var(--primary-color); border-radius: 2px; }
+/* Fjerner ::after for spesifikke seksjoner som har egen intro-tekst */
+section#kontakt h2::after,
+section#prispakker h2::after,
+section#ai-funksjoner h2::after {
+    display: none;
+}
+section h2 + p { text-align: center; max-width: 800px; margin: 0 auto 50px auto; font-size: 1.1em; color: #555; }
+/* Responsive for sections in _responsive.css */
