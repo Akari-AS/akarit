@@ -8,6 +8,8 @@
 
     <!-- Start cookieyes banner --> <script id="cookieyes" type="text/javascript" src="https://cdn-cookieyes.com/client_data/edac3f0861b009c0f5dbf4b9/script.js"></script> <!-- End cookieyes banner -->
 
+    <link rel="canonical" href="https://googleworkspace.akari.no/" />
+
     <!-- Google Fonts (Red Hat Display) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
