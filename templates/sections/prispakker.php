@@ -2,7 +2,7 @@
 <section id="prispakker">
     <div class="pk-pricing-container container">
         <div class="pk-pricing-intro">
-            <h2>Lei av kompliserte <span>IT-fakturaer?</span></h2> <!-- Endret -->
+            <h2>Lei av kompliserte <span>IT-fakturaer?</span></h2>
             <p>Hos oss får du Google Workspace til en fast, oversiktlig pris per bruker per måned. Inkludert i prisen er enkel drift og teknisk support. Enkelt og greit – det er tanken!</p>
         </div>
 
@@ -10,7 +10,6 @@
             <div class="pk-pricing-plan">
                 <div class="pk-plan-header">
                     <h3>Startpakken</h3>
-                    {/* ... resten av prispakke-kortene ... */}
                 </div>
                  <div class="pk-plan-storage">30GB lagring</div>
                 <ul class="pk-plan-features">
