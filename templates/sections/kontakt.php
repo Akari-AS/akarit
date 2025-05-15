@@ -15,7 +15,6 @@
                         <p>E-post: <a href="mailto:kenneth@akari.no">kenneth@akari.no</a></p>
                     </div>
                 </div>
-                <!-- Her var den feilaktige teksten, nå fjernet -->
             </div>
 
             <div class="contact-form-column">
@@ -29,11 +28,11 @@
                 <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>#kontakt" method="post" id="contactForm" class="modern-contact-form">
                     <div class="form-row">
                         <div class="form-group form-group-half">
-                            <label for="firstname">Navn <span class="required">*</span></label>
+                            <label for="firstname">Navn <span class="required">*</span></label> 
                             <input type="text" id="firstname" name="firstname" placeholder="Fornavn" required value="<?php echo old_value('firstname', $submittedData); ?>">
                         </div>
                         <div class="form-group form-group-half">
-                            <label for="lastname" class="visually-hidden">Etternavn</label>
+                            <label for="lastname">Etternavn</label> 
                             <input type="text" id="lastname" name="lastname" placeholder="Etternavn" value="<?php echo old_value('lastname', $submittedData); ?>">
                         </div>
                     </div>
