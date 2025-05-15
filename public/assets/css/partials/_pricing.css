@@ -10,7 +10,7 @@
     display: grid; 
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
     gap: 35px; 
-    margin-top: 40px; 
+    margin-top: 20px; /* Redusert litt, da kortene selv får top-margin */
 }
 .pk-pricing-plan { 
     background-color: #fff; 
@@ -22,13 +22,8 @@
     transition: transform 0.3s ease, box-shadow 0.3s ease; 
     position: relative; 
     box-shadow: 0 4px 10px rgba(0,0,0,0.05); 
-    margin-top: 25px; /* Gir plass til badge ovenfor, selv på det første kortet */
+    margin-top: 30px; /* Økt litt for å gi mer plass til badge over, spesielt på mobil */
 }
-.pk-pricing-plan:first-child {
-    /* Fjerner ekstra top-margin for det første kortet hvis det IKKE er recommended,
-       men vi beholder den hvis det *er* recommended for å gi plass til badgen */
-}
-
 
 .pk-pricing-plan:hover { 
     transform: translateY(-8px); 
@@ -38,18 +33,17 @@
 .pk-plan-recommended { 
     border-top: 6px solid var(--primary-color); 
     box-shadow: 0 8px 25px rgba(0, 169, 157, 0.25); 
-    /* margin-top: 25px; Flyttet til generell .pk-pricing-plan for å sikre plass for badge */
 }
 .pk-plan-badge { 
     position: absolute; 
-    top: -18px; /* Justert for å sitte pent over */
+    top: -20px; /* Justert for å sitte litt høyere over kortet */
     left: 50%; 
     transform: translateX(-50%); 
     background-color: var(--primary-color); 
-    padding: 7px 20px; /* Litt mer padding */
+    padding: 7px 20px; 
     border-radius: 20px; 
-    font-size: 0.85em; /* Litt større badge tekst */
-    font-weight: 600; /* Litt lettere enn 700 */
+    font-size: 0.85em; 
+    font-weight: 600; 
     box-shadow: 0 2px 5px rgba(0,0,0,0.15); 
     z-index: 10; 
     color: var(--text-color-light); 
@@ -73,4 +67,3 @@
 .pk-plan-footer { text-align: center; margin-top: auto; }
 .pk-btn.pk-btn-recommended { background-color: var(--primary-color); }
 .pk-btn.pk-btn-recommended:hover { background-color: #008a7d; }
-/* Responsive for pricing in _responsive.css */
