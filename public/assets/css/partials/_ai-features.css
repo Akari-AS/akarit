@@ -2,9 +2,30 @@
 .ai-tools-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 35px; margin-top: 40px; }
 .ai-tool-card { background-color: #fff; padding: 30px; border-radius: var(--border-radius); box-shadow: 0 5px 20px rgba(0,0,0,0.07); transition: transform 0.3s ease, box-shadow 0.3s ease; display: flex; flex-direction: column; }
 .ai-tool-card:hover { transform: translateY(-6px); box-shadow: 0 8px 25px rgba(0,0,0,0.1); }
-.ai-tool-header { display: flex; align-items: center; margin-bottom: 20px; }
-.ai-tool-icon-img { width: 32px; height: 32px; margin-right: 12px; object-fit: contain; }
-.ai-tool-card h3 { font-family: var(--heading-font); font-size: 1.4em; font-weight: 600; color: var(--primary-color); margin-bottom: 0; }
+
+.ai-tool-header {
+    display: flex;
+    align-items: center; /* Dette er nøkkelen for vertikal justering */
+    margin-bottom: 20px;
+}
+
+.ai-tool-icon-img {
+    width: 32px; /* Beholdes som før */
+    height: 32px; /* Beholdes som før */
+    margin-right: 12px;
+    object-fit: contain;
+    flex-shrink: 0; /* Forhindrer at ikonet krymper hvis teksten blir lang */
+}
+
+.ai-tool-card h3 {
+    font-family: var(--heading-font);
+    font-size: 1.4em;
+    font-weight: 600;
+    color: var(--primary-color);
+    margin-bottom: 0; /* Sikrer at det ikke er unødvendig bunnmarg som påvirker justeringen */
+    line-height: 1.2; /* Kan hjelpe med finjustering av vertikal posisjon ift ikonet */
+}
+
 .ai-tool-features { flex-grow: 1; }
 .ai-feature-item { margin-bottom: 18px; }
 .ai-feature-item:last-child { margin-bottom: 0; }
