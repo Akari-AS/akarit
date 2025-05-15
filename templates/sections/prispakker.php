@@ -2,14 +2,14 @@
 <section id="prispakker">
     <div class="pk-pricing-container container">
         <div class="pk-pricing-intro">
-            <h2>Lei av kompliserte IT-fakturaer?</h2>
+            <h2>Lei av kompliserte IT-fakturaer?</h2> <!-- Forble lik -->
             <p>Hos oss får du Google Workspace til en fast, oversiktlig pris per bruker per måned. Inkludert i prisen er enkel drift og teknisk support. Enkelt og greit – det er tanken!</p>
         </div>
 
         <div class="pk-pricing-table">
             <div class="pk-pricing-plan">
                 <div class="pk-plan-header">
-                    <h3>Startpakken</h3>
+                    <h3>Startpakken</h3> <!-- Egennavn/Produktnavn -->
                     <div class="pk-plan-price">
                         <span class="pk-price-amount">200kr</span>
                         <span class="pk-price-term">/mnd per bruker</span>
@@ -28,14 +28,14 @@
                     <p><strong>Passer for:</strong> Nystartede, mindre bedrifter (1-10 ansatte) og de med grunnleggende behov for e-post og dokumenthåndtering.</p>
                 </div>
                 <div class="pk-plan-footer">
-                    <a href="#kontakt" class="cta-button pk-btn">Velg Pakke</a>
+                    <a href="#kontakt" class="cta-button pk-btn">Velg pakke</a> <!-- Endret -->
                 </div>
             </div>
 
             <div class="pk-pricing-plan pk-plan-recommended">
                 <div class="pk-plan-badge">Mest Populær</div>
                 <div class="pk-plan-header">
-                    <h3>Standardpakken</h3>
+                    <h3>Standardpakken</h3> <!-- Egennavn/Produktnavn -->
                     <div class="pk-plan-price">
                         <span class="pk-price-amount">350kr</span>
                         <span class="pk-price-term">/mnd per bruker</span>
@@ -54,13 +54,13 @@
                     <p><strong>Passer for:</strong> Voksende bedrifter, team som jobber med større filer (design, video, store dokumenter) og de som trenger mer samarbeidsplass.</p>
                 </div>
                 <div class="pk-plan-footer">
-                    <a href="#kontakt" class="cta-button pk-btn pk-btn-recommended">Velg Pakke</a>
+                    <a href="#kontakt" class="cta-button pk-btn pk-btn-recommended">Velg pakke</a> <!-- Endret -->
                 </div>
             </div>
 
             <div class="pk-pricing-plan">
                 <div class="pk-plan-header">
-                    <h3>Premiumpakken</h3>
+                    <h3>Premiumpakken</h3> <!-- Egennavn/Produktnavn -->
                     <div class="pk-plan-price">
                         <span class="pk-price-amount">550kr</span>
                         <span class="pk-price-term">/mnd per bruker</span>
@@ -79,7 +79,7 @@
                     <p><strong>Passer for:</strong> Bedrifter med store datamengder (videoproduksjon, mediehus), strenge arkiveringskrav og behov for maksimal kapasitet.</p>
                 </div>
                 <div class="pk-plan-footer">
-                    <a href="#kontakt" class="cta-button pk-btn">Velg Pakke</a>
+                    <a href="#kontakt" class="cta-button pk-btn">Velg pakke</a> <!-- Endret -->
                 </div>
             </div>
         </div>

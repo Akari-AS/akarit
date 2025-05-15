@@ -3,12 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo $pageTitle ?? 'Google Workspace for Bedrifter | Akari'; ?></title> <!-- Endret fra Akarit -->
-    <meta name="description" content="<?php echo $pageDescription ?? 'Styrk bedriften med Google Workspace. Akari tilbyr ekspertise.'; ?>"> <!-- Endret fra Akarit -->
+    <title><?php echo $pageTitle ?? 'Google Workspace for bedrifter | Akari'; ?></title>
+    <meta name="description" content="<?php echo $pageDescription ?? 'Styrk bedriften med Google Workspace. Akari tilbyr ekspertise.'; ?>">
 
     <!-- Start cookieyes banner --> <script id="cookieyes" type="text/javascript" src="https://cdn-cookieyes.com/client_data/edac3f0861b009c0f5dbf4b9/script.js"></script> <!-- End cookieyes banner -->
-
-    <link rel="canonical" href="https://googleworkspace.akari.no/" />
 
     <!-- Google Fonts (Red Hat Display) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,12 +17,14 @@
     <link rel="stylesheet" href="/assets/css/style.css">
 
 </head>
-<body class="bg-akari-light-green text-gray-800 font-body antialiased"> <!-- Klassenavn i body forblir da den er intern, men kan endres hvis ønskelig -->
+<body class="bg-akari-light-green text-gray-800 font-body antialiased">
 
 <header>
      <div class="container header-container">
         <!-- Logo -->
-        <a href="#hjem" class="logo">Akari <span class="sub-logo">AS</span></a> <!-- Endret fra Akarit og "av Akari" til "AS" som var i CSS før -->
+        <a href="#hjem" class="logo">
+            <img src="/assets/img/Akari_jubileum.svg" alt="Akari Logo" class="akari-logo-img">
+        </a>
 
         <!-- Desktop Navigasjon -->
         <nav class="desktop-nav">
@@ -34,7 +34,7 @@
                 <li><a href="#ai-funksjoner">AI-Funksjoner</a></li>
                 <li><a href="#prispakker">Prispakker</a></li>
                 <li><a href="#nrk-google-workspace">NRK & Google</a></li>
-                <li><a href="#hvorfor-oss">Hvorfor Akari?</a></li> <!-- Endret fra Akarit -->
+                <li><a href="#hvorfor-oss">Hvorfor Akari?</a></li>
                 <li><a href="#kontakt">Kontakt</a></li>
             </ul>
         </nav>
@@ -64,7 +64,7 @@
              <li><a href="#ai-funksjoner">AI-Funksjoner</a></li>
              <li><a href="#prispakker">Prispakker</a></li>
              <li><a href="#nrk-google-workspace">NRK & Google</a></li>
-             <li><a href="#hvorfor-oss">Hvorfor Akari?</a></li> <!-- Endret fra Akarit -->
+             <li><a href="#hvorfor-oss">Hvorfor Akari?</a></li>
              <li><a href="#kontakt">Kontakt</a></li>
          </ul>
      </div>
