@@ -1,6 +1,4 @@
-/* --- Responsive Design Justeringer --- */
-
-/* Desktop Navigasjon - Vises fra 768px og oppover */
+/* ... (eksisterende @media (max-width: 992px) ... ) ... */
 @media (min-width: 768px) {
     nav.desktop-nav { display: block; }
     nav.desktop-nav ul { list-style: none; display: flex; margin: 0; padding: 0; }
@@ -9,7 +7,6 @@
     nav.desktop-nav li a:hover, nav.desktop-nav li a.active { color: #fff; border-bottom-color: var(--primary-color); }
 }
 
-/* Justeringer for mindre skjermer - under 992px */
 @media (max-width: 992px) {
     .container { max-width: 960px; }
     .hero h1 { font-size: 2.8em; }
@@ -17,22 +14,85 @@
     section h2 { font-size: 2.2em; }
 }
 
+
 /* Justeringer for nettbrett og mindre - under 768px */
 @media (max-width: 767px) {
-    :root { --scroll-padding-top: 80px; } /* Juster scroll padding for mobil header */
+    :root { --scroll-padding-top: 80px; } 
     .container { max-width: 100%; padding: 0 15px; }
     header { min-height: 60px; }
     .logo { font-size: 1.7em; }
     .mobile-menu-button-container { display: block; }
-    nav.desktop-nav { display: none; } /* Sørger for at desktop-nav er skjult */
+    nav.desktop-nav { display: none; } 
 
     .hero { padding-top: 80px; padding-bottom: 100px; }
     .hero h1 { font-size: 2.2em; }
     .hero p { font-size: 1.1em; max-width: 95%; }
     section h2 { font-size: 2em; }
-    .features-grid, .products-grid, .ai-tools-grid, .pk-pricing-table { grid-template-columns: 1fr; gap: 25px; }
+    .features-grid, .products-grid, .ai-tools-grid, .pk-pricing-table { 
+        grid-template-columns: 1fr; 
+        gap: 25px; 
+    } 
     .contact-form { padding: 40px 25px; margin: 40px 15px 0 15px; }
-    .pk-pricing-plan { max-width: 90%; }
+    
+    /* Prispakker mobil justeringer */
+    .pk-pricing-table {
+        gap: 40px; /* Øker gap mellom kortene når de er stablet */
+    }
+    .pk-pricing-plan { 
+        max-width: 90%; 
+        margin-left: auto; /* Sentrerer kortene */
+        margin-right: auto;
+        margin-top: 25px; /* Sørger for at det alltid er plass til badge over */
+    }
+     .pk-pricing-plan:first-child {
+        margin-top: 25px; /* Også for det første, hvis det skulle være en badge der */
+    }
+    .pk-plan-recommended {
+        /* Ingen spesiell margin-top nødvendig her lenger, håndteres av .pk-pricing-plan */
+    }
+
+    .contact-form-wrapper {
+        flex-direction: column; 
+        gap: 30px; 
+    }
+    .contact-info-column {
+        text-align: center; 
+        margin-bottom: 10px; 
+    }
+     .contact-info-column > p { 
+        font-size: 0.9em;
+        margin-bottom: 20px;
+    }
+    .contact-person {
+        flex-direction: column;
+        text-align: center;
+        align-items: center; 
+    }
+    .contact-person-img {
+        margin-right: 0;
+        margin-bottom: 10px; 
+        width: 80px; 
+        height: 80px;
+    }
+    .contact-form-column .form-title {
+        font-size: 1.7em; 
+        text-align: center;
+        margin-bottom: 25px;
+    }
+    .modern-contact-form .form-row {
+    }
+    .modern-contact-form .form-group-half {
+        margin-bottom: 25px; 
+    }
+    .modern-contact-form .form-group-half:last-child {
+        margin-bottom: 0; 
+    } 
+    .modern-contact-form .form-group {
+        margin-bottom: 25px; 
+    }
+    .modern-contact-form .checkbox-group label {
+        font-size: 0.8em; 
+    }
 }
 
 /* Justeringer for mobil - under 576px */
@@ -41,16 +101,17 @@
     .hero h1 { font-size: 1.9em; }
     .hero p { font-size: 1em; }
     .hero .cta-button { display: block; width: fit-content; max-width: 90%; margin: 15px auto; padding: 14px 30px; font-size: 1em; }
-    .hero .cta-button + .cta-button { margin-left: auto; } /* For to knapper i hero */
+    .hero .cta-button + .cta-button { margin-left: auto; } 
     section h2 { font-size: 1.8em; }
     section h2 + p { font-size: 1em; margin-bottom: 40px; }
-    .cta-button { padding: 14px 30px; font-size: 1em; }
+    .cta-button { padding: 14px 30px; font-size: 1em; } 
     .contact-form { padding: 30px 20px; }
     .feature-item, .product-card, .ai-tool-card, .pk-pricing-plan { padding: 30px 25px; }
     #hvorfor-oss ul { max-width: 100%; padding-left: 10px; }
     #hvorfor-oss li { font-size: 1em; padding-left: 30px; }
     #hvorfor-oss li::before { font-size: 1.2em; top: 0.25em; }
 
-    .pk-plan-header h3 { font-size: 1.4em; }
+    .pk-plan-header h3 { font-size: 1.4em; } 
     .pk-price-amount { font-size: 2.2em; }
+    .pk-plan-badge { font-size: 0.8em; padding: 6px 15px; } /* Litt mindre badge på små skjermer */
 }
