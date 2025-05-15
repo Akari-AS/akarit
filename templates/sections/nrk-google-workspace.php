@@ -1,13 +1,14 @@
 <!-- NRK & Google Workspace Seksjon -->
 <section id="nrk-google-workspace">
     <div class="container">
-        <h2>NRK velger Google Workspace: Et tegn i tiden</h2> <!-- Endret -->
+        <h2>NRK velger Google Workspace: <span>Et tegn i tiden</span></h2> <!-- Endret -->
         <p>En viktig anerkjennelse av Google Workspace sin posisjon i det norske markedet.</p>
         <div class="nrk-story-container">
-            <p>Et tydelig tegn på Google Workspace sin styrke og appell i det norske markedet er valget til Norsk Rikskringkasting (NRK). Den store og anerkjente medieorganisasjonen kunngjorde nylig at de bytter fra Microsoft 365 til Google Workspace for sine tusenvis av ansatte.</p>
+            {/* ... innhold ... */}
+             <p>Et tydelig tegn på Google Workspace sin styrke og appell i det norske markedet er valget til Norsk Rikskringkasting (NRK). Den store og anerkjente medieorganisasjonen kunngjorde nylig at de bytter fra Microsoft 365 til Google Workspace for sine tusenvis av ansatte.</p>
             <p>Hovedårsakene for dette strategiske byttet var ifølge NRK selv: vilkår, funksjonalitet og pris. De fremhevet spesifikt "tilgang til avanserte KI-løsninger" og en "plattform bygget for samhandling til en konkurransedyktig pris" som avgjørende faktorer. Dette understreker hvordan Google Workspace møter kravene til selv store, komplekse organisasjoner som prioriterer moderne samarbeidsverktøy og fremtidsrettet teknologi.</p>
             
-            <h3>Hør vår podcast om overgangen</h3> <!-- Endret -->
+            <h3>Hør vår podcast om <span>overgangen</span></h3> <!-- Endret -->
             <p>Vi har dedikert en episode til å dykke dypere inn i NRKs overgang til Google Workspace, implikasjonene dette har, og hva det kan bety for fremtidens digitale arbeidsplass i Norge. Lytt her:</p>
             
             <div class="spotify-embed-container">

@@ -3,9 +3,9 @@
      <div class="container">
         <div class="contact-form-wrapper">
             <div class="contact-info-column">
-                <h3>Kontakt Oss</h3>
+                <h3>Kontakt <span>Oss</span></h3> <!-- Endret -->
                 <p>Vi er klare til å hjelpe deg med å utnytte kraften i Google Workspace. Ta kontakt for en uforpliktende prat!</p>
-                
+                {/* ... resten av kontaktinfo ... */}
                 <div class="contact-person">
                     <img src="/assets/img/kenneth_bjerke.jpg" alt="Kenneth B. Bjerke" class="contact-person-img">
                     <div>
@@ -18,8 +18,9 @@
             </div>
 
             <div class="contact-form-column">
-                <h2 class="form-title"><em>Skriv</em> til oss:</h2>
-                <?php if (!empty($formMessage)): ?>
+                <h2 class="form-title"><em>Skriv</em> til oss:</h2> <!-- Behøver ikke span her, da em allerede gir annen stil -->
+                {/* ... resten av skjemaet ... */}
+                 <?php if (!empty($formMessage)): ?>
                     <div class="form-message <?php echo $formSuccess ? 'success' : 'error'; ?>">
                         <?php echo htmlspecialchars($formMessage); ?>
                     </div>

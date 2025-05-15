@@ -1,24 +1,32 @@
 /* --- CSS Styling (Akari Inspired - v15 - Best Practice Mobilmeny) --- */
 :root {
-    --primary-color: #00a99d;
-    --dark-color: #064f55;
+    --primary-color: #00a99d; /* Eksisterende primærfarge, ligner på akari.no sin cyan */
+    --dark-color: #064f55;    /* Eksisterende mørk farge for tekst */
     --light-green-bg: #f4fef8;
     --light-green-bg-darker: #eef8f2;
     --text-color: #333;
     --text-color-light: #ffffff;
     --heading-font: 'Red Hat Display', sans-serif;
     --body-font: 'Red Hat Display', sans-serif;
-    --border-radius: 15px;
+    --border-radius: 15px; /* Beholdes, men knapper får mer avrunding */
     --header-height-desktop: 70px;
-    --scroll-padding-top: 90px; /* Default for desktop */
-    --akari-sublogo: #01938b; /* Endret fra --akarit-sublogo */
+    --scroll-padding-top: 90px; 
+    --akari-sublogo: #01938b; 
 }
 
 /* Grunnleggende Reset & Body */
 html, body { margin: 0; padding: 0; width: 100%; }
 * { box-sizing: border-box; }
 
-body { font-family: var(--body-font); line-height: 1.7; color: var(--text-color); background-color: var(--light-green-bg); font-weight: 400; } /* Klassenavn bg-akari-light-green var ikke i bruk her, men fjernet fra body tag i header.php for konsistens */
+body { 
+    font-family: var(--body-font); 
+    line-height: 1.7; 
+    color: var(--text-color); 
+    background-color: var(--light-green-bg); 
+    font-weight: 400; /* Standard vekt for brødtekst */
+    -webkit-font-smoothing: antialiased; /* For jevnere font-rendering */
+    -moz-osx-font-smoothing: grayscale;
+}
 body.mobile-menu-is-open { overflow: hidden; }
-html { scroll-behavior: smooth; scroll-padding-top: var(--scroll-padding-top); } /* Scroll padding for sticky header */
+html { scroll-behavior: smooth; scroll-padding-top: var(--scroll-padding-top); } 
 .container { max-width: 1140px; margin: 0 auto; padding: 0 20px; }

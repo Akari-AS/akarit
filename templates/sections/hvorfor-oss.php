@@ -1,9 +1,10 @@
 <!-- Hvorfor Oss Seksjon -->
 <section id="hvorfor-oss">
      <div class="container">
-        <h2>Hvorfor velge Akari som din partner?</h2> <!-- Endret -->
+        <h2>Hvorfor velge Akari som <span>din partner?</span></h2> <!-- Endret -->
         <p>Vi er mer enn bare en leverandør – vi er din dedikerte Google Workspace-ekspert.</p>
-        <ul> <?php // Bruker standard ul/li fra original CSS ?>
+        <ul> 
+            {/* ... listeelementer ... */}
             <li><strong>Sømløs Overgang:</strong> Vi håndterer migrering og oppsett trygt og effektivt, minimere nedetid og forstyrrelser.</li>
             <li><strong>Skreddersydd Løsning:</strong> Vi tilpasser Workspace til din bedrifts unike behov, arbeidsflyt og sikkerhetskrav.</li>
             <li><strong>Økt Brukeradopsjon:</strong> Vi tilbyr opplæring og støtte for å sikre at teamet ditt får fullt utbytte av verktøyene.</li>
@@ -11,7 +12,7 @@
             <li><strong>Strategisk Rådgivning:</strong> Vi hjelper deg å utnytte Workspace fullt ut for å nå dine forretningsmål.</li>
         </ul>
          <div style="text-align: center; margin-top: 50px;">
-             <a href="#kontakt" class="cta-button">Bli kontaktet av en spesialist</a> <!-- Endret -->
+             <a href="#kontakt" class="cta-button">Bli kontaktet av en spesialist</a> 
          </div>
     </div>
 </section>
