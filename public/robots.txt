@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Disallow: /sis/
+Sitemap: https://googleworkspace.akari.no/sitemap.xml
