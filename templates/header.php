@@ -31,6 +31,7 @@
                 <li><a href="#produkter">Produkter</a></li>
                 <li><a href="#ai-funksjoner">AI-Funksjoner</a></li>
                 <li><a href="#prispakker">Prispakker</a></li>
+                <li><a href="#nrk-google-workspace">NRK & Google</a></li> <!-- <-- NY LINJE -->
                 <li><a href="#hvorfor-oss">Hvorfor Akarit?</a></li>
                 <li><a href="#kontakt">Kontakt</a></li>
             </ul>
@@ -60,6 +61,7 @@
              <li><a href="#produkter">Produkter</a></li>
              <li><a href="#ai-funksjoner">AI-Funksjoner</a></li>
              <li><a href="#prispakker">Prispakker</a></li>
+             <li><a href="#nrk-google-workspace">NRK & Google</a></li> <!-- <-- NY LINJE -->
              <li><a href="#hvorfor-oss">Hvorfor Akarit?</a></li>
              <li><a href="#kontakt">Kontakt</a></li>
          </ul>

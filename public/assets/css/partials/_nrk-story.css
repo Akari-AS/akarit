@@ -1,0 +1,58 @@
+/* --- NRK Story Section --- */
+#nrk-google-workspace {
+    background-color: var(--light-green-bg); /* Eller annen passende bakgrunn */
+}
+
+#nrk-google-workspace .nrk-story-container {
+    max-width: 800px; /* Begrenser bredden for lesbarhet */
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left; /* Justerer teksten til venstre for lengre avsnitt */
+}
+
+#nrk-google-workspace .nrk-story-container h3 {
+    font-family: var(--heading-font);
+    font-size: 1.5em;
+    font-weight: 600;
+    color: var(--dark-color);
+    margin-top: 30px;
+    margin-bottom: 15px;
+}
+
+#nrk-google-workspace .nrk-story-container p {
+    font-size: 1em;
+    color: var(--text-color);
+    line-height: 1.8;
+    margin-bottom: 20px;
+}
+
+.spotify-embed-container {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    max-width: 100%; /* Sikrer at den ikke blir bredere enn sin container */
+}
+
+.spotify-embed-container iframe {
+    border-radius: 12px; /* Matcher Spotify sin egen styling */
+    width: 100%;
+    min-height: 232px; /* Spotify sin standard minimumshøyde for kompakt spiller */
+}
+
+/* For den større spilleren, om ønskelig (høyde 352px) */
+.spotify-embed-container.large-player iframe {
+    min-height: 352px;
+}
+
+/* Fjerner ::after for denne spesifikke seksjonen */
+section#nrk-google-workspace h2::after {
+    display: none;
+}
+
+@media (max-width: 767px) {
+    #nrk-google-workspace .nrk-story-container {
+        text-align: center; /* Kan sentrere på mobil for kortere tekster */
+    }
+    .spotify-embed-container iframe {
+        /* Høyde kan justeres for mobil hvis ønskelig */
+    }
+}
