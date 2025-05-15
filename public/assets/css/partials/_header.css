@@ -10,7 +10,7 @@ header .header-container { display: flex; justify-content: space-between; align-
 }
 
 .akari-logo-img { /* Ny klasse for img-taggen */
-    height: 55px; /* Juster denne verdien for ønsket logostørrelse. Prøv 30px, 40px etc. */
+    height: 75px; /* Juster denne verdien for ønsket logostørrelse. Prøv 30px, 40px etc. */
     width: auto;  /* Beholder sideforholdet */
     display: block; /* Fjerner eventuell ekstra plass under bildet */
 }
