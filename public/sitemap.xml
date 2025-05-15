@@ -2,49 +2,49 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://googleworkspace.akari.no/</loc>
-    <lastmod><?php echo date('Y-m-d'); ?></lastmod>
+    <lastmod>2025-05-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://googleworkspace.akari.no/#fordeler</loc>
-    <lastmod><?php echo date('Y-m-d'); ?></lastmod>
+    <lastmod>2025-05-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://googleworkspace.akari.no/#produkter</loc>
-    <lastmod><?php echo date('Y-m-d'); ?></lastmod>
+    <lastmod>2025-05-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://googleworkspace.akari.no/#ai-funksjoner</loc>
-    <lastmod><?php echo date('Y-m-d'); ?></lastmod>
+    <lastmod>2025-05-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://googleworkspace.akari.no/#prispakker</loc>
-    <lastmod><?php echo date('Y-m-d'); ?></lastmod>
+    <lastmod>2025-05-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://googleworkspace.akari.no/#nrk-google-workspace</loc>
-    <lastmod><?php echo date('Y-m-d'); ?></lastmod>
+    <lastmod>2025-05-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://googleworkspace.akari.no/#hvorfor-oss</loc>
-    <lastmod><?php echo date('Y-m-d'); ?></lastmod>
+    <lastmod>2025-05-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://googleworkspace.akari.no/#kontakt</loc>
-    <lastmod><?php echo date('Y-m-d'); ?></lastmod>
+    <lastmod>2025-05-15</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
   </url>
