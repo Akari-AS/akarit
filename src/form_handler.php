@@ -60,8 +60,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $smtpPort = getenv('MAILGUN_SMTP_PORT') ?: 587;
     $smtpUsername = getenv('MAILGUN_SMTP_USERNAME'); // Ingen god standardverdi for disse
     $smtpPassword = getenv('MAILGUN_SMTP_PASSWORD');
-    $mailFromAddress = getenv('MAIL_FROM_ADDRESS') ?: 'noreply@akarit.no'; // Standard avsender
-    $mailFromName = getenv('MAIL_FROM_NAME') ?: 'Akarit Nettside';
+    $mailFromAddress = getenv('MAIL_FROM_ADDRESS') ?: 'noreply@akari.no'; // Standard avsender - Endret fra akarit.no
+    $mailFromName = getenv('MAIL_FROM_NAME') ?: 'Akari Nettside'; // Endret fra Akarit
     $mailRecipientAddress = getenv('MAIL_RECIPIENT_ADDRESS'); // E-post som mottar henvendelsen
 
     // === Hent Mailgun-innstillinger ... (linjene før) ===
@@ -75,7 +75,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty($smtpUsername) || empty($smtpPassword) || empty($mailRecipientAddress)) {
          $errors[] = "Serverkonfigurasjonsfeil (manglende e-postinnstillinger).";
          // Logg dette for deg selv
-         error_log("Mailgun SMTP credentials or recipient address missing in environment variables for akarit.no");
+         error_log("Mailgun SMTP credentials or recipient address missing in environment variables for akari.no"); // Logg for akari.no
     }
 
 
@@ -102,7 +102,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             // Innhold
             $mail->isHTML(false); // Send som ren tekst
-            $mail->Subject = 'Google Workspace Henvendelse fra Akarit.no';
+            $mail->Subject = 'Google Workspace Henvendelse fra Akari.no'; // Endret fra Akarit.no
 
             // Bygg e-post body
             $emailBody = "Ny Google Workspace henvendelse:\n\n";
@@ -120,13 +120,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             } else {
                  // $mail->send() returnerer false, men unntak bør fanges opp
                  $formResult['message'] = "Meldingen kunne ikke sendes. (Ukjent feil)";
-                 error_log("PHPMailer send() returned false without Exception for akarit.no");
+                 error_log("PHPMailer send() returned false without Exception for akari.no"); // Logg for akari.no
             }
 
         } catch (Exception $e) {
             $formResult['message'] = "Beklager, meldingen kunne ikke sendes. Kontakt oss direkte.";
             // Logg den faktiske feilen for deg selv (viktig for feilsøking!)
-            error_log("PHPMailer Exception for akarit.no: " . $mail->ErrorInfo . " | Exception: " . $e->getMessage());
+            error_log("PHPMailer Exception for akari.no: " . $mail->ErrorInfo . " | Exception: " . $e->getMessage()); // Logg for akari.no
         }
 
     } else {

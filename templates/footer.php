@@ -2,7 +2,7 @@
 
 <footer>
     <div class="container">
-        <p>© <?php echo date("Y"); ?> Akarit (av Akari AS). Alle Rettigheter Reservert. | Sertifisert Google Workspace Partner</p>
+        <p>© <?php echo date("Y"); ?> Akari AS. Alle Rettigheter Reservert. | Sertifisert Google Workspace Partner</p> <!-- Endret fra Akarit (av Akari AS) -->
     </div>
 </footer>
 

@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo $pageTitle ?? 'Google Workspace for Bedrifter | Akarit'; ?></title>
-    <meta name="description" content="<?php echo $pageDescription ?? 'Styrk bedriften med Google Workspace. Akarit tilbyr ekspertise.'; ?>">
+    <title><?php echo $pageTitle ?? 'Google Workspace for Bedrifter | Akari'; ?></title> <!-- Endret fra Akarit -->
+    <meta name="description" content="<?php echo $pageDescription ?? 'Styrk bedriften med Google Workspace. Akari tilbyr ekspertise.'; ?>"> <!-- Endret fra Akarit -->
 
     <!-- Start cookieyes banner --> <script id="cookieyes" type="text/javascript" src="https://cdn-cookieyes.com/client_data/edac3f0861b009c0f5dbf4b9/script.js"></script> <!-- End cookieyes banner -->
 
@@ -17,12 +17,12 @@
     <link rel="stylesheet" href="/assets/css/style.css">
 
 </head>
-<body class="bg-akarit-light-green text-gray-800 font-body antialiased">
+<body class="bg-akari-light-green text-gray-800 font-body antialiased"> <!-- Klassenavn i body forblir da den er intern, men kan endres hvis ønskelig -->
 
 <header>
      <div class="container header-container">
         <!-- Logo -->
-        <a href="#hjem" class="logo">Akarit <span class="sub-logo">av Akari</span></a>
+        <a href="#hjem" class="logo">Akari <span class="sub-logo">AS</span></a> <!-- Endret fra Akarit og "av Akari" til "AS" som var i CSS før -->
 
         <!-- Desktop Navigasjon -->
         <nav class="desktop-nav">
@@ -31,8 +31,8 @@
                 <li><a href="#produkter">Produkter</a></li>
                 <li><a href="#ai-funksjoner">AI-Funksjoner</a></li>
                 <li><a href="#prispakker">Prispakker</a></li>
-                <li><a href="#nrk-google-workspace">NRK & Google</a></li> <!-- <-- NY LINJE -->
-                <li><a href="#hvorfor-oss">Hvorfor Akarit?</a></li>
+                <li><a href="#nrk-google-workspace">NRK & Google</a></li>
+                <li><a href="#hvorfor-oss">Hvorfor Akari?</a></li> <!-- Endret fra Akarit -->
                 <li><a href="#kontakt">Kontakt</a></li>
             </ul>
         </nav>
@@ -61,8 +61,8 @@
              <li><a href="#produkter">Produkter</a></li>
              <li><a href="#ai-funksjoner">AI-Funksjoner</a></li>
              <li><a href="#prispakker">Prispakker</a></li>
-             <li><a href="#nrk-google-workspace">NRK & Google</a></li> <!-- <-- NY LINJE -->
-             <li><a href="#hvorfor-oss">Hvorfor Akarit?</a></li>
+             <li><a href="#nrk-google-workspace">NRK & Google</a></li>
+             <li><a href="#hvorfor-oss">Hvorfor Akari?</a></li> <!-- Endret fra Akarit -->
              <li><a href="#kontakt">Kontakt</a></li>
          </ul>
      </div>
