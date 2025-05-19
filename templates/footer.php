@@ -5,15 +5,16 @@
         <div class="footer-column footer-column-nav">
             <h4>Om Akari</h4>
             <ul>
-                <li><a href="https://akari.no/vilkar-og-betingelser" target="_blank">Vilkår og betingelser</a></li>
-                <li><a href="https://akari.no/personvern" target="_blank">Personvern og cookies</a></li>
+                <li><a href="https://akari.no/om-akari/" target="_blank">Om Akari</a></li> <!-- NY LINK OG TEKST -->
+                <li><a href="https://akari.no/betingelser/" target="_blank">Vilkår og betingelser</a></li> <!-- NY LINK -->
+                <li><a href="https://akari.no/personvern/" target="_blank">Personvern og cookies</a></li> <!-- NY LINK -->
             </ul>
             <h4>Sosiale Medier</h4>
             <ul>
-                <li><a href="https://www.facebook.com/akarias" target="_blank">Facebook</a></li>
-                <li><a href="https://www.instagram.com/akari_as/" target="_blank">Instagram</a></li>
-                <li><a href="https://www.linkedin.com/company/akari-as/" target="_blank">LinkedIn</a></li>
-                <li><a href="https://www.youtube.com/channel/UCoy3JgIe3p50Pq3f52zftFA" target="_blank">YouTube</a></li>
+                <li><a href="https://www.facebook.com/akarireklame" target="_blank">Facebook</a></li> <!-- NY LINK -->
+                <li><a href="https://www.instagram.com/akari_reklame/" target="_blank">Instagram</a></li> <!-- NY LINK -->
+                <li><a href="https://www.linkedin.com/company/11776262/admin/feed/posts/" target="_blank">LinkedIn</a></li> <!-- NY LINK -->
+                <li><a href="https://www.youtube.com/@akarireklame" target="_blank">YouTube</a></li> <!-- NY LINK -->
             </ul>
         </div>
 

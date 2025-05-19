@@ -9,7 +9,7 @@
                     <img src="/assets/img/kenneth_bjerke.jpg" alt="Kenneth B. Bjerke" class="contact-person-img">
                     <div>
                         <h4>Kenneth B. Bjerke</h4>
-                        <p class="title">Leder digital</p>
+                        <p class="title">Leder System & IT</p>
                         <p>Tlf: <a href="tel:+4796621811">966 21 811</a></p>
                         <p>E-post: <a href="mailto:kenneth@akari.no">kenneth@akari.no</a></p>
                     </div>
