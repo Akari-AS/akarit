@@ -67,7 +67,7 @@
 
                     <div class="form-group checkbox-group">
                         <input type="checkbox" id="privacy" name="privacy" required <?php echo isset($submittedData['privacy']) ? 'checked' : ''; ?>>
-                        <label for="privacy">Jeg har lest og forstått <a href="/personvernerklaering.html" target="_blank">personvernerklæringen</a><span class="required">*</span></label>
+                        <label for="privacy">Jeg har lest og forstått <a href="https://akari.no/personvern/" target="_blank">personvernerklæringen</a><span class="required">*</span></label> <!-- ENDRET HER -->
                     </div>
                     
                     <div style="text-align: center;">
