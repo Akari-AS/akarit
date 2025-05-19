@@ -1,5 +1,3 @@
---- START OF FILE akarit-current/templates/sections/prispakker.php ---
-
 <!-- Prispakker Seksjon -->
 <section id="prispakker">
     <div class="pk-pricing-container container">
@@ -92,4 +90,3 @@
         </div>
     </div>
 </section>
---- END OF FILE akarit-current/templates/sections/prispakker.php ---
