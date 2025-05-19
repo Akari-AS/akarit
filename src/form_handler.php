@@ -7,13 +7,6 @@ use PHPMailer\PHPMailer\Exception;
 
 require __DIR__ . '/../vendor/autoload.php';
 
-// I toppen av form_handler.php, etter require autoload.php:
-$log_file = __DIR__ . '/form_handler_debug.log';
-file_put_contents($log_file, "--- Nytt Skjemaforsøk: " . date('Y-m-d H:i:s') . " ---\n", FILE_APPEND);
-file_put_contents($log_file, "MAIL_FROM_ADDRESS (getenv): " . (getenv('MAIL_FROM_ADDRESS') ?: 'IKKE SATT I ENV') . "\n", FILE_APPEND);
-file_put_contents($log_file, "MAIL_FROM_NAME (getenv): " . (getenv('MAIL_FROM_NAME') ?: 'IKKE SATT I ENV') . "\n", FILE_APPEND);
-file_put_contents($log_file, "MAILGUN_SMTP_USERNAME (getenv): " . (getenv('MAILGUN_SMTP_USERNAME') ?: 'IKKE SATT I ENV') . "\n\n", FILE_APPEND);
-
 $formResult = [
     'message' => '',
     'success' => false,
@@ -65,69 +58,114 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $errors[] = "Du må godta personvernerklæringen.";
     }
 
-    // Hent Mailgun-innstillinger fra Miljøvariabler eller bruk fallbacks
+    // Hent Mailgun-innstillinger
+    // Siden du har hardkodet i FPM pool config, vil getenv() nå hente disse verdiene.
+    // Fallbacks beholdes for sikkerhets skyld hvis getenv() skulle feile.
     $smtpHost = getenv('MAILGUN_SMTP_HOST') ?: 'smtp.eu.mailgun.org';
     $smtpPort = getenv('MAILGUN_SMTP_PORT') ?: 587;
-    $smtpUsername = getenv('MAILGUN_SMTP_USERNAME'); // Bør være din Mailgun SMTP-bruker, f.eks. postmaster@mg.akari.no
-    $smtpPassword = getenv('MAILGUN_SMTP_PASSWORD'); // Ditt Mailgun SMTP-passord
-    
-    // VIKTIG: Endre disse standardverdiene til de nye ønskede verdiene
-    // Disse vil bli brukt HVIS miljøvariablene ikke er satt i Forge.
-    // Det ANBEFALES STERKT å sette disse i Forge Environment.
-    $mailFromAddress = getenv('MAIL_FROM_ADDRESS') ?: 'googleworkspace@akari.no'; // NY standard FROM adresse
-    $mailFromName = getenv('MAIL_FROM_NAME') ?: 'Akari Google Workspace'; // Nytt standard FROM navn
-    $mailRecipientAddress = getenv('MAIL_RECIPIENT_ADDRESS'); // Mottaker forblir den samme
+    $smtpUsername = getenv('MAILGUN_SMTP_USERNAME') ?: 'googleworkspace@mg.akari.no'; // Eller din SMTP bruker
+    $smtpPassword = getenv('MAILGUN_SMTP_PASSWORD'); // Bør være satt!
+    $mailFromAddress = getenv('MAIL_FROM_ADDRESS') ?: 'googleworkspace@akari.no';
+    $mailFromName = getenv('MAIL_FROM_NAME') ?: 'Akari Google Workspace';
+    $mailRecipientAddress = getenv('MAIL_RECIPIENT_ADDRESS');
 
     if (empty($smtpUsername) || empty($smtpPassword) || empty($mailRecipientAddress)) {
          $errors[] = "Serverkonfigurasjonsfeil (manglende e-postinnstillinger).";
-         error_log("Mailgun SMTP credentials or recipient address missing in environment variables for googleworkspace.akari.no");
+         error_log("Mailgun SMTP credentials or recipient address missing for googleworkspace.akari.no");
     }
 
     if (empty($errors)) {
         $mail = new PHPMailer(true);
 
         try {
+            // ----- SEND E-POST TIL AKARI (INTERN) -----
             // $mail->SMTPDebug = SMTP::DEBUG_SERVER;
             $mail->isSMTP();
             $mail->Host       = $smtpHost;
             $mail->SMTPAuth   = true;
-            $mail->Username   = $smtpUsername; // Brukes for å logge inn på Mailgun
-            $mail->Password   = $smtpPassword; // Brukes for å logge inn på Mailgun
+            $mail->Username   = $smtpUsername;
+            $mail->Password   = $smtpPassword;
             $mail->SMTPSecure = ($smtpPort == 465) ? PHPMailer::ENCRYPTION_SMTPS : PHPMailer::ENCRYPTION_STARTTLS;
             $mail->Port       = $smtpPort;
             $mail->CharSet    = PHPMailer::CHARSET_UTF8;
 
-            // Avsender (dette er hva mottakeren ser)
-            $mail->setFrom($mailFromAddress, $mailFromName); 
-            
-            $mail->addAddress($mailRecipientAddress); // Din mottakeradresse
-            $mail->addReplyTo($email, $fullname); // Svar går til innsenderen
+            $mail->setFrom($mailFromAddress, $mailFromName);
+            $mail->addAddress($mailRecipientAddress); // Til deg/Akari
+            $mail->addReplyTo($email, $fullname); 
 
             $mail->isHTML(false); 
-            $mail->Subject = 'Henvendelse via googleworkspace.akari.no - ' . $fullname; // Mer spesifikt emne
+            $mail->Subject = 'Henvendelse via googleworkspace.akari.no - ' . $fullname;
 
-            $emailBody = "Ny henvendelse fra googleworkspace.akari.no:\n\n"; // Mer spesifikk
-            $emailBody .= "Navn: " . $fullname . "\n";
-            $emailBody .= "Firma: " . (!empty($company) ? $company : "Ikke oppgitt") . "\n";
-            $emailBody .= "E-post (fra skjema): " . $email . "\n";
-            $emailBody .= "Telefon: " . $phone . "\n";
-            $emailBody .= "Interessert i pakke: " . (!empty($package_interest) ? $package_interest : "Ikke spesifisert") . "\n\n";
-            $emailBody .= "Melding:\n" . $message_content . "\n\n";
-            $emailBody .= "Personvernerklæring godtatt: Ja\n";
-            $mail->Body = $emailBody;
+            $emailBodyToAdmin = "Ny henvendelse fra googleworkspace.akari.no:\n\n";
+            $emailBodyToAdmin .= "Navn: " . $fullname . "\n";
+            $emailBodyToAdmin .= "Firma: " . (!empty($company) ? $company : "Ikke oppgitt") . "\n";
+            $emailBodyToAdmin .= "E-post (fra skjema): " . $email . "\n";
+            $emailBodyToAdmin .= "Telefon: " . $phone . "\n";
+            $emailBodyToAdmin .= "Interessert i pakke: " . (!empty($package_interest) ? $package_interest : "Ikke spesifisert") . "\n\n";
+            $emailBodyToAdmin .= "Melding:\n" . $message_content . "\n\n";
+            $emailBodyToAdmin .= "Personvernerklæring godtatt: Ja\n";
+            $mail->Body = $emailBodyToAdmin;
 
             if ($mail->send()) {
-                 $formResult['message'] = 'Takk! Meldingen din er sendt. Vi tar kontakt med deg snart.';
+                 $formResult['message'] = 'Takk! Meldingen din er sendt. Vi har også sendt deg en bekreftelse på e-post.'; // Oppdatert melding
                  $formResult['success'] = true;
-                 $formResult['data'] = []; 
+                 // IKKE TØM DATA HER ENDA, VI TRENGER $email og $firstname for kvittering
+
+                // ----- SEND KVITTERINGSEPOST TIL INNSENDER -----
+                $receiptMail = new PHPMailer(true);
+                // Gjenbruk SMTP-innstillinger
+                $receiptMail->isSMTP();
+                $receiptMail->Host       = $smtpHost;
+                $receiptMail->SMTPAuth   = true;
+                $receiptMail->Username   = $smtpUsername;
+                $receiptMail->Password   = $smtpPassword;
+                $receiptMail->SMTPSecure = ($smtpPort == 465) ? PHPMailer::ENCRYPTION_SMTPS : PHPMailer::ENCRYPTION_STARTTLS;
+                $receiptMail->Port       = $smtpPort;
+                $receiptMail->CharSet    = PHPMailer::CHARSET_UTF8;
+
+                $receiptMail->setFrom($mailFromAddress, $mailFromName); // Avsender er Akari
+                $receiptMail->addAddress($email, $fullname);           // Mottaker er innsenderen
+                // Ingen ReplyTo nødvendig for en kvittering
+
+                $receiptMail->isHTML(true); // La oss lage en litt penere HTML-kvittering
+                $receiptMail->Subject = 'Takk for din henvendelse til Akari!';
+                
+                $greetingName = !empty($firstname) ? $firstname : 'du';
+
+                $receiptBody = "<p>Hei " . htmlspecialchars($greetingName) . ",</p>";
+                $receiptBody .= "<p>Takk for din henvendelse via googleworkspace.akari.no. Vi har mottatt meldingen din og vil komme tilbake til deg så snart som mulig.</p>";
+                $receiptBody .= "<p>Dette er en automatisk bekreftelse, du trenger ikke svare på denne e-posten.</p>";
+                $receiptBody .= "<p><strong>Din melding var:</strong></p>";
+                $receiptBody .= "<blockquote style='border-left: 2px solid #ccc; padding-left: 10px; margin-left: 0; font-style: italic;'>";
+                $receiptBody .= nl2br(htmlspecialchars($message_content)); // Viser meldingen med linjeskift
+                $receiptBody .= "</blockquote>";
+                $receiptBody .= "<p>Vennlig hilsen,<br>Team Akari</p>";
+                // Du kan legge til logo eller annen branding her hvis du ønsker
+                // $receiptBody .= "<img src='https://googleworkspace.akari.no/assets/img/logo_akari_hvit.svg' alt='Akari Logo' style='width:150px; margin-top:20px;'>";
+
+
+                $receiptMail->Body = $receiptBody;
+                $receiptMail->AltBody = strip_tags(str_replace("<br>", "\n", str_replace("</p><p>", "\n\n", $receiptBody))); // Enkel rentekst-versjon
+
+                try {
+                    $receiptMail->send();
+                    // Kvittering sendt, ingenting mer å gjøre her for suksess
+                    $formResult['data'] = []; // Tøm data etter at BEGGE e-poster er sendt
+                } catch (Exception $e_receipt) {
+                    // Kvittering feilet, men hovedmeldingen gikk gjennom.
+                    // Logg feilen, men ikke endre suksessmeldingen til brukeren.
+                    error_log("PHPMailer Exception (Receipt) for " . $email . ": " . $receiptMail->ErrorInfo . " | Exception: " . $e_receipt->getMessage());
+                    $formResult['data'] = []; // Tøm data uansett
+                }
+
             } else {
                  $formResult['message'] = "Meldingen kunne ikke sendes. (Ukjent feil)";
-                 error_log("PHPMailer send() returned false without Exception for googleworkspace.akari.no");
+                 error_log("PHPMailer send() (Admin) returned false without Exception for googleworkspace.akari.no");
             }
 
         } catch (Exception $e) {
             $formResult['message'] = "Beklager, meldingen kunne ikke sendes. Kontakt oss direkte.";
-            error_log("PHPMailer Exception for googleworkspace.akari.no: " . $mail->ErrorInfo . " | Exception: " . $e->getMessage());
+            error_log("PHPMailer Exception (Admin) for googleworkspace.akari.no: " . $mail->ErrorInfo . " | Exception: " . $e->getMessage());
         }
 
     } else {
