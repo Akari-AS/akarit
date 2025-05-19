@@ -2,7 +2,7 @@
 .site-footer {
     background-color: var(--dark-color);
     color: #c0c0c0;
-    padding: 60px 0 0 0; /* Mer padding øverst, ingen nederst da .footer-bottom håndterer det */
+    padding: 60px 0 0 0;
     margin-top: 80px;
     width: 100%;
     font-size: 0.9em;
@@ -12,13 +12,13 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    gap: 30px; /* Mellomrom mellom kolonner */
+    gap: 30px;
     padding-bottom: 40px;
 }
 
 .footer-column {
     flex: 1;
-    min-width: 200px; /* Sørger for at kolonner ikke blir for smale */
+    min-width: 200px;
     margin-bottom: 20px;
 }
 
@@ -65,16 +65,17 @@
 
 
 .footer-column-brand {
-    text-align: right; /* Justerer innholdet i denne kolonnen til høyre */
+    text-align: right; 
     display: flex;
     flex-direction: column;
-    align-items: flex-end; /* Sikrer at elementene inni justeres til høyre */
+    align-items: flex-end; 
 }
 
-.footer-logo {
-    max-width: 150px; /* Juster etter behov */
-    height: auto;
+.footer-logo { /* Dette er <img>-taggen */
+    max-width: 150px; /* Juster etter behov. */
+    height: auto;    /* Viktig for SVG og responsivitet */
     margin-bottom: 20px;
+    display: block; /* Forhindrer ekstra plass under bildet */
 }
 
 .footer-locations {
@@ -83,7 +84,7 @@
 }
 
 .footer-bottom {
-    background-color: rgba(0,0,0,0.2); /* Litt mørkere enn hoved-footer */
+    background-color: rgba(0,0,0,0.2); 
     padding: 20px 0;
     text-align: center;
     font-size: 0.85em;
@@ -97,10 +98,10 @@
 /* Responsive for footer */
 @media (max-width: 992px) {
     .footer-column-brand {
-        text-align: left; /* Sentrer eller venstrejuster på mindre skjermer om ønskelig */
+        text-align: left; 
         align-items: flex-start;
-        margin-top: 20px; /* Litt ekstra plass hvis den wrapper */
-        width: 100%; /* Tar full bredde om den wrapper */
+        margin-top: 20px; 
+        width: 100%; 
     }
 }
 
@@ -108,17 +109,17 @@
 @media (max-width: 767px) {
     .footer-container {
         flex-direction: column;
-        text-align: center; /* Sentrerer innholdet i kolonnene */
+        text-align: center; 
     }
     .footer-column {
-        min-width: 100%; /* Kolonner tar full bredde */
+        min-width: 100%; 
         margin-bottom: 30px;
     }
     .footer-column h4 {
-        display: block; /* For at border-bottom skal ta full bredde */
+        display: block; 
     }
     .footer-column-brand {
-        align-items: center; /* Sentrerer logo etc. */
+        align-items: center; 
         margin-top: 10px;
     }
 }
