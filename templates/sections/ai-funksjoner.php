@@ -8,12 +8,7 @@
             <div class="ai-tool-card">
                 <div class="ai-tool-header">
                     <?php if (!empty($tool['imageUrl'])): ?>
-                        <!-- Antar at $tool['imageUrl'] peker til .png, og .webp finnes på samme sted -->
-                        <picture>
-                            <source srcset="<?php echo htmlspecialchars(str_replace('.png', '.webp', $tool['imageUrl'])); ?>" type="image/webp">
-                            <source srcset="<?php echo htmlspecialchars($tool['imageUrl']); ?>" type="image/png">
-                            <img src="<?php echo htmlspecialchars($tool['imageUrl']); ?>" alt="<?php echo htmlspecialchars($tool['name']); ?> ikon" class="ai-tool-icon-img" loading="lazy">
-                        </picture>
+                        <img src="<?php echo htmlspecialchars($tool['imageUrl']); ?>" alt="<?php echo htmlspecialchars($tool['name']); ?> ikon" class="ai-tool-icon-img" loading="lazy">
                     <?php endif; ?>
                     <h3><?php echo htmlspecialchars($tool['name']); ?></h3>
                 </div>

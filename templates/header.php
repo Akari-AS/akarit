@@ -25,7 +25,7 @@
 <header>
      <div class="container header-container">
         <!-- Logo -->
-        <a href="#hjem" class="logo logo-image-container"> <!-- Klassenavn endret for bilde-logo -->
+        <a href="#hjem" class="logo logo-image-container">
             <img src="/assets/img/Akari_jubileum.svg" alt="Akari Logo" class="header-logo-img">
         </a>
 
