@@ -1,3 +1,5 @@
+--- START OF FILE akarit-current/templates/sections/prispakker.php ---
+
 <!-- Prispakker Seksjon -->
 <section id="prispakker">
     <div class="pk-pricing-container container">
@@ -10,6 +12,10 @@
             <div class="pk-pricing-plan">
                 <div class="pk-plan-header">
                     <h3>Startpakken</h3>
+                    <div class="pk-plan-price">  <!-- <--- LAGT TIL HER -->
+                        <span class="pk-price-amount">200kr</span>
+                        <span class="pk-price-term">/mnd per bruker</span>
+                    </div>                       <!-- <--- LAGT TIL HER -->
                 </div>
                  <div class="pk-plan-storage">30GB lagring</div>
                 <ul class="pk-plan-features">
@@ -24,7 +30,7 @@
                     <p><strong>Passer for:</strong> Nystartede, mindre bedrifter (1-10 ansatte) og de med grunnleggende behov for e-post og dokumenthåndtering.</p>
                 </div>
                 <div class="pk-plan-footer">
-                    <a href="#kontakt" class="cta-button pk-btn">Velg pakke</a> 
+                    <a href="#kontakt" class="cta-button pk-btn">Velg pakke</a>
                 </div>
             </div>
 
@@ -32,6 +38,10 @@
                 <div class="pk-plan-badge">Mest Populær</div>
                 <div class="pk-plan-header">
                     <h3>Standardpakken</h3>
+                    <div class="pk-plan-price">  <!-- <--- LAGT TIL HER -->
+                        <span class="pk-price-amount">350kr</span>
+                        <span class="pk-price-term">/mnd per bruker</span>
+                    </div>                       <!-- <--- LAGT TIL HER -->
                 </div>
                 <div class="pk-plan-storage">2TB lagring</div>
                 <ul class="pk-plan-features">
@@ -53,6 +63,10 @@
             <div class="pk-pricing-plan">
                 <div class="pk-plan-header">
                     <h3>Premiumpakken</h3>
+                    <div class="pk-plan-price">  <!-- <--- LAGT TIL HER -->
+                        <span class="pk-price-amount">550kr</span>
+                        <span class="pk-price-term">/mnd per bruker</span>
+                    </div>                       <!-- <--- LAGT TIL HER -->
                 </div>
                  <div class="pk-plan-storage">5TB lagring</div>
                 <ul class="pk-plan-features">
@@ -78,3 +92,4 @@
         </div>
     </div>
 </section>
+--- END OF FILE akarit-current/templates/sections/prispakker.php ---
