@@ -6,6 +6,8 @@
     <title><?php echo $pageTitle ?? 'Google Workspace for Bedrifter | Akari'; ?></title>
     <meta name="description" content="<?php echo $pageDescription ?? 'Styrk bedriften med Google Workspace. Akari tilbyr ekspertise.'; ?>">
 
+    <link rel="canonical" href="https://googleworkspace.akari.no/" />
+
     <!-- Favicon -->
     <link rel="icon" href="/assets/img/favicon_akari.png" type="image/png">
 
@@ -18,6 +20,41 @@
 
     <!-- Link til VÅR CSS-fil -->
     <link rel="stylesheet" href="/assets/css/style.css">
+
+    <!-- Schema.org markup for Organization -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Akari AS",
+      "url": "https://googleworkspace.akari.no/",
+      "logo": "https://googleworkspace.akari.no/assets/img/Akari_jubileum.svg", // Full URL til logoen
+      "contactPoint": [
+        {
+          "@type": "ContactPoint",
+          "telephone": "+47-32-76-66-00",
+          "contactType": "customer support", // Generell kontakt
+          "email": "kreative@akari.no",
+          "areaServed": "NO", // Norge
+          "availableLanguage": ["Norwegian"]
+        },
+        {
+          "@type": "ContactPoint",
+          "telephone": "+47-32-76-66-00",
+          "contactType": "technical support", // Websupport
+          "email": "support@akari.no",
+          "areaServed": "NO",
+          "availableLanguage": ["Norwegian"]
+        }
+      ],
+      "sameAs": [ // Lenker til sosiale medier
+        "https://www.facebook.com/akarireklame",
+        "https://www.instagram.com/akari_reklame/",
+        "https://www.linkedin.com/company/11776262/", // Bruk den rene bedriftssiden, ikke admin-url
+        "https://www.youtube.com/@akarireklame"
+      ]
+    }
+    </script>
 
 </head>
 <body class="bg-akari-light-green text-gray-800 font-body antialiased">
