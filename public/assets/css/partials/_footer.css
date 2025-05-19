@@ -25,9 +25,9 @@
 .footer-column h4 {
     font-family: var(--heading-font);
     color: #fff;
-    font-size: 1.2em;
+    font-size: 1.2em; /* Behaves more like 1.1em due to parent font-size: 0.9em */
     margin-top: 0;
-    margin-bottom: 15px;
+    margin-bottom: 10px; /* REDUSERT fra 15px */
     font-weight: 600;
     border-bottom: 1px solid var(--primary-color);
     padding-bottom: 8px;
@@ -37,7 +37,10 @@
 .footer-column ul {
     list-style: none;
     padding-left: 0;
-    margin: 0;
+    margin: 0; /* Fjerner default top margin på ul */
+}
+.footer-column h4 + ul { /* Hvis en ul kommer rett etter en h4 */
+    margin-top: 0px; /* Strammer opp plassen hvis det er en liste */
 }
 
 .footer-column ul li {
@@ -56,11 +59,19 @@
 }
 
 .footer-column-contact p {
-    margin-bottom: 15px;
+    margin-bottom: 8px; /* REDUSERT fra 15px */
     line-height: 1.6;
 }
-.footer-column-contact p:last-of-type {
+.footer-column-contact h4 + p { /* Hvis en p kommer rett etter en h4 */
+    margin-top: 0px; /* Strammer opp plassen */
+}
+
+.footer-column-contact p:last-of-type { /* Gjelder for siste <p> i en kontakt-blokk */
     margin-bottom: 0;
+}
+/* For å unngå dobbel margin hvis neste element er en ny h4 */
+.footer-column-contact p + h4 {
+    margin-top: 20px; /* Litt ekstra pusterom før neste h4 */
 }
 
 
@@ -71,11 +82,11 @@
     align-items: flex-end; 
 }
 
-.footer-logo { /* Dette er <img>-taggen */
-    max-width: 150px; /* Juster etter behov. */
-    height: auto;    /* Viktig for SVG og responsivitet */
+.footer-logo { 
+    max-width: 150px; 
+    height: auto;   
     margin-bottom: 20px;
-    display: block; /* Forhindrer ekstra plass under bildet */
+    display: block; 
 }
 
 .footer-locations {
