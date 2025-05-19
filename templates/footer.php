@@ -34,7 +34,12 @@
         </div>
 
         <div class="footer-column footer-column-brand">
-            <img src="/assets/img/Akari_jubileum.svg" alt="Akari Logo" class="footer-logo">
+            <!-- Bruker <picture> for WebP-støtte og lazy loading for logoen i footeren -->
+            <picture>
+                <source srcset="/assets/img/Akari_jubileum.webp" type="image/webp">
+                <source srcset="/assets/img/Akari_jubileum.svg" type="image/svg+xml">
+                <img src="/assets/img/Akari_jubileum.svg" alt="Akari Logo" class="footer-logo" loading="lazy">
+            </picture>
             <div class="footer-locations">
                 Kongsberg • Hønefoss • Notodden • Numedal
             </div>
@@ -48,7 +53,7 @@
 </footer>
 
 <!-- Link til VÅR JavaScript fil -->
-<script src="/assets/js/script.js"></script>
+<script src="/assets/js/script.js" defer></script> <!-- defer er lagt til her -->
 
-</body>
+</body> <?php // Body tag lukkes her ?>
 </html>

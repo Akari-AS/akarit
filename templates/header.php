@@ -3,11 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo $pageTitle ?? 'Google Workspace for bedrifter | Akari'; ?></title>
+    <title><?php echo $pageTitle ?? 'Google Workspace for Bedrifter | Akari'; ?></title>
     <meta name="description" content="<?php echo $pageDescription ?? 'Styrk bedriften med Google Workspace. Akari tilbyr ekspertise.'; ?>">
 
-  <!-- Favicon -->
-  <link rel="icon" href="/assets/img/favicon_akari.png" type="image/png">
+    <!-- Favicon -->
+    <link rel="icon" href="/assets/img/favicon_akari.png" type="image/png">
+    <!-- For eldre nettlesere kan du også vurdere en .ico-versjon -->
+    <!-- <link rel="shortcut icon" href="/assets/img/favicon_akari.ico" type="image/x-icon"> -->
+
 
     <!-- Start cookieyes banner --> <script id="cookieyes" type="text/javascript" src="https://cdn-cookieyes.com/client_data/edac3f0861b009c0f5dbf4b9/script.js"></script> <!-- End cookieyes banner -->
 
@@ -25,9 +28,16 @@
 <header>
      <div class="container header-container">
         <!-- Logo -->
+        <a href="#hjem" class="logo">Akari <span class="sub-logo">AS</span></a>
+        <!-- Eventuelt, hvis du har en logo-bilde:
         <a href="#hjem" class="logo">
-            <img src="/assets/img/Akari_jubileum.svg" alt="Akari Logo" class="akari-logo-img">
+            <picture>
+                <source srcset="/assets/img/logo_akari.webp" type="image/webp">
+                <source srcset="/assets/img/logo_akari.png" type="image/png">
+                <img src="/assets/img/logo_akari.png" alt="Akari Logo" loading="lazy" style="height: 40px; width:auto;">
+            </picture>
         </a>
+         -->
 
         <!-- Desktop Navigasjon -->
         <nav class="desktop-nav">
