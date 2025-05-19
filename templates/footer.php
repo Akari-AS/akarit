@@ -5,16 +5,16 @@
         <div class="footer-column footer-column-nav">
             <h4>Om Akari</h4>
             <ul>
-                <li><a href="https://akari.no/om-akari/" target="_blank">Om Akari</a></li> <!-- NY LINK OG TEKST -->
-                <li><a href="https://akari.no/betingelser/" target="_blank">Vilkår og betingelser</a></li> <!-- NY LINK -->
-                <li><a href="https://akari.no/personvern/" target="_blank">Personvern og cookies</a></li> <!-- NY LINK -->
+                <li><a href="https://akari.no/om-akari/" target="_blank">Om Akari</a></li>
+                <li><a href="https://akari.no/betingelser/" target="_blank">Vilkår og betingelser</a></li>
+                <li><a href="https://akari.no/personvern/" target="_blank">Personvern og cookies</a></li>
             </ul>
             <h4>Sosiale Medier</h4>
             <ul>
-                <li><a href="https://www.facebook.com/akarireklame" target="_blank">Facebook</a></li> <!-- NY LINK -->
-                <li><a href="https://www.instagram.com/akari_reklame/" target="_blank">Instagram</a></li> <!-- NY LINK -->
-                <li><a href="https://www.linkedin.com/company/11776262/admin/feed/posts/" target="_blank">LinkedIn</a></li> <!-- NY LINK -->
-                <li><a href="https://www.youtube.com/@akarireklame" target="_blank">YouTube</a></li> <!-- NY LINK -->
+                <li><a href="https://www.facebook.com/akarireklame" target="_blank">Facebook</a></li>
+                <li><a href="https://www.instagram.com/akari_reklame/" target="_blank">Instagram</a></li>
+                <li><a href="https://www.linkedin.com/company/11776262/" target="_blank">LinkedIn</a></li> <!-- Korrigert fra forrige versjon, fjernet /admin/feed/posts/ -->
+                <li><a href="https://www.youtube.com/@akarireklame" target="_blank">YouTube</a></li>
             </ul>
         </div>
 
@@ -37,7 +37,7 @@
         <div class="footer-column footer-column-brand">
             <img src="/assets/img/Akari_jubileum.svg" alt="Akari Logo" class="footer-logo" loading="lazy">
             <div class="footer-locations">
-                Kongsberg • Hønefoss • Notodden • Numedal
+                Kongsberg • Hønefoss • Notodden • Numedal • Larvik <!-- LAGT TIL LARVIK HER -->
             </div>
         </div>
     </div>
