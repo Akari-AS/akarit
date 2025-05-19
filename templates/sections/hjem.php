@@ -10,12 +10,18 @@
         </iframe>
     </div>
     <!-- Hero Content -->
-    <div class="container"> 
-         <h1>Fremtiden er samarbeid med <span>Google Workspace</span></h1> 
-         <p>Akari hjelper din bedrift med å utnytte kraften i Google Workspace for økt produktivitet, sømløst samarbeid og bunnsolid sikkerhet. La oss ta oss av det tekniske, så du kan fokusere på vekst.</p>
-         <div> 
-            <a href="#kontakt" class="cta-button">Start samtalen</a> 
-            <a href="#produkter" class="cta-button secondary">Se verktøyene</a> 
+    <div class="container">
+         <h1>Fremtiden er samarbeid med <span>Google Workspace</span>
+            <?php if (isset($currentLocationName) && $currentLocationName !== "Generell"): ?>
+                i <?php echo htmlspecialchars($currentLocationName); ?>
+            <?php endif; ?>
+         </h1>
+         <p>
+            <?php echo htmlspecialchars($locationSpecificHeroText); // Denne er nå alltid satt via index.php ?>
+         </p>
+         <div>
+            <a href="#kontakt" class="cta-button">Start samtalen</a>
+            <a href="#produkter" class="cta-button secondary">Se verktøyene</a>
          </div>
     </div>
 </section>

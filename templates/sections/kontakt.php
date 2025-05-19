@@ -3,7 +3,11 @@
      <div class="container">
         <div class="contact-form-wrapper">
             <div class="contact-info-column">
-                <h3>Kontakt <span>Oss</span></h3>
+                <h3>Kontakt <span>Oss</span>
+                    <?php if (isset($currentLocationName) && $currentLocationName !== "Generell"): ?>
+                        i <?php echo htmlspecialchars($currentLocationName); ?>
+                    <?php endif; ?>
+                </h3>
                 <p>Vi er klare til å hjelpe deg med å utnytte kraften i Google Workspace. Ta kontakt for en uforpliktende prat!</p>
                 <div class="contact-person">
                     <img src="/assets/img/kenneth_bjerke.jpg" alt="Kenneth B. Bjerke" class="contact-person-img">
@@ -25,6 +29,7 @@
                 <?php endif; ?>
 
                 <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>#kontakt" method="post" id="contactForm" class="modern-contact-form">
+                    <input type="hidden" name="form_source_page" value="<?php echo htmlspecialchars($currentLocationName ?? 'Generell'); ?>">
                     <div class="form-row">
                         <div class="form-group form-group-half">
                             <label for="firstname">Navn <span class="required">*</span></label> 
@@ -67,7 +72,7 @@
 
                     <div class="form-group checkbox-group">
                         <input type="checkbox" id="privacy" name="privacy" required <?php echo isset($submittedData['privacy']) ? 'checked' : ''; ?>>
-                        <label for="privacy">Jeg har lest og forstått <a href="https://akari.no/personvern/" target="_blank">personvernerklæringen</a><span class="required">*</span></label> <!-- ENDRET HER -->
+                        <label for="privacy">Jeg har lest og forstått <a href="https://akari.no/personvern/" target="_blank">personvernerklæringen</a><span class="required">*</span></label>
                     </div>
                     
                     <div style="text-align: center;">
