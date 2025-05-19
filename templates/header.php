@@ -6,6 +6,9 @@
     <title><?php echo $pageTitle ?? 'Google Workspace for bedrifter | Akari'; ?></title>
     <meta name="description" content="<?php echo $pageDescription ?? 'Styrk bedriften med Google Workspace. Akari tilbyr ekspertise.'; ?>">
 
+  <!-- Favicon -->
+  <link rel="icon" href="/assets/img/favicon_akari.png" type="image/png">
+
     <!-- Start cookieyes banner --> <script id="cookieyes" type="text/javascript" src="https://cdn-cookieyes.com/client_data/edac3f0861b009c0f5dbf4b9/script.js"></script> <!-- End cookieyes banner -->
 
     <!-- Google Fonts (Red Hat Display) -->
