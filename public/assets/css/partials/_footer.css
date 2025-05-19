@@ -1,39 +1,43 @@
-/* --- Footer --- */
+/* --- Detaljert Footer Styling --- */
 .site-footer {
-    background-color: var(--dark-color); 
-    color: #c0c0c0; 
-    padding: 60px 0 0 0; 
-    margin-top: 0; /* Fjernet margin-top for å fjerne skillet */
+    background-color: var(--dark-color);
+    color: #c0c0c0;
+    padding: 60px 0 0 0; /* Mer padding øverst, ingen nederst da .footer-bottom håndterer det */
+    margin-top: 80px;
     width: 100%;
-    font-size: 0.9em; 
+    font-size: 0.9em;
 }
 
 .footer-container {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    gap: 30px; 
+    gap: 30px; /* Mellomrom mellom kolonner */
     padding-bottom: 40px;
 }
 
 .footer-column {
     flex: 1;
-    min-width: 220px; 
-    padding: 0 15px; 
+    min-width: 200px; /* Sørger for at kolonner ikke blir for smale */
+    margin-bottom: 20px;
 }
 
 .footer-column h4 {
     font-family: var(--heading-font);
-    font-size: 1.1em;
-    color: #ffffff; 
+    color: #fff;
+    font-size: 1.2em;
+    margin-top: 0;
     margin-bottom: 15px;
     font-weight: 600;
+    border-bottom: 1px solid var(--primary-color);
+    padding-bottom: 8px;
+    display: inline-block;
 }
 
 .footer-column ul {
     list-style: none;
-    padding: 0;
-    margin: 0 0 25px 0; 
+    padding-left: 0;
+    margin: 0;
 }
 
 .footer-column ul li {
@@ -41,41 +45,45 @@
 }
 
 .footer-column a {
-    color: #c0c0c0; 
+    color: #c0c0c0;
     text-decoration: none;
-    transition: color 0.3s ease;
+    transition: color 0.2s ease;
 }
 
 .footer-column a:hover {
-    color: var(--primary-color); 
+    color: var(--primary-color);
     text-decoration: underline;
 }
 
-.footer-column p {
+.footer-column-contact p {
     margin-bottom: 15px;
     line-height: 1.6;
 }
+.footer-column-contact p:last-of-type {
+    margin-bottom: 0;
+}
+
 
 .footer-column-brand {
-    text-align: right; 
+    text-align: right; /* Justerer innholdet i denne kolonnen til høyre */
     display: flex;
     flex-direction: column;
-    align-items: flex-end; 
+    align-items: flex-end; /* Sikrer at elementene inni justeres til høyre */
 }
 
 .footer-logo {
-    height: 70px; /* ØKT STØRRELSE - Juster denne verdien etter behov (f.eks. 60px, 80px, 90px) */
-    width: auto;
+    max-width: 150px; /* Juster etter behov */
+    height: auto;
     margin-bottom: 20px;
 }
 
 .footer-locations {
-    font-size: 0.95em;
-    color: #a0a0a0; 
+    font-size: 0.9em;
+    color: #a0a0a0;
 }
 
 .footer-bottom {
-    background-color: rgba(0,0,0,0.1); 
+    background-color: rgba(0,0,0,0.2); /* Litt mørkere enn hoved-footer */
     padding: 20px 0;
     text-align: center;
     font-size: 0.85em;
@@ -86,36 +94,31 @@
     color: #a0a0a0;
 }
 
-/* Responsive justeringer for footer */
+/* Responsive for footer */
 @media (max-width: 992px) {
     .footer-column-brand {
-        text-align: left; 
+        text-align: left; /* Sentrer eller venstrejuster på mindre skjermer om ønskelig */
         align-items: flex-start;
-        margin-top: 20px; 
-        width: 100%; 
+        margin-top: 20px; /* Litt ekstra plass hvis den wrapper */
+        width: 100%; /* Tar full bredde om den wrapper */
     }
 }
+
 
 @media (max-width: 767px) {
     .footer-container {
         flex-direction: column;
-        text-align: center; 
+        text-align: center; /* Sentrerer innholdet i kolonnene */
     }
     .footer-column {
-        min-width: 100%;
-        padding: 0; 
+        min-width: 100%; /* Kolonner tar full bredde */
         margin-bottom: 30px;
     }
-    .footer-column:last-child {
-        margin-bottom: 0;
+    .footer-column h4 {
+        display: block; /* For at border-bottom skal ta full bredde */
     }
     .footer-column-brand {
-        align-items: center; 
+        align-items: center; /* Sentrerer logo etc. */
         margin-top: 10px;
-    }
-    .footer-logo {
-        margin-left: auto;
-        margin-right: auto;
-        height: 60px; /* Juster for mobil også om nødvendig */
     }
 }
