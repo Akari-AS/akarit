@@ -7,6 +7,13 @@ use PHPMailer\PHPMailer\Exception;
 
 require __DIR__ . '/../vendor/autoload.php';
 
+// I toppen av form_handler.php, etter require autoload.php:
+$log_file = __DIR__ . '/form_handler_debug.log';
+file_put_contents($log_file, "--- Nytt Skjemaforsøk: " . date('Y-m-d H:i:s') . " ---\n", FILE_APPEND);
+file_put_contents($log_file, "MAIL_FROM_ADDRESS (getenv): " . (getenv('MAIL_FROM_ADDRESS') ?: 'IKKE SATT I ENV') . "\n", FILE_APPEND);
+file_put_contents($log_file, "MAIL_FROM_NAME (getenv): " . (getenv('MAIL_FROM_NAME') ?: 'IKKE SATT I ENV') . "\n", FILE_APPEND);
+file_put_contents($log_file, "MAILGUN_SMTP_USERNAME (getenv): " . (getenv('MAILGUN_SMTP_USERNAME') ?: 'IKKE SATT I ENV') . "\n\n", FILE_APPEND);
+
 $formResult = [
     'message' => '',
     'success' => false,
