@@ -7,6 +7,11 @@
     nav.desktop-nav li { margin-left: 25px; }
     nav.desktop-nav li a { text-decoration: none; color: #e0e0e0; font-weight: 600; transition: color 0.3s ease, border-bottom-color 0.3s ease; padding-bottom: 5px; border-bottom: 2px solid transparent; }
     nav.desktop-nav li a:hover, nav.desktop-nav li a.active { color: #fff; border-bottom-color: var(--primary-color); }
+
+    /* Større logo på desktop */
+    .header-logo-img {
+        height: 80px; /* Ønsket høyde for desktop */
+    }
 }
 
 /* Justeringer for mindre skjermer - under 992px */

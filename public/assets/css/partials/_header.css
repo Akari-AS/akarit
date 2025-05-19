@@ -21,7 +21,7 @@ header .header-container { display: flex; justify-content: space-between; align-
 }
 
 .header-logo-img { /* Dette er <img>-taggen inne i <a> */
-    height: 80px; /* Juster høyden etter behov. Bredden vil skalere proporsjonalt. */
+    height: 48px; /* Juster høyden etter behov. Bredden vil skalere proporsjonalt. */
     /* For eksempel, hvis logoen er 120x40, kan du sette height: 35px eller max-height: 35px */
     /* Du kan også sette en max-width hvis den blir for bred */
     /* max-width: 120px; */
