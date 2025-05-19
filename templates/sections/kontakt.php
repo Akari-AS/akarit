@@ -29,7 +29,9 @@
                 <?php endif; ?>
 
                 <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>#kontakt" method="post" id="contactForm" class="modern-contact-form">
-                    <input type="hidden" name="form_source_page" value="<?php echo htmlspecialchars($currentLocationName ?? 'Generell'); ?>">
+                    <!-- NYTT SKJULT FELT FOR KILDESIDE/LOKASJON -->
+                    <input type="hidden" name="form_source_location" value="<?php echo htmlspecialchars($currentLocationName ?? 'Generell'); ?>">
+                    
                     <div class="form-row">
                         <div class="form-group form-group-half">
                             <label for="firstname">Navn <span class="required">*</span></label> 
