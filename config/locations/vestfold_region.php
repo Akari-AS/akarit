@@ -1,11 +1,6 @@
 <?php
 // Lokasjoner for Vestfold-området
 return [
-    'larvik' => [
-        'name' => 'Larvik',
-        'heroText' => "Nyåpnet i Larvik! Akari er klar til å hjelpe din Vestfold-bedrift med Google Workspace for fremtidens arbeidsplass.",
-        'metaDescription' => "Google Workspace i Larvik. Akari tilbyr implementering, support og AI-løsninger for bedrifter.",
-    ],
     'sandefjord' => [
         'name' => 'Sandefjord',
         'heroText' => "Akari i Sandefjord: Din ekspert på Google Workspace. Vi hjelper din bedrift med å nå nye høyder med skybaserte løsninger.",

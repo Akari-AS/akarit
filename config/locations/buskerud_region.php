@@ -1,16 +1,6 @@
 <?php
 // Lokasjoner for Buskerud-området & tilstøtende
 return [
-    'kongsberg' => [
-        'name' => 'Kongsberg',
-        'heroText' => "Akari i Kongsberg hjelper din bedrift med Google Workspace for økt produktivitet, sømløst samarbeid og bunnsolid sikkerhet i Kongsberg-regionen.",
-        'metaDescription' => "Styrk bedriften i Kongsberg med Google Workspace. Akari tilbyr lokal ekspertise.",
-    ],
-    'honefoss' => [
-        'name' => 'Hønefoss',
-        'heroText' => "Akari i Hønefoss leverer Google Workspace-løsninger som transformerer hvordan din bedrift jobber. Øk produktiviteten i Ringeriksregionen!",
-        'metaDescription' => "Google Workspace-ekspert i Hønefoss. Akari hjelper din bedrift med skyløsninger og samarbeidsverktøy.",
-    ],
     'drammen' => [
         'name' => 'Drammen',
         'heroText' => "Effektiviser din bedrift i Drammen med Google Workspace fra Akari. Vi er din lokale partner for skybasert samarbeid.",
@@ -120,11 +110,6 @@ return [
         'name' => 'Flå',
         'heroText' => "Akari leverer Google Workspace til bedrifter i Flå. Ta steget inn i fremtidens arbeidsverktøy.",
         'metaDescription' => "Lokal Google Workspace-ekspertise i Flå. Akari hjelper din bedrift med skybaserte løsninger.",
-    ],
-    'numedal' => [
-        'name' => 'Numedal',
-        'heroText' => "Fra Rollag til Rødberg – Akari bringer kraften i Google Workspace til bedrifter i hele Numedal. Oppdag smartere samarbeid.",
-        'metaDescription' => "Akari: Google Workspace-løsninger for bedrifter i Numedal. Øk effektiviteten med skybaserte verktøy.",
     ],
     'rollag' => [
         'name' => 'Rollag',
