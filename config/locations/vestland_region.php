@@ -46,7 +46,12 @@ return [
         'heroText' => "Akari tilbyr Google Workspace for bedrifter på Osøyro. Få tilgang til moderne verktøy for vekst og effektivitet.",
         'metaDescription' => "Google Workspace på Osøyro. Akari er din partner for skybaserte løsninger og lokal support.",
     ],
-    // Vurder andre steder som Måløy, Nordfjordeid, Dale i Sunnfjord, Husnes, Norheimsund etc.
+    'stryn' => [ // NY LOKASJON
+        'name' => 'Stryn',
+        'heroText' => "Akari i Stryn: Google Workspace-løsninger for bedrifter i Nordfjord. Optimaliser samarbeid og produktivitet med oss.",
+        'metaDescription' => "Google Workspace-ekspertise i Stryn. Akari leverer skreddersydde skyløsninger og support for din bedrift.",
+    ],
+  // Vurder andre steder som Måløy, Nordfjordeid, Dale i Sunnfjord, Husnes, Norheimsund etc.
     'maloy' => [ // 'maloy' som slug
         'name' => 'Måløy', // Kinn kommune
         'heroText' => "For bedrifter i Måløy: Akari leverer Google Workspace for en smartere og mer tilkoblet arbeidsdag.",
