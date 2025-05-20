@@ -31,7 +31,7 @@ return [
         'heroText' => "For bedrifter i Båtsfjord: Akari tilbyr Google Workspace for økt produktivitet og enklere samarbeid i fiskerihovedstaden.",
         'metaDescription' => "Google Workspace i Båtsfjord. Akari hjelper din bedrift med å utnytte moderne skyteknologi.",
     ],
-    'vardø' => [ // 'vardo' som slug
+    'vardo' => [ // 'vardo' som slug
         'name' => 'Vardø',
         'heroText' => "Akari i Vardø: Din partner for Google Workspace. Vi hjelper bedrifter i Norges østligste by med å modernisere arbeidsflyten.",
         'metaDescription' => "Google Workspace-løsninger i Vardø. Akari tilbyr implementering og support for din bedrift.",
