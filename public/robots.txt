@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
 Disallow: /sis/
+Disallow: /personvernerklaering.html
 Sitemap: https://googleworkspace.akari.no/sitemap.xml
