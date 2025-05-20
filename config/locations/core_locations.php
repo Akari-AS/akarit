@@ -4,7 +4,7 @@ return [
     'kongsberg' => [
         'name' => 'Kongsberg',
         'isHeadOffice' => true, // Eksempel på ekstra data for nøkkellokasjon
-        'heroText' => "Akari i Kongsberg (Hovedkontor) hjelper din bedrift med Google Workspace for økt produktivitet, sømløst samarbeid og bunnsolid sikkerhet i Kongsberg-regionen.",
+        'heroText' => "Akari i Kongsberg hjelper din bedrift med Google Workspace for økt produktivitet, sømløst samarbeid og bunnsolid sikkerhet i Kongsberg-regionen.",
         'metaDescription' => "Styrk bedriften i Kongsberg med Google Workspace. Akari, ditt lokale hovedkontor, tilbyr ekspertise.",
         // Du kan legge til adresse, spesifikt tlf.nr for kontoret etc. her
         // 'address' => 'Storgata 1, 3611 Kongsberg',
