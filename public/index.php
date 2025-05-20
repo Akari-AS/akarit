@@ -1,13 +1,23 @@
 <?php
 // --------- HENT LOKASJONSDATA OG BESTEM AKTIV LOKASJON ---------
-$allLocationsData = require __DIR__ . '/../config/locations.php'; // Sti til din lokasjonsdatafil
+$allLocationsData = [];
+$locationFilesPath = __DIR__ . '/../config/locations/'; // Sti til mappen med lokasjonsfiler
+
+// Les alle .php-filer fra lokasjonsmappen
+if (is_dir($locationFilesPath)) {
+    $locationFiles = glob($locationFilesPath . '*.php');
+    foreach ($locationFiles as $file) {
+        $locationsInFile = require $file;
+        if (is_array($locationsInFile)) {
+            $allLocationsData = array_merge($allLocationsData, $locationsInFile);
+        }
+    }
+}
 
 $requestedPath = '';
 if (isset($_GET['path'])) {
     $requestedPath = trim($_GET['path'], '/');
 } elseif (isset($_SERVER['REQUEST_URI'])) {
-    // Fallback hvis .htaccess ikke sender 'path', prøv å parse REQUEST_URI
-    // Dette fjerner query string og ledende slash
     $uriPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
     $requestedPath = trim($uriPath, '/');
 }
@@ -16,7 +26,7 @@ $pathSegments = explode('/', $requestedPath);
 $locationSlug = strtolower($pathSegments[0] ?? '');
 
 $currentLocationData = null;
-$currentLocationName = "Generell"; // Fallback for hovedsiden eller ukjent lokasjon
+$currentLocationName = "Generell"; 
 
 if (!empty($locationSlug) && isset($allLocationsData[$locationSlug])) {
     $currentLocationData = $allLocationsData[$locationSlug];
@@ -34,7 +44,6 @@ $locationSpecificMetaDescription = $currentLocationData['metaDescription'] ?? $d
 // --------- FELLES OPPSETT ---------
 $formResult = ['message' => '', 'success' => false, 'data' => []];
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Stien til form_handler er korrekt fra roten av public
     $formResult = require __DIR__ . '/../src/form_handler.php';
 }
 $formMessage = $formResult['message'];
@@ -162,7 +171,7 @@ $workspaceToolsData = [
 ];
 
 // --------- INKLUDER MALER ---------
-require __DIR__ . '/../templates/header.php';
+require __DIR__ . '/../templates/header.php'; 
 
 require __DIR__ . '/../templates/sections/hjem.php';
 require __DIR__ . '/../templates/sections/fordeler.php';
