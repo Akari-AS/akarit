@@ -1,5 +1,40 @@
 <?php
-// ... (eksisterende PHP-kode øverst forblir uendret) ...
+// --------- HENT LOKASJONSDATA OG BESTEM AKTIV LOKASJON ---------
+$allLocationsData = [];
+$locationFilesPath = __DIR__ . '/../config/locations/'; 
+
+if (is_dir($locationFilesPath)) {
+    $locationFiles = glob($locationFilesPath . '*.php');
+    if ($locationFiles === false) {
+        error_log("Feil ved lesing av lokasjonsmappe: " . $locationFilesPath);
+    } else {
+        foreach ($locationFiles as $file) {
+            $locationsInFile = require $file;
+            if (is_array($locationsInFile)) {
+                $allLocationsData = array_merge($allLocationsData, $locationsInFile);
+            }
+        }
+    }
+}
+
+$requestedPath = '';
+if (isset($_GET['path'])) {
+    $requestedPath = trim($_GET['path'], '/');
+} elseif (isset($_SERVER['REQUEST_URI'])) {
+    $uriPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+    $requestedPath = trim($uriPath, '/');
+}
+
+$pathSegments = explode('/', $requestedPath);
+$locationSlug = strtolower($pathSegments[0] ?? '');
+
+$currentLocationData = null;
+$currentLocationName = "Generell"; 
+
+if (!empty($locationSlug) && isset($allLocationsData[$locationSlug])) {
+    $currentLocationData = $allLocationsData[$locationSlug];
+    $currentLocationName = $currentLocationData['name'];
+}
 
 // --------- SETT LOKASJONSSPESIFIKKE VARIABLER (eller fallbacks) ---------
 $defaultHeroText = "Som din dedikerte Google Workspace leverandør, hjelper Akari din bedrift med økt produktivitet, sømløst samarbeid og bunnsolid sikkerhet. La oss ta oss av det tekniske, så du kan fokusere på vekst.";
@@ -8,22 +43,36 @@ $defaultMetaDescription = "Akari er din erfarne Google Workspace leverandør. Vi
 $locationSpecificHeroText = $currentLocationData['heroText'] ?? $defaultHeroText;
 $locationSpecificMetaDescription = $currentLocationData['metaDescription'] ?? $defaultMetaDescription;
 
-// ... (resten av $formResult, old_value, $youtubeVideoId forblir uendret) ...
+// --------- FELLES OPPSETT ---------
+$formResult = ['message' => '', 'success' => false, 'data' => []];
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $formResult = require __DIR__ . '/../src/form_handler.php';
+}
+$formMessage = $formResult['message'];
+$formSuccess = $formResult['success'];
+$submittedData = $formResult['data'];
 
-// Oppdatert sidetittel-logikk (denne var allerede i sentence case for stedsnavn)
-$basePageTitle = "Google Workspace leverandør"; // Endret til sentence case
+function old_value(string $key, array $data): string {
+    return htmlspecialchars($data[$key] ?? '', ENT_QUOTES, 'UTF-8');
+}
+
+$youtubeVideoId = "AwwZMoYNK2o";
+
+$basePageTitle = "Google Workspace Leverandør";
 if ($currentLocationName !== "Generell") {
     $pageTitle = $basePageTitle . ' i ' . htmlspecialchars($currentLocationName) . ' | Akari';
 } else {
-    $pageTitle = $basePageTitle . ' for bedrifter | Akari'; // Endret
+    $pageTitle = $basePageTitle . ' for Bedrifter | Akari';
 }
-$pageDescription = $locationSpecificMetaDescription; // Denne hentes fra config, pass på sentence case der
+$pageDescription = $locationSpecificMetaDescription;
 
-
+// =========================================================================
+// VIKTIG: $workspaceToolsData MÅ VÆRE KOMPLETT HER
+// =========================================================================
 $workspaceToolsData = [
     [
         'id' => 'gmail',
-        'name' => 'Gmail', // Egennavn
+        'name' => 'Gmail',
         'imageUrl' => 'https://www.gstatic.com/images/branding/product/1x/gmail_2020q4_48dp.png',
         'features' => [
             [
@@ -35,18 +84,18 @@ $workspaceToolsData = [
                 'description' => 'Få et sammendrag direkte fra en e-postmelding eller e-posttråd, som fremhever nøkkelpunkter og sparer deg tid.'
             ],
             [
-                'title' => 'Gemini i Gmail-sidepanelet', // Egennavn
+                'title' => 'Gemini i Gmail-sidepanelet',
                 'description' => 'Lag utkast til e-postsvar, still spørsmål til e-postene dine (f.eks. "Oppdater meg på e-poster om Prosjekt Alfa"), og oppsummer lange e-poster og tråder.'
             ]
         ]
     ],
     [
         'id' => 'docs',
-        'name' => 'Google Docs', // Egennavn
+        'name' => 'Google Docs',
         'imageUrl' => 'https://www.gstatic.com/images/branding/product/1x/docs_2020q4_48dp.png',
         'features' => [
             [
-                'title' => 'Gemini i Docs-sidepanelet', // Egennavn
+                'title' => 'Gemini i Docs-sidepanelet',
                 'description' => 'Oppsummer hovedpunktene i et langt dokument, lag en disposisjon for en salgspresentasjon, eller brainstorm ideer for en ny markedsføringskampanje. Poler enkelt dokumentene dine med skrive-, grammatikk- og formateringsforslag fra Gemini.'
             ],
             [
@@ -61,11 +110,11 @@ $workspaceToolsData = [
     ],
     [
         'id' => 'meet',
-        'name' => 'Google Meet', // Egennavn
+        'name' => 'Google Meet',
         'imageUrl' => 'https://www.gstatic.com/images/branding/product/1x/meet_2020q4_48dp.png',
         'features' => [
             [
-                'title' => 'Ta notater for meg i Meet', // Egennavn
+                'title' => 'Ta notater for meg i Meet',
                 'description' => 'Ta møtenotater automatisk, organiser dem i Google Docs, og del dem med teamet ditt. De som kommer sent, kan oppdatere seg under møtet med "Sammendrag så langt".'
             ],
             [
@@ -80,26 +129,26 @@ $workspaceToolsData = [
     ],
     [
         'id' => 'drive',
-        'name' => 'Google Drive', // Egennavn
+        'name' => 'Google Drive',
         'imageUrl' => 'https://www.gstatic.com/images/branding/product/1x/drive_2020q4_48dp.png',
         'features' => [
             [
-                'title' => 'Gemini i Drive-sidepanelet', // Egennavn
+                'title' => 'Gemini i Drive-sidepanelet',
                 'description' => 'Oppsummer flere dokumenter, generer innsikt om et spesifikt emne, få hjelp til å finne filer raskere, og mer, direkte fra Drive-grensesnittet.'
             ],
             [
-                'title' => 'Jobb med PDF-er i Drive', // Egennavn
+                'title' => 'Jobb med PDF-er i Drive',
                 'description' => 'Gemini kan oppsummere lange PDF-filer, generere innsikt fra innholdet, eller bruke PDF-en som grunnlag for å lage noe nytt, som en studieplan eller et e-postutkast.'
             ],
         ]
     ],
     [
         'id' => 'sheets',
-        'name' => 'Google Sheets', // Egennavn
+        'name' => 'Google Sheets',
         'imageUrl' => 'https://www.gstatic.com/images/branding/product/1x/sheets_2020q4_48dp.png',
         'features' => [
             [
-                'title' => 'Gemini i Sheets-sidepanelet', // Egennavn
+                'title' => 'Gemini i Sheets-sidepanelet',
                 'description' => 'Lag raskt tabeller (f.eks. en utgiftssporing), generer innsikt og visualiseringer basert på regnearkdata, og automatiser oppgaver ved hjelp av naturlig språk.'
             ],
             [
@@ -110,7 +159,7 @@ $workspaceToolsData = [
     ],
     [
         'id' => 'slides',
-        'name' => 'Google Slides', // Egennavn
+        'name' => 'Google Slides',
         'imageUrl' => 'https://www.gstatic.com/images/branding/product/1x/slides_2020q4_48dp.png',
         'features' => [
             [
@@ -118,12 +167,13 @@ $workspaceToolsData = [
                 'description' => 'Med en enkel ledetekst kan du enkelt lage originale bilder for presentasjonene dine, som konsepter for digitale markedsføringskampanjer eller illustrasjoner for å forbedre forslaget til årsplanlegging.'
             ],
             [
-                'title' => 'Gemini i Slides-sidepanelet', // Egennavn
+                'title' => 'Gemini i Slides-sidepanelet',
                 'description' => 'Generer raskt nye lysbilder (f.eks. en møteagenda), lag tilpassede bilder for presentasjonene dine, omskriv innhold for klarhet eller tone, og få hjelp til å oppsummere presentasjonen.'
             ]
         ]
     ],
 ];
+// =========================================================================
 
 // --------- INKLUDER MALER ---------
 require __DIR__ . '/../templates/header.php'; 
