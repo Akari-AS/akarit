@@ -11,6 +11,8 @@
     <!-- Favicon -->
     <link rel="icon" href="/assets/img/favicon_akari.png" type="image/png">
 
+<!-- Start cookieyes banner --> <script id="cookieyes" type="text/javascript" src="https://cdn-cookieyes.com/client_data/deeb08dcea17bd80d94b1dd6/script.js"></script> <!-- End cookieyes banner -->
+
     <!-- Google Tag Manager -->
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
     new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
