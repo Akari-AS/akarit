@@ -1,10 +1,9 @@
 <?php
-session_start(); // Start session for å lagre påloggingsstatus
+session_start(); 
 
 // ----------- Passordbeskyttelse -----------
-// Hent fra miljøvariabler, med fallbacks (endre fallbacks før produksjon hvis du ikke bruker env)
 define('ADMIN_USER', getenv('ADMIN_USERNAME') ?: 'admin');
-define('ADMIN_PASS', getenv('ADMIN_PASSWORD') ?: 'secretPassword123!'); // ENDRE DENNE FALLBACKEN!
+define('ADMIN_PASS', getenv('ADMIN_PASSWORD') ?: 'secretPassword123!');
 
 $isLoggedIn = isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true;
 
@@ -12,7 +11,6 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
     if ($_POST['username'] === ADMIN_USER && $_POST['password'] === ADMIN_PASS) {
         $_SESSION['loggedin'] = true;
         $isLoggedIn = true;
-        // Omdiriger for å fjerne POST-data fra URL etter vellykket pålogging
         header("Location: " . $_SERVER['PHP_SELF']);
         exit;
     } else {
@@ -20,8 +18,67 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
     }
 }
 
+// ----------- Håndter CSV nedlasting FØR HTML output hvis logget inn -----------
+if ($isLoggedIn && isset($_GET['download_csv']) && $_GET['download_csv'] === 'true') {
+    $dbHost = getenv('DB_HOST') ?: '127.0.0.1';
+    $dbPort = getenv('DB_PORT') ?: '3306';
+    $dbName = getenv('DB_DATABASE');
+    $dbUser = getenv('DB_USERNAME');
+    $dbPass = getenv('DB_PASSWORD');
+    $pdo_dl = null; // Egen PDO-instans for nedlasting
+
+    if (empty($dbName) || empty($dbUser) || empty($dbPass)) {
+        die("Databasekonfigurasjon mangler. Kan ikke generere CSV.");
+    }
+
+    try {
+        $dsn_dl = "mysql:host={$dbHost};port={$dbPort};dbname={$dbName};charset=utf8mb4";
+        $options_dl = [
+            PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+            PDO::ATTR_EMULATE_PREPARES   => false,
+        ];
+        $pdo_dl = new PDO($dsn_dl, $dbUser, $dbPass, $options_dl);
+
+        $stmt_dl = $pdo_dl->query("SELECT id, submitted_at, firstname, lastname, company, email, phone, package_interest, message, privacy_agreed, form_source_location FROM contact_form_submissions ORDER BY submitted_at DESC");
+        
+        header('Content-Type: text/csv; charset=utf-8');
+        header('Content-Disposition: attachment; filename="henvendelser-' . date('Y-m-d') . '.csv"');
+        
+        $output = fopen('php://output', 'w');
+        // Sett UTF-8 BOM for Excel-kompatibilitet
+        fwrite($output, "\xEF\xBB\xBF"); 
+        
+        // Skriv headere
+        fputcsv($output, ['ID', 'Dato Innsendt', 'Fornavn', 'Etternavn', 'Firma', 'E-post', 'Telefon', 'Interessert i Pakke', 'Melding', 'Personvern Godtatt', 'Kilde/Lokasjon'], ';'); // Bruker semikolon som skilletegn
+
+        while ($row_dl = $stmt_dl->fetch()) {
+            fputcsv($output, [
+                $row_dl['id'],
+                $row_dl['submitted_at'],
+                $row_dl['firstname'],
+                $row_dl['lastname'],
+                $row_dl['company'],
+                $row_dl['email'],
+                $row_dl['phone'],
+                $row_dl['package_interest'],
+                $row_dl['message'],
+                $row_dl['privacy_agreed'] ? 'Ja' : 'Nei',
+                $row_dl['form_source_location']
+            ], ';'); // Bruker semikolon som skilletegn
+        }
+        fclose($output);
+
+    } catch (\PDOException $e_dl) {
+        error_log("Database Error for CSV Download: " . $e_dl->getMessage());
+        die("Kunne ikke generere CSV: Databasefeil. Sjekk serverloggen.");
+    }
+    exit; // Viktig å avslutte etter at filen er sendt
+}
+
+
 if (!$isLoggedIn) {
-    // Vis påloggingsskjema
+    // Vis påloggingsskjema (samme som før)
     ?>
     <!DOCTYPE html>
     <html lang="no">
@@ -54,14 +111,13 @@ if (!$isLoggedIn) {
     </body>
     </html>
     <?php
-    exit; // Ikke vis noe mer hvis ikke logget inn
+    exit; 
 }
 
-// ----------- Hent data fra databasen -----------
+// ----------- Hent data fra databasen for visning på siden -----------
 $submissions = [];
 $dbError = '';
 
-// Hent databaseinnstillinger (samme som i form_handler.php)
 $dbHost = getenv('DB_HOST') ?: '127.0.0.1';
 $dbPort = getenv('DB_PORT') ?: '3306';
 $dbName = getenv('DB_DATABASE');
@@ -70,25 +126,24 @@ $dbPass = getenv('DB_PASSWORD');
 
 if (empty($dbName) || empty($dbUser) || empty($dbPass)) {
     $dbError = "Databasekonfigurasjon mangler. Kan ikke hente henvendelser.";
-    error_log("Database credentials missing for admin_submissions.php");
+    error_log("Database credentials missing for admin_submissions.php display");
 } else {
-    $pdo = null;
+    $pdo_display = null; // Egen PDO for visning
     try {
-        $dsn = "mysql:host={$dbHost};port={$dbPort};dbname={$dbName};charset=utf8mb4";
-        $options = [
+        $dsn_display = "mysql:host={$dbHost};port={$dbPort};dbname={$dbName};charset=utf8mb4";
+        $options_display = [
             PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
             PDO::ATTR_EMULATE_PREPARES   => false,
         ];
-        $pdo = new PDO($dsn, $dbUser, $dbPass, $options);
+        $pdo_display = new PDO($dsn_display, $dbUser, $dbPass, $options_display);
 
-        // Hent de siste 100 innsendingene, nyeste først
-        $stmt = $pdo->query("SELECT id, firstname, lastname, company, email, phone, package_interest, message, privacy_agreed, form_source_location, submitted_at FROM contact_form_submissions ORDER BY submitted_at DESC LIMIT 100");
-        $submissions = $stmt->fetchAll();
+        $stmt_display = $pdo_display->query("SELECT id, firstname, lastname, company, email, phone, package_interest, message, privacy_agreed, form_source_location, submitted_at FROM contact_form_submissions ORDER BY submitted_at DESC LIMIT 100");
+        $submissions = $stmt_display->fetchAll();
 
-    } catch (\PDOException $e) {
-        $dbError = "Databasefeil: " . $e->getMessage();
-        error_log("Database Error in admin_submissions.php: " . $e->getMessage());
+    } catch (\PDOException $e_display) {
+        $dbError = "Databasefeil ved visning: " . $e_display->getMessage();
+        error_log("Database Error in admin_submissions.php (display): " . $e_display->getMessage());
     }
 }
 ?>
@@ -100,26 +155,35 @@ if (empty($dbName) || empty($dbUser) || empty($dbPass)) {
     <title>Henvendelser - Akari Google Workspace</title>
     <style>
         body { font-family: Arial, sans-serif; margin: 20px; background-color: #f4f7f6; color: #333; }
-        h1 { text-align: center; color: #064f55; margin-bottom:30px; }
-        .logout-link { position: absolute; top: 20px; right: 20px; text-decoration: none; background-color: #dc3545; color: white; padding: 8px 15px; border-radius: 4px; font-size: 0.9em;}
+        .header-actions { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        h1 { text-align: left; color: #064f55; margin-top:0; margin-bottom:0; }
+        .button-link { text-decoration: none; background-color: #28a745; color: white; padding: 8px 15px; border-radius: 4px; font-size: 0.9em;}
+        .button-link:hover { background-color: #218838; }
+        .logout-link { text-decoration: none; background-color: #dc3545; color: white; padding: 8px 15px; border-radius: 4px; font-size: 0.9em;}
         .logout-link:hover { background-color: #c82333; }
+        .action-buttons { display: flex; gap: 10px; }
         table { width: 100%; border-collapse: collapse; margin-top: 20px; background-color: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
-        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; font-size: 0.9em; }
+        th, td { border: 1px solid #ddd; padding: 10px 12px; text-align: left; font-size: 0.85em; }
         th { background-color: #00a99d; color: white; font-weight: bold; }
         tr:nth-child(even) { background-color: #f9f9f9; }
         tr:hover { background-color: #f1f1f1; }
-        .message-col { max-width: 300px; word-wrap: break-word; }
+        .message-col { max-width: 250px; min-width: 150px; word-wrap: break-word; white-space: pre-wrap; }
         .no-submissions { text-align: center; padding: 20px; font-style: italic; color: #777; }
         .error-message { color: red; background-color: #f8d7da; border: 1px solid #f5c6cb; padding: 10px; border-radius: 4px; margin-bottom:20px; text-align:center;}
     </style>
 </head>
 <body>
-    <a href="?logout=1" class="logout-link">Logg ut</a>
-    <h1>Mottatte Henvendelser</h1>
+    <div class="header-actions">
+        <h1>Mottatte Henvendelser</h1>
+        <div class="action-buttons">
+            <a href="?download_csv=true" class="button-link">Last ned CSV</a>
+            <a href="?logout=1" class="logout-link">Logg ut</a>
+        </div>
+    </div>
 
     <?php if (isset($_GET['logout'])): ?>
         <?php
-        $_SESSION = array(); // Tøm alle session variabler
+        $_SESSION = array(); 
         if (ini_get("session.use_cookies")) {
             $params = session_get_cookie_params();
             setcookie(session_name(), '', time() - 42000,
@@ -130,13 +194,11 @@ if (empty($dbName) || empty($dbUser) || empty($dbPass)) {
         session_destroy();
         echo "<p style='text-align:center; color:green;'>Du er nå logget ut.</p>";
         echo "<p style='text-align:center;'><a href='" . htmlspecialchars($_SERVER['PHP_SELF']) . "'>Logg inn igjen</a></p>";
-        // Stopp videre lasting av siden
         ?>
     </body></html>
         <?php
         exit;
     endif; ?>
-
 
     <?php if (!empty($dbError)): ?>
         <p class="error-message"><?php echo htmlspecialchars($dbError); ?></p>
