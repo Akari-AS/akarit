@@ -11,7 +11,17 @@
     <!-- Favicon -->
     <link rel="icon" href="/assets/img/favicon_akari.png" type="image/png">
 
-    <!-- Start cookieyes banner --> <script id="cookieyes" type="text/javascript" src="https://cdn-cookieyes.com/client_data/edac3f0861b009c0f5dbf4b9/script.js"></script> <!-- End cookieyes banner -->
+    <!-- Start CookieYes Banner - Plassert tidlig for samtykkehåndtering -->
+    <script id="cookieyes" type="text/javascript" src="https://cdn-cookieyes.com/client_data/edac3f0861b009c0f5dbf4b9/script.js"></script>
+    <!-- End CookieYes Banner -->
+
+    <!-- Google Tag Manager - Lastes etter CookieYes for å potensielt styres av samtykke -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-5B2PFWHX');</script> <!-- DIN NYE GTM ID -->
+    <!-- End Google Tag Manager -->
 
     <!-- Google Fonts (Red Hat Display) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -34,31 +44,31 @@
         {
           "@type": "ContactPoint",
           "telephone": "+47-32-76-66-00",
-          "contactType": "customer support",
+          "contactType": "customer support", 
           "email": "kreative@akari.no",
-          "areaServed": "NO",
+          "areaServed": "NO", 
           "availableLanguage": ["Norwegian"]
         },
         {
           "@type": "ContactPoint",
           "telephone": "+47-32-76-66-00",
-          "contactType": "technical support",
+          "contactType": "technical support", 
           "email": "support@akari.no",
           "areaServed": "NO",
           "availableLanguage": ["Norwegian"]
         }
       ],
-      "sameAs": [
+      "sameAs": [ 
         "https://www.facebook.com/akarireklame",
         "https://www.instagram.com/akari_reklame/",
         "https://www.linkedin.com/company/11776262/",
         "https://www.youtube.com/@akarireklame"
       ],
       "knowsAbout": "Google Workspace",
-      "serviceType": "IT Support, Cloud Computing Services, Google Workspace Reseller" // Eksempler, juster
+      "serviceType": "IT Support, Cloud Computing Services, Google Workspace Reseller"
     }
     </script>
-    <?php if (isset($currentLocationName) && $currentLocationName !== "Generell" && isset($currentLocationData)): ?>
+    <?php if (isset($currentLocationName) && $currentLocationName !== "Generell" && isset($currentLocationData) && isset($locationSlug)): ?>
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -71,18 +81,20 @@
         "url": "https://googleworkspace.akari.no/",
         "name": "Akari Google Workspace"
       },
-      "spatialCoverage": { // Indikerer at denne siden er spesifikk for en lokasjon
+      "spatialCoverage": { 
         "@type": "Place",
         "name": "<?php echo htmlspecialchars($currentLocationName); ?>"
-        // Du kan legge til mer detaljert adresseinfo her hvis du har det i $currentLocationData
       }
     }
     </script>
     <?php endif; ?>
 
-
 </head>
 <body class="bg-akari-light-green text-gray-800 font-body antialiased">
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5B2PFWHX"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript> <!-- DIN NYE GTM ID -->
+    <!-- End Google Tag Manager (noscript) -->
 
 <header>
      <div class="container header-container">
