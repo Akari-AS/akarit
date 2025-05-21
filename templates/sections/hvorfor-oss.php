@@ -1,7 +1,7 @@
 <!-- Hvorfor Oss Seksjon -->
 <section id="hvorfor-oss">
      <div class="container">
-        <h2>Hvorfor velge Akari som <span>din Google Workspace leverandør?</span></h2>
+        <h2>Hvorfor velge Akari som <span>din Google Workspace leverandør?</span></h2> <!-- OK -->
         <p>Som en ledende sertifisert Google Workspace partner og leverandør i Norge, er vi mer enn bare en forhandler – vi er din dedikerte ekspertpartner for skybaserte løsninger.</p>
         <ul> 
             <li><strong>Sertifisert Google Workspace Leverandør:</strong> Vi har inngående kunnskap og offisiell sertifisering for å levere og supportere Google Workspace.</li>

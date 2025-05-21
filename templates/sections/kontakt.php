@@ -3,16 +3,12 @@
      <div class="container">
         <div class="contact-form-wrapper">
             <div class="contact-info-column">
-                <h3>Kontakt <span>Oss</span>
-                    <?php if (isset($currentLocationName) && $currentLocationName !== "Generell"): ?>
-                        i <?php echo htmlspecialchars($currentLocationName); ?>
-                    <?php endif; ?>
-                </h3>
+                <h3>Kontakt <span>oss</span></h3> <!-- Endret -->
                 <p>Vi er klare til å hjelpe deg med å utnytte kraften i Google Workspace. Ta kontakt for en uforpliktende prat!</p>
                 <div class="contact-person">
                     <img src="/assets/img/kenneth_bjerke.jpg" alt="Kenneth B. Bjerke" class="contact-person-img">
                     <div>
-                        <h4>Kenneth B. Bjerke</h4>
+                        <h4>Kenneth B. Bjerke</h4> <!-- Egennavn -->
                         <p class="title">Leder System & IT</p>
                         <p>Tlf: <a href="tel:+4796621811">966 21 811</a></p>
                         <p>E-post: <a href="mailto:kenneth@akari.no">kenneth@akari.no</a></p>
@@ -21,15 +17,15 @@
             </div>
 
             <div class="contact-form-column">
-                <h2 class="form-title"><em>Skriv</em> til oss:</h2>
-                <?php if (!empty($formMessage)): ?>
+                <h2 class="form-title"><em>Skriv</em> til oss:</h2> <!-- "Skriv" kan være ok med stor S her som en oppfordring -->
+                <!-- ... (resten av skjemaet forblir uendret) ... -->
+                 <?php if (!empty($formMessage)): ?>
                     <div class="form-message <?php echo $formSuccess ? 'success' : 'error'; ?>">
                         <?php echo htmlspecialchars($formMessage); ?>
                     </div>
                 <?php endif; ?>
 
                 <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>#kontakt" method="post" id="contactForm" class="modern-contact-form">
-                    <!-- NYTT SKJULT FELT FOR KILDESIDE/LOKASJON -->
                     <input type="hidden" name="form_source_location" value="<?php echo htmlspecialchars($currentLocationName ?? 'Generell'); ?>">
                     
                     <div class="form-row">

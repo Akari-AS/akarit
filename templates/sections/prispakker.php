@@ -2,14 +2,14 @@
 <section id="prispakker">
     <div class="pk-pricing-container container">
         <div class="pk-pricing-intro">
-            <h2>Lei av kompliserte <span>IT-fakturaer?</span></h2>
+            <h2>Lei av kompliserte <span>IT-fakturaer?</span></h2> <!-- Allerede OK -->
             <p>Som din Google Workspace leverandør tilbyr Akari faste, oversiktlige priser per bruker per måned. Inkludert i prisen er enkel drift og teknisk support. Enkelt og greit – det er tanken!</p>
         </div>
 
         <div class="pk-pricing-table">
             <div class="pk-pricing-plan">
                 <div class="pk-plan-header">
-                    <h3>Startpakken</h3>
+                    <h3>Startpakken</h3> <!-- OK -->
                     <div class="pk-plan-price">
                         <span class="pk-price-amount">200kr</span>
                         <span class="pk-price-term">/mnd per bruker</span>
@@ -35,7 +35,7 @@
             <div class="pk-pricing-plan pk-plan-recommended">
                 <div class="pk-plan-badge">Mest Populær</div>
                 <div class="pk-plan-header">
-                    <h3>Standardpakken</h3>
+                    <h3>Standardpakken</h3> <!-- OK -->
                     <div class="pk-plan-price">
                         <span class="pk-price-amount">350kr</span>
                         <span class="pk-price-term">/mnd per bruker</span>
@@ -60,7 +60,7 @@
 
             <div class="pk-pricing-plan">
                 <div class="pk-plan-header">
-                    <h3>Premiumpakken</h3>
+                    <h3>Premiumpakken</h3> <!-- OK -->
                     <div class="pk-plan-price">
                         <span class="pk-price-amount">550kr</span>
                         <span class="pk-price-term">/mnd per bruker</span>
