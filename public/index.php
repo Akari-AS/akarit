@@ -22,26 +22,44 @@ if (is_dir($locationFilesPath)) {
 }
 
 // --------- ARTIKKELFUNKSJONER ---------
+function parse_front_matter($rawFrontMatter) {
+    $frontMatter = [];
+    $lines = explode("\n", trim($rawFrontMatter));
+    foreach ($lines as $line) {
+        $line = trim($line);
+        if (empty($line) || strpos($line, ':') === false) {
+            continue; 
+        }
+        list($key, $value) = explode(':', $line, 2);
+        $key = trim($key);
+        $value = trim($value);
+
+        if ((substr($value, 0, 1) == '"' && substr($value, -1) == '"') ||
+            (substr($value, 0, 1) == "'" && substr($value, -1) == "'")) {
+            $value = substr($value, 1, -1);
+        }
+        $frontMatter[$key] = $value;
+    }
+    return $frontMatter;
+}
+
 function get_article_data($slug) {
     $filePath = __DIR__ . '/../content/articles/' . $slug . '.md';
     if (file_exists($filePath)) {
         $content = file_get_contents($filePath);
         $parsedown = new Parsedown();
         
-        // Enkel front-matter parsing
         if (preg_match('/^---\s*$(.*?)^---\s*$(.*)/ms', $content, $matches)) {
-            $frontMatter = [];
-            $lines = explode("\n", trim($matches[1]));
-            foreach ($lines as $line) {
-                if (strpos($line, ':') !== false) {
-                    list($key, $value) = explode(':', $line, 2);
-                    $frontMatter[trim($key)] = trim(trim($value), "'\"");
-                }
-            }
+            $frontMatter = parse_front_matter($matches[1]);
             $htmlContent = $parsedown->text(trim($matches[2]));
-            return array_merge($frontMatter, ['content' => $htmlContent]);
+            return array_merge($frontMatter, ['content' => $htmlContent, 'slug' => $slug]); // Legg til slug her også
+        } else {
+            // Fallback hvis ingen front-matter, eller for å feilsøke
+             error_log("Kunne ikke parse front-matter for artikkel: " . $slug);
+             return ['title' => 'Artikkel uten tittel', 'content' => $parsedown->text($content), 'slug' => $slug];
         }
     }
+    error_log("Artikkelfil ikke funnet: " . $filePath);
     return null;
 }
 
@@ -54,20 +72,14 @@ function get_all_articles_metadata() {
     foreach ($markdownFiles as $file) {
         $content = file_get_contents($file);
         if (preg_match('/^---\s*$(.*?)^---\s*$/ms', $content, $matches)) {
-            $frontMatter = [];
-            $lines = explode("\n", trim($matches[1]));
-            foreach ($lines as $line) {
-                if (strpos($line, ':') !== false) {
-                    list($key, $value) = explode(':', $line, 2);
-                    $frontMatter[trim($key)] = trim(trim($value), "'\"");
-                }
+            $frontMatter = parse_front_matter($matches[1]);
+            // Legg til filnavn-basert slug hvis 'slug' mangler i front-matter, for robusthet
+            if (!isset($frontMatter['slug'])) {
+                $frontMatter['slug'] = pathinfo($file, PATHINFO_FILENAME);
             }
-            if (isset($frontMatter['slug'])) { // Krever slug for å være en gyldig artikkel for listing
-                $articles[] = $frontMatter;
-            }
+            $articles[] = $frontMatter;
         }
     }
-    // Sorter artikler etter dato (nyeste først), hvis dato er satt
     usort($articles, function($a, $b) {
         $dateA = isset($a['date']) ? strtotime($a['date']) : 0;
         $dateB = isset($b['date']) ? strtotime($b['date']) : 0;
@@ -84,30 +96,22 @@ if (isset($_GET['path'])) {
 } elseif (isset($_SERVER['REQUEST_URI'])) {
     $uriPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
     $requestedPath = trim($uriPath, '/');
-    // Fjern eventuell subfolder hvis prosjektet ikke er i roten av domenet
-    // Eksempel hvis prosjektet ligger i googleworkspace.akari.no/prosjektmappe/
-    // $scriptName = dirname($_SERVER['SCRIPT_NAME']);
-    // if ($scriptName !== '/' && strpos($requestedPath, ltrim($scriptName, '/')) === 0) {
-    //    $requestedPath = trim(substr($requestedPath, strlen(ltrim($scriptName, '/'))), '/');
-    // }
 }
 
-
 $pathSegments = explode('/', $requestedPath);
-$pageType = 'landingpage'; // 'landingpage', 'article_single', 'article_listing'
-$currentLocationSlug = strtolower($pathSegments[0] ?? ''); // Kan være lokasjonsslug eller 'artikler'
+$pageType = 'landingpage'; 
+$currentLocationSlug = strtolower($pathSegments[0] ?? ''); 
 $articleSlug = null;
-$articleData = null; // Initialiser for å unngå feil senere
-
+$articleData = null; 
 
 if ($currentLocationSlug === 'artikler') {
     if (isset($pathSegments[1]) && !empty($pathSegments[1])) {
         $pageType = 'article_single';
         $articleSlug = $pathSegments[1];
-        $currentLocationSlug = ''; // Dette er ikke en lokasjonsside
+        $currentLocationSlug = ''; 
     } else {
         $pageType = 'article_listing';
-        $currentLocationSlug = ''; // Dette er ikke en lokasjonsside
+        $currentLocationSlug = ''; 
     }
 }
 
@@ -118,32 +122,29 @@ if ($pageType === 'landingpage' && !empty($currentLocationSlug) && isset($allLoc
     $currentLocationData = $allLocationsData[$currentLocationSlug];
     $currentLocationName = $currentLocationData['name'];
 } elseif ($pageType === 'landingpage' && empty($currentLocationSlug)) {
-    // Dette er rot-URLen, ikke en spesifikk lokasjon
     $currentLocationName = "Generell";
 }
-
 
 // --------- SIDETITTEL OG METABESKRIVELSE ---------
 $defaultHeroText = "Som din dedikerte Google Workspace leverandør, hjelper Akari din bedrift med økt produktivitet, sømløst samarbeid og bunnsolid sikkerhet. La oss ta oss av det tekniske, så du kan fokusere på vekst.";
 $defaultMetaDescription = "Akari er din erfarne Google Workspace leverandør. Vi tilbyr skreddersydde skyløsninger, implementering, support og AI-drevne verktøy for bedrifter i Norge.";
 $locationSpecificHeroText = ($pageType === 'landingpage' && isset($currentLocationData['heroText'])) ? $currentLocationData['heroText'] : $defaultHeroText;
 
-
 if ($pageType === 'article_single' && $articleSlug) {
-    $articleData = get_article_data($articleSlug); // Hent artikkeldata her
-    if ($articleData) {
+    $articleData = get_article_data($articleSlug); 
+    if ($articleData && isset($articleData['title'])) { // Sjekk om title er satt
         $pageTitle = htmlspecialchars($articleData['title']) . ' | Artikler | Akari';
         $pageDescription = htmlspecialchars($articleData['meta_description'] ?? $articleData['excerpt'] ?? $defaultMetaDescription);
     } else {
-        // Artikkel ikke funnet - kunne hatt en 404 her
         http_response_code(404);
         $pageTitle = "Artikkel ikke funnet | Akari";
         $pageDescription = $defaultMetaDescription;
+        $articleData = null; // Sørg for at $articleData er null hvis artikkelen ikke finnes
     }
 } elseif ($pageType === 'article_listing') {
     $pageTitle = 'Artikler om Google Workspace | Akari';
     $pageDescription = 'Les våre siste artikler og innsikt om Google Workspace, AI, produktivitet og samarbeid.';
-} else { // Landing page
+} else { 
     $basePageTitle = "Google Workspace Leverandør";
     if ($currentLocationName !== "Generell") {
         $pageTitle = $basePageTitle . ' i ' . htmlspecialchars($currentLocationName) . ' | Akari';
@@ -153,7 +154,6 @@ if ($pageType === 'article_single' && $articleSlug) {
         $pageDescription = $defaultMetaDescription;
     }
 }
-
 
 // --------- SKJEMAHÅNDTERING (hvis POST) ---------
 $formResult = ['message' => '', 'success' => false, 'data' => []];
@@ -168,13 +168,8 @@ function old_value(string $key, array $data): string {
     return htmlspecialchars($data[$key] ?? '', ENT_QUOTES, 'UTF-8');
 }
 
-// --------- YOUTUBE VIDEO ID & WORKSPACE TOOLS (for landingssider) ---------
-$youtubeVideoId = "AwwZMoYNK2o"; // Brukes i hjem.php
+$youtubeVideoId = "AwwZMoYNK2o";
 
-// =========================================================================
-// VIKTIG: $workspaceToolsData MÅ VÆRE KOMPLETT HER
-// Dette arrayet brukes i templates/sections/ai-funksjoner.php
-// =========================================================================
 $workspaceToolsData = [
     [
         'id' => 'gmail',
@@ -279,34 +274,29 @@ $workspaceToolsData = [
         ]
     ],
 ];
-// =========================================================================
-
 
 // --------- INKLUDER MALER BASERT PÅ PAGETYPE ---------
-require __DIR__ . '/../templates/header.php'; // Felles header
+require __DIR__ . '/../templates/header.php'; 
 
 if ($pageType === 'article_single') {
-    if ($articleData) { // $articleData satt tidligere under SIDETITTEL OG METABESKRIVELSE
+    if ($articleData) { 
         require __DIR__ . '/../templates/article_single.php';
     } else {
-        // Vis 404-innhold hvis artikkel ikke ble funnet
         echo "<main><div class='container' style='padding: 50px 20px; text-align: center;'><h2>404 - Artikkel ikke funnet</h2><p>Beklager, vi fant ikke artikkelen du lette etter.</p><p><a href='/artikler/' class='cta-button'>Se alle artikler</a> <a href='/' class='cta-button secondary'>Til forsiden</a></p></div></main>";
     }
 } elseif ($pageType === 'article_listing') {
-    $allArticles = get_all_articles_metadata(); // Hent metadata for alle artikler
+    $allArticles = get_all_articles_metadata(); 
     require __DIR__ . '/../templates/article_listing.php';
-} else { // Landing page (enten generell eller lokasjonsspesifikk)
+} else { 
     require __DIR__ . '/../templates/sections/hjem.php';
     require __DIR__ . '/../templates/sections/fordeler.php';
     require __DIR__ . '/../templates/sections/produkter.php';
     require __DIR__ . '/../templates/sections/ai-funksjoner.php';
-    // TODO: Vurder å legge til en ny seksjon her for å vise f.eks. de 3 siste artiklene
-    // require __DIR__ . '/../templates/sections/siste_artikler.php';
     require __DIR__ . '/../templates/sections/prispakker.php';
     require __DIR__ . '/../templates/sections/nrk-google-workspace.php';
     require __DIR__ . '/../templates/sections/hvorfor-oss.php';
     require __DIR__ . '/../templates/sections/kontakt.php';
 }
 
-require __DIR__ . '/../templates/footer.php'; // Felles footer
+require __DIR__ . '/../templates/footer.php';
 ?>

@@ -1,11 +1,11 @@
 ---
 title: "Google Workspace: Forvandle din arbeidshverdag – Fra sømløst samarbeid til AI-drevet innsikt"
 author: "Kenneth B. Bjerke"
-date: "2025-05-23" # Sett dagens dato eller publiseringsdato
+date: "2025-05-23"
 slug: "google-workspace-forvandle-din-arbeidshverdag"
 excerpt: "Oppdag hvordan Google Workspace, med kraften fra Gemini og NotebookLM, kan revolusjonere måten bedriften din jobber, samarbeider og innoverer på."
 meta_description: "Utforsk fordelene med Google Workspace, fra sanntidssamarbeid til avansert AI-drevet analyse med Gemini og NotebookLM. Akari hjelper deg i gang."
-image: "/assets/img/articles/google-workspace-og-ai.jpg" # Foreslått bildeplassering - du må legge til et bilde her
+image: "/assets/img/articles/google-workspace-og-ai.jpg"
 ---
 
 I en stadig mer digitalisert og hektisk arbeidshverdag, jakter vi alle på verktøy som ikke bare forenkler oppgaver, men som genuint forbedrer måten vi jobber og samhandler på. Som en som daglig ser bedrifters behov for effektive løsninger, er det én plattform jeg stadig vender tilbake til som en game-changer: **Google Workspace**. Jeg ønsker å dele litt om hvorfor jeg mener denne pakken er mer enn bare en samling applikasjoner – den er en katalysator for produktivitet og innovasjon.
