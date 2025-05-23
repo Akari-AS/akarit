@@ -1,11 +1,11 @@
 ---
 title: "NRK velger Google Workspace: Et tegn i tiden"
-author: "Akari Redaksjonen" # Eller Kenneth B. Bjerke
-date: "2025-05-13" # Dagens dato eller publiseringsdato
+author: "Kenneth Bæver Bjerke"
+date: "2025-05-13" 
 slug: "nrk-velger-google-workspace"
 excerpt: "Norsk Rikskringkasting (NRK) bytter til Google Workspace. Les hvorfor dette valget understreker plattformens styrke og relevans i det norske markedet."
 meta_description: "NRK går fra Microsoft 365 til Google Workspace, med fokus på KI-løsninger, samhandling og pris. Akari analyserer betydningen."
-image: "/assets/img/articles/nrk-google-workspace-featured.jpg" # Foreslått bilde - du må legge til et passende bilde her
+image: "/assets/img/articles/nrk-google-workspace-featured.jpg"
 ---
 
 Et tydelig tegn på Google Workspace sin styrke og appell i det norske markedet er valget til Norsk Rikskringkasting (NRK). Den store og anerkjente medieorganisasjonen kunngjorde nylig at de bytter fra Microsoft 365 til Google Workspace for sine tusenvis av ansatte.
