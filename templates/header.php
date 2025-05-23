@@ -88,12 +88,9 @@
         </a>
         <nav class="desktop-nav">
             <ul>
-                <li><a href="/#fordeler">Fordeler</a></li>
-                <li><a href="/#produkter">Produkter</a></li>
-                <li><a href="/#ai-funksjoner">AI-Funksjoner</a></li>
+                <li><a href="/#fordeler">Google Workspace</a></li> <?php // Dekker Fordeler, Produkter, AI ?>
                 <li><a href="/#prispakker">Prispakker</a></li>
-                <li><a href="/#nrk-google-workspace">NRK & Google</a></li>
-                <li><a href="/artikler/">Artikler</a></li> <?php // <-- NY LENKE HER ?>
+                <li><a href="/artikler/">Artikler</a></li>
                 <li><a href="/#hvorfor-oss">Hvorfor Akari?</a></li>
                 <li><a href="/#kontakt">Kontakt</a></li>
             </ul>
@@ -111,14 +108,11 @@
     </div>
      <div id="mobile-menu" class="mobile-menu-panel">
          <ul>
-             <li><a href="/#fordeler">Fordeler</a></li>
-             <li><a href="/#produkter">Produkter</a></li>
-             <li><a href="/#ai-funksjoner">AI-Funksjoner</a></li>
-             <li><a href="/#prispakker">Prispakker</a></li>
-             <li><a href="/#nrk-google-workspace">NRK & Google</a></li>
-             <li><a href="/artikler/">Artikler</a></li> <?php // <-- NY LENKE HER ?>
-             <li><a href="/#hvorfor-oss">Hvorfor Akari?</a></li>
-             <li><a href="/#kontakt">Kontakt</a></li>
+            <li><a href="/#fordeler">Google Workspace</a></li>
+            <li><a href="/#prispakker">Prispakker</a></li>
+            <li><a href="/artikler/">Artikler</a></li>
+            <li><a href="/#hvorfor-oss">Hvorfor Akari?</a></li>
+            <li><a href="/#kontakt">Kontakt</a></li>
          </ul>
      </div>
 </header>
