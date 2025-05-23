@@ -9,7 +9,7 @@
 </iframe>
   </div>
   <div class="container">
-    <h1>testFremtiden er samarbeid med <span>Google Workspace</span>
+    <h1>Fremtiden er samarbeid med <span>Google Workspace</span>
       <?php if (isset($currentLocationName) && $currentLocationName !== "Generell"): ?>
       i <?php echo htmlspecialchars($currentLocationName); ?>
       <?php endif; ?>
