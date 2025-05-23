@@ -1,58 +1,58 @@
-/* --- NRK Story Section --- */
-#nrk-google-workspace {
-    background-color: var(--light-green-bg); /* Eller annen passende bakgrunn */
+/* --- NRK Teaser Section Styling (_nrk-story.css) --- */
+section#nrk-google-workspace-teaser { /* Endret ID for å matche template */
+    background-color: var(--light-green-bg); 
+    padding: 70px 0; /* Justert padding for en teaser */
 }
 
-#nrk-google-workspace .nrk-story-container {
-    max-width: 800px; /* Begrenser bredden for lesbarhet */
-    margin-left: auto;
-    margin-right: auto;
-    text-align: left; /* Justerer teksten til venstre for lengre avsnitt */
-}
-
-#nrk-google-workspace .nrk-story-container h3 {
-    font-family: var(--heading-font);
-    font-size: 1.5em;
-    font-weight: 600;
-    color: var(--dark-color);
-    margin-top: 30px;
-    margin-bottom: 15px;
-}
-
-#nrk-google-workspace .nrk-story-container p {
-    font-size: 1em;
-    color: var(--text-color);
-    line-height: 1.8;
+/* 
+   Generell h2 og p (ingress) for seksjonen vil arve styling fra _sections.css,
+   noe som vanligvis er ønskelig. Hvis du trenger å overstyre, kan du gjøre det her:
+*/
+/*
+section#nrk-google-workspace-teaser h2 {
+    font-size: 2.4em; 
     margin-bottom: 20px;
 }
 
-.spotify-embed-container {
-    margin-top: 30px;
-    margin-bottom: 30px;
-    max-width: 100%; /* Sikrer at den ikke blir bredere enn sin container */
+section#nrk-google-workspace-teaser > .container > p { 
+    font-size: 1.1em;
+    max-width: 800px;
+    margin-bottom: 35px;
+}
+*/
+
+.nrk-teaser-section .nrk-teaser-content { /* Ny klasse for innholdet i teaseren */
+    max-width: 700px; /* Begrenser bredden for lesbarhet av teaser-tekst */
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center; /* Sentrerer teaser-innholdet */
+    margin-top: 30px; /* Avstand fra ingress til teaser-tekst/knapp */
 }
 
-.spotify-embed-container iframe {
-    border-radius: 12px; /* Matcher Spotify sin egen styling */
-    width: 100%;
-    min-height: 232px; /* Spotify sin standard minimumshøyde for kompakt spiller */
+.nrk-teaser-section .nrk-teaser-content p {
+    font-size: 1.05em; /* Litt justert størrelse for teaser-tekst */
+    color: var(--text-color);
+    line-height: 1.8;
+    margin-bottom: 30px; /* Avstand fra tekst til knapp */
 }
 
-/* For den større spilleren, om ønskelig (høyde 352px) */
-.spotify-embed-container.large-player iframe {
-    min-height: 352px;
-}
+/* Knappen .cta-button vil arve styling fra _buttons.css */
+/* .nrk-teaser-section .nrk-teaser-content .cta-button {} */
 
-/* Fjerner ::after for denne spesifikke seksjonen */
-section#nrk-google-workspace h2::after {
+
+/* Fjerner ::after for denne spesifikke seksjonens h2, hvis den arver en fra _sections.css */
+section#nrk-google-workspace-teaser h2::after {
     display: none;
 }
 
+/* Responsive justeringer for teaser kan legges til her om nødvendig */
+/*
 @media (max-width: 767px) {
-    #nrk-google-workspace .nrk-story-container {
-        text-align: center; /* Kan sentrere på mobil for kortere tekster */
+    section#nrk-google-workspace-teaser {
+        padding: 50px 0;
     }
-    .spotify-embed-container iframe {
-        /* Høyde kan justeres for mobil hvis ønskelig */
+    .nrk-teaser-section .nrk-teaser-content p {
+        font-size: 1em;
     }
 }
+*/

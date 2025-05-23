@@ -146,7 +146,7 @@ if ($pageType === 'article_single' && $articleSlug) {
     $pageDescription = 'Les våre siste artikler og innsikt om Google Workspace, AI, produktivitet og samarbeid.';
 } else { 
     $basePageTitle = "Google Workspace Leverandør";
-    if ($currentLocationName !== "Generell") {
+    if ($currentLocationName !== "Generell" && isset($currentLocationData)) {
         $pageTitle = $basePageTitle . ' i ' . htmlspecialchars($currentLocationName) . ' | Akari';
         $pageDescription = $currentLocationData['metaDescription'] ?? $defaultMetaDescription;
     } else {
@@ -170,8 +170,6 @@ function old_value(string $key, array $data): string {
 
 // --------- ANDRE GLOBALE VARIABLER / DATA ---------
 $youtubeVideoId = "AwwZMoYNK2o";
-
-// Hent data for Workspace-verktøy fra egen fil
 $workspaceToolsData = require __DIR__ . '/../config/workspace_tools_data.php';
 
 
@@ -187,13 +185,13 @@ if ($pageType === 'article_single') {
 } elseif ($pageType === 'article_listing') {
     $allArticles = get_all_articles_metadata(); 
     require __DIR__ . '/../templates/article_listing.php';
-} else { 
+} else { // Landing page
     require __DIR__ . '/../templates/sections/hjem.php';
     require __DIR__ . '/../templates/sections/fordeler.php';
     require __DIR__ . '/../templates/sections/produkter.php';
-    require __DIR__ . '/../templates/sections/ai-funksjoner.php'; // Denne bruker $workspaceToolsData
+    require __DIR__ . '/../templates/sections/ai-funksjoner.php';
     require __DIR__ . '/../templates/sections/prispakker.php';
-    require __DIR__ . '/../templates/sections/nrk-google-workspace.php';
+    require __DIR__ . '/../templates/sections/nrk-google-workspace.php'; // Inkluderer nå teaseren
     require __DIR__ . '/../templates/sections/hvorfor-oss.php';
     require __DIR__ . '/../templates/sections/kontakt.php';
 }
