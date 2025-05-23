@@ -4,12 +4,15 @@
 .article-single-page {
     padding-top: 40px;
     padding-bottom: 60px;
-    max-width: 800px; 
+    /* max-width: 800px; TIDLIGERE VERDI */
+    max-width: 1140px; /* ØKT BREDDE - SAMME SOM STANDARD .container */
     margin-left: auto;
     margin-right: auto;
+    /* Padding på sidene (f.eks. 20px) håndteres vanligvis av den indre .container klassen,
+       eller vi kan legge det til her hvis .article-single-page er den ytterste containeren
+       for artikkelinnholdet. Siden du har class="article-single-page container" i HTML,
+       vil .container sin padding gjelde. */
 }
-
-/* Fjernet .article-single-page .article-header styling herfra */
 
 /* Ny styling for tittel og meta plassert direkte i .article-single-page */
 .article-single-page .article-main-title {
@@ -19,16 +22,16 @@
     margin-top: 0; 
     margin-bottom: 10px; 
     line-height: 1.2;
-    text-align: center; /* Kan endres til left hvis ønskelig */
-    padding: 0 15px; /* Litt padding på sidene hvis container er full bredde på mobil */
+    text-align: center; 
+    /* padding: 0 15px; Fjernet - .container håndterer padding */
 }
 
 .article-single-page .article-main-meta {
     font-size: 0.9em;
     color: #555; 
-    margin-bottom: 30px; /* Mellomrom før bildet */
-    text-align: center; /* Kan endres til left hvis ønskelig */
-    padding: 0 15px;
+    margin-bottom: 30px; 
+    text-align: center; 
+    /* padding: 0 15px; Fjernet - .container håndterer padding */
 }
 
 /* Styling for bildecontainer og selve bildet */
@@ -36,10 +39,15 @@
     margin-top: 0; 
     margin-bottom: 40px; 
     line-height: 0; 
+    /* Hvis du vil at bildet skal kunne bli bredere enn tekstinnholdet,
+       kan du gi denne containeren negativ margin:
+       margin-left: -20px; margin-right: -20px; (hvis container har 20px padding)
+       eller sette width: 100vw; position: relative; left: 50%; transform: translateX(-50%);
+       men det blir mer komplekst. La oss starte med at det følger tekstbredden. */
 }
 .article-single-page .article-featured-image {
     width: 100%;
-    max-height: 450px;
+    max-height: 500px; /* Kan justeres etter ønske */
     object-fit: cover;
     border-radius: var(--border-radius); 
 }
@@ -48,9 +56,14 @@
     font-size: 1.1em;
     line-height: 1.8;
     color: var(--text-color);
+    /* For å sikre at selve tekstblokken ikke blir for bred for lesbarhet,
+       selv om den ytre containeren er bredere, kan vi sette en max-width her også. */
+    max-width: 800px; /* BEGRENSE LESEBREDDEN PÅ SELVE TEKSTEN */
+    margin-left: auto; /* Sentrere tekstblokken */
+    margin-right: auto; /* Sentrere tekstblokken */
 }
 
-/* ... (Resten av H2, H3, p, ul, ol, a, blockquote, img i .article-content forblir som før) ... */
+/* ... (Resten av .article-content H2, H3, p, etc. forblir som før) ... */
 .article-single-page .article-content h2 {
     font-family: var(--heading-font);
     font-size: 2em;
@@ -110,16 +123,44 @@
     display: block; 
 }
 
+/* NÅR KONTAKTSKJEMA INKLUDERES INNE I ARTIKKELEN */
+.article-single-page section#kontakt {
+    margin-top: 60px; 
+    padding-top: 50px;
+    padding-bottom: 50px;
+    background-color: var(--light-green-bg-darker); 
+    /* VIKTIG: Kontaktseksjonen har sin egen .container inni seg.
+       For å få den til å fylle bredden satt av .article-single-page,
+       må vi kanskje justere padding på .article-single-page hvis
+       kontaktseksjonen ikke skal ha dobbel padding.
+       Eller, vi kan la kontaktseksjonen bruke sin egen .container
+       som vil begrense bredden på selve skjemaet til 1140px (eller hva .container er satt til)
+       men bakgrunnsfargen til #kontakt vil fylle hele bredden av .article-single-page.
+       Dette er sannsynligvis ønskelig.
+
+       For å sikre at innholdet i #kontakt ikke blir smalere enn selve artikkelteksten hvis
+       .article-content har en smalere max-width:
+    */
+}
+.article-single-page section#kontakt .container {
+    /* La denne være, så skjemaet bruker standard containerbredde.
+       Hvis du vil at skjemaet skal være like smalt som artikkelteksten (800px), kan du legge til:
+       max-width: 800px;
+       Men det vil se rart ut om bakgrunnen for #kontakt er bredere.
+    */
+}
+
+
 .article-navigation {
     margin-top: 50px;
     text-align: center;
 }
 
 /* Artikkeloppføringsside (_article_listing.php) - FORBLIR SOM FØR */
+/* ... (resten av .article-listing-page og .article-card CSS er uendret) ... */
 .article-listing-page {
     padding: 80px 0;
 }
-/* ... (resten av .article-listing-page og .article-card CSS er uendret) ... */
 .article-listing-page h2 { }
 .article-listing-page > .container > p { 
     text-align: center;
@@ -193,13 +234,15 @@
     font-size: 0.9em;
 }
 
+
 /* Responsive justeringer for artikler */
 @media (max-width: 767px) {
-    .article-single-page .article-main-title { /* Endret fra .article-header h1 */
+    .article-single-page .article-main-title {
         font-size: 2.2em;
     }
     .article-single-page .article-content {
         font-size: 1em;
+        max-width: 100%; /* La brødteksten fylle tilgjengelig bredde på mobil */
     }
      .article-single-page .article-content h2 {
         font-size: 1.8em;
