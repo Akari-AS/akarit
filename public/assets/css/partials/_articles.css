@@ -47,17 +47,15 @@
     font-family: var(--heading-font);
     font-size: 2em;
     color: var(--dark-color);
-    margin-top: 50px;
-    margin-bottom: 20px;
-    padding-bottom: 10px;
-    border-bottom: 2px solid var(--primary-color);
+    margin-top: 50px; /* Behold eller juster for "mykere overgang" */
+    margin-bottom: 25px; /* Øk litt for mer luft under */
+    padding-bottom: 5px; /* Reduser eller fjern padding hvis ingen border */
+    border-bottom: none; /* FJERNER STREKEN */
     text-align: left; /* Override section h2 */
 }
 .article-single-page .article-content h2::after {
     display: none; /* Fjerner global ::after for seksjonstitler */
 }
-
-
 .article-single-page .article-content h3 {
     font-family: var(--heading-font);
     font-size: 1.6em;

@@ -22,6 +22,8 @@ En av de store styrkene til Google Workspace er den helhetlige og intuitive bruk
 
 Når vi snakker om skybaserte løsninger og bedriftsdata, er sikkerhet alfa og omega. Google Workspace skuffer ikke. Plattformen kommer med robuste sikkerhetsfunksjoner, inkludert avansert beskyttelse mot nettfisking og skadelig programvare. Samtidig gir den detaljerte administratorkontroller for brukeradministrasjon, datalagring og enhetssikkerhet. Dette betyr at du kan være trygg på at bedriftens data er godt beskyttet, samtidig som du har full kontroll over hvordan plattformen brukes internt. For meg er dette en uslåelig kombinasjon av fleksibilitet og sikkerhet, bygget for fremtidens arbeidsmåte.
 
+![Oversikt over Google Workspace verktøy](/assets/img/articles/Kenneth_Google_Workspace-2.jpg "Google Workspace verktøyoversikt")
+
 ## AI-revolusjonen er her: Møt Gemini og NotebookLM i Google Workspace
 
 Og det stopper ikke der. AI-revolusjonen har for alvor inntatt Google Workspace, og det er her det blir virkelig spennende. Du har kanskje hørt om **Gemini**, Googles kraftfulle AI-modell, som nå er integrert direkte i verktøy som Docs, Gmail og Sheets. Se for deg Gemini som din intelligente makker: den hjelper deg å skrive, oppsummere, analysere og skape innhold raskere enn noensinne.
