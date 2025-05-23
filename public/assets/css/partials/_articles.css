@@ -4,37 +4,43 @@
 .article-single-page {
     padding-top: 40px;
     padding-bottom: 60px;
-    max-width: 800px; /* For bedre lesbarhet */
+    max-width: 800px; 
     margin-left: auto;
     margin-right: auto;
 }
 
 .article-single-page .article-header {
-    margin-bottom: 40px;
+    margin-bottom: 25px; /* Redusert margin siden bildet kommer etter */
     border-bottom: 1px solid #e0e0e0;
-    padding-bottom: 30px;
+    padding-bottom: 25px;
+    background: none; /* SIKRER INGEN UTILSINTET BAKGRUNN */
 }
 
 .article-single-page .article-header h1 {
     font-family: var(--heading-font);
     font-size: 2.8em;
-    color: var(--dark-color);
-    margin-bottom: 15px;
+    color: var(--dark-color); /* SIKRER MØRK TEKST PÅ LYS BAKGRUNN */
+    margin-bottom: 10px; /* Justert */
     line-height: 1.2;
 }
 
 .article-single-page .article-meta {
     font-size: 0.9em;
-    color: #777;
-    margin-bottom: 25px;
+    color: #777; /* Mørk nok for lys bakgrunn */
+    margin-bottom: 0; /* Var 25px, bildet kommer nå etter */
 }
 
+/* Styling for bildecontainer og selve bildet */
+.article-single-page .featured-image-container {
+    margin-top: 0; /* Kan justeres hvis du vil ha luft mellom meta og bilde */
+    margin-bottom: 40px; /* Luft før selve innholdet starter */
+    line-height: 0; 
+}
 .article-single-page .article-featured-image {
     width: 100%;
     max-height: 400px;
     object-fit: cover;
     border-radius: var(--border-radius);
-    margin-bottom: 30px;
 }
 
 .article-single-page .article-content {
@@ -43,6 +49,7 @@
     color: var(--text-color);
 }
 
+/* ... (Resten av H2, H3, p, ul, ol, a, blockquote, img i .article-content forblir som før) ... */
 .article-single-page .article-content h2 {
     font-family: var(--heading-font);
     font-size: 2em;
@@ -50,13 +57,12 @@
     margin-top: 50px;
     margin-bottom: 25px; 
     padding-bottom: 5px; 
-    border-bottom: none; /* FJERNET STREKEN */
+    border-bottom: none; 
     text-align: left; 
 }
 .article-single-page .article-content h2::after {
     display: none; 
 }
-
 
 .article-single-page .article-content h3 {
     font-family: var(--heading-font);
@@ -95,27 +101,24 @@
     color: #555;
 }
 
-.article-single-page .article-content img { /* Generell bildestyling i innhold */
+.article-single-page .article-content img { 
     max-width: 100%;
     height: auto;
     border-radius: 8px;
-    margin: 25px auto; /* La til auto for sentrering, juster margin-top/bottom etter behov */
+    margin: 25px auto; 
     display: block; 
 }
-
 
 .article-navigation {
     margin-top: 50px;
     text-align: center;
 }
 
-/* Artikkeloppføringsside (_article_listing.php) */
+/* Artikkeloppføringsside (_article_listing.php) - FORBLIR SOM FØR */
 .article-listing-page {
     padding: 80px 0;
 }
-.article-listing-page h2 { 
-    /* Ingen spesifikk override her, vil arve fra _sections.css */
-}
+.article-listing-page h2 { }
 .article-listing-page > .container > p { 
     text-align: center;
     max-width: 750px;
@@ -124,14 +127,12 @@
     color: #555;
     line-height: 1.8;
 }
-
 .articles-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     gap: 30px;
     margin-top: 40px;
 }
-
 .article-card {
     background-color: #fff;
     border-radius: var(--border-radius);
@@ -145,20 +146,17 @@
     transform: translateY(-5px);
     box-shadow: 0 8px 25px rgba(0,0,0,0.1);
 }
-
 .article-card-image {
     width: 100%;
     height: 200px;
     object-fit: cover;
 }
-
 .article-card-content {
     padding: 25px;
     flex-grow: 1;
     display: flex;
     flex-direction: column;
 }
-
 .article-card-content h3 {
     font-family: var(--heading-font);
     font-size: 1.4em;
@@ -174,13 +172,11 @@
 .article-card-content h3 a:hover {
     color: var(--primary-color);
 }
-
 .article-card-meta {
     font-size: 0.85em;
     color: #777;
     margin-bottom: 15px;
 }
-
 .article-card-excerpt {
     font-size: 0.95em;
     color: var(--text-color);
@@ -188,7 +184,6 @@
     margin-bottom: 20px;
     flex-grow: 1;
 }
-
 .article-card .cta-button {
     margin-top: auto; 
     align-self: flex-start; 
@@ -196,7 +191,7 @@
     font-size: 0.9em;
 }
 
-/* Responsive justeringer for artikler */
+/* Responsive justeringer for artikler - FORBLIR SOM FØR */
 @media (max-width: 767px) {
     .article-single-page .article-header h1 {
         font-size: 2.2em;
