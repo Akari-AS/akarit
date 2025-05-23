@@ -3,16 +3,12 @@
 $baseUrl = "https://googleworkspace.akari.no/";
 $today = date('Y-m-d');
 
-// Slå sammen lokasjonsdata fra alle filer i config/locations/
+// Slå sammen lokasjonsdata
 $allLocationsData = [];
-$locationFilesPath = __DIR__ . '/config/locations/'; 
-
+$locationFilesPath = __DIR__ . '/config/locations/';
 if (is_dir($locationFilesPath)) {
     $locationFiles = glob($locationFilesPath . '*.php');
-    if ($locationFiles === false) {
-        // glob() kan returnere false ved feil, selv om det er sjeldent for gyldig pattern
-        echo "Feil ved lesing av lokasjonsmappe." . PHP_EOL;
-    } else {
+    if ($locationFiles !== false) {
         foreach ($locationFiles as $file) {
             $locationsInFile = require $file;
             if (is_array($locationsInFile)) {
@@ -22,17 +18,17 @@ if (is_dir($locationFilesPath)) {
     }
 }
 
-
 $urls = [];
 
-// Hovedside (generell - googleworkspace.akari.no/)
+// Hovedside (generell)
 $urls[] = ['loc' => '', 'changefreq' => 'weekly', 'priority' => '1.0', 'lastmod' => $today];
 
-// Lokasjonssider (f.eks. googleworkspace.akari.no/kongsberg/)
+// Lokasjonssider
 foreach (array_keys($allLocationsData) as $slug) {
     $urls[] = ['loc' => $slug . '/', 'changefreq' => 'monthly', 'priority' => '0.9', 'lastmod' => $today];
 }
 
+// Ankerseksjoner på forsiden (hvis de ikke har egne dedikerte sider nå)
 $anchorSections = [
     ['path' => '#fordeler', 'priority' => '0.8'],
     ['path' => '#produkter', 'priority' => '0.8'],
@@ -42,10 +38,42 @@ $anchorSections = [
     ['path' => '#hvorfor-oss', 'priority' => '0.7'],
     ['path' => '#kontakt', 'priority' => '0.6'],
 ];
-
 foreach ($anchorSections as $section) {
-    $urls[] = ['loc' => $section['path'], 'changefreq' => 'monthly', 'priority' => $section['priority'], 'lastmod' => $today];
+    // Kun legg til ankerlenker hvis de peker til forsiden (loc er tom)
+     $urls[] = ['loc' => $section['path'], 'changefreq' => 'monthly', 'priority' => $section['priority'], 'lastmod' => $today];
 }
+
+
+// Artikkel-listeside
+$urls[] = ['loc' => 'artikler/', 'changefreq' => 'weekly', 'priority' => '0.9', 'lastmod' => $today];
+
+// Hent artikler for sitemap
+$articleContentPath = __DIR__ . '/content/articles/';
+$markdownArticleFiles = glob($articleContentPath . '*.md');
+if ($markdownArticleFiles !== false) {
+    foreach ($markdownArticleFiles as $articleFile) {
+        $articleContent = file_get_contents($articleFile);
+         // Enkel front-matter parsing for slug og dato
+        if (preg_match('/^---\s*$(.*?)^---\s*$/ms', $articleContent, $matches)) {
+            $articleFrontMatter = [];
+            $lines = explode("\n", trim($matches[1]));
+            foreach ($lines as $line) {
+                list($key, $value) = explode(':', $line, 2);
+                $articleFrontMatter[trim($key)] = trim(trim($value), "'\"");
+            }
+            if (isset($articleFrontMatter['slug'])) {
+                $articleLastMod = isset($articleFrontMatter['date']) ? date('Y-m-d', strtotime($articleFrontMatter['date'])) : $today;
+                $urls[] = [
+                    'loc' => 'artikler/' . $articleFrontMatter['slug'] . '/',
+                    'changefreq' => 'monthly',
+                    'priority' => '0.8',
+                    'lastmod' => $articleLastMod
+                ];
+            }
+        }
+    }
+}
+
 
 $xmlOutput = '<?xml version="1.0" encoding="UTF-8"?>' . PHP_EOL;
 $xmlOutput .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . PHP_EOL;
