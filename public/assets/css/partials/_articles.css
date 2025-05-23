@@ -9,30 +9,26 @@
     margin-right: auto;
 }
 
-.article-single-page .article-header {
-    /* Fjernet border-bottom og justerer padding/margin */
-    margin-bottom: 20px; /* Litt mindre mellomrom før bildet hvis header-boksen er borte */
-    padding-bottom: 10px; /* Mindre padding hvis ingen visuell boks */
-    background: none; 
-    /* Vi kan også fjerne all padding her hvis headeren kun skal posisjonere tekst: */
-    /* padding: 0; */
-    /* margin-bottom: 25px; /* Juster denne etter hvor mye luft du vil ha før bildet */
-}
+/* Fjernet .article-single-page .article-header styling herfra */
 
-.article-single-page .article-header h1 {
+/* Ny styling for tittel og meta plassert direkte i .article-single-page */
+.article-single-page .article-main-title {
     font-family: var(--heading-font);
-    font-size: 2.8em; /* Beholdt fra før */
-    color: var(--dark-color); /* Dette bør være standard mørk tekstfarge */
-    margin-top: 0; /* Ingen ekstra marg over tittelen i header-blokken */
+    font-size: 2.8em; 
+    color: var(--dark-color); 
+    margin-top: 0; 
     margin-bottom: 10px; 
     line-height: 1.2;
-    /* Sørg for at det ikke er noen text-shadow eller lignende som gjør den lys */
+    text-align: center; /* Kan endres til left hvis ønskelig */
+    padding: 0 15px; /* Litt padding på sidene hvis container er full bredde på mobil */
 }
 
-.article-single-page .article-meta {
+.article-single-page .article-main-meta {
     font-size: 0.9em;
-    color: #555; /* Litt mørkere enn #777 for bedre kontrast på lys bakgrunn */
-    margin-bottom: 25px; /* Gir luft før bildet starter */
+    color: #555; 
+    margin-bottom: 30px; /* Mellomrom før bildet */
+    text-align: center; /* Kan endres til left hvis ønskelig */
+    padding: 0 15px;
 }
 
 /* Styling for bildecontainer og selve bildet */
@@ -43,9 +39,9 @@
 }
 .article-single-page .article-featured-image {
     width: 100%;
-    max-height: 450px; /* Økt litt for å se om det hjelper med proporsjoner */
+    max-height: 450px;
     object-fit: cover;
-    border-radius: var(--border-radius); /* Beholdt */
+    border-radius: var(--border-radius); 
 }
 
 .article-single-page .article-content {
@@ -123,6 +119,7 @@
 .article-listing-page {
     padding: 80px 0;
 }
+/* ... (resten av .article-listing-page og .article-card CSS er uendret) ... */
 .article-listing-page h2 { }
 .article-listing-page > .container > p { 
     text-align: center;
@@ -196,9 +193,9 @@
     font-size: 0.9em;
 }
 
-/* Responsive justeringer for artikler - FORBLIR SOM FØR */
+/* Responsive justeringer for artikler */
 @media (max-width: 767px) {
-    .article-single-page .article-header h1 {
+    .article-single-page .article-main-title { /* Endret fra .article-header h1 */
         font-size: 2.2em;
     }
     .article-single-page .article-content {

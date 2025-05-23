@@ -1,16 +1,16 @@
 <?php // templates/article_single.php ?>
 <article class="article-single-page container">
     <?php if ($articleData && isset($articleData['title'])): ?>
-        <header class="article-header">
-            <h1><?php echo htmlspecialchars($articleData['title']); ?></h1>
-            <?php if (isset($articleData['author']) && isset($articleData['date'])): ?>
-            <p class="article-meta">
-                Av <?php echo htmlspecialchars($articleData['author']); ?> | Publisert: <?php echo date("d. M Y", strtotime($articleData['date'])); ?>
-            </p>
-            <?php endif; ?>
-        </header> 
+        
+        <?php // Tittel og meta direkte i containeren, ikke i egen header-blokk ?>
+        <h1 class="article-main-title"><?php echo htmlspecialchars($articleData['title']); ?></h1>
+        <?php if (isset($articleData['author']) && isset($articleData['date'])): ?>
+        <p class="article-main-meta">
+            Av <?php echo htmlspecialchars($articleData['author']); ?> | Publisert: <?php echo date("d. M Y", strtotime($articleData['date'])); ?>
+        </p>
+        <?php endif; ?>
 
-        <?php // Featured image kommer ETTER header-elementet med tittel/meta ?>
+        <?php // Featured image kommer ETTER tittel og meta ?>
         <?php if (!empty($articleData['image']) && file_exists(__DIR__ . '/../public' . $articleData['image'])): ?>
             <figure class="featured-image-container">
                 <img src="<?php echo htmlspecialchars($articleData['image']); ?>" alt="<?php echo htmlspecialchars($articleData['title']); ?>" class="article-featured-image">
