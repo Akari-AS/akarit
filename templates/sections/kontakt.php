@@ -3,12 +3,19 @@
      <div class="container">
         <div class="contact-form-wrapper">
             <div class="contact-info-column">
-                <h3>Kontakt <span>Oss</span>
-                    <?php if (isset($currentLocationName) && $currentLocationName !== "Generell"): ?>
-                        i <?php echo htmlspecialchars($currentLocationName); ?>
-                    <?php endif; ?>
-                </h3>
-                <p>Vi er klare til å hjelpe deg med å utnytte kraften i Google Workspace. Ta kontakt for en uforpliktende prat!</p>
+                <?php // Tittel kan justeres basert på om $formSourceOverride er satt, hvis ønskelig ?>
+                <?php if (isset($formSourceOverride)): ?>
+                    <h3>Har du spørsmål til artikkelen? <span>Kontakt oss!</span></h3>
+                    <p>Fyll ut skjemaet nedenfor, så tar vi kontakt med deg så snart som mulig.</p>
+                <?php else: ?>
+                    <h3>Kontakt <span>Oss</span>
+                        <?php if (isset($currentLocationName) && $currentLocationName !== "Generell"): ?>
+                            i <?php echo htmlspecialchars($currentLocationName); ?>
+                        <?php endif; ?>
+                    </h3>
+                    <p>Vi er klare til å hjelpe deg med å utnytte kraften i Google Workspace. Ta kontakt for en uforpliktende prat!</p>
+                <?php endif; ?>
+
                 <div class="contact-person">
                     <img src="/assets/img/kenneth_bjerke.jpg" alt="Kenneth B. Bjerke" class="contact-person-img">
                     <div>
@@ -21,16 +28,20 @@
             </div>
 
             <div class="contact-form-column">
-                <h2 class="form-title"><em>Skriv</em> til oss:</h2>
+                <?php if (!isset($formSourceOverride)): // Vis kun denne standardtittelen hvis det IKKE er en artikkelside ?>
+                    <h2 class="form-title"><em>Skriv</em> til oss:</h2>
+                <?php endif; ?>
+
                 <?php if (!empty($formMessage)): ?>
                     <div class="form-message <?php echo $formSuccess ? 'success' : 'error'; ?>">
                         <?php echo htmlspecialchars($formMessage); ?>
                     </div>
                 <?php endif; ?>
 
-                <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>#kontakt" method="post" id="contactForm" class="modern-contact-form">
-                    <!-- NYTT SKJULT FELT FOR KILDESIDE/LOKASJON -->
-                    <input type="hidden" name="form_source_location" value="<?php echo htmlspecialchars($currentLocationName ?? 'Generell'); ?>">
+                <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?><?php echo ($pageType === 'article_single' && $articleData ? 'artikler/'.htmlspecialchars($articleData['slug']).'/' : ($pageType === 'article_listing' ? 'artikler/' : ($currentLocationSlug ? htmlspecialchars($currentLocationSlug).'/' : ''))); ?>#kontakt" method="post" id="contactForm" class="modern-contact-form">
+                    
+                    <?php // NY LOGIKK FOR SKJULT FELT ?>
+                    <input type="hidden" name="form_source_location" value="<?php echo htmlspecialchars($formSourceOverride ?? $currentLocationName ?? 'Generell'); ?>">
                     
                     <div class="form-row">
                         <div class="form-group form-group-half">
@@ -73,7 +84,7 @@
                     </div>
 
                     <div class="form-group checkbox-group">
-                        <input type="checkbox" id="privacy" name="privacy" required <?php echo isset($submittedData['privacy']) ? 'checked' : ''; ?>>
+                        <input type="checkbox" id="privacy" name="privacy" required <?php echo (isset($submittedData['privacy']) && $submittedData['privacy'] == 'on') ? 'checked' : ''; ?>>
                         <label for="privacy">Jeg har lest og forstått <a href="https://akari.no/personvern/" target="_blank">personvernerklæringen</a><span class="required">*</span></label>
                     </div>
                     

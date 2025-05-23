@@ -1,5 +1,5 @@
 ---
-title: "Google Workspace: Forvandle din arbeidshverdag – Fra sømløst samarbeid til AI-drevet innsikt"
+title: "Google Workspace: Forvandle Din Arbeidsdag"
 author: "Kenneth B. Bjerke"
 date: "2025-05-23"
 slug: "google-workspace-forvandle-din-arbeidshverdag"

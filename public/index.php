@@ -52,9 +52,8 @@ function get_article_data($slug) {
         if (preg_match('/^---\s*$(.*?)^---\s*$(.*)/ms', $content, $matches)) {
             $frontMatter = parse_front_matter($matches[1]);
             $htmlContent = $parsedown->text(trim($matches[2]));
-            return array_merge($frontMatter, ['content' => $htmlContent, 'slug' => $slug]); // Legg til slug her også
+            return array_merge($frontMatter, ['content' => $htmlContent, 'slug' => $slug]);
         } else {
-            // Fallback hvis ingen front-matter, eller for å feilsøke
              error_log("Kunne ikke parse front-matter for artikkel: " . $slug);
              return ['title' => 'Artikkel uten tittel', 'content' => $parsedown->text($content), 'slug' => $slug];
         }
@@ -73,7 +72,6 @@ function get_all_articles_metadata() {
         $content = file_get_contents($file);
         if (preg_match('/^---\s*$(.*?)^---\s*$/ms', $content, $matches)) {
             $frontMatter = parse_front_matter($matches[1]);
-            // Legg til filnavn-basert slug hvis 'slug' mangler i front-matter, for robusthet
             if (!isset($frontMatter['slug'])) {
                 $frontMatter['slug'] = pathinfo($file, PATHINFO_FILENAME);
             }
@@ -87,7 +85,6 @@ function get_all_articles_metadata() {
     });
     return $articles;
 }
-
 
 // --------- ROUTING LOGIKK ---------
 $requestedPath = '';
@@ -103,6 +100,7 @@ $pageType = 'landingpage';
 $currentLocationSlug = strtolower($pathSegments[0] ?? ''); 
 $articleSlug = null;
 $articleData = null; 
+$formSourceOverride = null; // Initialiser variabel for skjema-kilde
 
 if ($currentLocationSlug === 'artikler') {
     if (isset($pathSegments[1]) && !empty($pathSegments[1])) {
@@ -117,7 +115,7 @@ if ($currentLocationSlug === 'artikler') {
 
 // --------- LOKASJONSSPESIFIKK DATA (hvis det er en landingsside for lokasjon) ---------
 $currentLocationData = null;
-$currentLocationName = "Generell";
+$currentLocationName = "Generell"; // Standard for artikkelsider og generell forside
 if ($pageType === 'landingpage' && !empty($currentLocationSlug) && isset($allLocationsData[$currentLocationSlug])) {
     $currentLocationData = $allLocationsData[$currentLocationSlug];
     $currentLocationName = $currentLocationData['name'];
@@ -132,18 +130,21 @@ $locationSpecificHeroText = ($pageType === 'landingpage' && isset($currentLocati
 
 if ($pageType === 'article_single' && $articleSlug) {
     $articleData = get_article_data($articleSlug); 
-    if ($articleData && isset($articleData['title'])) { // Sjekk om title er satt
+    if ($articleData && isset($articleData['title'])) { 
         $pageTitle = htmlspecialchars($articleData['title']) . ' | Artikler | Akari';
         $pageDescription = htmlspecialchars($articleData['meta_description'] ?? $articleData['excerpt'] ?? $defaultMetaDescription);
+        $formSourceOverride = "Artikkel: " . htmlspecialchars($articleData['title']); // SETT SKJEMAKILDE FOR ARTIKKEL
     } else {
         http_response_code(404);
         $pageTitle = "Artikkel ikke funnet | Akari";
         $pageDescription = $defaultMetaDescription;
-        $articleData = null; // Sørg for at $articleData er null hvis artikkelen ikke finnes
+        $articleData = null; 
+        $formSourceOverride = "Artikkel: Ukjent (404)"; // Fallback for skjema
     }
 } elseif ($pageType === 'article_listing') {
     $pageTitle = 'Artikler om Google Workspace | Akari';
     $pageDescription = 'Les våre siste artikler og innsikt om Google Workspace, AI, produktivitet og samarbeid.';
+    // $currentLocationName forblir "Generell" som satt tidligere, $formSourceOverride er null
 } else { 
     $basePageTitle = "Google Workspace Leverandør";
     if ($currentLocationName !== "Generell") {
@@ -153,6 +154,7 @@ if ($pageType === 'article_single' && $articleSlug) {
         $pageTitle = $basePageTitle . ' for Bedrifter | Akari';
         $pageDescription = $defaultMetaDescription;
     }
+    // For landingssider vil $currentLocationName bli brukt i skjemaet, $formSourceOverride er null
 }
 
 // --------- SKJEMAHÅNDTERING (hvis POST) ---------
@@ -169,111 +171,7 @@ function old_value(string $key, array $data): string {
 }
 
 $youtubeVideoId = "AwwZMoYNK2o";
-
-$workspaceToolsData = [
-    [
-        'id' => 'gmail',
-        'name' => 'Gmail',
-        'imageUrl' => 'https://www.gstatic.com/images/branding/product/1x/gmail_2020q4_48dp.png',
-        'features' => [
-            [
-                'title' => 'Hjelp meg å skrive',
-                'description' => 'Skriv og forbedre e-postene dine uten problemer, fra å finpusse tonen med et enkelt klikk til å generere nye utkast fra bunnen av.'
-            ],
-            [
-                'title' => 'Oppsummer e-poster',
-                'description' => 'Få et sammendrag direkte fra en e-postmelding eller e-posttråd, som fremhever nøkkelpunkter og sparer deg tid.'
-            ],
-            [
-                'title' => 'Gemini i Gmail-sidepanelet',
-                'description' => 'Lag utkast til e-postsvar, still spørsmål til e-postene dine (f.eks. "Oppdater meg på e-poster om Prosjekt Alfa"), og oppsummer lange e-poster og tråder.'
-            ]
-        ]
-    ],
-    [
-        'id' => 'docs',
-        'name' => 'Google Docs',
-        'imageUrl' => 'https://www.gstatic.com/images/branding/product/1x/docs_2020q4_48dp.png',
-        'features' => [
-            [
-                'title' => 'Gemini i Docs-sidepanelet',
-                'description' => 'Oppsummer hovedpunktene i et langt dokument, lag en disposisjon for en salgspresentasjon, eller brainstorm ideer for en ny markedsføringskampanje. Poler enkelt dokumentene dine med skrive-, grammatikk- og formateringsforslag fra Gemini.'
-            ],
-            [
-                'title' => 'Generer bilder',
-                'description' => 'Lag unike innebygde bilder og fullformats forsidebilder direkte i dokumentet ditt for en rekke behov, som en reklamebrosjyre, en kampanjeoversikt, eller en restaurantmeny.'
-            ],
-            [
-                'title' => 'Hjelp meg å skrive (med ledetekst)',
-                'description' => 'Bare legg til en ledetekst, som "Lag en prosjektoversikt, inkludert forsknings-, design-, test- og produksjonsfaser", og et utkast vil umiddelbart bli generert.'
-            ],
-        ]
-    ],
-    [
-        'id' => 'meet',
-        'name' => 'Google Meet',
-        'imageUrl' => 'https://www.gstatic.com/images/branding/product/1x/meet_2020q4_48dp.png',
-        'features' => [
-            [
-                'title' => 'Ta notater for meg i Meet',
-                'description' => 'Ta møtenotater automatisk, organiser dem i Google Docs, og del dem med teamet ditt. De som kommer sent, kan oppdatere seg under møtet med "Sammendrag så langt".'
-            ],
-            [
-                'title' => 'Adaptiv lyd',
-                'description' => 'Adaptiv lyd lar team delta i møter fra flere bærbare datamaskiner i nærheten uten forstyrrende ekko eller tilbakekobling, noe som er nyttig når konferanserom eller møteutstyr er mangelvare.'
-            ],
-            [
-                'title' => 'Oversatte tekstinger',
-                'description' => 'Oversatte tekstinger gir sanntidsoversettelser av talerens språk, noe som bidrar til å gjøre møter mer inkluderende og effektive for globale team.'
-            ]
-        ]
-    ],
-    [
-        'id' => 'drive',
-        'name' => 'Google Drive',
-        'imageUrl' => 'https://www.gstatic.com/images/branding/product/1x/drive_2020q4_48dp.png',
-        'features' => [
-            [
-                'title' => 'Gemini i Drive-sidepanelet',
-                'description' => 'Oppsummer flere dokumenter, generer innsikt om et spesifikt emne, få hjelp til å finne filer raskere, og mer, direkte fra Drive-grensesnittet.'
-            ],
-            [
-                'title' => 'Jobb med PDF-er i Drive',
-                'description' => 'Gemini kan oppsummere lange PDF-filer, generere innsikt fra innholdet, eller bruke PDF-en som grunnlag for å lage noe nytt, som en studieplan eller et e-postutkast.'
-            ],
-        ]
-    ],
-    [
-        'id' => 'sheets',
-        'name' => 'Google Sheets',
-        'imageUrl' => 'https://www.gstatic.com/images/branding/product/1x/sheets_2020q4_48dp.png',
-        'features' => [
-            [
-                'title' => 'Gemini i Sheets-sidepanelet',
-                'description' => 'Lag raskt tabeller (f.eks. en utgiftssporing), generer innsikt og visualiseringer basert på regnearkdata, og automatiser oppgaver ved hjelp av naturlig språk.'
-            ],
-            [
-                'title' => 'Hjelp meg å organisere',
-                'description' => 'Få hjelp til å lage maler og strukturere dataene dine. For eksempel, be om en "prosjektplanlegger med kolonner for oppgave, ansvarlig, tidsfrist og status".'
-            ]
-        ]
-    ],
-    [
-        'id' => 'slides',
-        'name' => 'Google Slides',
-        'imageUrl' => 'https://www.gstatic.com/images/branding/product/1x/slides_2020q4_48dp.png',
-        'features' => [
-            [
-                'title' => 'Hjelp meg å lage et bilde',
-                'description' => 'Med en enkel ledetekst kan du enkelt lage originale bilder for presentasjonene dine, som konsepter for digitale markedsføringskampanjer eller illustrasjoner for å forbedre forslaget til årsplanlegging.'
-            ],
-            [
-                'title' => 'Gemini i Slides-sidepanelet',
-                'description' => 'Generer raskt nye lysbilder (f.eks. en møteagenda), lag tilpassede bilder for presentasjonene dine, omskriv innhold for klarhet eller tone, og få hjelp til å oppsummere presentasjonen.'
-            ]
-        ]
-    ],
-];
+$workspaceToolsData = [ /* ... (lim inn hele ditt workspaceToolsData array her) ... */ ]; // VIKTIG: LIM INN DATA HER
 
 // --------- INKLUDER MALER BASERT PÅ PAGETYPE ---------
 require __DIR__ . '/../templates/header.php'; 
