@@ -8,6 +8,7 @@
                 <li><a href="https://akari.no/om-akari/" target="_blank">Om Akari</a></li>
                 <li><a href="https://akari.no/betingelser/" target="_blank">Vilkår og betingelser</a></li>
                 <li><a href="https://akari.no/personvern/" target="_blank">Personvern og cookies</a></li>
+                <li><a href="https://open.spotify.com/show/4r6WpPitapZhiEgh3zb2Lb?si=2b52f53a412348d2" target="_blank">Akaripodden</a></li>
             </ul>
             <h4>Sosiale Medier</h4>
             <ul>
@@ -43,7 +44,7 @@
     </div>
     <div class="footer-bottom">
         <div class="container">
-            <p>© <?php echo date("Y"); ?> Akari AS | Sertifisert Google Workspace Leverandør</p> <!-- Endret Partner til Leverandør -->
+            <p>© <?php echo date("Y"); ?> Akari AS | Sertifisert Google Workspace Leverandør</p>
         </div>
     </div>
 </footer>
