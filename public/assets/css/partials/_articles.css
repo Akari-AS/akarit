@@ -10,37 +10,42 @@
 }
 
 .article-single-page .article-header {
-    margin-bottom: 25px; /* Redusert margin siden bildet kommer etter */
-    border-bottom: 1px solid #e0e0e0;
-    padding-bottom: 25px;
-    background: none; /* SIKRER INGEN UTILSINTET BAKGRUNN */
+    /* Fjernet border-bottom og justerer padding/margin */
+    margin-bottom: 20px; /* Litt mindre mellomrom før bildet hvis header-boksen er borte */
+    padding-bottom: 10px; /* Mindre padding hvis ingen visuell boks */
+    background: none; 
+    /* Vi kan også fjerne all padding her hvis headeren kun skal posisjonere tekst: */
+    /* padding: 0; */
+    /* margin-bottom: 25px; /* Juster denne etter hvor mye luft du vil ha før bildet */
 }
 
 .article-single-page .article-header h1 {
     font-family: var(--heading-font);
-    font-size: 2.8em;
-    color: var(--dark-color); /* SIKRER MØRK TEKST PÅ LYS BAKGRUNN */
-    margin-bottom: 10px; /* Justert */
+    font-size: 2.8em; /* Beholdt fra før */
+    color: var(--dark-color); /* Dette bør være standard mørk tekstfarge */
+    margin-top: 0; /* Ingen ekstra marg over tittelen i header-blokken */
+    margin-bottom: 10px; 
     line-height: 1.2;
+    /* Sørg for at det ikke er noen text-shadow eller lignende som gjør den lys */
 }
 
 .article-single-page .article-meta {
     font-size: 0.9em;
-    color: #777; /* Mørk nok for lys bakgrunn */
-    margin-bottom: 0; /* Var 25px, bildet kommer nå etter */
+    color: #555; /* Litt mørkere enn #777 for bedre kontrast på lys bakgrunn */
+    margin-bottom: 25px; /* Gir luft før bildet starter */
 }
 
 /* Styling for bildecontainer og selve bildet */
 .article-single-page .featured-image-container {
-    margin-top: 0; /* Kan justeres hvis du vil ha luft mellom meta og bilde */
-    margin-bottom: 40px; /* Luft før selve innholdet starter */
+    margin-top: 0; 
+    margin-bottom: 40px; 
     line-height: 0; 
 }
 .article-single-page .article-featured-image {
     width: 100%;
-    max-height: 400px;
+    max-height: 450px; /* Økt litt for å se om det hjelper med proporsjoner */
     object-fit: cover;
-    border-radius: var(--border-radius);
+    border-radius: var(--border-radius); /* Beholdt */
 }
 
 .article-single-page .article-content {
