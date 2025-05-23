@@ -6,7 +6,23 @@
     <title><?php echo htmlspecialchars($pageTitle ?? 'Google Workspace Leverandør | Akari'); ?></title>
     <meta name="description" content="<?php echo htmlspecialchars($pageDescription ?? 'Akari er din erfarne Google Workspace leverandør. Vi tilbyr skreddersydde skyløsninger for bedrifter.'); ?>">
 
-    <link rel="canonical" href="https://googleworkspace.akari.no/<?php echo isset($locationSlug) && !empty($locationSlug) ? htmlspecialchars($locationSlug) . '/' : ''; ?>" />
+    <?php
+    // Bygg base URL for canonical
+    $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
+    $host = $_SERVER['HTTP_HOST']; // F.eks. googleworkspace.akari.no
+    $baseCanonicalUrl = $protocol . $host;
+
+    // Bestem den kanoniske URLen basert på pageType og slugs
+    $canonicalPath = '/'; // Standard for forsiden
+    if ($pageType === 'article_single' && isset($articleData['slug'])) {
+        $canonicalPath = '/artikler/' . htmlspecialchars($articleData['slug']) . '/';
+    } elseif ($pageType === 'article_listing') {
+        $canonicalPath = '/artikler/';
+    } elseif ($pageType === 'landingpage' && !empty($currentLocationSlug)) {
+        $canonicalPath = '/' . htmlspecialchars($currentLocationSlug) . '/';
+    }
+    ?>
+    <link rel="canonical" href="<?php echo rtrim($baseCanonicalUrl, '/') . $canonicalPath; ?>" />
 
     <!-- Favicon -->
     <link rel="icon" href="/assets/img/favicon_akari.png" type="image/png">
@@ -37,8 +53,8 @@
       "@context": "https://schema.org",
       "@type": "Organization",
       "name": "Akari AS",
-      "url": "https://googleworkspace.akari.no/<?php echo isset($locationSlug) && !empty($locationSlug) ? htmlspecialchars($locationSlug) . '/' : ''; ?>",
-      "logo": "https://googleworkspace.akari.no/assets/img/Akari_jubileum.svg",
+      "url": "<?php echo rtrim($baseCanonicalUrl, '/') . $canonicalPath; ?>",
+      "logo": "<?php echo $baseCanonicalUrl; ?>/assets/img/Akari_jubileum.svg",
       "description": "Akari AS er en ledende norsk leverandør og sertifisert partner for Google Workspace, og tilbyr implementering, migrering, support og skreddersydde skyløsninger for bedrifter.",
       "contactPoint": [
         {
@@ -68,23 +84,52 @@
       "serviceType": "IT Support, Cloud Computing Services, Google Workspace Reseller"
     }
     </script>
-    <?php if (isset($currentLocationName) && $currentLocationName !== "Generell" && isset($currentLocationData) && isset($locationSlug)): ?>
+    <?php if (isset($currentLocationName) && $currentLocationName !== "Generell" && isset($currentLocationData) && !empty($currentLocationSlug) && $pageType === 'landingpage'): ?>
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "WebPage",
       "name": "<?php echo htmlspecialchars($pageTitle); ?>",
       "description": "<?php echo htmlspecialchars($pageDescription); ?>",
-      "url": "https://googleworkspace.akari.no/<?php echo htmlspecialchars($locationSlug); ?>/",
+      "url": "<?php echo rtrim($baseCanonicalUrl, '/') . '/' . htmlspecialchars($currentLocationSlug) . '/'; ?>",
       "isPartOf": {
         "@type": "WebSite",
-        "url": "https://googleworkspace.akari.no/",
+        "url": "<?php echo $baseCanonicalUrl; ?>/",
         "name": "Akari Google Workspace"
       },
       "spatialCoverage": { 
         "@type": "Place",
         "name": "<?php echo htmlspecialchars($currentLocationName); ?>"
       }
+    }
+    </script>
+    <?php elseif ($pageType === 'article_single' && isset($articleData['slug'])): ?>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "<?php echo rtrim($baseCanonicalUrl, '/') . '/artikler/' . htmlspecialchars($articleData['slug']) . '/'; ?>"
+      },
+      "headline": "<?php echo htmlspecialchars($articleData['title'] ?? ''); ?>",
+      <?php if (!empty($articleData['image'])): ?>
+      "image": "<?php echo $baseCanonicalUrl . htmlspecialchars($articleData['image']); ?>",
+      <?php endif; ?>
+      "datePublished": "<?php echo isset($articleData['date']) ? date(DATE_ISO8601, strtotime($articleData['date'])) : ''; ?>",
+      "author": {
+        "@type": "Person",
+        "name": "<?php echo htmlspecialchars($articleData['author'] ?? 'Akari'); ?>"
+      },
+       "publisher": {
+        "@type": "Organization",
+        "name": "Akari AS",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "<?php echo $baseCanonicalUrl; ?>/assets/img/Akari_jubileum.svg"
+        }
+      },
+      "description": "<?php echo htmlspecialchars($articleData['excerpt'] ?? $pageDescription); ?>"
     }
     </script>
     <?php endif; ?>
@@ -98,18 +143,18 @@
 
 <header>
      <div class="container header-container">
-        <a href="#hjem" class="logo logo-image-container">
+        <a href="/#hjem" class="logo logo-image-container"> <?php // Endret til /#hjem for å alltid gå til forsiden ?>
             <img src="/assets/img/Akari_jubileum.svg" alt="Akari Logo" class="header-logo-img">
         </a>
         <nav class="desktop-nav">
             <ul>
-                <li><a href="#fordeler">Fordeler</a></li>
-                <li><a href="#produkter">Produkter</a></li>
-                <li><a href="#ai-funksjoner">AI-Funksjoner</a></li>
-                <li><a href="#prispakker">Prispakker</a></li>
-                <li><a href="#nrk-google-workspace">NRK & Google</a></li>
-                <li><a href="#hvorfor-oss">Hvorfor Akari?</a></li>
-                <li><a href="#kontakt">Kontakt</a></li>
+                <li><a href="/#fordeler">Fordeler</a></li>
+                <li><a href="/#produkter">Produkter</a></li>
+                <li><a href="/#ai-funksjoner">AI-Funksjoner</a></li>
+                <li><a href="/#prispakker">Prispakker</a></li>
+                <li><a href="/#nrk-google-workspace">NRK & Google</a></li>
+                <li><a href="/#hvorfor-oss">Hvorfor Akari?</a></li>
+                <li><a href="/#kontakt">Kontakt</a></li>
             </ul>
         </nav>
          <div class="mobile-menu-button-container">
@@ -128,13 +173,13 @@
     </div>
      <div id="mobile-menu" class="mobile-menu-panel">
          <ul>
-             <li><a href="#fordeler">Fordeler</a></li>
-             <li><a href="#produkter">Produkter</a></li>
-             <li><a href="#ai-funksjoner">AI-Funksjoner</a></li>
-             <li><a href="#prispakker">Prispakker</a></li>
-             <li><a href="#nrk-google-workspace">NRK & Google</a></li>
-             <li><a href="#hvorfor-oss">Hvorfor Akari?</a></li>
-             <li><a href="#kontakt">Kontakt</a></li>
+             <li><a href="/#fordeler">Fordeler</a></li>
+             <li><a href="/#produkter">Produkter</a></li>
+             <li><a href="/#ai-funksjoner">AI-Funksjoner</a></li>
+             <li><a href="/#prispakker">Prispakker</a></li>
+             <li><a href="/#nrk-google-workspace">NRK & Google</a></li>
+             <li><a href="/#hvorfor-oss">Hvorfor Akari?</a></li>
+             <li><a href="/#kontakt">Kontakt</a></li>
          </ul>
      </div>
 </header>
