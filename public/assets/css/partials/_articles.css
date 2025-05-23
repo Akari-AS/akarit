@@ -1,20 +1,24 @@
 /* --- Artikkel Styling --- */
 
 /* Artikkel Enkeltside (_article_single.php) */
-.article-single-page {
+.article-single-page { /* IKKE .container her lenger for selve article-taggen */
     padding-top: 40px;
-    padding-bottom: 60px;
-    /* max-width: 800px; TIDLIGERE VERDI */
-    max-width: 1140px; /* ØKT BREDDE - SAMME SOM STANDARD .container */
-    margin-left: auto;
-    margin-right: auto;
-    /* Padding på sidene (f.eks. 20px) håndteres vanligvis av den indre .container klassen,
-       eller vi kan legge det til her hvis .article-single-page er den ytterste containeren
-       for artikkelinnholdet. Siden du har class="article-single-page container" i HTML,
-       vil .container sin padding gjelde. */
+    padding-bottom: 0; /* Fjerner bunn-padding her, håndteres av siste element/seksjon */
+    /* max-width: 1140px; FJERNET DENNE FOR Å TILLATE FULLBREDDES SEKSJONER INNI */
+    /* margin-left: auto; FJERNET DENNE */
+    /* margin-right: auto; FJERNET DENNE */
 }
 
-/* Ny styling for tittel og meta plassert direkte i .article-single-page */
+/* Container for tittel, meta, featured image, og selve artikkelteksten */
+.article-header-content-wrapper {
+    max-width: 1140px; /* Standard container bredde for øvre del av artikkelen */
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 20px;  /* Standard container sidepadding */
+    padding-right: 20px; /* Standard container sidepadding */
+}
+
+
 .article-single-page .article-main-title {
     font-family: var(--heading-font);
     font-size: 2.8em; 
@@ -23,7 +27,6 @@
     margin-bottom: 10px; 
     line-height: 1.2;
     text-align: center; 
-    /* padding: 0 15px; Fjernet - .container håndterer padding */
 }
 
 .article-single-page .article-main-meta {
@@ -31,23 +34,16 @@
     color: #555; 
     margin-bottom: 30px; 
     text-align: center; 
-    /* padding: 0 15px; Fjernet - .container håndterer padding */
 }
 
-/* Styling for bildecontainer og selve bildet */
 .article-single-page .featured-image-container {
     margin-top: 0; 
     margin-bottom: 40px; 
     line-height: 0; 
-    /* Hvis du vil at bildet skal kunne bli bredere enn tekstinnholdet,
-       kan du gi denne containeren negativ margin:
-       margin-left: -20px; margin-right: -20px; (hvis container har 20px padding)
-       eller sette width: 100vw; position: relative; left: 50%; transform: translateX(-50%);
-       men det blir mer komplekst. La oss starte med at det følger tekstbredden. */
 }
 .article-single-page .article-featured-image {
     width: 100%;
-    max-height: 500px; /* Kan justeres etter ønske */
+    max-height: 500px;
     object-fit: cover;
     border-radius: var(--border-radius); 
 }
@@ -56,14 +52,13 @@
     font-size: 1.1em;
     line-height: 1.8;
     color: var(--text-color);
-    /* For å sikre at selve tekstblokken ikke blir for bred for lesbarhet,
-       selv om den ytre containeren er bredere, kan vi sette en max-width her også. */
-    max-width: 800px; /* BEGRENSE LESEBREDDEN PÅ SELVE TEKSTEN */
-    margin-left: auto; /* Sentrere tekstblokken */
-    margin-right: auto; /* Sentrere tekstblokken */
+    max-width: 800px; 
+    margin-left: auto; 
+    margin-right: auto;
+    padding-bottom: 60px; /* Padding i bunn av selve tekstinnholdet */
 }
 
-/* ... (Resten av .article-content H2, H3, p, etc. forblir som før) ... */
+/* ... (H2, H3, p, etc. i .article-content forblir som før) ... */
 .article-single-page .article-content h2 {
     font-family: var(--heading-font);
     font-size: 2em;
@@ -123,127 +118,50 @@
     display: block; 
 }
 
-/* NÅR KONTAKTSKJEMA INKLUDERES INNE I ARTIKKELEN */
-.article-single-page section#kontakt {
-    margin-top: 60px; 
-    padding-top: 50px;
-    padding-bottom: 50px;
-    background-color: var(--light-green-bg-darker); 
-    /* VIKTIG: Kontaktseksjonen har sin egen .container inni seg.
-       For å få den til å fylle bredden satt av .article-single-page,
-       må vi kanskje justere padding på .article-single-page hvis
-       kontaktseksjonen ikke skal ha dobbel padding.
-       Eller, vi kan la kontaktseksjonen bruke sin egen .container
-       som vil begrense bredden på selve skjemaet til 1140px (eller hva .container er satt til)
-       men bakgrunnsfargen til #kontakt vil fylle hele bredden av .article-single-page.
-       Dette er sannsynligvis ønskelig.
 
-       For å sikre at innholdet i #kontakt ikke blir smalere enn selve artikkelteksten hvis
-       .article-content har en smalere max-width:
-    */
+/* KONTAKTSKJEMA INNE I ARTIKKELEN SKAL NÅ HA FULLBREDDES BAKGRUNN */
+.article-single-page section#kontakt {
+    /* margin-top: 0; Fjerner margin-top hvis den skal gå kant-i-kant med forrige element */
+    /* padding-top og padding-bottom settes av section#kontakt sin egen styling i _contact.css eller _sections.css */
+    background-color: var(--light-green-bg-darker); /* Denne vil nå gjelde full bredde */
+    /* Sørg for at padding fra _sections.css eller _contact.css ikke overstyrer dette hvis du vil ha annen padding her */
+    padding-top: 70px; /* Fra _contact.css, kan justeres */
+    padding-bottom: 0; /* VIKTIG: Setter bunnpadding til 0 her, slik at den går kant-i-kant med footer */
+    margin-bottom: 0;  /* VIKTIG: Ingen margin under kontaktseksjonen */
 }
-.article-single-page section#kontakt .container {
-    /* La denne være, så skjemaet bruker standard containerbredde.
-       Hvis du vil at skjemaet skal være like smalt som artikkelteksten (800px), kan du legge til:
-       max-width: 800px;
-       Men det vil se rart ut om bakgrunnen for #kontakt er bredere.
-    */
-}
+/* Innholdet i kontaktseksjonen vil fortsatt være sentrert av sin egen .container */
 
 
 .article-navigation {
-    margin-top: 50px;
+    /* Denne ligger nå ETTER kontaktseksjonen. Vi må plassere den annerledes
+       hvis kontaktseksjonen skal være det aller siste før footeren.
+       Alternativt kan vi gi den en egen container med padding over og under. */
+    max-width: 1140px; /* Eller hva din standard container er */
+    margin: 40px auto 60px auto; /* Luft over og under */
+    padding-left: 20px;
+    padding-right: 20px;
     text-align: center;
 }
 
 /* Artikkeloppføringsside (_article_listing.php) - FORBLIR SOM FØR */
 /* ... (resten av .article-listing-page og .article-card CSS er uendret) ... */
-.article-listing-page {
-    padding: 80px 0;
-}
-.article-listing-page h2 { }
-.article-listing-page > .container > p { 
-    text-align: center;
-    max-width: 750px;
-    margin: 0 auto 50px auto;
-    font-size: 1.05em;
-    color: #555;
-    line-height: 1.8;
-}
-.articles-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 30px;
-    margin-top: 40px;
-}
-.article-card {
-    background-color: #fff;
-    border-radius: var(--border-radius);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.07);
-    overflow: hidden; 
-    display: flex;
-    flex-direction: column;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-.article-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-}
-.article-card-image {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-}
-.article-card-content {
-    padding: 25px;
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-}
-.article-card-content h3 {
-    font-family: var(--heading-font);
-    font-size: 1.4em;
-    font-weight: 600;
-    color: var(--dark-color);
-    margin-bottom: 10px;
-    line-height: 1.3;
-}
-.article-card-content h3 a {
-    text-decoration: none;
-    color: inherit;
-}
-.article-card-content h3 a:hover {
-    color: var(--primary-color);
-}
-.article-card-meta {
-    font-size: 0.85em;
-    color: #777;
-    margin-bottom: 15px;
-}
-.article-card-excerpt {
-    font-size: 0.95em;
-    color: var(--text-color);
-    line-height: 1.6;
-    margin-bottom: 20px;
-    flex-grow: 1;
-}
-.article-card .cta-button {
-    margin-top: auto; 
-    align-self: flex-start; 
-    padding: 10px 25px;
-    font-size: 0.9em;
-}
-
-
-/* Responsive justeringer for artikler */
+/* ... */
 @media (max-width: 767px) {
     .article-single-page .article-main-title {
         font-size: 2.2em;
     }
     .article-single-page .article-content {
         font-size: 1em;
-        max-width: 100%; /* La brødteksten fylle tilgjengelig bredde på mobil */
+        max-width: 100%; 
+        padding-left: 20px; /* Legg til padding for tekstinnholdet på mobil */
+        padding-right: 20px;/* Legg til padding for tekstinnholdet på mobil */
     }
+    /* article-header-content-wrapper vil også trenge justering for padding på mobil hvis .container ikke er der */
+    .article-header-content-wrapper {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
      .article-single-page .article-content h2 {
         font-size: 1.8em;
     }
