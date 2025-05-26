@@ -1,8 +1,8 @@
 ---
-title: "Google Workspace: Forvandle Din Arbeidsdag"
+title: "Google Workspace: Oppgrader din arbeidshverdag"
 author: "Kenneth B. Bjerke"
 date: "2025-05-23"
-slug: "google-workspace-forvandle-din-arbeidshverdag"
+slug: "google-workspace-oppgrader-din-arbeidshverdag"
 excerpt: "Oppdag hvordan Google Workspace, med kraften fra Gemini og NotebookLM, kan revolusjonere måten bedriften din jobber, samarbeider og innoverer på."
 meta_description: "Utforsk fordelene med Google Workspace, fra sanntidssamarbeid til avansert AI-drevet analyse med Gemini og NotebookLM. Akari hjelper deg i gang."
 image: "/assets/img/articles/google-workspace-og-ai.jpg"
