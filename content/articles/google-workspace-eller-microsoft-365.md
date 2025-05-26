@@ -3,16 +3,16 @@ title: "Google Workspace eller Microsoft 365"
 author: "Kenneth B. Bjerke"
 date: "2025-05-27"
 slug: "google-workspace-eller-microsoft-365"
-excerpt: "Velg riktig produktivitetspakke for din norske bedrift: Google Workspace eller Microsoft 365? Akari AS, din erfarne Google Workspace-partner, gir deg en detaljert Q&A som dekker funksjoner, AI-verktøy (som Gemini), Akari-pakker med priser, sikkerhet, og hvorfor Google Workspace, født i skyen, er et smart valg med vår lokale support."
-meta_description: "Usikker på Google Workspace vs Microsoft 365? Akari AS gir norske bedrifter svar. Q&A om AI, pris, sikkerhet & support. Velg riktig med vår guide!"
+excerpt: "Velg riktig produktivitetspakke for din norske bedrift: Google Workspace eller Microsoft 365? Akari, din erfarne Google Workspace-partner, gir deg en detaljert Q&A som dekker funksjoner, AI-verktøy (som Gemini), Akari-pakker med priser, sikkerhet, og hvorfor Google Workspace, født i skyen, er et smart valg med vår lokale support."
+meta_description: "Usikker på Google Workspace vs Microsoft 365? Akari gir norske bedrifter svar. Q&A om AI, pris, sikkerhet & support. Velg riktig med vår guide!"
 image: "/assets/img/articles/Kenneth_Google_Workspace-4.jpg"
 ---
 
-# Google Workspace eller Microsoft 365? Slik velger din bedrift riktig – med Akari AS som din skybaserte og AI-drevne guide
+## Google Workspace eller Microsoft 365? Slik velger din bedrift riktig – med Akari som din skybaserte og AI-drevne guide
 
 Står din bedrift ved et veiskille og vurderer hvilken produktivitetspakke som er best egnet – Google Workspace eller Microsoft 365? Du er ikke alene. Mange norske bedrifter lurer på hva som vil gi dem den beste verdien, den mest sømløse arbeidsflyten og den tryggeste fremtiden. Svaret ligger ofte i skyen, og i økende grad i kraften av integrert kunstig intelligens (AI).
 
-Vi i Akari AS, som i år stolt feirer vårt 10-årsjubileum, er offisiell Google Workspace-forhandler. For drøyt ett år siden tok vi selv steget over til Google Workspace – en plattform som er **født i skyen** og designet for fremtidens AI-drevne arbeid – og vi har ikke sett oss tilbake! Vår egen positive erfaring, kombinert med dyp teknisk innsikt (vår System- og IT-ansvarlig har over 10 års erfaring med Google Workspace), gjør oss trygge på å anbefale denne løsningen.
+Vi i Akari, som i år stolt feirer vårt 10-årsjubileum, er offisiell Google Workspace-forhandler. For drøyt ett år siden tok vi selv steget over til Google Workspace – en plattform som er **født i skyen** og designet for fremtidens AI-drevne arbeid – og vi har ikke sett oss tilbake! Vår egen positive erfaring, kombinert med dyp teknisk innsikt (vår System- og IT-ansvarlig har over 10 års erfaring med Google Workspace), gjør oss trygge på å anbefale denne løsningen.
 
 Denne artikkelen er utformet som en spørsmål-og-svar-guide for å hjelpe deg å navigere i valget, og vise hvorfor vi mener Google Workspace, spesielt med en dedikert partner som Akari, er et fremragende valg for moderne norske bedrifter som ønsker å jobbe smartere – hvor som helst, når som helst, og med AI som en integrert medhjelper.
 
@@ -37,7 +37,7 @@ Både Google Workspace (GW) og Microsoft 365 (M365) tilbyr robuste pakker, men d
 
 ### Q2: Hvordan sammenlignes priser og hva får man egentlig for pengene, inkludert AI-muligheter?
 
-Prismodeller kan være forvirrende. Hos Akari AS har vi valgt en transparent og forutsigbar tilnærming når vi leverer Google Workspace. I stedet for mange små, utydelige varelinjer på IT-regningen, baker vi support, drift, vår ekspertise og tilgang til Googles kraftige AI-verktøy inn i klare pakkeløsninger.
+Prismodeller kan være forvirrende. Hos Akari har vi valgt en transparent og forutsigbar tilnærming når vi leverer Google Workspace. I stedet for mange små, utydelige varelinjer på IT-regningen, baker vi support, drift, vår ekspertise og tilgang til Googles kraftige AI-verktøy inn i klare pakkeløsninger.
 
 * **Akaris Startpakke (basert på Google Workspace Business Starter): 200,- per bruker/mnd.**
     * Inkluderer profesjonell e-post med bedriftens domene, 30 GB skylagring per bruker, videomøter, standard support fra Akari, og tilgang til smarte AI-funksjoner som effektiviserer hverdagen.
@@ -107,7 +107,7 @@ Migrering er en viktig del av overgangen.
 
 **Akaris perspektiv:** Dette er hvor en lokal partner som Akari virkelig skinner! I stedet for å navigere i store, globale supportsystemer, får du direkte tilgang til oss. **Vi tilbyr personlig, norsk brukerstøtte og teknisk hjelp.** Vi kjenner deg og din bedrift, og kan raskt bistå med alt fra enkle spørsmål til mer komplekse utfordringer. Dette er inkludert i våre pakkeløsninger.
 
-## Hvorfor velge Akari AS som din Google Workspace-partner?
+## Hvorfor velge Akari som din Google Workspace-partner?
 
 Å velge riktig programvare er bare starten. Å ha en kompetent, tilgjengelig og norsk IT-partner er nøkkelen til suksess, spesielt når man skal utnytte avansert teknologi som AI.
 
@@ -123,7 +123,7 @@ Migrering er en viktig del av overgangen.
 
 For bedrifter som ønsker en fremtidsrettet, fleksibel og samarbeidsorientert arbeidsplattform som virkelig er **født i skyen** og fullt utnytter potensialet i **kunstig intelligens**, er Google Workspace et enestående valg. Googles lederskap innen AI gir deg verktøyene som trengs for å ligge i forkant.
 
-Med Akari AS som din partner får du ikke bare tilgang til en førsteklasses produktivitetsplattform, men også et team av norske eksperter som sørger for en problemfri overgang, og som er der for deg med support og rådgivning – alt inkludert i en klar og forutsigbar pris.
+Med Akari som din partner får du ikke bare tilgang til en førsteklasses produktivitetsplattform, men også et team av norske eksperter som sørger for en problemfri overgang, og som er der for deg med support og rådgivning – alt inkludert i en klar og forutsigbar pris.
 
 **Er du klar for å ta steget opp i skyen med en løsning som er bygget for fremtiden og drevet av markedets kanskje smarteste AI?**
-**Kontakt Akari AS i dag for en uforpliktende prat om hvordan våre Google Workspace-pakker kan transformere din arbeidshverdag!**
+**Kontakt Akari i dag for en uforpliktende prat om hvordan våre Google Workspace-pakker kan transformere din arbeidshverdag!**
