@@ -1,32 +1,83 @@
-/* --- CSS Styling (Akari Inspired - v15 - Best Practice Mobilmeny) --- */
+/* --- CSS Styling (Grunnleggende) --- */
 :root {
-    --primary-color: #00a99d; /* Eksisterende primærfarge, ligner på akari.no sin cyan */
-    --dark-color: #064f55;    /* Eksisterende mørk farge for tekst */
-    --light-green-bg: #f4fef8;
-    --light-green-bg-darker: #eef8f2;
-    --text-color: #333;
+    /* Fargepalett fra designmanualen */
+    --primary-color: #1DD1B6; /* TURQUOISE sekundær - ofte brukt som primær handling/highlight */
+    --dark-color: #064F55;    /* TEAL primær - for tekst, mørke elementer */
+    --glacier-bg: #F3FCF8;    /* GLACIER støttefarge - lys bakgrunn */
+    
+    /* Andre farger du bruker */
+    --light-green-bg: var(--glacier-bg); /* Alias for Glacier */
+    --light-green-bg-darker: #eaf9f5; /* En litt mørkere variant for variasjon, juster etter behov */
+    --text-color: #333;       /* Generell mørk tekstfarge, kan være lik --dark-color */
     --text-color-light: #ffffff;
+
+    /* Typografi fra designmanualen */
     --heading-font: 'Red Hat Display', sans-serif;
-    --body-font: 'Red Hat Display', sans-serif;
-    --border-radius: 15px; /* Beholdes, men knapper får mer avrunding */
+    --body-font: 'DM Sans', sans-serif; /* ENDRET TIL DM SANS */
+
+    /* Andre globale variabler */
+    --border-radius: 15px; 
     --header-height-desktop: 70px;
     --scroll-padding-top: 90px; 
-    --akari-sublogo: #01938b; 
+    --akari-sublogo: #01938b; /* Dette er nær --dark-color, kan konsolideres om ønskelig */
 }
 
 /* Grunnleggende Reset & Body */
-html, body { margin: 0; padding: 0; width: 100%; }
-* { box-sizing: border-box; }
+html, body { 
+    margin: 0; 
+    padding: 0; 
+    width: 100%; 
+}
+* { 
+    box-sizing: border-box; 
+}
 
 body { 
-    font-family: var(--body-font); 
+    font-family: var(--body-font); /* Bruker DM Sans som standard */
     line-height: 1.7; 
     color: var(--text-color); 
     background-color: var(--light-green-bg); 
-    font-weight: 400; /* Standard vekt for brødtekst */
-    -webkit-font-smoothing: antialiased; /* For jevnere font-rendering */
+    font-weight: 400; /* Standard vekt for DM Sans (Regular) */
+    -webkit-font-smoothing: antialiased; 
     -moz-osx-font-smoothing: grayscale;
 }
-body.mobile-menu-is-open { overflow: hidden; }
-html { scroll-behavior: smooth; scroll-padding-top: var(--scroll-padding-top); } 
-.container { max-width: 1140px; margin: 0 auto; padding: 0 20px; }
+body.mobile-menu-is-open { 
+    overflow: hidden; 
+}
+html { 
+    scroll-behavior: smooth; 
+    scroll-padding-top: var(--scroll-padding-top); 
+} 
+.container { 
+    max-width: 1140px; 
+    margin: 0 auto; 
+    padding: 0 20px; 
+}
+
+/* Standard styling for overskrifter (kan justeres videre i spesifikke partials) */
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--heading-font); /* Red Hat Display */
+    color: var(--dark-color);
+    margin-top: 1.5em; /* Standard marg over overskrifter */
+    margin-bottom: 0.75em; /* Standard marg under overskrifter */
+    line-height: 1.3;
+}
+
+h1 { font-size: 2.8em; font-weight: 700; } /* Eksempel: Bold */
+h2 { font-size: 2.2em; font-weight: 600; } /* Eksempel: SemiBold */
+h3 { font-size: 1.8em; font-weight: 600; } /* Eksempel: SemiBold */
+h4 { font-size: 1.4em; font-weight: 500; } /* Eksempel: Medium */
+/* Disse vil bli overstyrt i spesifikke seksjoner/artikler ved behov */
+
+p {
+    margin-bottom: 1em;
+    /* font-family og font-weight arves fra body */
+}
+
+a {
+    color: var(--primary-color);
+    text-decoration: none; /* Fjerner standard understrek, kan legges til spesifikt */
+}
+a:hover {
+    text-decoration: underline;
+}

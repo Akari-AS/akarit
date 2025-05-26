@@ -33,7 +33,9 @@
     </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <?php // ENDRET FONT-IMPORT FOR Å INKLUDERE DM SANS OG FLERE VEKTER FOR RED HAT DISPLAY ?>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&family=Red+Hat+Display:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    
     <link rel="stylesheet" href="/assets/css/style.css">
 
     <script type="application/ld+json">
@@ -78,7 +80,7 @@
     <?php endif; ?>
 
 </head>
-<body class="bg-akari-light-green text-gray-800 font-body antialiased">
+<body class="bg-akari-light-green text-gray-800 font-body antialiased"> <?php // font-body vil nå peke til DM Sans ?>
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5B2PFWHX" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <header>
@@ -88,7 +90,7 @@
         </a>
         <nav class="desktop-nav">
             <ul>
-                <li><a href="/#fordeler">Google Workspace</a></li> <?php // Dekker Fordeler, Produkter, AI ?>
+                <li><a href="/#fordeler">Google Workspace</a></li>
                 <li><a href="/#prispakker">Prispakker</a></li>
                 <li><a href="/artikler/">Artikler</a></li>
                 <li><a href="/#hvorfor-oss">Hvorfor Akari?</a></li>
