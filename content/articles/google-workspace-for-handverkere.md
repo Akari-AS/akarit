@@ -84,4 +84,3 @@ Google Workspace er mer enn bare e-post og dokumenter. Det er en komplett digita
 Klar for å ta steget mot en enklere og mer digital arbeidshverdag? Kontakt Akari i dag for en prat om hvordan Google Workspace kan transformere din håndverkerbedrift!
 
 ---
-**(Valgfritt: Legg inn kontaktinformasjon eller en lenke til kontaktskjema her)**
