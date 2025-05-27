@@ -1,11 +1,11 @@
 ---
-title: "Google Workspace for Håndverkere: Enklere Hverdag Fra Tilbud til Faktura"
-author: "Kenneth B. Bjerke"
-date: "2025-05-27"
+title: "Google Workspace for håndverkere: Enklere hverdag fra tilbud til faktura"
+author: "Kenneth B. Bjerke" # Eller den faktiske forfatteren av denne artikkelen
+date: "2025-05-27" # Dagens dato, eller publiseringsdato
 slug: "google-workspace-for-handverkere"
 excerpt: "Optimaliser din håndverkerbedrift med Google Workspace! Akari viser deg hvordan du kan effektivisere alt fra tilbudsskriving og prosjektstyring til fakturering. Få konkrete tips for en enklere og mer produktiv arbeidshverdag."
 meta_description: "Lær hvordan Google Workspace kan forenkle hverdagen for håndverkere. Tips for tilbud, prosjekt, faktura & samarbeid. Akari er din Google Workspace-partner i Norge."
-image: "/assets/img/articles/Ag_smeltehytta_1.18.1.jpg"
+image: "/assets/img/articles/Ag_smeltehytta_1.18.1.jpg" # Oppdatert bildesti
 ---
 
 ## Google Workspace for håndverkere: Enklere hverdag fra tilbud til faktura
@@ -13,6 +13,10 @@ image: "/assets/img/articles/Ag_smeltehytta_1.18.1.jpg"
 Driver du et håndverkerfirma og kjenner på at papirarbeid, koordinering og kommunikasjon stjeler tid fra det du egentlig vil drive med – selve håndverket? I en travel hverdag med befaringer, kundekontakt, materialinnkjøp og selve jobben, kan administrative oppgaver fort bli en flaskehals. Men hva om du kunne forenkle mye av dette med verktøy du kanskje allerede kjenner til, eller som er enkle å ta i bruk?
 
 Google Workspace (tidligere G Suite) er en pakke med skybaserte verktøy som kan revolusjonere måten håndverkerbedriften din jobber på. Tenk deg enklere tilbudsskriving, sømløs deling av prosjektinformasjon, og mer effektiv kommunikasjon – alt samlet på ett sted, tilgjengelig uansett hvor du er.
+
+Foretrekker du å lytte? Hør vår Akaripodden-episode hvor vi går dypere inn i hvordan Google Workspace kan transformere arbeidshverdagen for håndverkere:
+<iframe style="border-radius:12px" src="https://open.spotify.com/episode/2TkbXrOibaL9aR6Y2FiIxp?si=Q3bjVCYXTa6fwVQDwrQXeQ" width="100%" height="232" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+*(Merk: Bytt ut src-adressen over med den korrekte embed-URLen fra Spotify for din episode).*
 
 Som din IT-partner hjelper Akari deg ikke bare med å sette opp Google Workspace, men også med å skreddersy løsningene slik at de passer perfekt til din bedrifts unike behov. Vi forstår utfordringene i håndverkerbransjen og kan vise deg hvordan du får mest mulig ut av disse kraftige verktøyene.
 
