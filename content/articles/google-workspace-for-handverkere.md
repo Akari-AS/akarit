@@ -8,7 +8,7 @@ meta_description: "Lær hvordan Google Workspace kan forenkle hverdagen for hån
 image: "/assets/img/articles/Ag_smeltehytta_1.18.1.jpg"
 ---
 
-# Google Workspace for Håndverkere: Enklere Hverdag Fra Tilbud til Faktura
+## Google Workspace for Håndverkere: Enklere Hverdag Fra Tilbud til Faktura
 
 Driver du et håndverkerfirma og kjenner på at papirarbeid, koordinering og kommunikasjon stjeler tid fra det du egentlig vil drive med – selve håndverket? I en travel hverdag med befaringer, kundekontakt, materialinnkjøp og selve jobben, kan administrative oppgaver fort bli en flaskehals. Men hva om du kunne forenkle mye av dette med verktøy du kanskje allerede kjenner til, eller som er enkle å ta i bruk?
 
