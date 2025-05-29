@@ -1,5 +1,5 @@
 ---
-title: "Slik Velger Du Riktig IT-Leverandør for Din Bedrift i Norge"
+title: "Slik velger du riktig IT-leverandør for din bedrift i Norge"
 author: "Kenneth B. Bjerke"
 date: "2025-05-29"
 slug: "slik-velger-du-riktig-it-leverandor-norge"
@@ -25,8 +25,8 @@ For å unngå dette, bør du se etter en leverandør som forstår dine unike beh
 
 ## Akari: Din lokale IT-partner med over 10 års erfaring
 
-![Bilde av Per Kristian Semmen, leder i Akari Group](/assets/img/articles/Per_Kristian_Semmen.jpg)
-*Per Kristian Semmen er lederen av Akari Group (AG), men også godt involvert i KIF (Kongsberg Idrettsforening). Han er strålende fornøyd med Google Workspace. "Du får alltid fullversjonen."*
+![Bilde av Per Kristian Semmen, leder i AG](/assets/img/articles/Per_Kristian_Semmen.jpg)
+*Per Kristian Semmen er lederen av Argentum Entreprenør AS (AG), men også godt involvert i KIF (Kongsberg Idrettsforening). Han er strålende fornøyd med Google Workspace. "Du får alltid fullversjonen."*
 
 I Akari AS nærmer vi oss vårt **10-årsjubileum i 2025**. Siden oppstarten i 2015 har vi bygget opp solid kompetanse og en lojal kundebase på rundt **300 små og store bedrifter, offentlige etater og kommuner**. Vår leder for System & IT, Kenneth B. Bjerke, har selv over et tiår med spesialisert erfaring med Google Workspace, noe som sikrer dyptgående innsikt.
 
