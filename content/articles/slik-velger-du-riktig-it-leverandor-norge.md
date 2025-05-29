@@ -30,7 +30,7 @@ For å unngå dette, bør du se etter en leverandør som forstår dine unike beh
 
 I Akari AS nærmer vi oss vårt **10-årsjubileum i 2025**. Siden oppstarten i 2015 har vi bygget opp solid kompetanse og en lojal kundebase på rundt **300 små og store bedrifter, offentlige etater og kommuner**. Vår leder for System & IT, Kenneth B. Bjerke, har selv over et tiår med spesialisert erfaring med Google Workspace, noe som sikrer dyptgående innsikt.
 
-Vi har en sterk lokal forankring med hovedkontor i **Kongsberg** og betjener aktivt kunder i **Numedal, Hønefoss, Notodden**, og er nå i ferd med å etablere oss i **Larvik**. Dette betyr at vi kjenner de lokale forholdene og kan tilby personlig service og rask respons.
+Vi har en sterk lokal forankring med hovedkontor i **Kongsberg** og betjener aktivt kunder i **Numedal, Hønefoss, Notodden**, og er nå i ferd med å etablere oss i **Larvik**. Dette betyr at vi kjenner de lokale forholdene og kan tilby personlig service og rask respons, men vi har også et bredt nettverk som strekker seg over hele Norge og har kunder i **Oslo, Bergen, Trondheim** og mange andre steder rundt om i landet.
 
 ## Hva bør du vurdere hos en potensiell IT-leverandør?
 
