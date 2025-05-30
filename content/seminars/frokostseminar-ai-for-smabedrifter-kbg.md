@@ -1,5 +1,5 @@
 ---
-title: "Frokostseminar: AI i Praksis for Småbedrifter"
+title: "Frokostseminar: TEST - AI i Praksis for Småbedrifter"
 date: "2025-09-15 08:30"
 location: "Akari Kongsberg, Kirkegata 2, 3616 Kongsberg"
 slug: "frokostseminar-ai-for-smabedrifter-kbg"
@@ -12,8 +12,9 @@ max_attendees: 25
 contact_person_email: "kenneth@akari.no" 
 ---
 
-## Bli med på et inspirerende frokostseminar!
+## TEST --- Bli med på et inspirerende frokostseminar!
 
+### TEST! Obs dette er ikke et ekte seminar, kun testing. Ekte seminar kommer ;)
 Kunstig intelligens (AI) er ikke lenger bare for store selskaper. I dette frokostseminaret viser vi deg helt konkret hvordan du som driver en liten eller mellomstor bedrift kan dra nytte av de kraftige AI-verktøyene som nå er integrert i Google Workspace, spesielt gjennom Gemini.
 
 **Du vil lære om:**
