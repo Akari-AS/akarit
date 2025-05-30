@@ -28,24 +28,25 @@ foreach (array_keys($allLocationsData) as $slug) {
     $urls[] = ['loc' => $slug . '/', 'changefreq' => 'monthly', 'priority' => '0.9', 'lastmod' => $today];
 }
 
-// Ankerseksjoner på forsiden (hvis de ikke har egne dedikerte sider nå)
+// Ankerseksjoner på forsiden
 $anchorSections = [
     ['path' => '#fordeler', 'priority' => '0.8'],
     ['path' => '#produkter', 'priority' => '0.8'],
     ['path' => '#ai-funksjoner', 'priority' => '0.8'],
     ['path' => '#prispakker', 'priority' => '0.7'],
-    ['path' => '#nrk-google-workspace', 'priority' => '0.7'],
+    ['path' => '#nrk-google-workspace', 'priority' => '0.7'], 
     ['path' => '#hvorfor-oss', 'priority' => '0.7'],
     ['path' => '#kontakt', 'priority' => '0.6'],
 ];
 foreach ($anchorSections as $section) {
-    // Kun legg til ankerlenker hvis de peker til forsiden (loc er tom)
      $urls[] = ['loc' => $section['path'], 'changefreq' => 'monthly', 'priority' => $section['priority'], 'lastmod' => $today];
 }
 
-
 // Artikkel-listeside
 $urls[] = ['loc' => 'artikler/', 'changefreq' => 'weekly', 'priority' => '0.9', 'lastmod' => $today];
+
+// Lokasjonslisteside (NYTT)
+$urls[] = ['loc' => 'lokasjoner/', 'changefreq' => 'monthly', 'priority' => '0.7', 'lastmod' => $today];
 
 // Hent artikler for sitemap
 $articleContentPath = __DIR__ . '/content/articles/';
@@ -53,13 +54,14 @@ $markdownArticleFiles = glob($articleContentPath . '*.md');
 if ($markdownArticleFiles !== false) {
     foreach ($markdownArticleFiles as $articleFile) {
         $articleContent = file_get_contents($articleFile);
-         // Enkel front-matter parsing for slug og dato
         if (preg_match('/^---\s*$(.*?)^---\s*$/ms', $articleContent, $matches)) {
             $articleFrontMatter = [];
             $lines = explode("\n", trim($matches[1]));
             foreach ($lines as $line) {
-                list($key, $value) = explode(':', $line, 2);
-                $articleFrontMatter[trim($key)] = trim(trim($value), "'\"");
+                if(strpos($line, ':') !== false) { 
+                    list($key, $value) = explode(':', $line, 2);
+                    $articleFrontMatter[trim($key)] = trim(trim($value), "'\"");
+                }
             }
             if (isset($articleFrontMatter['slug'])) {
                 $articleLastMod = isset($articleFrontMatter['date']) ? date('Y-m-d', strtotime($articleFrontMatter['date'])) : $today;
@@ -73,7 +75,6 @@ if ($markdownArticleFiles !== false) {
         }
     }
 }
-
 
 $xmlOutput = '<?xml version="1.0" encoding="UTF-8"?>' . PHP_EOL;
 $xmlOutput .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . PHP_EOL;
