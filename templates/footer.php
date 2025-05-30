@@ -6,6 +6,7 @@
             <h4>Om Akari</h4>
             <ul>
                 <li><a href="https://akari.no/om-akari/" target="_blank">Om Akari</a></li>
+                <li><a href="/lokasjoner/">Våre lokasjoner</a></li> <?php // <-- NY LENKE HER ?>
                 <li><a href="https://akari.no/betingelser/" target="_blank">Vilkår og betingelser</a></li>
                 <li><a href="https://akari.no/personvern/" target="_blank">Personvern og cookies</a></li>
             </ul>
