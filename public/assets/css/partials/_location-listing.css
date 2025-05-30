@@ -1,0 +1,122 @@
+/* --- Simple Location Listing Page Styling --- */
+.location-listing-page-simple {
+    padding: 70px 0; 
+    background-color: var(--light-green-bg); 
+}
+
+.location-listing-page-simple h2 {
+    text-align: center;
+    margin-bottom: 15px;
+    /* Arver font-size, font-weight etc. fra _sections.css eller _base.css,
+       hvis du vil overstyre, gjør det her. F.eks.: */
+    /* font-size: 2.4em; */
+}
+.location-listing-page-simple > .container > p { 
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto 40px auto;
+    font-size: 1.05em; /* Bruker DM Sans via body-arv */
+    line-height: 1.6;
+}
+
+.location-group-simple {
+    margin-bottom: 40px;
+}
+.location-group-simple:last-of-type {
+    margin-bottom: 20px;
+}
+
+.location-group-simple h3 { /* For "Våre nøkkelkontorer" / "Andre dekningsområder" */
+    font-family: var(--heading-font);
+    font-size: 1.8em;
+    color: var(--dark-color);
+    border-bottom: 1px solid var(--primary-color); /* Tynnere linje */
+    padding-bottom: 10px;
+    margin-top: 0; 
+    margin-bottom: 25px; 
+    text-align: left; /* Eller center hvis du foretrekker */
+}
+
+.region-block-simple {
+    margin-bottom: 30px;
+}
+.region-block-simple:last-of-type {
+    margin-bottom: 15px;
+}
+
+.region-block-simple h4 { /* For regionnavn som Buskerud, Telemark etc. */
+    font-family: var(--heading-font);
+    font-size: 1.4em;
+    color: var(--dark-color);
+    margin-bottom: 15px;
+    font-weight: 600; /* Gjør regionnavn litt tydeligere */
+    /* text-align: left; /* Standard */
+}
+
+ul.location-links-list {
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: 20px;
+    /* Enkel kolonne på mobil som standard */
+}
+
+ul.location-links-list li {
+    margin-bottom: 10px; /* Litt mer luft mellom lenkene */
+}
+
+ul.location-links-list li a {
+    font-family: var(--body-font); /* Sikrer DM Sans */
+    color: var(--primary-color); 
+    text-decoration: none; /* Ingen understrek som standard */
+    font-weight: 500; /* DM Sans Medium */
+    padding: 3px 0; 
+    display: inline-block; 
+    transition: color 0.2s ease;
+}
+
+ul.location-links-list li a:hover {
+    color: var(--dark-color);
+    text-decoration: underline; /* Understrek på hover */
+}
+
+.head-office-indicator {
+    font-size: 0.9em; /* Litt større for bedre lesbarhet */
+    color: #555; 
+    font-style: normal; /* Fjerner kursiv hvis du ikke vil ha det */
+    font-weight: 400; /* Normal vekt */
+    margin-left: 6px;
+}
+
+.location-listing-contact-cta {
+    border-top: 1px solid #e0e0e0;
+    padding-top: 40px;
+    margin-top: 40px;
+}
+.location-listing-contact-cta p {
+    font-family: var(--body-font);
+}
+
+
+/* For en enkel multi-kolonne layout på større skjermer */
+@media (min-width: 577px) {
+    ul.location-links-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); /* Justert min-bredde */
+        gap: 10px 25px; /* Vertikal og horisontal gap */
+    }
+    /* ul.location-links-list li a { */
+        /* padding: 5px 0;  Kan fjernes hvis du ikke trenger ekstra padding i grid */
+    /* } */
+}
+
+@media (max-width: 576px) {
+    .location-listing-page-simple h2 {
+        font-size: 2em;
+    }
+    .location-group-simple h3 {
+        font-size: 1.6em;
+    }
+    .region-block-simple h4 {
+        font-size: 1.3em;
+    }
+}
