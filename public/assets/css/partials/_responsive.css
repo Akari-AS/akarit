@@ -3,14 +3,40 @@
 /* Desktop Navigasjon - Vises fra 768px og oppover */
 @media (min-width: 768px) {
     nav.desktop-nav { display: block; }
-    nav.desktop-nav ul { list-style: none; display: flex; margin: 0; padding: 0; }
+    nav.desktop-nav ul { list-style: none; display: flex; margin: 0; padding: 0; align-items: center; }
     nav.desktop-nav li { margin-left: 25px; }
-    nav.desktop-nav li a { text-decoration: none; color: #e0e0e0; font-weight: 600; transition: color 0.3s ease, border-bottom-color 0.3s ease; padding-bottom: 5px; border-bottom: 2px solid transparent; }
-    nav.desktop-nav li a:hover, nav.desktop-nav li a.active { color: #fff; border-bottom-color: var(--primary-color); }
+    nav.desktop-nav li a { 
+        text-decoration: none; 
+        color: #e0e0e0; 
+        font-weight: 600; 
+        transition: color 0.3s ease, border-bottom-color 0.3s ease; 
+        padding-bottom: 5px; 
+        border-bottom: 2px solid transparent; 
+    }
+    nav.desktop-nav li a:hover, 
+    nav.desktop-nav li a.active { 
+        color: #fff; 
+        border-bottom-color: var(--primary-color); 
+    }
 
-    /* Større logo på desktop */
+    /* Styling for ekstern lenke i desktop-navigasjon */
+    nav.desktop-nav li a.nav-link-external {
+        color: #b0b0b0; 
+        font-size: 0.9em; 
+        border-bottom: none; 
+        padding: 6px 10px; 
+        border-radius: 20px;
+        border: 1px solid #b0b0b0;
+        margin-left: 30px; 
+    }
+    nav.desktop-nav li a.nav-link-external:hover {
+        color: #fff;
+        background-color: var(--primary-color);
+        border-color: var(--primary-color);
+    }
+
     .header-logo-img {
-        height: 80px; /* Ønsket høyde for desktop */
+        height: 80px; 
     }
 }
 
@@ -27,7 +53,9 @@
     :root { --scroll-padding-top: 80px; } 
     .container { max-width: 100%; padding: 0 15px; }
     header { min-height: 60px; }
-    .logo { font-size: 1.7em; }
+    /* .logo { font-size: 1.7em; } Fjerner denne da vi bruker bilde-logo som styres av .header-logo-img */
+    .header-logo-img { height: 50px; } /* Juster mobil-logohøyde her om nødvendig, var 64px */
+
     .mobile-menu-button-container { display: block; }
     nav.desktop-nav { display: none; } 
 
@@ -35,32 +63,34 @@
     .hero h1 { font-size: 2.2em; }
     .hero p { font-size: 1.1em; max-width: 95%; }
     section h2 { font-size: 2em; }
-    .features-grid, .products-grid, .ai-tools-grid { 
+    
+    /* Fjerner grid for produkter, da vi bruker ny layout */
+    /* .features-grid, .products-grid, .ai-tools-grid { 
         grid-template-columns: 1fr; 
         gap: 25px; 
-    } 
+    }  */
     
     /* Prispakker mobil justeringer */
     .pk-pricing-table {
         display: grid; 
         grid-template-columns: 1fr; 
         gap: 20px; 
-        justify-items: center; /* Sentrerer grid items (kortene) horisontalt */
+        justify-items: center; 
         padding: 0 10px; 
     }
     .pk-pricing-plan { 
         width: 100%; 
-        max-width: 400px; /* Juster denne verdien for ønsket maks bredde på mobil */
+        max-width: 400px; 
         margin-top: 30px; 
     }
-    .pk-pricing-plan:first-child { /* Sørger for at også første kort har samme margin hvis det skulle ha en badge */
+    .pk-pricing-plan:first-child {
          margin-top: 30px; 
     }
     .pk-plan-badge {
         top: -20px; 
     }
 
-    .contact-form { padding: 40px 25px; margin: 40px 15px 0 15px; }
+    /* .contact-form { padding: 40px 25px; margin: 40px 15px 0 15px; } FJERNET - kontakt.php har sin egen padding */
     .contact-form-wrapper {
         flex-direction: column; 
         gap: 30px; 
@@ -90,18 +120,48 @@
         margin-bottom: 25px;
     }
     .modern-contact-form .form-row {
+        /* Beholdes som før, men kan trenge flex-direction: column; hvis feltene skal under hverandre */
+        /* flex-direction: column; gap: 0; */
     }
     .modern-contact-form .form-group-half {
+        /* Hvis form-row er column, trenger ikke denne lenger være halv */
         margin-bottom: 25px; 
     }
     .modern-contact-form .form-group-half:last-child {
-        margin-bottom: 0; 
+        margin-bottom: 0; /* Eller 25px hvis den nå er full bredde */
     } 
     .modern-contact-form .form-group {
         margin-bottom: 25px; 
     }
     .modern-contact-form .checkbox-group label {
         font-size: 0.8em; 
+    }
+
+    /* Artikkel styling responsive (fra _articles.css, kan stå der eller flyttes hit om det er mer logisk) */
+    .article-single-page .article-main-title {
+        font-size: 2.2em;
+    }
+    .article-single-page .article-content {
+        font-size: 1em;
+        max-width: 100%; 
+        padding-left: 0; /* .article-header-content-wrapper har padding */
+        padding-right: 0;
+    }
+    .article-header-content-wrapper { /* Sørg for at denne har sidepadding på mobil */
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+     .article-single-page .article-content h2 {
+        font-size: 1.8em;
+    }
+     .article-single-page .article-content h1 { 
+        font-size: 2em;
+    }
+    .article-single-page .article-content h3 {
+        font-size: 1.4em;
+    }
+    .articles-grid {
+        grid-template-columns: 1fr;
     }
 }
 
@@ -115,10 +175,15 @@
     section h2 { font-size: 1.8em; }
     section h2 + p { font-size: 1em; margin-bottom: 40px; }
     .cta-button { padding: 14px 30px; font-size: 1em; } 
-    .contact-form { padding: 30px 20px; }
-    .feature-item, .product-card, .ai-tool-card, .pk-pricing-plan { 
+    /* .contact-form { padding: 30px 20px; } FJERNET */
+    /* .feature-item, .product-card, .ai-tool-card, .pk-pricing-plan {  FJERNET .product-card herfra, den har ny layout
         padding: 30px 25px; 
+    } */
+     .feature-item, .ai-tool-card, .pk-pricing-plan {
+        padding: 30px 25px;
     }
+
+
     #hvorfor-oss ul { max-width: 100%; padding-left: 10px; }
     #hvorfor-oss li { font-size: 1em; padding-left: 30px; }
     #hvorfor-oss li::before { font-size: 1.2em; top: 0.25em; }
@@ -132,7 +197,7 @@
     }
      .pk-pricing-plan {
         margin-top: 25px; 
-        max-width: calc(100% - 20px); /* For de aller smaleste skjermene, trekk inn litt mer */
+        max-width: calc(100% - 20px); 
     }
     .pk-pricing-plan:first-child {
         margin-top: 25px;

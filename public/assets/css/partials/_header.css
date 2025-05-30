@@ -2,17 +2,9 @@
 header { background-color: var(--dark-color); padding: 15px 0; position: sticky; top: 0; left: 0; width: 100%; z-index: 1000; box-shadow: 0 2px 5px rgba(0,0,0,0.1); min-height: var(--header-height-desktop); display: flex; align-items: center; }
 header .header-container { display: flex; justify-content: space-between; align-items: center; width: 100%; }
 
-/* Tekstbasert logo styling (kommentert ut, kan fjernes helt hvis du ikke bytter tilbake) */
-/*
-.logo { font-size: 1.9em; font-weight: 700; color: #fff; text-decoration: none; letter-spacing: 0.5px; display: flex; align-items: baseline; }
-.logo .sub-logo { font-size: 0.45em; opacity: 0.8; font-weight: 400; margin-left: 7px; white-space: nowrap; color: var(--akari-sublogo); }
-*/
-
-/* Styling for bilde-logo i header */
-.logo.logo-image-container { /* Dette er <a>-taggen */
+.logo.logo-image-container { 
     display: inline-block; 
-    line-height: 0; /* Forhindrer ekstra plass om <a> er inline-block */
-    /* Fjerner tekst-spesifikk styling hvis .logo også ble brukt for tekst */
+    line-height: 0; 
     font-size: initial; 
     font-weight: initial;
     color: initial;
@@ -20,21 +12,15 @@ header .header-container { display: flex; justify-content: space-between; align-
     letter-spacing: initial;
 }
 
-.header-logo-img { /* Dette er <img>-taggen inne i <a> */
-    height: 64px; /* Juster høyden etter behov. Bredden vil skalere proporsjonalt. */
-    /* For eksempel, hvis logoen er 120x40, kan du sette height: 35px eller max-height: 35px */
-    /* Du kan også sette en max-width hvis den blir for bred */
-    /* max-width: 120px; */
-    width: auto; /* Lar bredden skalere med høyden */
-    display: block; /* Forhindrer ekstra plass under bildet */
-    /* Hvis SVG-en har mye tomrom rundt seg, kan du trenge negativ margin for å justere den vertikalt */
-    /* margin-top: -5px; */ /* Eksempel, juster/fjern */
+.header-logo-img { 
+    height: 64px; 
+    width: auto; 
+    display: block; 
 }
-
 
 /* --- Desktop Navigasjon --- */
 nav.desktop-nav { display: none; }
-/* Desktop nav styling kommer i _responsive.css */
+/* Desktop nav styling (inkludert .nav-link-external) kommer i _responsive.css */
 
 /* --- Mobilmeny Knappe-styling --- */
 .mobile-menu-button-container { display: none; z-index: 1200; position: relative; }
@@ -54,5 +40,22 @@ nav.desktop-nav { display: none; }
 .mobile-menu-panel ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; align-items: center; width: 100%;}
 .mobile-menu-panel li { width: 100%; text-align: center; }
 .mobile-menu-panel li a { display: block; padding: 18px 20px; color: #e0e0e0; font-weight: 600; font-size: 1.4em; transition: background-color 0.2s ease, color 0.2s ease; text-decoration: none; border-bottom: 1px solid rgba(255, 255, 255, 0.1); width: 100%; }
-.mobile-menu-panel li:last-child a { border-bottom: none; }
+.mobile-menu-panel li:last-child a { border-bottom: none; } /* Gjelder nå "Til Akari.no" */
 .mobile-menu-panel li a:hover, .mobile-menu-panel li a.active { background-color: rgba(255, 255, 255, 0.1); color: var(--primary-color); }
+
+/* Styling for separator og ekstern lenke i mobilmeny */
+.mobile-menu-panel li.mobile-nav-separator hr {
+    border: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin: 10px 20px; 
+}
+
+.mobile-menu-panel li a.nav-link-external.mobile-external-link {
+    font-size: 1.1em; 
+    color: #c0c0c0; 
+    /* border-bottom: none; Hvis du vil fjerne den siste borderen spesifikt her, men li:last-child a håndterer det allerede */
+}
+.mobile-menu-panel li a.nav-link-external.mobile-external-link:hover {
+    background-color: rgba(255, 255, 255, 0.05); 
+    color: #fff;
+}

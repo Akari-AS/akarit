@@ -33,7 +33,6 @@
     </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <?php // ENDRET FONT-IMPORT FOR Å INKLUDERE DM SANS OG FLERE VEKTER FOR RED HAT DISPLAY ?>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&family=Red+Hat+Display:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="/assets/css/style.css">
@@ -80,7 +79,7 @@
     <?php endif; ?>
 
 </head>
-<body class="bg-akari-light-green text-gray-800 font-body antialiased"> <?php // font-body vil nå peke til DM Sans ?>
+<body class="bg-akari-light-green text-gray-800 font-body antialiased">
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5B2PFWHX" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <header>
@@ -95,6 +94,7 @@
                 <li><a href="/artikler/">Artikler</a></li>
                 <li><a href="/#hvorfor-oss">Hvorfor Akari?</a></li>
                 <li><a href="/#kontakt">Kontakt</a></li>
+                <li><a href="https://akari.no" target="_blank" class="nav-link-external">Til Akari.no</a></li>
             </ul>
         </nav>
          <div class="mobile-menu-button-container">
@@ -115,6 +115,8 @@
             <li><a href="/artikler/">Artikler</a></li>
             <li><a href="/#hvorfor-oss">Hvorfor Akari?</a></li>
             <li><a href="/#kontakt">Kontakt</a></li>
+            <li class="mobile-nav-separator"><hr></li> 
+            <li><a href="https://akari.no" target="_blank" class="nav-link-external mobile-external-link">Til Akari.no</a></li>
          </ul>
      </div>
 </header>
