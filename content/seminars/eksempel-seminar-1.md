@@ -1,6 +1,6 @@
 ---
 title: "Frokostseminar: AI i Praksis for Småbedrifter"
-date: "2024-09-15 08:30"
+date: "2025-09-15 08:30"
 location: "Akari Kongsberg, Kirkegata 2, 3616 Kongsberg"
 slug: "frokostseminar-ai-for-smabedrifter-kbg"
 excerpt: "Lær hvordan du kan bruke AI-verktøy i Google Workspace til å effektivisere din småbedrift. Få praktiske tips, demoer og nyt en god frokost med oss!"
