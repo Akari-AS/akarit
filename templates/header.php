@@ -94,7 +94,16 @@
                 <li><a href="/artikler/">Artikler</a></li>
                 <li><a href="/#hvorfor-oss">Hvorfor Akari?</a></li>
                 <li><a href="/#kontakt">Kontakt</a></li>
-                <li><a href="https://akari.no" target="_blank" class="nav-link-external">Til hovedside</a></li>
+                <li>
+                    <a href="https://akari.no" target="_blank" class="nav-link-external">
+                        Til hovedside 
+                        <svg class="external-link-icon" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                            <polyline points="15 3 21 3 21 9"></polyline>
+                            <line x1="10" y1="14" x2="21" y2="3"></line>
+                        </svg>
+                    </a>
+                </li>
             </ul>
         </nav>
          <div class="mobile-menu-button-container">
@@ -115,7 +124,7 @@
             <li><a href="/artikler/">Artikler</a></li>
             <li><a href="/#hvorfor-oss">Hvorfor Akari?</a></li>
             <li><a href="/#kontakt">Kontakt</a></li>
-            <li class="mobile-nav-separator"><hr></li> 
+            <?php /* <li class="mobile-nav-separator"><hr></li> */ // Strek fjernet som ønsket ?>
             <li><a href="https://akari.no" target="_blank" class="nav-link-external mobile-external-link">Til hovedside</a></li>
          </ul>
      </div>

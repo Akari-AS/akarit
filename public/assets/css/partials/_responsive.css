@@ -19,7 +19,6 @@
         border-bottom-color: var(--primary-color); 
     }
 
-    /* Styling for ekstern lenke til hovedsiden i desktop-navigasjon */
     nav.desktop-nav li a.nav-link-external {
         color: var(--primary-color); 
         font-size: 0.9em;
@@ -31,11 +30,20 @@
         background-color: transparent; 
         border: none; 
         border-radius: 0; 
+        display: inline-flex; 
+        align-items: center;   
     }
     nav.desktop-nav li a.nav-link-external:hover {
         color: #fff; 
         text-decoration: underline; 
         background-color: transparent; 
+    }
+    nav.desktop-nav li a.nav-link-external .external-link-icon {
+        margin-left: 5px; 
+        /* stroke: var(--primary-color); Kan settes hvis default farge ikke arves riktig */
+    }
+    nav.desktop-nav li a.nav-link-external:hover .external-link-icon {
+        stroke: #fff; /* Endrer ikonfarge sammen med tekst på hover */
     }
 
     .header-logo-img {
