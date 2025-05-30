@@ -2,7 +2,6 @@
 
 // --------- AUTOLOADER & GRUNNLEGGENDE OPPSETT ---------
 require __DIR__ . '/../vendor/autoload.php'; // For Parsedown
-use Parsedown; // For Markdown-parser
 
 // --------- LOKASJONSDATA ---------
 $allLocationsData = [];
