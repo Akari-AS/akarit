@@ -16,6 +16,8 @@
         $canonicalPath = '/artikler/' . htmlspecialchars($articleData['slug']) . '/';
     } elseif ($pageType === 'article_listing') {
         $canonicalPath = '/artikler/';
+    } elseif ($pageType === 'location_listing') { // Denne er fortsatt viktig for canonical på /lokasjoner/
+        $canonicalPath = '/lokasjoner/';
     } elseif ($pageType === 'landingpage' && !empty($currentLocationSlug)) {
         $canonicalPath = '/' . htmlspecialchars($currentLocationSlug) . '/';
     }
@@ -54,7 +56,7 @@
       "serviceType": "IT Support, Cloud Computing Services, Google Workspace Reseller"
     }
     </script>
-    <?php if (isset($currentLocationName) && $currentLocationName !== "Generell" && isset($currentLocationData) && !empty($currentLocationSlug) && $pageType === 'landingpage'): ?>
+    <?php if (isset($currentLocationName) && $currentLocationName !== "Generell" && $currentLocationName !== "Lokasjoner" && isset($currentLocationData) && !empty($currentLocationSlug) && $pageType === 'landingpage'): ?>
     <script type="application/ld+json">
     {
       "@context": "https://schema.org", "@type": "WebPage", "name": "<?php echo htmlspecialchars($pageTitle); ?>", "description": "<?php echo htmlspecialchars($pageDescription); ?>",
@@ -76,6 +78,16 @@
       "description": "<?php echo htmlspecialchars($articleData['excerpt'] ?? $pageDescription); ?>"
     }
     </script>
+    <?php elseif ($pageType === 'location_listing'): ?>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "<?php echo htmlspecialchars($pageTitle); ?>",
+      "description": "<?php echo htmlspecialchars($pageDescription); ?>",
+      "url": "<?php echo rtrim($baseCanonicalUrl, '/') . '/lokasjoner/'; ?>"
+    }
+    </script>
     <?php endif; ?>
 
 </head>
@@ -92,6 +104,7 @@
                 <li><a href="/#fordeler">Google Workspace</a></li>
                 <li><a href="/#prispakker">Priser</a></li>
                 <li><a href="/artikler/">Artikler</a></li>
+                <?php /* Fjernet: <li><a href="/lokasjoner/">Lokasjoner</a></li> */ ?>
                 <li><a href="/#hvorfor-oss">Hvorfor Akari?</a></li>
                 <li><a href="/#kontakt">Kontakt</a></li>
                 <li>
@@ -122,9 +135,9 @@
             <li><a href="/#fordeler">Google Workspace</a></li>
             <li><a href="/#prispakker">Priser</a></li>
             <li><a href="/artikler/">Artikler</a></li>
+            <?php /* Fjernet: <li><a href="/lokasjoner/">Lokasjoner</a></li> */ ?>
             <li><a href="/#hvorfor-oss">Hvorfor Akari?</a></li>
             <li><a href="/#kontakt">Kontakt</a></li>
-            <?php /* <li class="mobile-nav-separator"><hr></li> */ // Strek fjernet som ønsket ?>
             <li><a href="https://akari.no" target="_blank" class="nav-link-external mobile-external-link">Til hovedside</a></li>
          </ul>
      </div>

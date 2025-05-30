@@ -2,6 +2,7 @@
 
 // --------- AUTOLOADER & GRUNNLEGGENDE OPPSETT ---------
 require __DIR__ . '/../vendor/autoload.php'; // For Parsedown
+// use Parsedown; // Denne er ikke nødvendig da Parsedown er i globalt namespace
 
 // --------- LOKASJONSDATA ---------
 $allLocationsData = [];
@@ -46,7 +47,7 @@ function get_article_data($slug) {
     $filePath = __DIR__ . '/../content/articles/' . $slug . '.md';
     if (file_exists($filePath)) {
         $content = file_get_contents($filePath);
-        $parsedown = new Parsedown();
+        $parsedown = new Parsedown(); // Opprett instans her
         
         if (preg_match('/^---\s*$(.*?)^---\s*$(.*)/ms', $content, $matches)) {
             $frontMatter = parse_front_matter($matches[1]);
@@ -54,7 +55,8 @@ function get_article_data($slug) {
             return array_merge($frontMatter, ['content' => $htmlContent, 'slug' => $slug]);
         } else {
              error_log("Kunne ikke parse front-matter for artikkel: " . $slug);
-             return ['title' => 'Artikkel uten tittel', 'content' => $parsedown->text($content), 'slug' => $slug];
+             // Returner innhold selv om front-matter feiler, for å unngå fatal error ved manglende title
+             return ['title' => 'Artikkel uten formatert tittel', 'content' => $parsedown->text($content), 'slug' => $slug];
         }
     }
     error_log("Artikkelfil ikke funnet: " . $filePath);
@@ -105,22 +107,62 @@ if ($currentLocationSlug === 'artikler') {
     if (isset($pathSegments[1]) && !empty($pathSegments[1])) {
         $pageType = 'article_single';
         $articleSlug = $pathSegments[1];
-        $currentLocationSlug = ''; 
     } else {
         $pageType = 'article_listing';
-        $currentLocationSlug = ''; 
     }
+    $currentLocationSlug = ''; 
+} elseif ($currentLocationSlug === 'lokasjoner') { // NY BETINGELSE FOR LOKASJONSLISTING
+    $pageType = 'location_listing';
+    $currentLocationSlug = ''; 
 }
 
-// --------- LOKASJONSSPESIFIKK DATA (hvis det er en landingsside for lokasjon) ---------
+
+// --------- LOKASJONSSPESIFIKK DATA & FORBEREDELSE FOR LISTING ---------
 $currentLocationData = null;
 $currentLocationName = "Generell"; 
+$coreLocations = []; // Initialiser for location_listing
+$regionalLocations = []; // Initialiser for location_listing
+
 if ($pageType === 'landingpage' && !empty($currentLocationSlug) && isset($allLocationsData[$currentLocationSlug])) {
     $currentLocationData = $allLocationsData[$currentLocationSlug];
     $currentLocationName = $currentLocationData['name'];
 } elseif ($pageType === 'landingpage' && empty($currentLocationSlug)) {
     $currentLocationName = "Generell";
 }
+
+// Hvis det er en lokasjonslisteside, forbered data
+if ($pageType === 'location_listing') {
+    $coreLocationsDataFromFile = require __DIR__ . '/../config/locations/core_locations.php';
+    foreach ($coreLocationsDataFromFile as $slug => $data) {
+        $coreLocations[$slug] = $data; // Bruk slug som nøkkel for enkel lenkebygging
+    }
+    // uasort($coreLocations, function($a, $b) { return strcmp($a['name'], $b['name']); }); // Sortering flyttet til template for mer fleksibilitet
+
+    $locationFiles = glob(__DIR__ . '/../config/locations/*.php');
+    if ($locationFiles !== false) {
+        foreach ($locationFiles as $file) {
+            $fileName = basename($file, '.php');
+            if ($fileName === 'core_locations') continue; 
+
+            $regionName = ucfirst(str_replace(['_region', '_'], ['', ' '], $fileName)); 
+            $locationsInFile = require $file;
+            if (is_array($locationsInFile)) {
+                $tempRegionLocations = [];
+                foreach($locationsInFile as $slug => $data) {
+                    if (!array_key_exists($slug, $coreLocations)) { // Unngå duplikater fra core
+                         $tempRegionLocations[$data['name']] = array_merge($data, ['slug' => $slug]); // Bruk navn som nøkkel for sortering, legg til slug
+                    }
+                }
+                if (!empty($tempRegionLocations)) {
+                    ksort($tempRegionLocations); // Sorter lokasjoner alfabetisk på navn innenfor region
+                    $regionalLocations[$regionName] = $tempRegionLocations;
+                }
+            }
+        }
+        ksort($regionalLocations); 
+    }
+}
+
 
 // --------- SIDETITTEL OG METABESKRIVELSE ---------
 $defaultHeroText = "Som din dedikerte Google Workspace leverandør, hjelper Akari din bedrift med økt produktivitet, sømløst samarbeid og bunnsolid sikkerhet. La oss ta oss av det tekniske, så du kan fokusere på vekst.";
@@ -143,7 +185,11 @@ if ($pageType === 'article_single' && $articleSlug) {
 } elseif ($pageType === 'article_listing') {
     $pageTitle = 'Artikler om Google Workspace | Akari';
     $pageDescription = 'Les våre siste artikler og innsikt om Google Workspace, AI, produktivitet og samarbeid.';
-} else { 
+} elseif ($pageType === 'location_listing') { 
+    $pageTitle = 'Våre lokasjoner | Akari Google Workspace';
+    $pageDescription = 'Oversikt over Akaris kontorer og dekningsområder for Google Workspace-tjenester i Norge.';
+    $currentLocationName = "Lokasjoner"; // For å unngå "Generell" i brødsmuler etc. hvis du hadde det
+} else { // Landing page
     $basePageTitle = "Google Workspace Leverandør";
     if ($currentLocationName !== "Generell" && isset($currentLocationData)) {
         $pageTitle = $basePageTitle . ' i ' . htmlspecialchars($currentLocationName) . ' | Akari';
@@ -184,13 +230,15 @@ if ($pageType === 'article_single') {
 } elseif ($pageType === 'article_listing') {
     $allArticles = get_all_articles_metadata(); 
     require __DIR__ . '/../templates/article_listing.php';
+} elseif ($pageType === 'location_listing') { 
+    require __DIR__ . '/../templates/location_listing.php';
 } else { // Landing page
     require __DIR__ . '/../templates/sections/hjem.php';
     require __DIR__ . '/../templates/sections/fordeler.php';
     require __DIR__ . '/../templates/sections/produkter.php';
     require __DIR__ . '/../templates/sections/ai-funksjoner.php';
     require __DIR__ . '/../templates/sections/prispakker.php';
-    require __DIR__ . '/../templates/sections/nrk-google-workspace.php'; // Inkluderer nå teaseren
+    require __DIR__ . '/../templates/sections/nrk-google-workspace.php';
     require __DIR__ . '/../templates/sections/hvorfor-oss.php';
     require __DIR__ . '/../templates/sections/kontakt.php';
 }
