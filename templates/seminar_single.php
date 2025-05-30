@@ -1,6 +1,28 @@
 <?php // templates/seminar_single.php
 // $contentData (seminar data) er tilgjengelig her fra index.php
 // $formResult, $formMessage, $formSuccess, $submittedData også tilgjengelig
+
+// Funksjon for å formatere dato og tid på norsk for detaljsiden
+if (!function_exists('format_seminar_datetime_norwegian')) {
+    function format_seminar_datetime_norwegian($dateString) {
+        $timestamp = strtotime($dateString);
+        if ($timestamp === false) {
+            return htmlspecialchars($dateString); // Returner original streng hvis ugyldig
+        }
+        // For 'tirsdag 17. juni 2025, kl. 08:30' (endret til fullt månedsnavn)
+        $formatter = new IntlDateFormatter(
+            'nb_NO',
+            IntlDateFormatter::FULL, // For dagnavn og full dato
+            IntlDateFormatter::NONE, // Ingen tid her, vi legger til manuelt for "kl."
+            'Europe/Oslo',
+            IntlDateFormatter::GREGORIAN,
+            'EEEE d. MMMM yyyy' // EEEE for fullt dagnavn, MMMM for fullt månedsnavn
+        );
+        $formattedDate = $formatter->format($timestamp);
+        $formattedTime = date('H:i', $timestamp);
+        return $formattedDate . ', kl. ' . $formattedTime;
+    }
+}
 ?>
 <article class="seminar-single-page">
     <?php if ($contentData && isset($contentData['title'])): ?>
@@ -8,7 +30,7 @@
         <div class="seminar-header-content-wrapper">
             <h1 class="seminar-main-title"><?php echo htmlspecialchars($contentData['title']); ?></h1>
             <p class="seminar-main-meta">
-                <strong>Dato:</strong> <?php echo date("d. M Y, kl. H:i", strtotime($contentData['date'])); ?><br>
+                <strong>Dato:</strong> <?php echo format_seminar_datetime_norwegian($contentData['date']); ?><br>
                 <strong>Sted:</strong> <?php echo htmlspecialchars($contentData['location'] ?? 'N/A'); ?>
                 <?php if (isset($contentData['contact_person_email'])): ?>
                     <br><strong>Kontakt:</strong> <a href="mailto:<?php echo htmlspecialchars($contentData['contact_person_email']); ?>"><?php echo htmlspecialchars($contentData['contact_person_email']); ?></a>
@@ -29,10 +51,9 @@
         <?php
         $isRegistrationOpen = (isset($contentData['registration_open']) && strtolower($contentData['registration_open']) === 'true');
         $isFull = (isset($contentData['status']) && strtolower($contentData['status']) === 'full');
-        // Sjekker om seminardatoen har passert (kun dato, ikke tidspunkt)
-        $seminarDateOnly = date('Y-m-d', strtotime($contentData['date'] ?? 'now +1 day')); // Default til fremtiden hvis dato mangler
-        $todayDateOnly = date('Y-m-d');
-        $isPast = ($seminarDateOnly < $todayDateOnly) || (isset($contentData['status']) && strtolower($contentData['status']) === 'past');
+        
+        $seminarTimestamp = strtotime($contentData['date'] ?? 'now +1 day'); // Default til fremtiden hvis dato mangler
+        $isPast = ($seminarTimestamp < time()) || (isset($contentData['status']) && strtolower($contentData['status']) === 'past');
 
         $showForm = $isRegistrationOpen && !$isFull && !$isPast;
         ?>

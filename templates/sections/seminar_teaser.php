@@ -1,17 +1,32 @@
 <?php // templates/sections/seminar_teaser.php
-// Hent kun kommende seminarer for teaseren
+
+if (!function_exists('format_teaser_datetime_norwegian')) {
+    function format_teaser_datetime_norwegian($dateString) {
+        $timestamp = strtotime($dateString);
+        if ($timestamp === false) {
+            return htmlspecialchars($dateString);
+        }
+        // For 'Tirsdag 17. juni, kl. 08:30' (endret til fullt månedsnavn og fjernet år)
+        $formatter = new IntlDateFormatter(
+            'nb_NO',
+            IntlDateFormatter::FULL,
+            IntlDateFormatter::NONE,
+            'Europe/Oslo',
+            IntlDateFormatter::GREGORIAN,
+            'EEEE d. MMMM' // EEEE for fullt dagnavn, MMMM for fullt månedsnavn
+        );
+        $formattedDate = $formatter->format($timestamp);
+        $formattedTime = date('H:i', $timestamp);
+        return $formattedDate . ', kl. ' . $formattedTime;
+    }
+}
+
 $allSeminarsForTeaser = get_all_content_metadata('seminar');
 $upcomingTeaserSeminars = array_filter($allSeminarsForTeaser, function ($seminar) {
-    $seminarDate = strtotime($seminar['date'] ?? 'now'); // Full datetime for seminar
-    $now = time(); // Nåværende tidspunkt
-
-    // Sjekk om seminaret er i fremtiden
-    $isInFuture = ($seminarDate >= $now);
+    $seminarTimestamp = strtotime($seminar['date'] ?? 'now -1 day'); 
     
-    // Sjekk status (ikke "past", "cancelled", "full")
+    $isInFuture = ($seminarTimestamp >= time());
     $statusOK = (!isset($seminar['status']) || !in_array(strtolower($seminar['status']), ['past', 'cancelled', 'full']));
-    
-    // Sjekk om påmelding er åpen
     $registrationOpen = (isset($seminar['registration_open']) && strtolower($seminar['registration_open']) === 'true');
 
     return $isInFuture && $statusOK && $registrationOpen;
@@ -19,20 +34,17 @@ $upcomingTeaserSeminars = array_filter($allSeminarsForTeaser, function ($seminar
 
 $teaserSeminar = null;
 if (!empty($upcomingTeaserSeminars)) {
-    // Sorter etter dato stigende (tidligste først) for å få det neste seminaret
-    usort($upcomingTeaserSeminars, function($a, $b) {
-        return ($a['timestamp'] ?? 0) <=> ($b['timestamp'] ?? 0);
-    });
-    $teaserSeminar = reset($upcomingTeaserSeminars); // Ta det første (neste) kommende seminaret
+    // Sortert etter dato stigende (tidligste først) i get_all_content_metadata
+    $teaserSeminar = reset($upcomingTeaserSeminars); 
 }
 ?>
 
 <?php if ($teaserSeminar): ?>
-<section id="seminarer-teaser" class="seminar-teaser-section"> <?php // Endret ID her for å matche sitemap ?>
+<section id="seminarer-teaser" class="seminar-teaser-section">
     <div class="container">
         <h2>Kommende Frokostseminar: <span><?php echo htmlspecialchars($teaserSeminar['title']); ?></span></h2>
         <p>
-            <strong>Dato:</strong> <?php echo date("d. M Y, kl. H:i", strtotime($teaserSeminar['date'])); ?><br>
+            <strong>Dato:</strong> <?php echo format_teaser_datetime_norwegian($teaserSeminar['date']); ?><br>
             <strong>Sted:</strong> <?php echo htmlspecialchars($teaserSeminar['location'] ?? 'Nærmere info kommer'); ?>
         </p>
         <div class="seminar-teaser-content">

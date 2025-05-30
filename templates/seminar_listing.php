@@ -1,5 +1,46 @@
 <?php // templates/seminar_listing.php
 // $allSeminars (metadata) er tilgjengelig her fra index.php
+
+// Funksjon for å formatere dato og tid på norsk for listevisning
+if (!function_exists('format_seminar_list_datetime_norwegian')) {
+    function format_seminar_list_datetime_norwegian($dateString) {
+        $timestamp = strtotime($dateString);
+        if ($timestamp === false) {
+            return htmlspecialchars($dateString);
+        }
+        // For 'Tirsdag 17. juni, 08:30' (endret til fullt månedsnavn og fjernet år for kommende)
+        $formatter = new IntlDateFormatter(
+            'nb_NO',
+            IntlDateFormatter::FULL, 
+            IntlDateFormatter::NONE, 
+            'Europe/Oslo',
+            IntlDateFormatter::GREGORIAN,
+            'EEEE d. MMMM' // Viser ikke år for kommende seminarer for et renere utseende
+        );
+        $formattedDate = $formatter->format($timestamp);
+        $formattedTime = date('H:i', $timestamp);
+        return $formattedDate . ', ' . $formattedTime; // La til komma etter dato
+    }
+}
+// Funksjon for å formatere dato (uten tid) for tidligere seminarer
+if (!function_exists('format_seminar_list_date_norwegian')) {
+    function format_seminar_list_date_norwegian($dateString) {
+        $timestamp = strtotime($dateString);
+        if ($timestamp === false) {
+            return htmlspecialchars($dateString);
+        }
+        // For '17. juni 2025'
+        $formatter = new IntlDateFormatter(
+            'nb_NO',
+            IntlDateFormatter::LONG, // For å få med fullt månedsnavn og år
+            IntlDateFormatter::NONE,
+            'Europe/Oslo',
+            IntlDateFormatter::GREGORIAN
+            // Standard LONG format vil typisk være '17. juni 2025'
+        );
+        return $formatter->format($timestamp);
+    }
+}
 ?>
 <section id="seminar-liste" class="seminar-listing-page">
     <div class="container">
@@ -8,11 +49,8 @@
 
         <?php 
         $upcomingSeminars = array_filter($allSeminars, function ($seminar) {
-            // Vis seminarer som er i fremtiden eller i dag, og som ikke er merket som "past" eller "cancelled"
-            $seminarDate = strtotime($seminar['date'] ?? 'now'); // Full datetime for seminar
-            $todayStartOfDay = strtotime(date('Y-m-d 00:00:00')); // Starten på dagen i dag
-            
-            return ($seminarDate >= $todayStartOfDay) && 
+            $seminarTimestamp = strtotime($seminar['date'] ?? 'now -1 day');
+            return ($seminarTimestamp >= time()) && 
                    (!isset($seminar['status']) || !in_array(strtolower($seminar['status']), ['past', 'cancelled']));
         });
 
@@ -28,18 +66,14 @@
                         <div class="seminar-card-content">
                             <h3><a href="/seminarer/<?php echo htmlspecialchars($seminarMeta['slug']); ?>/"><?php echo htmlspecialchars($seminarMeta['title']); ?></a></h3>
                             <p class="seminar-card-meta">
-                                <span class="meta-date"><strong>Dato:</strong> <?php echo date("d. M Y, H:i", strtotime($seminarMeta['date'])); ?></span><br>
+                                <span class="meta-date"><strong>Dato:</strong> <?php echo format_seminar_list_datetime_norwegian($seminarMeta['date']); ?></span><br>
                                 <span class="meta-location"><strong>Sted:</strong> <?php echo htmlspecialchars($seminarMeta['location'] ?? 'Nærmere info kommer'); ?></span>
                             </p>
                             <p class="seminar-card-excerpt"><?php echo htmlspecialchars($seminarMeta['excerpt'] ?? 'Les mer om dette spennende seminaret.'); ?></p>
                             
                             <?php
-                            // Logikk for knapp/status
-                            $seminarDateOnly = date('Y-m-d', strtotime($seminarMeta['date'] ?? 'now +1 day')); // Seminars dato
-                            $todayDateOnly = date('Y-m-d'); // Dagens dato
-                            
-                            // Seminaret er "past" hvis datoen er før i dag, eller status er eksplisitt 'past'
-                            $isPastForButton = ($seminarDateOnly < $todayDateOnly) || (isset($seminarMeta['status']) && strtolower($seminarMeta['status']) === 'past');
+                            $seminarTimestampForButton = strtotime($seminarMeta['date'] ?? 'now -1 day');
+                            $isPastForButton = ($seminarTimestampForButton < time()) || (isset($seminarMeta['status']) && strtolower($seminarMeta['status']) === 'past');
                             
                             $isRegistrationOpen = (isset($seminarMeta['registration_open']) && strtolower($seminarMeta['registration_open']) === 'true');
                             $isFull = (isset($seminarMeta['status']) && strtolower($seminarMeta['status']) === 'full');
@@ -50,7 +84,7 @@
                                 echo '<p class="seminar-status-info"><em>Seminaret er fulltegnet.</em></p>';
                             } elseif ($isRegistrationOpen) {
                                 echo '<a href="/seminarer/' . htmlspecialchars($seminarMeta['slug']) . '/#seminar-registrering" class="cta-button pk-btn">Meld deg på</a>';
-                            } else { // Registrering er ikke åpen (og det er ikke "past" eller "full")
+                            } else {
                                 echo '<p class="seminar-status-info"><em>Påmelding er ikke åpen.</em></p>';
                             }
                             ?>
@@ -63,22 +97,16 @@
         <?php endif; ?>
 
          <?php
-        // Viser tidligere seminarer
         $pastSeminars = array_filter($allSeminars, function ($seminar) {
-            $seminarDateOnly = date('Y-m-d', strtotime($seminar['date'] ?? 'now +1 day'));
-            $todayDateOnly = date('Y-m-d');
-            return ($seminarDateOnly < $todayDateOnly) || (isset($seminar['status']) && strtolower($seminar['status']) === 'past');
+            $seminarTimestamp = strtotime($seminar['date'] ?? 'now +1 day'); 
+            return ($seminarTimestamp < time()) || (isset($seminar['status']) && strtolower($seminar['status']) === 'past');
         });
         
-        // Sorter tidligere seminarer synkende etter dato (nyeste først)
         if(!empty($pastSeminars)) {
             usort($pastSeminars, function($a, $b) {
-                $dateA = strtotime($a['date'] ?? 0);
-                $dateB = strtotime($b['date'] ?? 0);
-                return $dateB <=> $dateA;
+                return ($b['timestamp'] ?? 0) <=> ($a['timestamp'] ?? 0);
             });
         }
-
 
         if (!empty($pastSeminars)):
         ?>
@@ -89,7 +117,7 @@
                         <li>
                             <a href="/seminarer/<?php echo htmlspecialchars($seminarMeta['slug']); ?>/">
                                 <?php echo htmlspecialchars($seminarMeta['title']); ?>
-                            </a> - <?php echo date("d. M Y", strtotime($seminarMeta['date'])); ?>
+                            </a> - <?php echo format_seminar_list_date_norwegian($seminarMeta['date']); ?>
                             (<?php echo htmlspecialchars($seminarMeta['location'] ?? 'Ukjent sted'); ?>)
                         </li>
                     <?php endforeach; ?>
