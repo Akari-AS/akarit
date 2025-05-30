@@ -1,0 +1,350 @@
+/* --- Seminar Listing Page Styling --- */
+.seminar-listing-page {
+    padding: 80px 0;
+}
+.seminar-listing-page h2 {
+    /* Arver fra _sections.css, men kan overstyres her ved behov */
+    /* F.eks. text-align: left; hvis du vil ha det */
+}
+.seminar-listing-page > .container > p { /* Ingress-tekst for listesiden */
+    text-align: center;
+    max-width: 750px;
+    margin: 0 auto 50px auto;
+    font-size: 1.05em;
+    color: #555;
+    line-height: 1.8;
+}
+.seminars-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+}
+.seminar-card {
+    background-color: #fff;
+    border-radius: var(--border-radius);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.07);
+    overflow: hidden; 
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.seminar-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+}
+
+.seminar-card-image {
+    width: 100%;
+    height: 200px; 
+    object-fit: cover;
+}
+
+.seminar-card-content {
+    padding: 20px 25px 25px 25px; 
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.seminar-card-content h3 { 
+    font-family: var(--heading-font); 
+    font-size: 1.4em;
+    font-weight: 600; 
+    color: var(--dark-color);
+    margin-top: 0;
+    margin-bottom: 10px;
+    line-height: 1.3;
+}
+.seminar-card-content h3 a {
+    text-decoration: none;
+    color: inherit;
+}
+.seminar-card-content h3 a:hover {
+    color: var(--primary-color);
+}
+
+.seminar-card-meta { 
+    font-family: var(--body-font); 
+    font-size: 0.9em;
+    font-weight: 400; 
+    color: #555;
+    margin-bottom: 10px;
+    line-height: 1.5;
+}
+.seminar-card-meta strong {
+    color: var(--dark-color);
+    font-weight: 600; /* Gjør label litt tydeligere */
+}
+.seminar-card-excerpt { 
+    font-family: var(--body-font); 
+    font-size: 0.95em;
+    font-weight: 400; 
+    color: var(--text-color);
+    line-height: 1.6;
+    margin-bottom: 20px;
+    flex-grow: 1;
+}
+.seminar-card .cta-button {
+    margin-top: auto; 
+    align-self: flex-start; 
+    padding: 10px 25px;
+    font-size: 0.9em;
+}
+.seminar-status-info {
+    font-style: italic;
+    color: #777;
+    margin-top: 15px;
+    font-size: 0.9em;
+}
+
+.past-seminars-section {
+    margin-top: 60px;
+    padding-top: 30px;
+    border-top: 1px solid #e0e0e0;
+}
+.past-seminars-section h2 {
+    text-align: left; /* Overstyrer sentrert h2 hvis den arver det */
+    font-size: 1.8em; /* Litt mindre for underseksjon */
+    margin-bottom: 20px;
+    color: var(--dark-color);
+    padding-bottom: 10px;
+}
+.past-seminars-section h2::after { /* Linje under H2 for tidligere seminarer */
+    display: block; /* Sørg for at den vises hvis den var none */
+    left: 0; /* Juster til venstre */
+    transform: translateX(0); /* Nullstill transformasjon */
+    width: 50px; /* Kortere linje */
+    background-color: var(--primary-color);
+    height: 2px; /* Litt tynnere */
+    position: relative; /* Hvis den var absolute */
+    margin-top: 5px;
+}
+
+
+ul.past-seminars-list {
+    list-style: none;
+    padding-left: 0;
+}
+ul.past-seminars-list li {
+    margin-bottom: 8px;
+    font-size: 0.95em;
+}
+ul.past-seminars-list li a {
+    color: var(--primary-color);
+    font-weight: 500;
+}
+ul.past-seminars-list li a:hover {
+    text-decoration: underline;
+}
+
+
+/* --- Seminar Single Page Styling --- */
+.seminar-single-page { 
+    padding-top: 40px;
+    padding-bottom: 0; /* Blir håndtert av siste seksjon */
+}
+.seminar-header-content-wrapper {
+    max-width: 1140px; 
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 20px;  
+    padding-right: 20px; 
+}
+.seminar-single-page .seminar-main-title {
+    font-family: var(--heading-font);
+    font-size: 2.8em; 
+    color: var(--dark-color); 
+    font-weight: 700; 
+    margin-top: 0; 
+    margin-bottom: 10px; 
+    line-height: 1.2;
+    text-align: center; 
+}
+.seminar-single-page .seminar-main-meta {
+    font-family: var(--body-font); 
+    font-size: 1em;
+    color: #555; 
+    font-weight: 400; 
+    margin-bottom: 30px; 
+    text-align: center; 
+    line-height: 1.6;
+}
+.seminar-single-page .seminar-main-meta strong {
+    color: var(--dark-color);
+    font-weight: 600;
+}
+.seminar-single-page .featured-image-container {
+    margin-top: 0; 
+    margin-bottom: 40px; 
+    line-height: 0; 
+}
+.seminar-single-page .seminar-featured-image {
+    width: 100%;
+    max-height: 500px; /* Juster etter behov */
+    object-fit: cover;
+    border-radius: var(--border-radius); 
+}
+.seminar-single-page .seminar-content {
+    font-family: var(--body-font); 
+    font-size: 1.1em; 
+    line-height: 1.8;
+    color: var(--text-color); 
+    font-weight: 400; 
+    max-width: 800px; /* Samme som artikkel */
+    margin-left: auto; 
+    margin-right: auto;
+    padding-bottom: 60px; 
+}
+/* Gjenbruk artikkel-innhold styling for h1, h2, h3, p, ul, ol, etc. inni .seminar-content */
+.seminar-single-page .seminar-content h1 { font-size: 2.2em; color: var(--primary-color); margin-top: 40px; border-bottom: none; }
+.seminar-single-page .seminar-content h1::after { display: none; }
+.seminar-single-page .seminar-content h2 { font-size: 2em; margin-top: 50px; border-bottom: none; }
+.seminar-single-page .seminar-content h2::after { display: none; }
+.seminar-single-page .seminar-content h3 { font-size: 1.6em; margin-top: 40px; }
+.seminar-single-page .seminar-content p { margin-bottom: 20px; }
+.seminar-single-page .seminar-content ul,
+.seminar-single-page .seminar-content ol { margin-bottom: 20px; padding-left: 25px; }
+.seminar-single-page .seminar-content li { margin-bottom: 8px; }
+.seminar-single-page .seminar-content strong { font-weight: 700; color: var(--dark-color); }
+.seminar-single-page .seminar-content a { color: var(--primary-color); text-decoration: underline; }
+.seminar-single-page .seminar-content a:hover { text-decoration: none; }
+.seminar-single-page .seminar-content blockquote { border-left: 4px solid var(--primary-color); padding-left: 20px; margin: 25px 0; font-style: italic; color: #555; font-family: var(--body-font); }
+.seminar-single-page .seminar-content img { max-width: 100%; height: auto; border-radius: 8px; margin: 25px auto; display: block; }
+
+
+.seminar-registration-section {
+    background-color: var(--light-green-bg-darker);
+    padding: 70px 0;
+    margin-top: 0; /* Fjern top margin hvis den kommer rett etter .seminar-content */
+}
+.seminar-registration-section h2 {
+    text-align: center;
+    font-family: var(--heading-font);
+    font-size: 2.4em;
+    color: var(--dark-color);
+    margin-bottom: 40px;
+}
+.seminar-registration-section h2::after { /* Linje under H2 for registreringsseksjon */
+    content: ''; 
+    display: block;
+    width: 60px;
+    height: 3px;
+    background-color: var(--primary-color);
+    margin: 15px auto 0;
+    border-radius: 2px;
+}
+
+.modern-contact-form.seminar-form {
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #fff;
+    padding: 30px 40px;
+    border-radius: var(--border-radius);
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+}
+
+
+.seminar-navigation-wrapper { 
+    max-width: 1140px;
+    margin: 40px auto 60px auto;
+    padding-left: 20px;
+    padding-right: 20px;
+    text-align: center;
+}
+
+.seminar-status-container {
+    text-align: center;
+    padding: 30px 0;
+}
+.seminar-status-message.info {
+    background-color: #e9f5ff;
+    color: #005a9e;
+    border: 1px solid #b8dcfc;
+    padding: 15px 20px;
+    border-radius: var(--border-radius);
+    display: inline-block;
+    max-width: 600px;
+}
+
+
+/* --- Seminar Teaser Section Styling (for homepage) --- */
+section#seminarer-teaser {
+    background-color: var(--light-green-bg); /* Samme som andre lyse seksjoner */
+    padding: 70px 0;
+}
+section#seminarer-teaser h2 {
+    /* Arver fra _sections.css, men kan justeres for font-size hvis det trengs mer plass for lang tittel */
+    font-size: 2.4em; /* Litt mindre for å gi plass til lengre teaser-titler */
+}
+section#seminarer-teaser h2::after { /* Sørg for at linjen under h2 vises her */
+    display: block;
+}
+section#seminarer-teaser > .container > p { /* For dato/sted info */
+    text-align: center;
+    font-size: 1.1em;
+    color: var(--dark-color);
+    margin-top: -10px; /* Nærmere H2 */
+    margin-bottom: 25px;
+    line-height: 1.6;
+}
+.seminar-teaser-section .seminar-teaser-content {
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    margin-top: 10px; /* Litt mindre avstand */
+}
+.seminar-teaser-section .seminar-teaser-content p { /* For excerpt */
+    font-size: 1.05em;
+    color: var(--text-color);
+    line-height: 1.8;
+    margin-bottom: 30px;
+}
+
+/* Responsive justeringer for seminar */
+@media (max-width: 767px) {
+    .seminar-listing-page h2, 
+    .seminar-registration-section h2,
+    section#seminarer-teaser h2 {
+        font-size: 2em; /* Samme som andre H2 på mobil */
+    }
+    .seminar-listing-page > .container > p,
+    .seminar-teaser-section .seminar-teaser-content p {
+        font-size: 1em; /* Samme som andre p-ingresser */
+    }
+    .seminar-single-page .seminar-main-title {
+        font-size: 2.2em;
+    }
+    .seminar-single-page .seminar-main-meta {
+        font-size: 0.9em;
+    }
+    .seminar-single-page .seminar-content {
+        font-size: 1em; 
+    }
+    .seminars-grid {
+        grid-template-columns: 1fr;
+    }
+    .seminar-card-content {
+        padding: 15px 20px 20px 20px;
+    }
+    .modern-contact-form.seminar-form {
+        padding: 25px 20px; /* Litt mer padding på mobil enn artikkel skjema */
+    }
+    .past-seminars-section h2 {
+        font-size: 1.6em;
+    }
+}
+
+@media (max-width: 576px) {
+    section#seminarer-teaser h2 {
+        font-size: 1.8em; /* Enda litt mindre for teaser H2 på mobil */
+    }
+    section#seminarer-teaser > .container > p { /* Dato/sted i teaser */
+        font-size: 1em;
+    }
+    .seminar-teaser-section .seminar-teaser-content p { /* Excerpt i teaser */
+         font-size: 0.95em;
+    }
+}

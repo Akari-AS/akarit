@@ -12,11 +12,15 @@
     $baseCanonicalUrl = $protocol . $host;
 
     $canonicalPath = '/'; 
-    if ($pageType === 'article_single' && isset($articleData['slug'])) {
-        $canonicalPath = '/artikler/' . htmlspecialchars($articleData['slug']) . '/';
+    if ($pageType === 'article_single' && isset($contentData['slug'])) {
+        $canonicalPath = '/artikler/' . htmlspecialchars($contentData['slug']) . '/';
     } elseif ($pageType === 'article_listing') {
         $canonicalPath = '/artikler/';
-    } elseif ($pageType === 'location_listing') { // Denne er fortsatt viktig for canonical på /lokasjoner/
+    } elseif ($pageType === 'seminar_single' && isset($contentData['slug'])) {
+        $canonicalPath = '/seminarer/' . htmlspecialchars($contentData['slug']) . '/';
+    } elseif ($pageType === 'seminar_listing') {
+        $canonicalPath = '/seminarer/';
+    } elseif ($pageType === 'location_listing') {
         $canonicalPath = '/lokasjoner/';
     } elseif ($pageType === 'landingpage' && !empty($currentLocationSlug)) {
         $canonicalPath = '/' . htmlspecialchars($currentLocationSlug) . '/';
@@ -37,7 +41,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&family=Red+Hat+Display:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     
-    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/style.css?v=<?php echo filemtime(__DIR__.'/../public/assets/css/style.css'); ?>">
+
 
     <script type="application/ld+json">
     {
@@ -65,17 +70,46 @@
       "spatialCoverage": { "@type": "Place", "name": "<?php echo htmlspecialchars($currentLocationName); ?>" }
     }
     </script>
-    <?php elseif ($pageType === 'article_single' && isset($articleData['slug'])): ?>
+    <?php elseif ($pageType === 'article_single' && isset($contentData['slug'])): ?>
     <script type="application/ld+json">
     {
       "@context": "https://schema.org", "@type": "Article",
-      "mainEntityOfPage": { "@type": "WebPage", "@id": "<?php echo rtrim($baseCanonicalUrl, '/') . '/artikler/' . htmlspecialchars($articleData['slug']) . '/'; ?>" },
-      "headline": "<?php echo htmlspecialchars($articleData['title'] ?? ''); ?>",
-      <?php if (!empty($articleData['image'])): ?> "image": "<?php echo $baseCanonicalUrl . htmlspecialchars($articleData['image']); ?>", <?php endif; ?>
-      "datePublished": "<?php echo isset($articleData['date']) ? date(DATE_ISO8601, strtotime($articleData['date'])) : ''; ?>",
-      "author": { "@type": "Person", "name": "<?php echo htmlspecialchars($articleData['author'] ?? 'Akari'); ?>" },
+      "mainEntityOfPage": { "@type": "WebPage", "@id": "<?php echo rtrim($baseCanonicalUrl, '/') . '/artikler/' . htmlspecialchars($contentData['slug']) . '/'; ?>" },
+      "headline": "<?php echo htmlspecialchars($contentData['title'] ?? ''); ?>",
+      <?php if (!empty($contentData['image'])): ?> "image": "<?php echo $baseCanonicalUrl . htmlspecialchars($contentData['image']); ?>", <?php endif; ?>
+      "datePublished": "<?php echo isset($contentData['date']) ? date(DATE_ISO8601, strtotime($contentData['date'])) : ''; ?>",
+      "author": { "@type": "Person", "name": "<?php echo htmlspecialchars($contentData['author'] ?? 'Akari'); ?>" },
       "publisher": { "@type": "Organization", "name": "Akari AS", "logo": { "@type": "ImageObject", "url": "<?php echo $baseCanonicalUrl; ?>/assets/img/Akari_jubileum.svg" }},
-      "description": "<?php echo htmlspecialchars($articleData['excerpt'] ?? $pageDescription); ?>"
+      "description": "<?php echo htmlspecialchars($contentData['excerpt'] ?? $pageDescription); ?>"
+    }
+    </script>
+    <?php elseif ($pageType === 'seminar_single' && isset($contentData['slug'])): ?>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Event",
+      "name": "<?php echo htmlspecialchars($contentData['title'] ?? ''); ?>",
+      "startDate": "<?php echo isset($contentData['date']) ? date(DATE_ISO8601, strtotime($contentData['date'])) : ''; ?>",
+      "location": {
+        "@type": "Place",
+        "name": "<?php echo htmlspecialchars($contentData['location'] ?? 'Akari'); ?>",
+        "address": "<?php echo htmlspecialchars($contentData['location'] ?? 'Norge'); ?>"
+      },
+      "description": "<?php echo htmlspecialchars($contentData['excerpt'] ?? $pageDescription); ?>",
+      <?php if (!empty($contentData['image'])): ?> "image": "<?php echo $baseCanonicalUrl . htmlspecialchars($contentData['image']); ?>", <?php endif; ?>
+      "eventStatus": "https://schema.org/EventScheduled",
+      "offers": {
+        "@type": "Offer",
+        "url": "<?php echo rtrim($baseCanonicalUrl, '/') . '/seminarer/' . htmlspecialchars($contentData['slug']) . '/'; ?>",
+        "price": "0", 
+        "priceCurrency": "NOK",
+        "availability": "https://schema.org/InStock" 
+      },
+      "organizer": {
+        "@type": "Organization",
+        "name": "Akari AS",
+        "url": "<?php echo $baseCanonicalUrl; ?>/"
+      }
     }
     </script>
     <?php elseif ($pageType === 'location_listing'): ?>
@@ -101,10 +135,10 @@
         </a>
         <nav class="desktop-nav">
             <ul>
-                <li><a href="/#fordeler">Google Workspace</a></li>
+                <li><a href="/#fordeler" class="<?php echo ($pageType === 'landingpage' && empty($_GET['path'])) ? 'active' : ''; // Eksempel på aktiv klasse for forside ?>">Google Workspace</a></li>
                 <li><a href="/#prispakker">Priser</a></li>
-                <li><a href="/artikler/">Artikler</a></li>
-                <?php /* Fjernet: <li><a href="/lokasjoner/">Lokasjoner</a></li> */ ?>
+                <li><a href="/seminarer/" class="<?php echo ($pageType === 'seminar_listing' || $pageType === 'seminar_single') ? 'active' : ''; ?>">Seminarer</a></li>
+                <li><a href="/artikler/" class="<?php echo ($pageType === 'article_listing' || $pageType === 'article_single') ? 'active' : ''; ?>">Artikler</a></li>
                 <li><a href="/#hvorfor-oss">Hvorfor Akari?</a></li>
                 <li><a href="/#kontakt">Kontakt</a></li>
                 <li>
@@ -134,8 +168,8 @@
          <ul>
             <li><a href="/#fordeler">Google Workspace</a></li>
             <li><a href="/#prispakker">Priser</a></li>
+            <li><a href="/seminarer/">Seminarer</a></li>
             <li><a href="/artikler/">Artikler</a></li>
-            <?php /* Fjernet: <li><a href="/lokasjoner/">Lokasjoner</a></li> */ ?>
             <li><a href="/#hvorfor-oss">Hvorfor Akari?</a></li>
             <li><a href="/#kontakt">Kontakt</a></li>
             <li><a href="https://akari.no" target="_blank" class="nav-link-external mobile-external-link">Til hovedside</a></li>

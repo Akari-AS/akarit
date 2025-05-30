@@ -1,8 +1,7 @@
 <?php // index.php
 
 // --------- AUTOLOADER & GRUNNLEGGENDE OPPSETT ---------
-require __DIR__ . '/../vendor/autoload.php'; // For Parsedown
-// use Parsedown; // Denne er ikke nødvendig da Parsedown er i globalt namespace
+require __DIR__ . '/../vendor/autoload.php'; 
 
 // --------- LOKASJONSDATA ---------
 $allLocationsData = [];
@@ -21,7 +20,7 @@ if (is_dir($locationFilesPath)) {
     }
 }
 
-// --------- ARTIKKELFUNKSJONER ---------
+// --------- FUNKSJONER (Artikler & Seminarer) ---------
 function parse_front_matter($rawFrontMatter) {
     $frontMatter = [];
     $lines = explode("\n", trim($rawFrontMatter));
@@ -43,30 +42,31 @@ function parse_front_matter($rawFrontMatter) {
     return $frontMatter;
 }
 
-function get_article_data($slug) {
-    $filePath = __DIR__ . '/../content/articles/' . $slug . '.md';
+function get_content_data($slug, $contentType = 'article') {
+    $folder = ($contentType === 'seminar') ? 'seminars' : 'articles';
+    $filePath = __DIR__ . '/../content/' . $folder . '/' . $slug . '.md';
     if (file_exists($filePath)) {
         $content = file_get_contents($filePath);
-        $parsedown = new Parsedown(); // Opprett instans her
+        $parsedown = new Parsedown();
         
         if (preg_match('/^---\s*$(.*?)^---\s*$(.*)/ms', $content, $matches)) {
             $frontMatter = parse_front_matter($matches[1]);
             $htmlContent = $parsedown->text(trim($matches[2]));
             return array_merge($frontMatter, ['content' => $htmlContent, 'slug' => $slug]);
         } else {
-             error_log("Kunne ikke parse front-matter for artikkel: " . $slug);
-             // Returner innhold selv om front-matter feiler, for å unngå fatal error ved manglende title
-             return ['title' => 'Artikkel uten formatert tittel', 'content' => $parsedown->text($content), 'slug' => $slug];
+             error_log("Kunne ikke parse front-matter for {$contentType}: " . $slug);
+             return ['title' => ucfirst($contentType) . ' uten formatert tittel', 'content' => $parsedown->text($content), 'slug' => $slug];
         }
     }
-    error_log("Artikkelfil ikke funnet: " . $filePath);
+    error_log(ucfirst($contentType) . "fil ikke funnet: " . $filePath);
     return null;
 }
 
-function get_all_articles_metadata() {
-    $articles = [];
-    $articleFilesPath = __DIR__ . '/../content/articles/';
-    $markdownFiles = glob($articleFilesPath . '*.md');
+function get_all_content_metadata($contentType = 'article') {
+    $items = [];
+    $folder = ($contentType === 'seminar') ? 'seminars' : 'articles';
+    $contentFilesPath = __DIR__ . '/../content/' . $folder . '/';
+    $markdownFiles = glob($contentFilesPath . '*.md');
     if ($markdownFiles === false) return [];
 
     foreach ($markdownFiles as $file) {
@@ -76,16 +76,28 @@ function get_all_articles_metadata() {
             if (!isset($frontMatter['slug'])) {
                 $frontMatter['slug'] = pathinfo($file, PATHINFO_FILENAME);
             }
-            $articles[] = $frontMatter;
+            // For seminarer, konverter dato-string til timestamp for sortering
+            if ($contentType === 'seminar' && isset($frontMatter['date'])) {
+                $frontMatter['timestamp'] = strtotime($frontMatter['date']);
+            }
+            $items[] = $frontMatter;
         }
     }
-    usort($articles, function($a, $b) {
-        $dateA = isset($a['date']) ? strtotime($a['date']) : 0;
-        $dateB = isset($b['date']) ? strtotime($b['date']) : 0;
-        return $dateB <=> $dateA;
+    // Sortering: Artikler sorteres synkende på dato, Seminarer sorteres stigende på dato
+    usort($items, function($a, $b) use ($contentType) {
+        if ($contentType === 'seminar') {
+            $dateA = $a['timestamp'] ?? 0;
+            $dateB = $b['timestamp'] ?? 0;
+            return $dateA <=> $dateB; // Stigende for seminarer (tidligste dato først)
+        } else { // Artikler
+            $dateA = isset($a['date']) ? strtotime($a['date']) : 0;
+            $dateB = isset($b['date']) ? strtotime($b['date']) : 0;
+            return $dateB <=> $dateA; // Synkende for artikler (nyeste først)
+        }
     });
-    return $articles;
+    return $items;
 }
+
 
 // --------- ROUTING LOGIKK ---------
 $requestedPath = '';
@@ -99,19 +111,27 @@ if (isset($_GET['path'])) {
 $pathSegments = explode('/', $requestedPath);
 $pageType = 'landingpage'; 
 $currentLocationSlug = strtolower($pathSegments[0] ?? ''); 
-$articleSlug = null;
-$articleData = null; 
+$contentSlug = null; 
+$contentData = null;  
 $formSourceOverride = null; 
 
 if ($currentLocationSlug === 'artikler') {
     if (isset($pathSegments[1]) && !empty($pathSegments[1])) {
         $pageType = 'article_single';
-        $articleSlug = $pathSegments[1];
+        $contentSlug = $pathSegments[1];
     } else {
         $pageType = 'article_listing';
     }
     $currentLocationSlug = ''; 
-} elseif ($currentLocationSlug === 'lokasjoner') { // NY BETINGELSE FOR LOKASJONSLISTING
+} elseif ($currentLocationSlug === 'seminarer') {
+    if (isset($pathSegments[1]) && !empty($pathSegments[1])) {
+        $pageType = 'seminar_single';
+        $contentSlug = $pathSegments[1];
+    } else {
+        $pageType = 'seminar_listing';
+    }
+    $currentLocationSlug = '';
+} elseif ($currentLocationSlug === 'lokasjoner') {
     $pageType = 'location_listing';
     $currentLocationSlug = ''; 
 }
@@ -120,8 +140,8 @@ if ($currentLocationSlug === 'artikler') {
 // --------- LOKASJONSSPESIFIKK DATA & FORBEREDELSE FOR LISTING ---------
 $currentLocationData = null;
 $currentLocationName = "Generell"; 
-$coreLocations = []; // Initialiser for location_listing
-$regionalLocations = []; // Initialiser for location_listing
+$coreLocations = []; 
+$regionalLocations = []; 
 
 if ($pageType === 'landingpage' && !empty($currentLocationSlug) && isset($allLocationsData[$currentLocationSlug])) {
     $currentLocationData = $allLocationsData[$currentLocationSlug];
@@ -130,31 +150,27 @@ if ($pageType === 'landingpage' && !empty($currentLocationSlug) && isset($allLoc
     $currentLocationName = "Generell";
 }
 
-// Hvis det er en lokasjonslisteside, forbered data
 if ($pageType === 'location_listing') {
     $coreLocationsDataFromFile = require __DIR__ . '/../config/locations/core_locations.php';
     foreach ($coreLocationsDataFromFile as $slug => $data) {
-        $coreLocations[$slug] = $data; // Bruk slug som nøkkel for enkel lenkebygging
+        $coreLocations[$slug] = $data;
     }
-    // uasort($coreLocations, function($a, $b) { return strcmp($a['name'], $b['name']); }); // Sortering flyttet til template for mer fleksibilitet
-
     $locationFiles = glob(__DIR__ . '/../config/locations/*.php');
     if ($locationFiles !== false) {
         foreach ($locationFiles as $file) {
             $fileName = basename($file, '.php');
             if ($fileName === 'core_locations') continue; 
-
             $regionName = ucfirst(str_replace(['_region', '_'], ['', ' '], $fileName)); 
             $locationsInFile = require $file;
             if (is_array($locationsInFile)) {
                 $tempRegionLocations = [];
                 foreach($locationsInFile as $slug => $data) {
-                    if (!array_key_exists($slug, $coreLocations)) { // Unngå duplikater fra core
-                         $tempRegionLocations[$data['name']] = array_merge($data, ['slug' => $slug]); // Bruk navn som nøkkel for sortering, legg til slug
+                    if (!array_key_exists($slug, $coreLocations)) {
+                         $tempRegionLocations[$data['name']] = array_merge($data, ['slug' => $slug]);
                     }
                 }
                 if (!empty($tempRegionLocations)) {
-                    ksort($tempRegionLocations); // Sorter lokasjoner alfabetisk på navn innenfor region
+                    ksort($tempRegionLocations); 
                     $regionalLocations[$regionName] = $tempRegionLocations;
                 }
             }
@@ -169,26 +185,41 @@ $defaultHeroText = "Som din dedikerte Google Workspace leverandør, hjelper Akar
 $defaultMetaDescription = "Akari er din erfarne Google Workspace leverandør. Vi tilbyr skreddersydde skyløsninger, implementering, support og AI-drevne verktøy for bedrifter i Norge.";
 $locationSpecificHeroText = ($pageType === 'landingpage' && isset($currentLocationData['heroText'])) ? $currentLocationData['heroText'] : $defaultHeroText;
 
-if ($pageType === 'article_single' && $articleSlug) {
-    $articleData = get_article_data($articleSlug); 
-    if ($articleData && isset($articleData['title'])) { 
-        $pageTitle = htmlspecialchars($articleData['title']) . ' | Artikler | Akari';
-        $pageDescription = htmlspecialchars($articleData['meta_description'] ?? $articleData['excerpt'] ?? $defaultMetaDescription);
-        $formSourceOverride = "Artikkel: " . htmlspecialchars($articleData['title']); 
+if ($pageType === 'article_single' && $contentSlug) {
+    $contentData = get_content_data($contentSlug, 'article'); 
+    if ($contentData && isset($contentData['title'])) { 
+        $pageTitle = htmlspecialchars($contentData['title']) . ' | Artikler | Akari';
+        $pageDescription = htmlspecialchars($contentData['meta_description'] ?? $contentData['excerpt'] ?? $defaultMetaDescription);
+        $formSourceOverride = "Artikkel: " . htmlspecialchars($contentData['title']); 
     } else {
         http_response_code(404);
         $pageTitle = "Artikkel ikke funnet | Akari";
         $pageDescription = $defaultMetaDescription;
-        $articleData = null; 
+        $contentData = null; 
         $formSourceOverride = "Artikkel: Ukjent (404)"; 
     }
 } elseif ($pageType === 'article_listing') {
     $pageTitle = 'Artikler om Google Workspace | Akari';
     $pageDescription = 'Les våre siste artikler og innsikt om Google Workspace, AI, produktivitet og samarbeid.';
+} elseif ($pageType === 'seminar_single' && $contentSlug) {
+    $contentData = get_content_data($contentSlug, 'seminar');
+    if ($contentData && isset($contentData['title'])) {
+        $pageTitle = htmlspecialchars($contentData['title']) . ' | Seminar | Akari';
+        $pageDescription = htmlspecialchars($contentData['meta_description'] ?? $contentData['excerpt'] ?? 'Delta på vårt seminar: ' . $contentData['title'] . '. Lær mer og meld deg på!');
+        // $formSourceOverride settes ikke her, da seminarpåmelding har egne skjulte felter
+    } else {
+        http_response_code(404);
+        $pageTitle = "Seminar ikke funnet | Akari";
+        $pageDescription = $defaultMetaDescription;
+        $contentData = null;
+    }
+} elseif ($pageType === 'seminar_listing') {
+    $pageTitle = 'Kommende Seminarer | Akari';
+    $pageDescription = 'Se oversikt over våre kommende frokostseminarer og arrangementer. Meld deg på for faglig påfyll!';
 } elseif ($pageType === 'location_listing') { 
     $pageTitle = 'Våre lokasjoner | Akari Google Workspace';
     $pageDescription = 'Oversikt over Akaris kontorer og dekningsområder for Google Workspace-tjenester i Norge.';
-    $currentLocationName = "Lokasjoner"; // For å unngå "Generell" i brødsmuler etc. hvis du hadde det
+    $currentLocationName = "Lokasjoner"; 
 } else { // Landing page
     $basePageTitle = "Google Workspace Leverandør";
     if ($currentLocationName !== "Generell" && isset($currentLocationData)) {
@@ -209,8 +240,8 @@ $formMessage = $formResult['message'];
 $formSuccess = $formResult['success'];
 $submittedData = $formResult['data'];
 
-function old_value(string $key, array $data): string {
-    return htmlspecialchars($data[$key] ?? '', ENT_QUOTES, 'UTF-8');
+function old_value(string $key, array $data, $default = ''): string {
+    return htmlspecialchars($data[$key] ?? $default, ENT_QUOTES, 'UTF-8');
 }
 
 // --------- ANDRE GLOBALE VARIABLER / DATA ---------
@@ -222,14 +253,23 @@ $workspaceToolsData = require __DIR__ . '/../config/workspace_tools_data.php';
 require __DIR__ . '/../templates/header.php'; 
 
 if ($pageType === 'article_single') {
-    if ($articleData) { 
+    if ($contentData) { 
         require __DIR__ . '/../templates/article_single.php';
     } else {
         echo "<main><div class='container' style='padding: 50px 20px; text-align: center;'><h2>404 - Artikkel ikke funnet</h2><p>Beklager, vi fant ikke artikkelen du lette etter.</p><p><a href='/artikler/' class='cta-button'>Se alle artikler</a> <a href='/' class='cta-button secondary'>Til forsiden</a></p></div></main>";
     }
 } elseif ($pageType === 'article_listing') {
-    $allArticles = get_all_articles_metadata(); 
+    $allArticles = get_all_content_metadata('article'); 
     require __DIR__ . '/../templates/article_listing.php';
+} elseif ($pageType === 'seminar_single') {
+    if ($contentData) {
+        require __DIR__ . '/../templates/seminar_single.php';
+    } else {
+         echo "<main><div class='container' style='padding: 50px 20px; text-align: center;'><h2>404 - Seminar ikke funnet</h2><p>Beklager, vi fant ikke seminaret du lette etter.</p><p><a href='/seminarer/' class='cta-button'>Se alle seminarer</a> <a href='/' class='cta-button secondary'>Til forsiden</a></p></div></main>";
+    }
+} elseif ($pageType === 'seminar_listing') {
+    $allSeminars = get_all_content_metadata('seminar');
+    require __DIR__ . '/../templates/seminar_listing.php';
 } elseif ($pageType === 'location_listing') { 
     require __DIR__ . '/../templates/location_listing.php';
 } else { // Landing page
@@ -238,6 +278,7 @@ if ($pageType === 'article_single') {
     require __DIR__ . '/../templates/sections/produkter.php';
     require __DIR__ . '/../templates/sections/ai-funksjoner.php';
     require __DIR__ . '/../templates/sections/prispakker.php';
+    require __DIR__ . '/../templates/sections/seminar_teaser.php';
     require __DIR__ . '/../templates/sections/nrk-google-workspace.php';
     require __DIR__ . '/../templates/sections/hvorfor-oss.php';
     require __DIR__ . '/../templates/sections/kontakt.php';
