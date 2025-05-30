@@ -91,7 +91,7 @@
         <nav class="desktop-nav">
             <ul>
                 <li><a href="/#fordeler">Google Workspace</a></li>
-                <li><a href="/#prispakker">Prispakker</a></li>
+                <li><a href="/#prispakker">Priser</a></li>
                 <li><a href="/artikler/">Artikler</a></li>
                 <li><a href="/#hvorfor-oss">Hvorfor Akari?</a></li>
                 <li><a href="/#kontakt">Kontakt</a></li>
@@ -111,7 +111,7 @@
      <div id="mobile-menu" class="mobile-menu-panel">
          <ul>
             <li><a href="/#fordeler">Google Workspace</a></li>
-            <li><a href="/#prispakker">Prispakker</a></li>
+            <li><a href="/#prispakker">Priser</a></li>
             <li><a href="/artikler/">Artikler</a></li>
             <li><a href="/#hvorfor-oss">Hvorfor Akari?</a></li>
             <li><a href="/#kontakt">Kontakt</a></li>

@@ -1,7 +1,7 @@
 <!-- Google Workspace AI (Gemini) Seksjon -->
 <section id="ai-funksjoner">
     <div class="container">
-        <h2>Google Workspace Superladet med Gemini AI</h2>
+        <h2>Google Workspace superladet med Gemini AI</h2>
         <p>Oppdag hvordan kunstig intelligens (AI) fra Gemini forvandler Google Workspace-verktøyene du bruker hver dag, og gjør dem smartere og mer effektive. Google inkluderer nå Gemini i sine bedriftspakker, slik at din virksomhet kan dra nytte av neste generasjons AI-drevet produktivitet og samarbeid. Disse løsningene kan du naturligvis kjøpe gjennom Akari, din lokale Google Workspace-forhandler.</p>
         
         <?php if (isset($workspaceToolsData) && !empty($workspaceToolsData)): ?>

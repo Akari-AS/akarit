@@ -18,7 +18,7 @@
       <?php echo htmlspecialchars($locationSpecificHeroText); // Denne settes nå i index.php med "leverandør" ?>
     </p>
     <div>
-      <a href="#kontakt" class="cta-button">Start samtalen</a>
+      <a href="#kontakt" class="cta-button">Kontakt oss</a>
       <a href="#produkter" class="cta-button secondary">Se verktøyene</a>
     </div>
   </div>

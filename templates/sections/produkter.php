@@ -1,7 +1,7 @@
 <!-- Produkter Seksjon -->
 <section id="produkter" class="products-section">
     <div class="container">
-        <h2>Verktøyene Som Driver Vekst</h2>
+        <h2>Verktøyene som driver vekst</h2>
         <p>En komplett pakke med applikasjoner designet for moderne bedrifter.</p>
         <div class="products-grid">
             <!-- Produktkort -->
