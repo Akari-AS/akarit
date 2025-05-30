@@ -12,7 +12,7 @@ max_attendees: 150
 contact_person_email: "kenneth@akari.no"
 ---
 
-## Frokostseminar: Hva er nytt i Google Workspace med Gemini AI?
+## Frokostseminar: hva er nytt i Google Workspace med Gemini AI?
 
 Bli med på et innsiktsfullt frokostseminar hvor vi setter fokus på AI og Google Workspace, og utforsker spørsmålet: "Hva er nytt i Google Workspace med Gemini om bord?". Dette er en ypperlig anledning til å oppdage hvordan Googles nyeste AI-teknologi, Gemini, kan transformere måten du jobber på i Google Workspace.
 
@@ -35,4 +35,5 @@ Vi serverer kaffe og enkel bevertning. Det blir også god tid til spørsmål og 
 * Frem til 10:00 (eller så lenge vi måtte trenge): Spørsmål og mingling
 
 Seminaret er gratis. Påmelding i skjema under.
-Velkommen skal du være! 
+
+Velkommen skal du være!
