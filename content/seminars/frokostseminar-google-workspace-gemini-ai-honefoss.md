@@ -5,7 +5,7 @@ location: "HM49, Hønefoss"
 slug: "frokostseminar-google-workspace-gemini-ai-honefoss"
 excerpt: "Bli med på frokostseminar i Hønefoss og lær om de nyeste AI-mulighetene i Google Workspace med Gemini. Se hvordan du kan jobbe smartere!"
 meta_description: "Gratis frokostseminar i Hønefoss om Google Workspace og Gemini AI. Oppdag hva som er nytt og hvordan AI kan effektivisere din arbeidshverdag."
-image: "/assets/img/seminars/kenneth_bjerke.jpg"
+image: "/assets/img/seminars/Kenneth_Google_Workspace-3.jpg"
 status: "upcoming"
 registration_open: true
 max_attendees: 150
