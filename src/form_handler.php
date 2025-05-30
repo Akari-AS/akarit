@@ -20,9 +20,8 @@ if (!function_exists('generate_ics_content')) {
         }
 
         try {
-            // Tolk den rå datostrengen som 'Europe/Oslo' tid
             $start_datetime_oslo = new DateTime($seminar_datetime_str_raw, new DateTimeZone('Europe/Oslo'));
-            $start_timestamp = $start_datetime_oslo->getTimestamp(); // UNIX timestamp (UTC)
+            $start_timestamp = $start_datetime_oslo->getTimestamp();
         } catch (Exception $e) {
             error_log("ICS Generation: Kunne ikke parse dato: " . $seminar_datetime_str_raw . " for slug " . ($seminar_data['slug'] ?? 'UKJENT') . " - Feil: " . $e->getMessage());
             return null;
@@ -61,8 +60,7 @@ if (!function_exists('generate_ics_content')) {
         $ics_content .= "STATUS:CONFIRMED\r\n";
         $ics_content .= "TRANSP:OPAQUE\r\n";
         
-        // Påminnelse: Dagen før kl. 09:00 Oslo tid
-        $reminder_datetime_oslo = clone $start_datetime_oslo; // Start med Oslo-tid objektet
+        $reminder_datetime_oslo = clone $start_datetime_oslo;
         $reminder_datetime_oslo->modify('-1 day');
         $reminder_datetime_oslo->setTime(9, 0, 0);
         $reminder_dt_utc = $reminder_datetime_oslo->setTimezone(new DateTimeZone('UTC'))->format('Ymd\THis\Z');
@@ -78,7 +76,7 @@ if (!function_exists('generate_ics_content')) {
     }
 }
 
-// NY Hjelpefunksjon for Google Calendar Link
+// Hjelpefunksjon for Google Calendar Link - JUSTERT
 if (!function_exists('generate_google_calendar_link')) {
     function generate_google_calendar_link($seminar_data) {
         $seminar_datetime_str_raw_gcal = $seminar_data['datetime_raw'] ?? '';
@@ -87,7 +85,6 @@ if (!function_exists('generate_google_calendar_link')) {
             return '#';
         }
         try {
-            // Tolk den rå datostrengen som 'Europe/Oslo' tid
             $start_datetime_oslo_gcal = new DateTime($seminar_datetime_str_raw_gcal, new DateTimeZone('Europe/Oslo'));
         } catch (Exception $e) {
             error_log("Google Calendar Link: Kunne ikke parse dato: " . $seminar_datetime_str_raw_gcal . " for slug " . ($seminar_data['slug'] ?? 'UKJENT') . " - Feil: " . $e->getMessage());
@@ -104,12 +101,13 @@ if (!function_exists('generate_google_calendar_link')) {
         $dtend_google = $end_datetime_oslo_gcal->format('Ymd\THis');
 
         $base_url = 'https://www.google.com/calendar/render?action=TEMPLATE';
+        
         $params = [
-            'text' => urlencode($seminar_data['title'] ?? 'Seminar'),
+            'text' => $seminar_data['title'] ?? 'Seminar', // Direkte verdi
             'dates' => $dtstart_google . '/' . $dtend_google,
-            'details' => urlencode($seminar_data['excerpt_raw'] ?? 'Påmelding til Akari seminar.'),
-            'location' => urlencode($seminar_data['location_raw'] ?? 'Akari'),
-            'ctz' => 'Europe/Oslo' // Angi tidssonen for datoene
+            'details' => $seminar_data['excerpt_raw'] ?? 'Påmelding til Akari seminar.', // Direkte verdi
+            'location' => $seminar_data['location_raw'] ?? 'Akari', // Direkte verdi
+            'ctz' => 'Europe/Oslo'
         ];
         
         return $base_url . '&' . http_build_query($params);
@@ -374,7 +372,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $formResult['message'] = implode(" ", $errors); $formResult['success'] = false;
         }
 
-    } else {
+    } else { // Ukjent form_type
         $errors[] = "Ugyldig skjematype.";
         $formResult['message'] = implode(" ", $errors); $formResult['success'] = false;
     }
