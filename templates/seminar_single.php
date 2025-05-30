@@ -9,7 +9,7 @@ if (!function_exists('format_seminar_datetime_norwegian')) {
         if ($timestamp === false) {
             return htmlspecialchars($dateString); // Returner original streng hvis ugyldig
         }
-        // For 'tirsdag 17. juni 2025, kl. 08:30' (endret til fullt månedsnavn)
+        // For 'Tirsdag 17. juni 2025, kl. 08:30' (endret til fullt månedsnavn)
         $formatter = new IntlDateFormatter(
             'nb_NO',
             IntlDateFormatter::FULL, // For dagnavn og full dato
@@ -20,7 +20,8 @@ if (!function_exists('format_seminar_datetime_norwegian')) {
         );
         $formattedDate = $formatter->format($timestamp);
         $formattedTime = date('H:i', $timestamp);
-        return $formattedDate . ', kl. ' . $formattedTime;
+        // Legg til ucfirst() her
+        return ucfirst($formattedDate) . ', kl. ' . $formattedTime;
     }
 }
 ?>

@@ -6,18 +6,19 @@ if (!function_exists('format_teaser_datetime_norwegian')) {
         if ($timestamp === false) {
             return htmlspecialchars($dateString);
         }
-        // For 'Tirsdag 17. juni, kl. 08:30' (endret til fullt månedsnavn og fjernet år)
+        // For 'Tirsdag 17. juni, kl. 08:30'
         $formatter = new IntlDateFormatter(
             'nb_NO',
             IntlDateFormatter::FULL,
             IntlDateFormatter::NONE,
             'Europe/Oslo',
             IntlDateFormatter::GREGORIAN,
-            'EEEE d. MMMM' // EEEE for fullt dagnavn, MMMM for fullt månedsnavn
+            'EEEE d. MMMM' 
         );
         $formattedDate = $formatter->format($timestamp);
         $formattedTime = date('H:i', $timestamp);
-        return $formattedDate . ', kl. ' . $formattedTime;
+        // Legg til ucfirst() her
+        return ucfirst($formattedDate) . ', kl. ' . $formattedTime;
     }
 }
 

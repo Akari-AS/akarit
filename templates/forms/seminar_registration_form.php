@@ -14,6 +14,15 @@
     <input type="hidden" name="form_type" value="seminar_registration">
     <input type="hidden" name="seminar_slug" value="<?php echo htmlspecialchars($contentData['slug'] ?? ''); ?>">
     <input type="hidden" name="seminar_title" value="<?php echo htmlspecialchars($contentData['title'] ?? ''); ?>">
+    
+    <?php // Nye skjulte felter for .ics-generering ?>
+    <input type="hidden" name="seminar_datetime_raw" value="<?php echo htmlspecialchars($contentData['date'] ?? ''); ?>">
+    <input type="hidden" name="seminar_location_raw" value="<?php echo htmlspecialchars($contentData['location'] ?? ''); ?>">
+    <input type="hidden" name="seminar_excerpt_raw" value="<?php echo htmlspecialchars($contentData['excerpt'] ?? ''); ?>">
+    <input type="hidden" name="seminar_contact_email_raw" value="<?php echo htmlspecialchars($contentData['contact_person_email'] ?? ''); ?>">
+    <input type="hidden" name="seminar_duration_hours_raw" value="<?php echo htmlspecialchars($contentData['duration_hours'] ?? '1.5'); // Default 1.5 timer ?>">
+
+
     <input type="hidden" name="form_source_location" value="Seminar: <?php echo htmlspecialchars($contentData['title'] ?? 'Ukjent'); ?>">
 
 

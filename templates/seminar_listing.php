@@ -8,18 +8,19 @@ if (!function_exists('format_seminar_list_datetime_norwegian')) {
         if ($timestamp === false) {
             return htmlspecialchars($dateString);
         }
-        // For 'Tirsdag 17. juni, 08:30' (endret til fullt månedsnavn og fjernet år for kommende)
+        // For 'Tirsdag 17. juni, 08:30'
         $formatter = new IntlDateFormatter(
             'nb_NO',
             IntlDateFormatter::FULL, 
             IntlDateFormatter::NONE, 
             'Europe/Oslo',
             IntlDateFormatter::GREGORIAN,
-            'EEEE d. MMMM' // Viser ikke år for kommende seminarer for et renere utseende
+            'EEEE d. MMMM' 
         );
         $formattedDate = $formatter->format($timestamp);
         $formattedTime = date('H:i', $timestamp);
-        return $formattedDate . ', ' . $formattedTime; // La til komma etter dato
+        // Legg til ucfirst() her
+        return ucfirst($formattedDate) . ', ' . $formattedTime;
     }
 }
 // Funksjon for å formatere dato (uten tid) for tidligere seminarer
@@ -32,12 +33,12 @@ if (!function_exists('format_seminar_list_date_norwegian')) {
         // For '17. juni 2025'
         $formatter = new IntlDateFormatter(
             'nb_NO',
-            IntlDateFormatter::LONG, // For å få med fullt månedsnavn og år
+            IntlDateFormatter::LONG, 
             IntlDateFormatter::NONE,
             'Europe/Oslo',
             IntlDateFormatter::GREGORIAN
-            // Standard LONG format vil typisk være '17. juni 2025'
         );
+        // ucfirst() er ikke nødvendig her siden vi ikke forventer dagnavn først
         return $formatter->format($timestamp);
     }
 }
