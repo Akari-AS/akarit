@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Mobilmeny
     const mobileMenuButton = document.getElementById('mobile-menu-button');
     const mobileMenuPanel = document.getElementById('mobile-menu');
-    const mainContent = document.querySelector('main'); // Anta at hovedinnholdet er i <main>
+    // const mainContent = document.querySelector('main'); // Ikke brukt aktivt nå
 
     if (mobileMenuButton && mobileMenuPanel) {
         mobileMenuButton.addEventListener('click', function () {
@@ -12,149 +12,137 @@ document.addEventListener('DOMContentLoaded', function () {
             document.body.classList.toggle('mobile-menu-is-open');
         });
 
-        // Lukk mobilmeny når en lenke klikkes
         mobileMenuPanel.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', () => {
                 if (mobileMenuPanel.classList.contains('open')) {
-                    mobileMenuButton.click(); // Simulerer et klikk for å lukke og bytte ikon
+                    mobileMenuButton.click();
                 }
             });
         });
     }
 
-    // Aktiv menylenke-logikk (Desktop og Mobil)
-    // Velger lenker som starter med /# for å kun sikte mot ankerlenker på forsiden
-    const navLinks = document.querySelectorAll('nav.desktop-nav a[href^="/#"], .mobile-menu-panel a[href^="/#"]');
-    const sections = [];
+    // Aktiv menylenke-logikk
+    const desktopNavLinks = document.querySelectorAll('nav.desktop-nav a');
+    const mobileNavLinks = document.querySelectorAll('.mobile-menu-panel a');
+    const allNavLinks = Array.from(desktopNavLinks).concat(Array.from(mobileNavLinks)); // Samle alle nav-lenker
 
-    navLinks.forEach(link => {
+    const sections = [];
+    // Samle kun ankerseksjoner for scroll-logikk
+    allNavLinks.forEach(link => {
         const href = link.getAttribute('href');
-        // Sikrer at vi bare jobber med gyldige ankerlenker som starter med /#
         if (href && href.startsWith('/#') && href.length > 2) {
             try {
-                const sectionId = href.substring(2); // Fjerner '/#'
+                const sectionId = href.substring(2);
                 const section = document.getElementById(sectionId);
                 if (section) {
                     sections.push(section);
                 }
             } catch (e) {
-                console.warn(`Could not find section for href: ${href}`, e);
+                // console.warn(`Could not find section for href: ${href}`, e);
             }
         }
     });
 
     function clearAllActiveStates() {
-        navLinks.forEach(link => {
+        allNavLinks.forEach(link => {
             link.classList.remove('active');
         });
     }
     
     function setActiveStates(targetHref) {
         clearAllActiveStates();
-        navLinks.forEach(link => {
+        allNavLinks.forEach(link => {
             if (link.getAttribute('href') === targetHref) {
                 link.classList.add('active');
             }
         });
     }
 
-
-    function updateActiveLinkOnScroll() {
+    function updateActiveLink() {
         const currentPath = window.location.pathname;
-        // Kjør kun scroll-logikk hvis vi er på forsiden
-        if (currentPath !== '/' && currentPath !== '/index.php' && currentPath !== '') {
-            clearAllActiveStates(); // Ingen skal være aktive på andre sider
-            return;
-        }
+        const currentHash = window.location.hash;
 
-        const scrollPaddingTop = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--scroll-padding-top'), 10) || 70;
-        let currentSectionId = '';
-        let foundSection = false;
+        clearAllActiveStates();
 
-        // Finn den første seksjonen som er innenfor "aktiv sone" fra toppen
-        for (let i = 0; i < sections.length; i++) {
-            const section = sections[i];
-            const sectionTop = section.offsetTop;
-            const sectionHeight = section.offsetHeight;
-            const scrollPosition = window.scrollY;
+        if (currentPath.startsWith('/artikler')) {
+            // Hvis vi er på en artikkelside eller artikkellistesiden
+            allNavLinks.forEach(link => {
+                if (link.getAttribute('href') === '/artikler/') {
+                    link.classList.add('active');
+                }
+            });
+        } else if (currentPath === '/' || currentPath === '/index.php' || currentPath === '') {
+            // Vi er på forsiden, bruk scroll/hash-logikk
+            const scrollPaddingTop = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--scroll-padding-top'), 10) || 70;
+            let activeSectionId = '';
+            let foundSectionViaScroll = false;
 
-            // Er toppen av seksjonen over "aktiv sone" og bunnen av seksjonen under "aktiv sone"?
-            if (scrollPosition >= sectionTop - scrollPaddingTop - 50 && // Litt buffer over
-                scrollPosition < sectionTop + sectionHeight - scrollPaddingTop - 50) { // Litt buffer under
-                currentSectionId = section.id;
-                foundSection = true;
-                break;
-            }
-        }
-        
-        // Fallback: Hvis ingen seksjon er perfekt i sonen (f.eks. helt på toppen før første seksjon)
-        // eller helt på bunnen etter siste seksjon.
-        if (!foundSection && sections.length > 0) {
-            if (window.scrollY < sections[0].offsetTop - scrollPaddingTop - 50) {
-                 // Hvis vi er over den første seksjonen (f.eks. i hero), marker "Google Workspace" (#fordeler)
-                currentSectionId = 'fordeler'; // Anta at "Google Workspace" peker til #fordeler
-            } else if (window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 50) {
-                // Hvis vi er nær bunnen av siden, og siste seksjon er Kontakt
-                currentSectionId = 'kontakt'; // Anta at siste menyvalg er Kontakt
-            }
-        }
+            if (currentHash && currentHash.length > 1) {
+                // Hvis det er en hash, prioriter den
+                activeSectionId = currentHash.substring(1);
+            } else {
+                // Ellers, bruk scroll-posisjon
+                for (let i = 0; i < sections.length; i++) {
+                    const section = sections[i];
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.offsetHeight;
+                    const scrollPosition = window.scrollY;
 
-
-        if (currentSectionId) {
-            setActiveStates(`/#${currentSectionId}`);
-        } else {
-            clearAllActiveStates();
-        }
-    }
-
-    // Håndter klikk på ankerlenker
-    navLinks.forEach(link => {
-        link.addEventListener('click', function(event) {
-            const href = this.getAttribute('href');
-            const currentPath = window.location.pathname;
-
-            if (href.startsWith('/#')) {
-                if (currentPath === '/' || currentPath === '/index.php' || currentPath === '') {
-                    // Vi er allerede på forsiden, la smooth scroll skje og oppdater active state
-                    // event.preventDefault(); // Fjern hvis du vil ha default browser scroll
-                    const targetId = href.substring(2);
-                    const targetElement = document.getElementById(targetId);
-                    if (targetElement) {
-                        // setActiveStates(href); // Sett umiddelbart for respons
-                        // La onScroll håndtere det for nøyaktighet, eller uncomment for umiddelbar.
-                        // window.scrollTo(...) kan brukes her for custom smooth scroll
+                    if (scrollPosition >= sectionTop - scrollPaddingTop - 50 && 
+                        scrollPosition < sectionTop + sectionHeight - scrollPaddingTop - 50) {
+                        activeSectionId = section.id;
+                        foundSectionViaScroll = true;
+                        break;
                     }
-                } else {
-                    // Vi er på en underside, naviger til forsiden + anker
-                    // Standard nettleser-navigasjon vil skje.
-                    // `hashchange` eller `onScroll` på neste side vil håndtere active state.
-                    clearAllActiveStates(); // Fjern aktiv fra nåværende side
+                }
+                
+                if (!foundSectionViaScroll && sections.length > 0) {
+                    if (window.scrollY < sections[0].offsetTop - scrollPaddingTop - 50) {
+                        activeSectionId = 'fordeler'; 
+                    } else if (window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 50) {
+                        activeSectionId = 'kontakt'; 
+                    }
                 }
             }
-            // For lenker som ikke er /#, la standard oppførsel skje (f.eks. /artikler/)
+            
+            if (activeSectionId) {
+                setActiveStates(`/#${activeSectionId}`);
+            } else {
+                // Fallback hvis ingen seksjon er aktiv (f.eks. midt mellom seksjoner)
+                // eller hvis vi er helt på toppen uten hash og ingen seksjon er enda i "aktiv sone"
+                // Ofte ønsker man da at "Hjem" eller første relevante menypunkt er aktivt.
+                // For nå, hvis ingen spesifikk, la "Google Workspace" (#fordeler) være aktiv hvis vi er på toppen.
+                if (window.scrollY < 100 && !currentHash) { // Anta 100px som "toppen"
+                     setActiveStates('/#fordeler');
+                }
+            }
+        }
+        // Hvis ingen av betingelsene over slår til (f.eks. en annen ukjent side),
+        // vil ingen lenker være aktive, noe som er greit.
+    }
+
+    // Lytt etter klikk på ALLE navigasjonslenker for å oppdatere umiddelbart (om mulig)
+    allNavLinks.forEach(link => {
+        link.addEventListener('click', function(event) {
+            const href = this.getAttribute('href');
+            // For ankerlenker på samme side, eller lenker til /artikler/
+            if (href.startsWith('/#') || href === '/artikler/') {
+                 // La standard navigasjon skje (enten scroll eller sidebytte)
+                 // setActiveStates(href); // Sett umiddelbart for raskere feedback
+                 // La updateActiveLink() håndtere det mer nøyaktig etter navigasjon/scroll
+            }
+             // For andre lenker (f.eks. eksterne), la standard oppførsel skje uten å endre active state her
         });
     });
 
-    // Oppdater ved scroll og ved lasting av siden
-    window.addEventListener('scroll', updateActiveLinkOnScroll);
-    
-    // Kjør en gang ved lasting for å sette korrekt initiell tilstand
-    // Gi DOM litt tid til å rendre og kalkulere offsetTop korrekt, spesielt hvis det er bilder
-    setTimeout(updateActiveLinkOnScroll, 100);
-
-    // Oppdater også når hash endres, for eksempel ved bruk av tilbake/fremover-knapper
-    // eller hvis en lenke på siden endrer hashen.
-    window.addEventListener('hashchange', function() {
-        const currentPath = window.location.pathname;
-        if (currentPath === '/' || currentPath === '/index.php' || currentPath === '') {
-             updateActiveLinkOnScroll(); // Bruk scroll-logikken som tar hensyn til posisjon
-        } else {
-            clearAllActiveStates();
-        }
+    window.addEventListener('scroll', updateActiveLink);
+    window.addEventListener('hashchange', updateActiveLink);
+    window.addEventListener('load', () => { // Endret fra DOMContentLoaded til load for å være sikker på at offsetTop er korrekt
+         setTimeout(updateActiveLink, 150); // Gi litt ekstra tid
     });
 
 
-    // Karakterteller for meldingsfelt i kontaktskjema
+    // Karakterteller for meldingsfelt (uendret)
     const messageTextarea = document.getElementById('message');
     const charCounter = document.querySelector('.char-counter');
     if (messageTextarea && charCounter) {
@@ -168,6 +156,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 charCounter.style.color = '#78909C'; 
             }
         });
-        charCounter.textContent = `${messageTextarea.value.length} av ${maxLength} maks tegn`;
+        if(messageTextarea.value) { // Oppdater ved lasting hvis det er eksisterende tekst
+            charCounter.textContent = `${messageTextarea.value.length} av ${maxLength} maks tegn`;
+        }
     }
 });
