@@ -11,7 +11,7 @@ return [
         'heroText' => "For bedrifter i Steinkjer: Akari leverer Google Workspace for en smartere og mer effektiv arbeidshverdag i Nord-Trøndelag.",
         'metaDescription' => "Google Workspace i Steinkjer. Akari tilbyr implementering, support og AI-drevne verktøy.",
     ],
-    'stjordal' => [ // 'stjordal' som slug for Stjørdalshalsen/Stjørdal
+    'stjordal' => [ 
         'name' => 'Stjørdal',
         'heroText' => "Akari i Stjørdal: Optimaliser din bedrifts digitale verktøy med Google Workspace. Vi er din lokale ekspert nær Værnes.",
         'metaDescription' => "Din Google Workspace-leverandør i Stjørdal. Kontakt Akari for moderne og effektive skyløsninger.",
@@ -31,7 +31,7 @@ return [
         'heroText' => "For bedrifter i Verdal: Akari tilbyr Google Workspace for økt produktivitet og enklere samarbeid i Innherred.",
         'metaDescription' => "Google Workspace i Verdal. Akari hjelper din bedrift med å utnytte moderne skyteknologi.",
     ],
-    'orkanger' => [ // Orkland kommune
+    'orkanger' => [ 
         'name' => 'Orkanger',
         'heroText' => "Akari på Orkanger: Din partner for Google Workspace. Vi hjelper bedrifter i Orkdalsregionen med å modernisere arbeidsflyten.",
         'metaDescription' => "Google Workspace-løsninger på Orkanger. Akari tilbyr implementering og support for din bedrift.",
@@ -41,12 +41,12 @@ return [
         'heroText' => "Effektiviser din kystbedrift på Hitra med Google Workspace fra Akari. Oppdag kraften i skybasert samarbeid.",
         'metaDescription' => "Din lokale Google Workspace-ekspert på Hitra. Kontakt Akari for skreddersydde løsninger.",
     ],
-    'froya' => [ // 'froya' som slug for Frøya
+    'froya' => [ 
         'name' => 'Frøya',
         'heroText' => "Akari tilbyr Google Workspace for bedrifter på Frøya. Få tilgang til moderne verktøy for vekst i havbruksnæringen.",
         'metaDescription' => "Google Workspace på Frøya. Akari er din partner for skybaserte løsninger og lokal support.",
     ],
-    'røros' => [ // 'roros' som slug
+    'roros' => [ // ENDRET SLUG
         'name' => 'Røros',
         'heroText' => "For bedrifter på Røros: Akari leverer Google Workspace for en smartere og mer tilkoblet arbeidsdag i verdensarvbyen.",
         'metaDescription' => "Google Workspace-ekspertise på Røros. Akari hjelper deg med implementering og optimalisering.",
@@ -56,8 +56,7 @@ return [
         'heroText' => "Akari i Oppdal: Google Workspace-løsninger som forbedrer din bedrifts samarbeid og produktivitet i fjellregionen.",
         'metaDescription' => "Din partner for Google Workspace i Oppdal. Kontakt Akari for moderne digitale verktøy.",
     ],
-    // Vurder andre steder som Brekstad, Melhus, Malvik, Nærøysund (Kolvereid/Rørvik) etc.
-    'brekstad' => [ // Ørland kommune
+    'brekstad' => [ 
         'name' => 'Brekstad',
         'heroText' => "Effektiviser din bedrift på Brekstad med Google Workspace fra Akari. Lokal ekspertise for Fosen.",
         'metaDescription' => "Google Workspace på Brekstad. Akari hjelper din bedrift med overgang og support.",

@@ -16,7 +16,7 @@ return [
         'heroText' => "Akari i Grimstad: Optimaliser din bedrifts digitale verktøy med Google Workspace. Vi er din lokale ekspert.",
         'metaDescription' => "Din Google Workspace-leverandør i Grimstad. Kontakt Akari for moderne og effektive skyløsninger.",
     ],
-    'mandal' => [ // Nå del av Lindesnes kommune
+    'mandal' => [ 
         'name' => 'Mandal',
         'heroText' => "Effektiviser driften i Mandal med Google Workspace fra Akari. Vi tilbyr support og skreddersydde løsninger for Sørlandet.",
         'metaDescription' => "Google Workspace-spesialist i Mandal. Akari hjelper din bedrift med overgang, support og AI-verktøy.",
@@ -46,12 +46,12 @@ return [
         'heroText' => "Akari tilbyr Google Workspace for bedrifter i Vennesla. Få tilgang til moderne verktøy for vekst og effektivitet.",
         'metaDescription' => "Google Workspace i Vennesla. Akari er din partner for skybaserte løsninger og lokal support.",
     ],
-    'søgne' => [ // 'sogne' som slug, nå del av Kristiansand
+    'sogne' => [ // ENDRET SLUG
         'name' => 'Søgne',
         'heroText' => "For bedrifter i Søgne: Akari leverer Google Workspace for en smartere og mer tilkoblet arbeidsdag.",
         'metaDescription' => "Google Workspace-ekspertise i Søgne-området. Akari hjelper deg med implementering og optimalisering.",
     ],
-    'risor' => [ // 'risor' som slug
+    'risor' => [ // ENDRET SLUG
         'name' => 'Risør',
         'heroText' => "Akari i Risør tilbyr Google Workspace for å forbedre din bedrifts samarbeid og produktivitet.",
         'metaDescription' => "Din partner for Google Workspace i Risør. Kontakt Akari for moderne digitale verktøy.",
@@ -61,8 +61,7 @@ return [
         'heroText' => "Effektiviser din bedrift i Tvedestrand med Google Workspace fra Akari. Lokal ekspertise for skybaserte løsninger.",
         'metaDescription' => "Google Workspace i Tvedestrand. Akari hjelper din bedrift med overgang, support og AI-drevne verktøy.",
     ],
-    // Vurder også mindre, men strategiske steder hvis relevant for Akari
-    'evje' => [ // Evje og Hornnes
+    'evje' => [ 
         'name' => 'Evje',
         'heroText' => "Akari på Evje: Google Workspace for bedrifter i Setesdal. Moderne verktøy for lokal vekst.",
         'metaDescription' => "Google Workspace på Evje. Akari tilbyr skybaserte løsninger og support.",
