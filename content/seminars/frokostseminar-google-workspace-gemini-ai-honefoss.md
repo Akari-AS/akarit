@@ -9,33 +9,30 @@ image: "/assets/img/seminars/kenneth_bjerke.jpg"
 status: "upcoming"
 registration_open: true
 max_attendees: 150
-contact_person_email: "kenneth@akari.no" [cite: 2, 3, 6]
+contact_person_email: "kenneth@akari.no"
 ---
 
 ## Frokostseminar: Hva er nytt i Google Workspace med Gemini AI?
 
-Bli med på et innsiktsfullt frokostseminar hvor vi setter fokus på AI og Google Workspace, og utforsker spørsmålet: "Hva er nytt i Google Workspace med Gemini om bord?"[cite: 5]. Dette er en ypperlig anledning til å oppdage hvordan Googles nyeste AI-teknologi, Gemini, kan transformere måten du jobber på i Google Workspace.
+Bli med på et innsiktsfullt frokostseminar hvor vi setter fokus på AI og Google Workspace, og utforsker spørsmålet: "Hva er nytt i Google Workspace med Gemini om bord?". Dette er en ypperlig anledning til å oppdage hvordan Googles nyeste AI-teknologi, Gemini, kan transformere måten du jobber på i Google Workspace.
 
 **Du vil lære om:**
 
-* **AI og Google Workspace:** En gjennomgang av hvordan kunstig intelligens er integrert. [cite: 5]
-* **Gemini i Praksis:** Hva Gemini betyr for din bruk av Google Workspace-verktøy. [cite: 5]
-* **Nyheter og Funksjoner:** De siste oppdateringene med Gemini i Google Workspace. [cite: 5]
-* **Effektivisering:** Hvordan du kan bruke disse verktøyene for en mer produktiv arbeidsdag. [cite: 5]
+* **AI og Google Workspace:** En gjennomgang av hvordan kunstig intelligens er integrert.
+* **Gemini i Praksis:** Hva Gemini betyr for din bruk av Google Workspace-verktøy.
+* **Nyheter og Funksjoner:** De siste oppdateringene med Gemini i Google Workspace.
+* **Effektivisering:** Hvordan du kan bruke disse verktøyene for en mer produktiv arbeidsdag.
 
-Vi serverer en deilig frokost med kaffe og enkel bevertning.[cite: 1]. Det blir også god tid til spørsmål og mingling etter programmet[cite: 1].
+Vi serverer kaffe og enkel bevertning. Det blir også god tid til spørsmål og mingling etter programmet.
 
 **Agenda:**
 
-* 08:00: Dørene åpner (kaffe, mingling) [cite: 1]
-* 08:30: Programstart [cite: 1]
-* 09:00: Kort pause [cite: 1]
-* 09:15: Program del 2 [cite: 1]
-* 09:45: Avslutning [cite: 1]
-* Frem til 10:00 (eller etter behov): Spørsmål og mingling [cite: 1]
+* 08:00: Dørene åpner (kaffe og enkel bevertning serveres)
+* 08:30: Programstart
+* 09:00: Kort pause
+* 09:15: Program del 2
+* 09:45: Avslutning
+* Frem til 10:00 (eller så lenge vi måtte trenge): Spørsmål og mingling
 
-Seminaret er gratis. Påmelding under.
-
-Velkommen skal du være!
-
-
+Seminaret er gratis. Påmelding i skjema under.
+Velkommen skal du være! 
