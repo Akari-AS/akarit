@@ -94,7 +94,7 @@
                 <li><a href="/artikler/">Artikler</a></li>
                 <li><a href="/#hvorfor-oss">Hvorfor Akari?</a></li>
                 <li><a href="/#kontakt">Kontakt</a></li>
-                <li><a href="https://akari.no" target="_blank" class="nav-link-external">Til Akari.no</a></li>
+                <li><a href="https://akari.no" target="_blank" class="nav-link-external">Til hovedside</a></li>
             </ul>
         </nav>
          <div class="mobile-menu-button-container">
@@ -116,7 +116,7 @@
             <li><a href="/#hvorfor-oss">Hvorfor Akari?</a></li>
             <li><a href="/#kontakt">Kontakt</a></li>
             <li class="mobile-nav-separator"><hr></li> 
-            <li><a href="https://akari.no" target="_blank" class="nav-link-external mobile-external-link">Til Akari.no</a></li>
+            <li><a href="https://akari.no" target="_blank" class="nav-link-external mobile-external-link">Til hovedside</a></li>
          </ul>
      </div>
 </header>

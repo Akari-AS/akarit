@@ -19,20 +19,23 @@
         border-bottom-color: var(--primary-color); 
     }
 
-    /* Styling for ekstern lenke i desktop-navigasjon */
+    /* Styling for ekstern lenke til hovedsiden i desktop-navigasjon */
     nav.desktop-nav li a.nav-link-external {
-        color: #b0b0b0; 
-        font-size: 0.9em; 
+        color: var(--primary-color); 
+        font-size: 0.9em;
+        font-style: italic; 
+        font-weight: 500; 
         border-bottom: none; 
-        padding: 6px 10px; 
-        border-radius: 20px;
-        border: 1px solid #b0b0b0;
+        padding-bottom: 5px; 
         margin-left: 30px; 
+        background-color: transparent; 
+        border: none; 
+        border-radius: 0; 
     }
     nav.desktop-nav li a.nav-link-external:hover {
-        color: #fff;
-        background-color: var(--primary-color);
-        border-color: var(--primary-color);
+        color: #fff; 
+        text-decoration: underline; 
+        background-color: transparent; 
     }
 
     .header-logo-img {
@@ -53,8 +56,7 @@
     :root { --scroll-padding-top: 80px; } 
     .container { max-width: 100%; padding: 0 15px; }
     header { min-height: 60px; }
-    /* .logo { font-size: 1.7em; } Fjerner denne da vi bruker bilde-logo som styres av .header-logo-img */
-    .header-logo-img { height: 50px; } /* Juster mobil-logohøyde her om nødvendig, var 64px */
+    .header-logo-img { height: 50px; } 
 
     .mobile-menu-button-container { display: block; }
     nav.desktop-nav { display: none; } 
@@ -64,13 +66,6 @@
     .hero p { font-size: 1.1em; max-width: 95%; }
     section h2 { font-size: 2em; }
     
-    /* Fjerner grid for produkter, da vi bruker ny layout */
-    /* .features-grid, .products-grid, .ai-tools-grid { 
-        grid-template-columns: 1fr; 
-        gap: 25px; 
-    }  */
-    
-    /* Prispakker mobil justeringer */
     .pk-pricing-table {
         display: grid; 
         grid-template-columns: 1fr; 
@@ -90,7 +85,6 @@
         top: -20px; 
     }
 
-    /* .contact-form { padding: 40px 25px; margin: 40px 15px 0 15px; } FJERNET - kontakt.php har sin egen padding */
     .contact-form-wrapper {
         flex-direction: column; 
         gap: 30px; 
@@ -119,16 +113,11 @@
         text-align: center;
         margin-bottom: 25px;
     }
-    .modern-contact-form .form-row {
-        /* Beholdes som før, men kan trenge flex-direction: column; hvis feltene skal under hverandre */
-        /* flex-direction: column; gap: 0; */
-    }
     .modern-contact-form .form-group-half {
-        /* Hvis form-row er column, trenger ikke denne lenger være halv */
         margin-bottom: 25px; 
     }
     .modern-contact-form .form-group-half:last-child {
-        margin-bottom: 0; /* Eller 25px hvis den nå er full bredde */
+        margin-bottom: 0; 
     } 
     .modern-contact-form .form-group {
         margin-bottom: 25px; 
@@ -137,17 +126,16 @@
         font-size: 0.8em; 
     }
 
-    /* Artikkel styling responsive (fra _articles.css, kan stå der eller flyttes hit om det er mer logisk) */
     .article-single-page .article-main-title {
         font-size: 2.2em;
     }
     .article-single-page .article-content {
         font-size: 1em;
         max-width: 100%; 
-        padding-left: 0; /* .article-header-content-wrapper har padding */
+        padding-left: 0; 
         padding-right: 0;
     }
-    .article-header-content-wrapper { /* Sørg for at denne har sidepadding på mobil */
+    .article-header-content-wrapper { 
         padding-left: 15px;
         padding-right: 15px;
     }
@@ -175,14 +163,10 @@
     section h2 { font-size: 1.8em; }
     section h2 + p { font-size: 1em; margin-bottom: 40px; }
     .cta-button { padding: 14px 30px; font-size: 1em; } 
-    /* .contact-form { padding: 30px 20px; } FJERNET */
-    /* .feature-item, .product-card, .ai-tool-card, .pk-pricing-plan {  FJERNET .product-card herfra, den har ny layout
-        padding: 30px 25px; 
-    } */
+    
      .feature-item, .ai-tool-card, .pk-pricing-plan {
         padding: 30px 25px;
     }
-
 
     #hvorfor-oss ul { max-width: 100%; padding-left: 10px; }
     #hvorfor-oss li { font-size: 1em; padding-left: 30px; }

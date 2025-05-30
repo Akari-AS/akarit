@@ -40,7 +40,7 @@ nav.desktop-nav { display: none; }
 .mobile-menu-panel ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; align-items: center; width: 100%;}
 .mobile-menu-panel li { width: 100%; text-align: center; }
 .mobile-menu-panel li a { display: block; padding: 18px 20px; color: #e0e0e0; font-weight: 600; font-size: 1.4em; transition: background-color 0.2s ease, color 0.2s ease; text-decoration: none; border-bottom: 1px solid rgba(255, 255, 255, 0.1); width: 100%; }
-.mobile-menu-panel li:last-child a { border-bottom: none; } /* Gjelder nå "Til Akari.no" */
+.mobile-menu-panel li:last-child a { border-bottom: none; } 
 .mobile-menu-panel li a:hover, .mobile-menu-panel li a.active { background-color: rgba(255, 255, 255, 0.1); color: var(--primary-color); }
 
 /* Styling for separator og ekstern lenke i mobilmeny */
@@ -51,11 +51,12 @@ nav.desktop-nav { display: none; }
 }
 
 .mobile-menu-panel li a.nav-link-external.mobile-external-link {
-    font-size: 1.1em; 
-    color: #c0c0c0; 
-    /* border-bottom: none; Hvis du vil fjerne den siste borderen spesifikt her, men li:last-child a håndterer det allerede */
+    font-size: 1.2em; 
+    color: var(--primary-color); 
+    font-style: italic; 
+    font-weight: 500; 
 }
 .mobile-menu-panel li a.nav-link-external.mobile-external-link:hover {
-    background-color: rgba(255, 255, 255, 0.05); 
-    color: #fff;
+    background-color: rgba(255, 255, 255, 0.1); 
+    color: #fff; 
 }
