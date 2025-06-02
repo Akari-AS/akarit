@@ -46,15 +46,6 @@ function get_content_data($slug, $contentType = 'article') {
     $folder = ($contentType === 'seminar') ? 'seminars' : 'articles';
     $filePath = __DIR__ . '/../content/' . $folder . '/' . $slug . '.md';
 
-    // --- START AGGRESSIV DEBUG (KOMMENTERT UT FOR NÅ) ---
-    // echo "<div style='border:2px solid red; padding:10px; margin:10px; background-color: #fee; color: black; z-index: 9999; position:relative;'>";
-    // echo "<strong>DEBUG: get_content_data KALT</strong><br>";
-    // echo "Slug: <code style='background:#f0f0f0; padding:2px;'>" . htmlspecialchars($slug) . "</code><br>";
-    // echo "ContentType: <code style='background:#f0f0f0; padding:2px;'>" . htmlspecialchars($contentType) . "</code><br>";
-    // echo "Forventet Mappe: <code style='background:#f0f0f0; padding:2px;'>" . htmlspecialchars($folder) . "</code><br>";
-    // echo "Kalkulert Filsti: <code style='background:#f0f0f0; padding:2px;'>" . htmlspecialchars($filePath) . "</code><br>";
-    // --- END AGGRESSIV DEBUG ---
-
     if (file_exists($filePath)) {
         $content = file_get_contents($filePath);
         $parsedown = new Parsedown();
@@ -62,36 +53,15 @@ function get_content_data($slug, $contentType = 'article') {
         if (preg_match('/^---\s*$(.*?)^---\s*$(.*)/ms', $content, $matches)) {
             $frontMatter = parse_front_matter($matches[1]);
             $markdown_content_body = trim($matches[2]); 
-            
-            // --- DETALJERT DEBUG FOR ARTIKKELINNHOLD (KOMMENTERT UT) ---
-            // if ($contentType === 'article') { 
-            //     echo "DEBUG: Rå markdown_content_body (før Parsedown) - Lengde: " . strlen($markdown_content_body) . "<br>";
-            //     echo "<textarea style='width:95%; height: 150px; border:1px solid #ccc;'>" . htmlspecialchars($markdown_content_body) . "</textarea><br>";
-            // }
-            // --- SLUTT DETALJERT DEBUG ---
-            
             $htmlContent = $parsedown->text($markdown_content_body);
-
-             // --- DEBUG HTML CONTENT (KOMMENTERT UT) ---
-            // if ($contentType === 'article') {
-            //     echo "DEBUG: HTML Content (etter Parsedown) - Lengde: " . strlen($htmlContent) . "<br>";
-            //     echo "<textarea style='width:95%; height: 150px; border:1px solid #ccc;'>" . htmlspecialchars($htmlContent) . "</textarea><br>";
-            // }
-            // --- END DEBUG ---
-            
-            // if ($contentType === 'article') echo "</div>"; // Lukk debug-div hvis den var åpen
             return array_merge($frontMatter, ['content' => $htmlContent, 'slug' => $slug]);
         } else {
              error_log("Kunne ikke parse front-matter for {$contentType}: " . $slug . ". Regex feilet. Filinnhold starter med: " . substr(htmlspecialchars($content), 0, 200));
              $htmlContentOnly = $parsedown->text($content);
-             // if ($contentType === 'article') echo "DEBUG: Kunne ikke parse front-matter. Hele filen blir behandlet som markdown.<br>";
-             // if ($contentType === 'article') echo "</div>"; // Lukk debug-div
              return ['title' => ucfirst($contentType) . ' uten formatert tittel', 'content' => $htmlContentOnly, 'slug' => $slug, 'error_parsing_frontmatter' => true];
         }
     }
     error_log(ucfirst($contentType) . "fil ikke funnet: " . $filePath);
-    // if ($contentType === 'article') echo "DEBUG: Filen ble ikke funnet på sti: " . htmlspecialchars($filePath) . "<br>"; 
-    // if ($contentType === 'article') echo "</div>"; // Lukk debug-div
     return null;
 }
 
@@ -169,7 +139,6 @@ if ($currentLocationSlug === 'artikler') {
 
 
 // --------- LOKASJONSSPESIFIKK DATA & FORBEREDELSE FOR LISTING ---------
-// ... (Denne koden forblir uendret) ...
 $currentLocationData = null;
 $currentLocationName = "Generell"; 
 $coreLocations = []; 
@@ -208,8 +177,6 @@ if ($pageType === 'location_listing') {
         ksort($regionalLocations); 
     }
 }
-// --------- SLUTT LOKASJONSSPESIFIKK DATA ---------
-
 
 // --------- SIDETITTEL OG METABESKRIVELSE ---------
 $defaultHeroText = "Som din dedikerte Google Workspace leverandør, hjelper Akari din bedrift med økt produktivitet, sømløst samarbeid og bunnsolid sikkerhet. La oss ta oss av det tekniske, så du kan fokusere på vekst.";
@@ -219,24 +186,7 @@ $locationSpecificHeroText = ($pageType === 'landingpage' && isset($currentLocati
 if ($pageType === 'article_single' && $contentSlug) {
     $contentData = get_content_data($contentSlug, 'article'); 
     
-    // --- START NY DEBUG RETT FØR IF (kun for artikkel-sider) ---
-    echo "<div style='border:2px solid blue; padding:10px; margin:10px; background-color: #e0e0ff; color: black; z-index: 9998; position:relative;'>";
-    echo "<strong>DEBUG: \$contentData FØR IF-sjekk (article_single):</strong><br>";
-    var_dump($contentData);
-    if ($contentData) {
-        echo "isset(\$contentData['title']): " . (isset($contentData['title']) ? 'JA' : 'NEI') . "<br>";
-        echo "isset(\$contentData['content']): " . (isset($contentData['content']) ? 'JA' : 'NEI') . "<br>";
-        if (isset($contentData['content'])) {
-            echo "strlen(trim(\$contentData['content'])): " . strlen(trim($contentData['content'])) . "<br>";
-            echo "!empty(trim(\$contentData['content'])): " . (!empty(trim($contentData['content'])) ? 'JA (IKKE TOM)' : 'NEI (TOM)') . "<br>";
-        }
-    } else {
-        echo "\$contentData er FALSE/NULL her!<br>";
-    }
-    echo "</div>";
-    // --- SLUTT NY DEBUG RETT FØR IF ---
-
-    if ($contentData && isset($contentData['title']) && isset($contentData['content'])) { // Bruker den forenklede sjekken du bekreftet
+    if ($contentData && isset($contentData['title']) && isset($contentData['content']) && strlen(strip_tags(trim($contentData['content']))) > 5) { 
         $pageTitle = htmlspecialchars($contentData['title']) . ' | Artikler | Akari';
         $pageDescription = htmlspecialchars($contentData['meta_description'] ?? $contentData['excerpt'] ?? $defaultMetaDescription);
         $formSourceOverride = "Artikkel: " . htmlspecialchars($contentData['title']); 
@@ -252,7 +202,8 @@ if ($pageType === 'article_single' && $contentSlug) {
     $pageDescription = 'Les våre siste artikler og innsikt om Google Workspace, AI, produktivitet og samarbeid.';
 } elseif ($pageType === 'seminar_single' && $contentSlug) {
     $contentData = get_content_data($contentSlug, 'seminar');
-    if ($contentData && isset($contentData['title']) && !empty(trim($contentData['content'] ?? ''))) { // Beholder original sjekk for seminarer, da de virket
+    // Bruker den mer robuste sjekken for seminarer også, for konsistens
+    if ($contentData && isset($contentData['title']) && isset($contentData['content']) && strlen(strip_tags(trim($contentData['content']))) > 5) {
         $pageTitle = htmlspecialchars($contentData['title']) . ' | Seminar | Akari';
         $pageDescription = htmlspecialchars($contentData['meta_description'] ?? $contentData['excerpt'] ?? 'Delta på vårt seminar: ' . ($contentData['title'] ?? '') . '. Lær mer og meld deg på!');
     } else {
@@ -301,8 +252,8 @@ $workspaceToolsData = require __DIR__ . '/../config/workspace_tools_data.php';
 require __DIR__ . '/../templates/header.php'; 
 
 if ($pageType === 'article_single') {
-    // Bruker den forenklede sjekken for $contentData her også for konsistens med blokken over
-    if ($contentData && isset($contentData['title']) && isset($contentData['content'])) { 
+    // Bruker den mer robuste sjekken
+    if ($contentData && isset($contentData['title']) && isset($contentData['content']) && strlen(strip_tags(trim($contentData['content']))) > 5) { 
         require __DIR__ . '/../templates/article_single.php';
     } else {
         http_response_code(404); 
@@ -312,7 +263,8 @@ if ($pageType === 'article_single') {
     $allArticles = get_all_content_metadata('article'); 
     require __DIR__ . '/../templates/article_listing.php';
 } elseif ($pageType === 'seminar_single') {
-    if ($contentData && isset($contentData['content']) && !empty(trim($contentData['content']))) { // Beholder original sjekk for seminarer
+    // Bruker den mer robuste sjekken også her
+    if ($contentData && isset($contentData['title']) && isset($contentData['content']) && strlen(strip_tags(trim($contentData['content']))) > 5) {
         require __DIR__ . '/../templates/seminar_single.php';
     } else {
          http_response_code(404);
