@@ -46,13 +46,13 @@ function get_content_data($slug, $contentType = 'article') {
     $folder = ($contentType === 'seminar') ? 'seminars' : 'articles';
     $filePath = __DIR__ . '/../content/' . $folder . '/' . $slug . '.md';
 
-    // --- START AGGRESSIV DEBUG ---
-    echo "<div style='border:2px solid red; padding:10px; margin:10px; background-color: #fee; color: black; z-index: 9999; position:relative;'>";
-    echo "<strong>DEBUG: get_content_data KALT</strong><br>";
-    echo "Slug: <code style='background:#f0f0f0; padding:2px;'>" . htmlspecialchars($slug) . "</code><br>";
-    echo "ContentType: <code style='background:#f0f0f0; padding:2px;'>" . htmlspecialchars($contentType) . "</code><br>";
-    echo "Forventet Mappe: <code style='background:#f0f0f0; padding:2px;'>" . htmlspecialchars($folder) . "</code><br>";
-    echo "Kalkulert Filsti: <code style='background:#f0f0f0; padding:2px;'>" . htmlspecialchars($filePath) . "</code><br>";
+    // --- START AGGRESSIV DEBUG (KOMMENTERT UT FOR NÅ) ---
+    // echo "<div style='border:2px solid red; padding:10px; margin:10px; background-color: #fee; color: black; z-index: 9999; position:relative;'>";
+    // echo "<strong>DEBUG: get_content_data KALT</strong><br>";
+    // echo "Slug: <code style='background:#f0f0f0; padding:2px;'>" . htmlspecialchars($slug) . "</code><br>";
+    // echo "ContentType: <code style='background:#f0f0f0; padding:2px;'>" . htmlspecialchars($contentType) . "</code><br>";
+    // echo "Forventet Mappe: <code style='background:#f0f0f0; padding:2px;'>" . htmlspecialchars($folder) . "</code><br>";
+    // echo "Kalkulert Filsti: <code style='background:#f0f0f0; padding:2px;'>" . htmlspecialchars($filePath) . "</code><br>";
     // --- END AGGRESSIV DEBUG ---
 
     if (file_exists($filePath)) {
@@ -63,35 +63,35 @@ function get_content_data($slug, $contentType = 'article') {
             $frontMatter = parse_front_matter($matches[1]);
             $markdown_content_body = trim($matches[2]); 
             
-            // --- DETALJERT DEBUG FOR SPESIFIKK ARTIKKEL ---
-            if ($contentType === 'article') { // Gjelder alle artikler nå for å se input
-                echo "DEBUG: Rå markdown_content_body (før Parsedown) - Lengde: " . strlen($markdown_content_body) . "<br>";
-                echo "<textarea style='width:95%; height: 150px; border:1px solid #ccc;'>" . htmlspecialchars($markdown_content_body) . "</textarea><br>";
-            }
+            // --- DETALJERT DEBUG FOR ARTIKKELINNHOLD (KOMMENTERT UT) ---
+            // if ($contentType === 'article') { 
+            //     echo "DEBUG: Rå markdown_content_body (før Parsedown) - Lengde: " . strlen($markdown_content_body) . "<br>";
+            //     echo "<textarea style='width:95%; height: 150px; border:1px solid #ccc;'>" . htmlspecialchars($markdown_content_body) . "</textarea><br>";
+            // }
             // --- SLUTT DETALJERT DEBUG ---
             
             $htmlContent = $parsedown->text($markdown_content_body);
 
-             // --- DEBUG HTML CONTENT ---
-            if ($contentType === 'article') {
-                echo "DEBUG: HTML Content (etter Parsedown) - Lengde: " . strlen($htmlContent) . "<br>";
-                echo "<textarea style='width:95%; height: 150px; border:1px solid #ccc;'>" . htmlspecialchars($htmlContent) . "</textarea><br>";
-            }
+             // --- DEBUG HTML CONTENT (KOMMENTERT UT) ---
+            // if ($contentType === 'article') {
+            //     echo "DEBUG: HTML Content (etter Parsedown) - Lengde: " . strlen($htmlContent) . "<br>";
+            //     echo "<textarea style='width:95%; height: 150px; border:1px solid #ccc;'>" . htmlspecialchars($htmlContent) . "</textarea><br>";
+            // }
             // --- END DEBUG ---
             
-            echo "</div>"; // Lukk debug-div
+            // if ($contentType === 'article') echo "</div>"; // Lukk debug-div hvis den var åpen
             return array_merge($frontMatter, ['content' => $htmlContent, 'slug' => $slug]);
         } else {
-             error_log("Kunne ikke parse front-matter for {$contentType}: " . $slug . ". Regex feilet. Filinnhold starter med: " . substr(htmlspecialchars($content), 0, 200)); // htmlspecialchars her også
+             error_log("Kunne ikke parse front-matter for {$contentType}: " . $slug . ". Regex feilet. Filinnhold starter med: " . substr(htmlspecialchars($content), 0, 200));
              $htmlContentOnly = $parsedown->text($content);
-             echo "DEBUG: Kunne ikke parse front-matter. Hele filen blir behandlet som markdown.<br>";
-             echo "</div>"; // Lukk debug-div
+             // if ($contentType === 'article') echo "DEBUG: Kunne ikke parse front-matter. Hele filen blir behandlet som markdown.<br>";
+             // if ($contentType === 'article') echo "</div>"; // Lukk debug-div
              return ['title' => ucfirst($contentType) . ' uten formatert tittel', 'content' => $htmlContentOnly, 'slug' => $slug, 'error_parsing_frontmatter' => true];
         }
     }
     error_log(ucfirst($contentType) . "fil ikke funnet: " . $filePath);
-    echo "DEBUG: Filen ble ikke funnet på sti: " . htmlspecialchars($filePath) . "<br>"; 
-    echo "</div>"; // Lukk debug-div
+    // if ($contentType === 'article') echo "DEBUG: Filen ble ikke funnet på sti: " . htmlspecialchars($filePath) . "<br>"; 
+    // if ($contentType === 'article') echo "</div>"; // Lukk debug-div
     return null;
 }
 
@@ -169,18 +169,17 @@ if ($currentLocationSlug === 'artikler') {
 
 
 // --------- LOKASJONSSPESIFIKK DATA & FORBEREDELSE FOR LISTING ---------
+// ... (Denne koden forblir uendret) ...
 $currentLocationData = null;
 $currentLocationName = "Generell"; 
 $coreLocations = []; 
 $regionalLocations = []; 
-
 if ($pageType === 'landingpage' && !empty($currentLocationSlug) && isset($allLocationsData[$currentLocationSlug])) {
     $currentLocationData = $allLocationsData[$currentLocationSlug];
     $currentLocationName = $currentLocationData['name'];
 } elseif ($pageType === 'landingpage' && empty($currentLocationSlug)) {
     $currentLocationName = "Generell";
 }
-
 if ($pageType === 'location_listing') {
     $coreLocationsDataFromFile = require __DIR__ . '/../config/locations/core_locations.php';
     foreach ($coreLocationsDataFromFile as $slug => $data) {
@@ -209,6 +208,8 @@ if ($pageType === 'location_listing') {
         ksort($regionalLocations); 
     }
 }
+// --------- SLUTT LOKASJONSSPESIFIKK DATA ---------
+
 
 // --------- SIDETITTEL OG METABESKRIVELSE ---------
 $defaultHeroText = "Som din dedikerte Google Workspace leverandør, hjelper Akari din bedrift med økt produktivitet, sømløst samarbeid og bunnsolid sikkerhet. La oss ta oss av det tekniske, så du kan fokusere på vekst.";
@@ -217,8 +218,25 @@ $locationSpecificHeroText = ($pageType === 'landingpage' && isset($currentLocati
 
 if ($pageType === 'article_single' && $contentSlug) {
     $contentData = get_content_data($contentSlug, 'article'); 
-    //if ($contentData && isset($contentData['title']) && !empty(trim($contentData['content'] ?? ''))) { // Sjekk også at content ikke er tomt
-    if ($contentData && isset($contentData['title']) && isset($contentData['content'])) { // Forenklet sjekk
+    
+    // --- START NY DEBUG RETT FØR IF (kun for artikkel-sider) ---
+    echo "<div style='border:2px solid blue; padding:10px; margin:10px; background-color: #e0e0ff; color: black; z-index: 9998; position:relative;'>";
+    echo "<strong>DEBUG: \$contentData FØR IF-sjekk (article_single):</strong><br>";
+    var_dump($contentData);
+    if ($contentData) {
+        echo "isset(\$contentData['title']): " . (isset($contentData['title']) ? 'JA' : 'NEI') . "<br>";
+        echo "isset(\$contentData['content']): " . (isset($contentData['content']) ? 'JA' : 'NEI') . "<br>";
+        if (isset($contentData['content'])) {
+            echo "strlen(trim(\$contentData['content'])): " . strlen(trim($contentData['content'])) . "<br>";
+            echo "!empty(trim(\$contentData['content'])): " . (!empty(trim($contentData['content'])) ? 'JA (IKKE TOM)' : 'NEI (TOM)') . "<br>";
+        }
+    } else {
+        echo "\$contentData er FALSE/NULL her!<br>";
+    }
+    echo "</div>";
+    // --- SLUTT NY DEBUG RETT FØR IF ---
+
+    if ($contentData && isset($contentData['title']) && isset($contentData['content'])) { // Bruker den forenklede sjekken du bekreftet
         $pageTitle = htmlspecialchars($contentData['title']) . ' | Artikler | Akari';
         $pageDescription = htmlspecialchars($contentData['meta_description'] ?? $contentData['excerpt'] ?? $defaultMetaDescription);
         $formSourceOverride = "Artikkel: " . htmlspecialchars($contentData['title']); 
@@ -234,7 +252,7 @@ if ($pageType === 'article_single' && $contentSlug) {
     $pageDescription = 'Les våre siste artikler og innsikt om Google Workspace, AI, produktivitet og samarbeid.';
 } elseif ($pageType === 'seminar_single' && $contentSlug) {
     $contentData = get_content_data($contentSlug, 'seminar');
-    if ($contentData && isset($contentData['title']) && !empty(trim($contentData['content'] ?? ''))) {
+    if ($contentData && isset($contentData['title']) && !empty(trim($contentData['content'] ?? ''))) { // Beholder original sjekk for seminarer, da de virket
         $pageTitle = htmlspecialchars($contentData['title']) . ' | Seminar | Akari';
         $pageDescription = htmlspecialchars($contentData['meta_description'] ?? $contentData['excerpt'] ?? 'Delta på vårt seminar: ' . ($contentData['title'] ?? '') . '. Lær mer og meld deg på!');
     } else {
@@ -283,17 +301,18 @@ $workspaceToolsData = require __DIR__ . '/../config/workspace_tools_data.php';
 require __DIR__ . '/../templates/header.php'; 
 
 if ($pageType === 'article_single') {
-    if ($contentData && isset($contentData['content']) && !empty(trim($contentData['content']))) { 
+    // Bruker den forenklede sjekken for $contentData her også for konsistens med blokken over
+    if ($contentData && isset($contentData['title']) && isset($contentData['content'])) { 
         require __DIR__ . '/../templates/article_single.php';
     } else {
-        http_response_code(404);
+        http_response_code(404); 
         echo "<main><div class='container' style='padding: 50px 20px; text-align: center;'><h2>404 - Artikkel ikke funnet</h2><p>Beklager, vi fant ikke artikkelen du lette etter. Teknisk info: Innhold for artikkelen '<strong>" . htmlspecialchars($contentSlug ?? 'Ukjent') . "</strong>' kunne ikke lastes korrekt.</p><p><a href='/artikler/' class='cta-button'>Se alle artikler</a> <a href='/' class='cta-button secondary'>Til forsiden</a></p></div></main>";
     }
 } elseif ($pageType === 'article_listing') {
     $allArticles = get_all_content_metadata('article'); 
     require __DIR__ . '/../templates/article_listing.php';
 } elseif ($pageType === 'seminar_single') {
-    if ($contentData && isset($contentData['content']) && !empty(trim($contentData['content']))) {
+    if ($contentData && isset($contentData['content']) && !empty(trim($contentData['content']))) { // Beholder original sjekk for seminarer
         require __DIR__ . '/../templates/seminar_single.php';
     } else {
          http_response_code(404);
