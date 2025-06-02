@@ -1,6 +1,6 @@
 ---
 title: "Frokostseminar: Google Workspace og Gemini AI"
-date: "2025-06-17 08:30"
+date: "2025-06-16 08:30"
 location: "HM49, Hønefoss"
 duration_hours: 1,5
 slug: "frokostseminar-google-workspace-gemini-ai-honefoss"
