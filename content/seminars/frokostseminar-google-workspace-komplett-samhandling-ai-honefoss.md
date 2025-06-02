@@ -5,7 +5,7 @@ location: "HM49, Hønefoss"
 slug: "frokostseminar-google-workspace-komplett-samhandling-ai-honefoss"
 excerpt: "Er e-post og enkel samhandling nok? Se hvordan Google Workspace med Disk, Dokumenter, Regneark og AI kan revolusjonere samarbeidet i din bedrift (SMB, håndverker, kommune m.fl.)."
 meta_description: "Frokostseminar i Hønefoss: Dykk ned i Google Workspace som en komplett samhandlingsplattform – fra e-post og Google Disk til Dokumenter, Regneark, Presentasjoner og smart AI."
-image: "/assets/img/seminars/kenneth_bjerke.jpg"
+image: "/assets/img/seminars/Kenneth_Google_Workspace-3.jpg"
 status: "upcoming"
 registration_open: true
 max_attendees: 150
