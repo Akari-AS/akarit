@@ -248,7 +248,25 @@ function old_value(string $key, array $data, $default = ''): string {
 $youtubeVideoId = "AwwZMoYNK2o";
 $workspaceToolsData = require __DIR__ . '/../config/workspace_tools_data.php';
 
-
+// --- START DEBUG ---
+echo "<pre>";
+echo "Requested Path: " . htmlspecialchars($requestedPath) . "\n";
+echo "Page Type: " . htmlspecialchars($pageType) . "\n";
+echo "Content Slug: " . htmlspecialchars($contentSlug ?? 'NULL') . "\n";
+if ($pageType === 'article_single' && $contentSlug) {
+    echo "Trying to get article data for: " . htmlspecialchars($contentSlug) . "\n";
+    $debugArticleData = get_content_data($contentSlug, 'article');
+    echo "Article Data fetched:\n";
+    var_dump($debugArticleData); // Vis hva som faktisk hentes
+}
+if ($pageType === 'article_listing') {
+     $debugAllArticles = get_all_content_metadata('article');
+     echo "All articles metadata for listing:\n";
+     var_dump($debugAllArticles);
+}
+echo "</pre>";
+// --- END DEBUG ---
+// exit; // Du kan legge inn en exit her for å kun se debug-output
 // --------- INKLUDER MALER BASERT PÅ PAGETYPE ---------
 require __DIR__ . '/../templates/header.php'; 
 
