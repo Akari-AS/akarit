@@ -217,7 +217,8 @@ $locationSpecificHeroText = ($pageType === 'landingpage' && isset($currentLocati
 
 if ($pageType === 'article_single' && $contentSlug) {
     $contentData = get_content_data($contentSlug, 'article'); 
-    if ($contentData && isset($contentData['title']) && !empty(trim($contentData['content'] ?? ''))) { // Sjekk også at content ikke er tomt
+    //if ($contentData && isset($contentData['title']) && !empty(trim($contentData['content'] ?? ''))) { // Sjekk også at content ikke er tomt
+    if ($contentData && isset($contentData['title']) && isset($contentData['content'])) { // Forenklet sjekk
         $pageTitle = htmlspecialchars($contentData['title']) . ' | Artikler | Akari';
         $pageDescription = htmlspecialchars($contentData['meta_description'] ?? $contentData['excerpt'] ?? $defaultMetaDescription);
         $formSourceOverride = "Artikkel: " . htmlspecialchars($contentData['title']); 
