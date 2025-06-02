@@ -47,7 +47,7 @@ function get_content_data($slug, $contentType = 'article') {
     $filePath = __DIR__ . '/../content/' . $folder . '/' . $slug . '.md';
 
     if (file_exists($filePath)) {
-        $content_file_content = file_get_contents($filePath); // Renamed variable
+        $content_file_content = file_get_contents($filePath);
         $parsedown = new Parsedown();
         
         if (preg_match('/^---\s*$(.*?)^---\s*$(.*)/ms', $content_file_content, $matches)) {
@@ -73,7 +73,7 @@ function get_all_content_metadata($contentType = 'article') {
     if ($markdownFiles === false) return [];
 
     foreach ($markdownFiles as $file) {
-        $content_file_content = file_get_contents($file); // Renamed variable
+        $content_file_content = file_get_contents($file);
         if (preg_match('/^---\s*$(.*?)^---\s*$/ms', $content_file_content, $matches)) {
             $frontMatter = parse_front_matter($matches[1]);
             if (!isset($frontMatter['slug'])) {
@@ -113,7 +113,9 @@ $pathSegments = explode('/', $requestedPath);
 $pageType = 'landingpage'; 
 $currentLocationSlug = strtolower($pathSegments[0] ?? ''); 
 $contentSlug = null; 
-$contentData = null;  
+$contentData = null;  // Vil inneholde data for enten artikkel eller seminar
+$articleData = null;  // Spesifikk variabel for artikkel-templaten
+$seminarData = null;  // Spesifikk variabel for seminar-templaten (hvis du vil skille dem)
 $formSourceOverride = null; 
 
 if ($currentLocationSlug === 'artikler') {
@@ -136,7 +138,6 @@ if ($currentLocationSlug === 'artikler') {
     $pageType = 'location_listing';
     $currentLocationSlug = ''; 
 }
-
 
 // --------- LOKASJONSSPESIFIKK DATA & FORBEREDELSE FOR LISTING ---------
 $currentLocationData = null;
@@ -186,38 +187,17 @@ $locationSpecificHeroText = ($pageType === 'landingpage' && isset($currentLocati
 if ($pageType === 'article_single' && $contentSlug) {
     $contentData = get_content_data($contentSlug, 'article'); 
     
-    // --- START NY DEBUG RETT FØR IF (kun for artikkel-sider) ---
-    echo "<div style='border:2px solid green; padding:15px; margin:15px; background-color: #e6ffe6; color: black; z-index: 99999; position:relative; font-family: monospace; font-size: 12px;'>";
-    echo "<strong>DEBUG INDEX.PHP: \$contentData FØR IF-sjekk (article_single for slug: '" . htmlspecialchars($contentSlug) . "'):</strong><br>";
-    
-    echo "\$contentData er satt (ikke null/false)? " . ($contentData ? 'JA' : 'NEI') . "<br>";
-    if ($contentData) {
-        echo "isset(\$contentData['title'])? " . (isset($contentData['title']) ? 'JA (' . htmlspecialchars($contentData['title']) . ')' : 'NEI') . "<br>";
-        echo "isset(\$contentData['content'])? " . (isset($contentData['content']) ? 'JA' : 'NEI') . "<br>";
-        if (isset($contentData['content'])) {
-            $trimmedContent = trim($contentData['content']);
-            $strippedContent = strip_tags($trimmedContent);
-            echo "Trimmed Content Lengde: " . strlen($trimmedContent) . "<br>";
-            echo "Stripped & Trimmed Content Lengde: " . strlen($strippedContent) . "<br>";
-            echo "!empty(trim(\$contentData['content'] ?? '')): " . (!empty($trimmedContent) ? 'JA (IKKE TOM ETTER TRIM)' : 'NEI (TOM ETTER TRIM)') . "<br>";
-            echo "strlen(strip_tags(trim(\$contentData['content']))) > 5: " . (strlen($strippedContent) > 5 ? 'JA' : 'NEI') . "<br>";
-            // echo "Full \$contentData:<br><pre>"; var_dump($contentData); echo "</pre>"; // Kan aktiveres ved behov
-        }
-    } else {
-        echo "\$contentData er faktisk NULL/FALSE her!<br>";
-    }
-    echo "</div>";
-    // --- SLUTT NY DEBUG RETT FØR IF ---
-
     if ($contentData && isset($contentData['title']) && isset($contentData['content']) && strlen(strip_tags(trim($contentData['content']))) > 5) { 
         $pageTitle = htmlspecialchars($contentData['title']) . ' | Artikler | Akari';
         $pageDescription = htmlspecialchars($contentData['meta_description'] ?? $contentData['excerpt'] ?? $defaultMetaDescription);
         $formSourceOverride = "Artikkel: " . htmlspecialchars($contentData['title']); 
+        $articleData = $contentData; // Sett $articleData for templaten
     } else {
         http_response_code(404);
         $pageTitle = "Artikkel ikke funnet | Akari";
         $pageDescription = $defaultMetaDescription;
-        $contentData = null; // Viktig: Nullstill $contentData hvis betingelsen feiler
+        $contentData = null; 
+        $articleData = null; // Nullstill også denne
         $formSourceOverride = "Artikkel: Ukjent (404)"; 
     }
 } elseif ($pageType === 'article_listing') {
@@ -228,11 +208,13 @@ if ($pageType === 'article_single' && $contentSlug) {
     if ($contentData && isset($contentData['title']) && isset($contentData['content']) && strlen(strip_tags(trim($contentData['content']))) > 5) {
         $pageTitle = htmlspecialchars($contentData['title']) . ' | Seminar | Akari';
         $pageDescription = htmlspecialchars($contentData['meta_description'] ?? $contentData['excerpt'] ?? 'Delta på vårt seminar: ' . ($contentData['title'] ?? '') . '. Lær mer og meld deg på!');
+        $seminarData = $contentData; // Sett $seminarData for templaten (eller bruk $contentData direkte i seminar_single.php)
     } else {
         http_response_code(404);
         $pageTitle = "Seminar ikke funnet | Akari";
         $pageDescription = $defaultMetaDescription;
         $contentData = null;
+        $seminarData = null;
     }
 } elseif ($pageType === 'seminar_listing') {
     $pageTitle = 'Kommende Seminarer | Akari';
@@ -274,8 +256,8 @@ $workspaceToolsData = require __DIR__ . '/../config/workspace_tools_data.php';
 require __DIR__ . '/../templates/header.php'; 
 
 if ($pageType === 'article_single') {
-    // Bruker den mer robuste sjekken
-    if ($contentData && isset($contentData['title']) && isset($contentData['content']) && strlen(strip_tags(trim($contentData['content']))) > 5) { 
+    // $articleData er nå satt (eller nullstilt) i blokken ovenfor
+    if ($articleData) { 
         require __DIR__ . '/../templates/article_single.php';
     } else {
         http_response_code(404); 
@@ -285,7 +267,8 @@ if ($pageType === 'article_single') {
     $allArticles = get_all_content_metadata('article'); 
     require __DIR__ . '/../templates/article_listing.php';
 } elseif ($pageType === 'seminar_single') {
-    if ($contentData && isset($contentData['title']) && isset($contentData['content']) && strlen(strip_tags(trim($contentData['content']))) > 5) {
+    // $seminarData (eller $contentData hvis du foretrekker) er satt ovenfor
+    if ($seminarData) { // Eller if ($contentData) hvis du ikke bruker $seminarData
         require __DIR__ . '/../templates/seminar_single.php';
     } else {
          http_response_code(404);
