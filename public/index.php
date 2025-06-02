@@ -43,25 +43,56 @@ function parse_front_matter($rawFrontMatter) {
 }
 
 function get_content_data($slug, $contentType = 'article') {
-  $folder = ($contentType === 'seminar') ? 'seminars' : 'articles';
-  $filePath = __DIR__ . '/../content/' . $folder . '/' . $slug . '.md';
-  if (file_exists($filePath)) {
-    $content = file_get_contents($filePath);
-    $parsedown = new Parsedown();
+    $folder = ($contentType === 'seminar') ? 'seminars' : 'articles';
+    $filePath = __DIR__ . '/../content/' . $folder . '/' . $slug . '.md';
 
-    if (preg_match('/^---\s*$(.*?)^---\s*$(.*)/ms', $content, $matches)) {
-      $frontMatter = parse_front_matter($matches[1]);
-      //$htmlContent = $parsedown->text(trim($matches[2]));
-      $markdown_content_body = trim($matches[2]); 
-      $htmlContent = $parsedown->text($markdown_content_body);
-      return array_merge($frontMatter, ['content' => $htmlContent, 'slug' => $slug]);
-    } else {
-      error_log("Kunne ikke parse front-matter for {$contentType}: " . $slug);
-      return ['title' => ucfirst($contentType) . ' uten formatert tittel', 'content' => $parsedown->text($content), 'slug' => $slug];
+    // --- START AGGRESSIV DEBUG ---
+    echo "<div style='border:2px solid red; padding:10px; margin:10px; background-color: #fee; color: black; z-index: 9999; position:relative;'>";
+    echo "<strong>DEBUG: get_content_data KALT</strong><br>";
+    echo "Slug: <code style='background:#f0f0f0; padding:2px;'>" . htmlspecialchars($slug) . "</code><br>";
+    echo "ContentType: <code style='background:#f0f0f0; padding:2px;'>" . htmlspecialchars($contentType) . "</code><br>";
+    echo "Forventet Mappe: <code style='background:#f0f0f0; padding:2px;'>" . htmlspecialchars($folder) . "</code><br>";
+    echo "Kalkulert Filsti: <code style='background:#f0f0f0; padding:2px;'>" . htmlspecialchars($filePath) . "</code><br>";
+    // --- END AGGRESSIV DEBUG ---
+
+    if (file_exists($filePath)) {
+        $content = file_get_contents($filePath);
+        $parsedown = new Parsedown();
+        
+        if (preg_match('/^---\s*$(.*?)^---\s*$(.*)/ms', $content, $matches)) {
+            $frontMatter = parse_front_matter($matches[1]);
+            $markdown_content_body = trim($matches[2]); 
+            
+            // --- DETALJERT DEBUG FOR SPESIFIKK ARTIKKEL ---
+            if ($contentType === 'article') { // Gjelder alle artikler nå for å se input
+                echo "DEBUG: Rå markdown_content_body (før Parsedown) - Lengde: " . strlen($markdown_content_body) . "<br>";
+                echo "<textarea style='width:95%; height: 150px; border:1px solid #ccc;'>" . htmlspecialchars($markdown_content_body) . "</textarea><br>";
+            }
+            // --- SLUTT DETALJERT DEBUG ---
+            
+            $htmlContent = $parsedown->text($markdown_content_body);
+
+             // --- DEBUG HTML CONTENT ---
+            if ($contentType === 'article') {
+                echo "DEBUG: HTML Content (etter Parsedown) - Lengde: " . strlen($htmlContent) . "<br>";
+                echo "<textarea style='width:95%; height: 150px; border:1px solid #ccc;'>" . htmlspecialchars($htmlContent) . "</textarea><br>";
+            }
+            // --- END DEBUG ---
+            
+            echo "</div>"; // Lukk debug-div
+            return array_merge($frontMatter, ['content' => $htmlContent, 'slug' => $slug]);
+        } else {
+             error_log("Kunne ikke parse front-matter for {$contentType}: " . $slug . ". Regex feilet. Filinnhold starter med: " . substr(htmlspecialchars($content), 0, 200)); // htmlspecialchars her også
+             $htmlContentOnly = $parsedown->text($content);
+             echo "DEBUG: Kunne ikke parse front-matter. Hele filen blir behandlet som markdown.<br>";
+             echo "</div>"; // Lukk debug-div
+             return ['title' => ucfirst($contentType) . ' uten formatert tittel', 'content' => $htmlContentOnly, 'slug' => $slug, 'error_parsing_frontmatter' => true];
+        }
     }
-  }
-  error_log(ucfirst($contentType) . "fil ikke funnet: " . $filePath);
-  return null;
+    error_log(ucfirst($contentType) . "fil ikke funnet: " . $filePath);
+    echo "DEBUG: Filen ble ikke funnet på sti: " . htmlspecialchars($filePath) . "<br>"; 
+    echo "</div>"; // Lukk debug-div
+    return null;
 }
 
 function get_all_content_metadata($contentType = 'article') {
@@ -78,23 +109,21 @@ function get_all_content_metadata($contentType = 'article') {
             if (!isset($frontMatter['slug'])) {
                 $frontMatter['slug'] = pathinfo($file, PATHINFO_FILENAME);
             }
-            // For seminarer, konverter dato-string til timestamp for sortering
             if ($contentType === 'seminar' && isset($frontMatter['date'])) {
                 $frontMatter['timestamp'] = strtotime($frontMatter['date']);
             }
             $items[] = $frontMatter;
         }
     }
-    // Sortering: Artikler sorteres synkende på dato, Seminarer sorteres stigende på dato
     usort($items, function($a, $b) use ($contentType) {
         if ($contentType === 'seminar') {
             $dateA = $a['timestamp'] ?? 0;
             $dateB = $b['timestamp'] ?? 0;
-            return $dateA <=> $dateB; // Stigende for seminarer (tidligste dato først)
-        } else { // Artikler
+            return $dateA <=> $dateB;
+        } else { 
             $dateA = isset($a['date']) ? strtotime($a['date']) : 0;
             $dateB = isset($b['date']) ? strtotime($b['date']) : 0;
-            return $dateB <=> $dateA; // Synkende for artikler (nyeste først)
+            return $dateB <=> $dateA;
         }
     });
     return $items;
@@ -181,7 +210,6 @@ if ($pageType === 'location_listing') {
     }
 }
 
-
 // --------- SIDETITTEL OG METABESKRIVELSE ---------
 $defaultHeroText = "Som din dedikerte Google Workspace leverandør, hjelper Akari din bedrift med økt produktivitet, sømløst samarbeid og bunnsolid sikkerhet. La oss ta oss av det tekniske, så du kan fokusere på vekst.";
 $defaultMetaDescription = "Akari er din erfarne Google Workspace leverandør. Vi tilbyr skreddersydde skyløsninger, implementering, support og AI-drevne verktøy for bedrifter i Norge.";
@@ -189,7 +217,7 @@ $locationSpecificHeroText = ($pageType === 'landingpage' && isset($currentLocati
 
 if ($pageType === 'article_single' && $contentSlug) {
     $contentData = get_content_data($contentSlug, 'article'); 
-    if ($contentData && isset($contentData['title'])) { 
+    if ($contentData && isset($contentData['title']) && !empty(trim($contentData['content'] ?? ''))) { // Sjekk også at content ikke er tomt
         $pageTitle = htmlspecialchars($contentData['title']) . ' | Artikler | Akari';
         $pageDescription = htmlspecialchars($contentData['meta_description'] ?? $contentData['excerpt'] ?? $defaultMetaDescription);
         $formSourceOverride = "Artikkel: " . htmlspecialchars($contentData['title']); 
@@ -205,10 +233,9 @@ if ($pageType === 'article_single' && $contentSlug) {
     $pageDescription = 'Les våre siste artikler og innsikt om Google Workspace, AI, produktivitet og samarbeid.';
 } elseif ($pageType === 'seminar_single' && $contentSlug) {
     $contentData = get_content_data($contentSlug, 'seminar');
-    if ($contentData && isset($contentData['title'])) {
+    if ($contentData && isset($contentData['title']) && !empty(trim($contentData['content'] ?? ''))) {
         $pageTitle = htmlspecialchars($contentData['title']) . ' | Seminar | Akari';
-        $pageDescription = htmlspecialchars($contentData['meta_description'] ?? $contentData['excerpt'] ?? 'Delta på vårt seminar: ' . $contentData['title'] . '. Lær mer og meld deg på!');
-        // $formSourceOverride settes ikke her, da seminarpåmelding har egne skjulte felter
+        $pageDescription = htmlspecialchars($contentData['meta_description'] ?? $contentData['excerpt'] ?? 'Delta på vårt seminar: ' . ($contentData['title'] ?? '') . '. Lær mer og meld deg på!');
     } else {
         http_response_code(404);
         $pageTitle = "Seminar ikke funnet | Akari";
@@ -250,42 +277,26 @@ function old_value(string $key, array $data, $default = ''): string {
 $youtubeVideoId = "AwwZMoYNK2o";
 $workspaceToolsData = require __DIR__ . '/../config/workspace_tools_data.php';
 
-// --- START DEBUG ---
-echo "<pre>";
-echo "Requested Path: " . htmlspecialchars($requestedPath) . "\n";
-echo "Page Type: " . htmlspecialchars($pageType) . "\n";
-echo "Content Slug: " . htmlspecialchars($contentSlug ?? 'NULL') . "\n";
-if ($pageType === 'article_single' && $contentSlug) {
-    echo "Trying to get article data for: " . htmlspecialchars($contentSlug) . "\n";
-    $debugArticleData = get_content_data($contentSlug, 'article');
-    echo "Article Data fetched:\n";
-    var_dump($debugArticleData); // Vis hva som faktisk hentes
-}
-if ($pageType === 'article_listing') {
-     $debugAllArticles = get_all_content_metadata('article');
-     echo "All articles metadata for listing:\n";
-     var_dump($debugAllArticles);
-}
-echo "</pre>";
-// --- END DEBUG ---
-// exit; // Du kan legge inn en exit her for å kun se debug-output
+
 // --------- INKLUDER MALER BASERT PÅ PAGETYPE ---------
 require __DIR__ . '/../templates/header.php'; 
 
 if ($pageType === 'article_single') {
-    if ($contentData) { 
+    if ($contentData && isset($contentData['content']) && !empty(trim($contentData['content']))) { 
         require __DIR__ . '/../templates/article_single.php';
     } else {
-        echo "<main><div class='container' style='padding: 50px 20px; text-align: center;'><h2>404 - Artikkel ikke funnet</h2><p>Beklager, vi fant ikke artikkelen du lette etter.</p><p><a href='/artikler/' class='cta-button'>Se alle artikler</a> <a href='/' class='cta-button secondary'>Til forsiden</a></p></div></main>";
+        http_response_code(404);
+        echo "<main><div class='container' style='padding: 50px 20px; text-align: center;'><h2>404 - Artikkel ikke funnet</h2><p>Beklager, vi fant ikke artikkelen du lette etter. Teknisk info: Innhold for artikkelen '<strong>" . htmlspecialchars($contentSlug ?? 'Ukjent') . "</strong>' kunne ikke lastes korrekt.</p><p><a href='/artikler/' class='cta-button'>Se alle artikler</a> <a href='/' class='cta-button secondary'>Til forsiden</a></p></div></main>";
     }
 } elseif ($pageType === 'article_listing') {
     $allArticles = get_all_content_metadata('article'); 
     require __DIR__ . '/../templates/article_listing.php';
 } elseif ($pageType === 'seminar_single') {
-    if ($contentData) {
+    if ($contentData && isset($contentData['content']) && !empty(trim($contentData['content']))) {
         require __DIR__ . '/../templates/seminar_single.php';
     } else {
-         echo "<main><div class='container' style='padding: 50px 20px; text-align: center;'><h2>404 - Seminar ikke funnet</h2><p>Beklager, vi fant ikke seminaret du lette etter.</p><p><a href='/seminarer/' class='cta-button'>Se alle seminarer</a> <a href='/' class='cta-button secondary'>Til forsiden</a></p></div></main>";
+         http_response_code(404);
+         echo "<main><div class='container' style='padding: 50px 20px; text-align: center;'><h2>404 - Seminar ikke funnet</h2><p>Beklager, vi fant ikke seminaret du lette etter. Teknisk info: Innhold for seminaret '<strong>" . htmlspecialchars($contentSlug ?? 'Ukjent') . "</strong>' kunne ikke lastes korrekt.</p><p><a href='/seminarer/' class='cta-button'>Se alle seminarer</a> <a href='/' class='cta-button secondary'>Til forsiden</a></p></div></main>";
     }
 } elseif ($pageType === 'seminar_listing') {
     $allSeminars = get_all_content_metadata('seminar');
