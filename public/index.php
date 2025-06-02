@@ -43,23 +43,25 @@ function parse_front_matter($rawFrontMatter) {
 }
 
 function get_content_data($slug, $contentType = 'article') {
-    $folder = ($contentType === 'seminar') ? 'seminars' : 'articles';
-    $filePath = __DIR__ . '/../content/' . $folder . '/' . $slug . '.md';
-    if (file_exists($filePath)) {
-        $content = file_get_contents($filePath);
-        $parsedown = new Parsedown();
-        
-        if (preg_match('/^---\s*$(.*?)^---\s*$(.*)/ms', $content, $matches)) {
-            $frontMatter = parse_front_matter($matches[1]);
-            $htmlContent = $parsedown->text(trim($matches[2]));
-            return array_merge($frontMatter, ['content' => $htmlContent, 'slug' => $slug]);
-        } else {
-             error_log("Kunne ikke parse front-matter for {$contentType}: " . $slug);
-             return ['title' => ucfirst($contentType) . ' uten formatert tittel', 'content' => $parsedown->text($content), 'slug' => $slug];
-        }
+  $folder = ($contentType === 'seminar') ? 'seminars' : 'articles';
+  $filePath = __DIR__ . '/../content/' . $folder . '/' . $slug . '.md';
+  if (file_exists($filePath)) {
+    $content = file_get_contents($filePath);
+    $parsedown = new Parsedown();
+
+    if (preg_match('/^---\s*$(.*?)^---\s*$(.*)/ms', $content, $matches)) {
+      $frontMatter = parse_front_matter($matches[1]);
+      //$htmlContent = $parsedown->text(trim($matches[2]));
+      $markdown_content_body = trim($matches[2]); 
+      $htmlContent = $parsedown->text($markdown_content_body);
+      return array_merge($frontMatter, ['content' => $htmlContent, 'slug' => $slug]);
+    } else {
+      error_log("Kunne ikke parse front-matter for {$contentType}: " . $slug);
+      return ['title' => ucfirst($contentType) . ' uten formatert tittel', 'content' => $parsedown->text($content), 'slug' => $slug];
     }
-    error_log(ucfirst($contentType) . "fil ikke funnet: " . $filePath);
-    return null;
+  }
+  error_log(ucfirst($contentType) . "fil ikke funnet: " . $filePath);
+  return null;
 }
 
 function get_all_content_metadata($contentType = 'article') {
