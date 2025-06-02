@@ -47,17 +47,17 @@ function get_content_data($slug, $contentType = 'article') {
     $filePath = __DIR__ . '/../content/' . $folder . '/' . $slug . '.md';
 
     if (file_exists($filePath)) {
-        $content = file_get_contents($filePath);
+        $content_file_content = file_get_contents($filePath); // Renamed variable
         $parsedown = new Parsedown();
         
-        if (preg_match('/^---\s*$(.*?)^---\s*$(.*)/ms', $content, $matches)) {
+        if (preg_match('/^---\s*$(.*?)^---\s*$(.*)/ms', $content_file_content, $matches)) {
             $frontMatter = parse_front_matter($matches[1]);
             $markdown_content_body = trim($matches[2]); 
             $htmlContent = $parsedown->text($markdown_content_body);
             return array_merge($frontMatter, ['content' => $htmlContent, 'slug' => $slug]);
         } else {
-             error_log("Kunne ikke parse front-matter for {$contentType}: " . $slug . ". Regex feilet. Filinnhold starter med: " . substr(htmlspecialchars($content), 0, 200));
-             $htmlContentOnly = $parsedown->text($content);
+             error_log("Kunne ikke parse front-matter for {$contentType}: " . $slug . ". Regex feilet. Filinnhold starter med: " . substr(htmlspecialchars($content_file_content), 0, 200));
+             $htmlContentOnly = $parsedown->text($content_file_content);
              return ['title' => ucfirst($contentType) . ' uten formatert tittel', 'content' => $htmlContentOnly, 'slug' => $slug, 'error_parsing_frontmatter' => true];
         }
     }
@@ -73,8 +73,8 @@ function get_all_content_metadata($contentType = 'article') {
     if ($markdownFiles === false) return [];
 
     foreach ($markdownFiles as $file) {
-        $content = file_get_contents($file);
-        if (preg_match('/^---\s*$(.*?)^---\s*$/ms', $content, $matches)) {
+        $content_file_content = file_get_contents($file); // Renamed variable
+        if (preg_match('/^---\s*$(.*?)^---\s*$/ms', $content_file_content, $matches)) {
             $frontMatter = parse_front_matter($matches[1]);
             if (!isset($frontMatter['slug'])) {
                 $frontMatter['slug'] = pathinfo($file, PATHINFO_FILENAME);
@@ -186,6 +186,29 @@ $locationSpecificHeroText = ($pageType === 'landingpage' && isset($currentLocati
 if ($pageType === 'article_single' && $contentSlug) {
     $contentData = get_content_data($contentSlug, 'article'); 
     
+    // --- START NY DEBUG RETT FØR IF (kun for artikkel-sider) ---
+    echo "<div style='border:2px solid green; padding:15px; margin:15px; background-color: #e6ffe6; color: black; z-index: 99999; position:relative; font-family: monospace; font-size: 12px;'>";
+    echo "<strong>DEBUG INDEX.PHP: \$contentData FØR IF-sjekk (article_single for slug: '" . htmlspecialchars($contentSlug) . "'):</strong><br>";
+    
+    echo "\$contentData er satt (ikke null/false)? " . ($contentData ? 'JA' : 'NEI') . "<br>";
+    if ($contentData) {
+        echo "isset(\$contentData['title'])? " . (isset($contentData['title']) ? 'JA (' . htmlspecialchars($contentData['title']) . ')' : 'NEI') . "<br>";
+        echo "isset(\$contentData['content'])? " . (isset($contentData['content']) ? 'JA' : 'NEI') . "<br>";
+        if (isset($contentData['content'])) {
+            $trimmedContent = trim($contentData['content']);
+            $strippedContent = strip_tags($trimmedContent);
+            echo "Trimmed Content Lengde: " . strlen($trimmedContent) . "<br>";
+            echo "Stripped & Trimmed Content Lengde: " . strlen($strippedContent) . "<br>";
+            echo "!empty(trim(\$contentData['content'] ?? '')): " . (!empty($trimmedContent) ? 'JA (IKKE TOM ETTER TRIM)' : 'NEI (TOM ETTER TRIM)') . "<br>";
+            echo "strlen(strip_tags(trim(\$contentData['content']))) > 5: " . (strlen($strippedContent) > 5 ? 'JA' : 'NEI') . "<br>";
+            // echo "Full \$contentData:<br><pre>"; var_dump($contentData); echo "</pre>"; // Kan aktiveres ved behov
+        }
+    } else {
+        echo "\$contentData er faktisk NULL/FALSE her!<br>";
+    }
+    echo "</div>";
+    // --- SLUTT NY DEBUG RETT FØR IF ---
+
     if ($contentData && isset($contentData['title']) && isset($contentData['content']) && strlen(strip_tags(trim($contentData['content']))) > 5) { 
         $pageTitle = htmlspecialchars($contentData['title']) . ' | Artikler | Akari';
         $pageDescription = htmlspecialchars($contentData['meta_description'] ?? $contentData['excerpt'] ?? $defaultMetaDescription);
@@ -194,7 +217,7 @@ if ($pageType === 'article_single' && $contentSlug) {
         http_response_code(404);
         $pageTitle = "Artikkel ikke funnet | Akari";
         $pageDescription = $defaultMetaDescription;
-        $contentData = null; 
+        $contentData = null; // Viktig: Nullstill $contentData hvis betingelsen feiler
         $formSourceOverride = "Artikkel: Ukjent (404)"; 
     }
 } elseif ($pageType === 'article_listing') {
@@ -202,7 +225,6 @@ if ($pageType === 'article_single' && $contentSlug) {
     $pageDescription = 'Les våre siste artikler og innsikt om Google Workspace, AI, produktivitet og samarbeid.';
 } elseif ($pageType === 'seminar_single' && $contentSlug) {
     $contentData = get_content_data($contentSlug, 'seminar');
-    // Bruker den mer robuste sjekken for seminarer også, for konsistens
     if ($contentData && isset($contentData['title']) && isset($contentData['content']) && strlen(strip_tags(trim($contentData['content']))) > 5) {
         $pageTitle = htmlspecialchars($contentData['title']) . ' | Seminar | Akari';
         $pageDescription = htmlspecialchars($contentData['meta_description'] ?? $contentData['excerpt'] ?? 'Delta på vårt seminar: ' . ($contentData['title'] ?? '') . '. Lær mer og meld deg på!');
@@ -263,7 +285,6 @@ if ($pageType === 'article_single') {
     $allArticles = get_all_content_metadata('article'); 
     require __DIR__ . '/../templates/article_listing.php';
 } elseif ($pageType === 'seminar_single') {
-    // Bruker den mer robuste sjekken også her
     if ($contentData && isset($contentData['title']) && isset($contentData['content']) && strlen(strip_tags(trim($contentData['content']))) > 5) {
         require __DIR__ . '/../templates/seminar_single.php';
     } else {
