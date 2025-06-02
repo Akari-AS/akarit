@@ -1,7 +1,7 @@
 ---
 title: "Frokostseminar: Google Workspace – mye mer enn e-post? Utforsk en komplett samhandlingsplattform med AI"
-date: "2025-06-17 08:30" #
-location: "HM49, Hønefoss" #
+date: "2025-06-17 08:30"
+location: "HM49, Hønefoss"
 slug: "frokostseminar-google-workspace-komplett-samhandling-ai-honefoss"
 excerpt: "Er e-post og enkel samhandling nok? Se hvordan Google Workspace med Disk, Dokumenter, Regneark og AI kan revolusjonere samarbeidet i din bedrift (SMB, håndverker, kommune m.fl.)."
 meta_description: "Frokostseminar i Hønefoss: Dykk ned i Google Workspace som en komplett samhandlingsplattform – fra e-post og Google Disk til Dokumenter, Regneark, Presentasjoner og smart AI."
