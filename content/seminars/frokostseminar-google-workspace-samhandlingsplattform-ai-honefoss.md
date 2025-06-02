@@ -4,7 +4,7 @@ date: "2025-06-17 08:30"
 location: "HM49, Hønefoss"
 duration_hours: 1.5
 slug: "frokostseminar-google-workspace-samhandlingsplattform-ai-honefoss"
-excerpt: "Nysgjerrig på Google Workspace? Utforsk en komplett samhandlingsplattform med Disk, Dokumenter og AI for din bedrift (SMB, kommune etc.) i Hønefoss."
+excerpt: "Nysgjerrig på Google Workspace? Utforsk en komplett samhandlingsplattform med Disk, Dokumenter og AI for din bedrift i Hønefoss."
 meta_description: "Hønefoss frokostseminar: Vurderer du Google Workspace? Lær om samhandling med Disk, Dokumenter, Regneark og AI for ulike bransjer."
 image: "/assets/img/seminars/Kenneth_Google_Workspace-3.jpg"
 status: "upcoming"
