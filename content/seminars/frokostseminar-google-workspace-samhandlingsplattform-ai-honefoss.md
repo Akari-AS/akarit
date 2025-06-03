@@ -22,19 +22,19 @@ Dette frokostseminaret er for deg som er åpen for å se hvorfor stadig flere �
 
 * Google Workspace vs. Microsoft 365: En ærlig titt på hvorfor mange bytter – er det enklere, raskere, smartere?
 * Mer enn bare e-post: Utforsk den komplette samhandlingspakken med Google Disk, Dokumenter, Regneark, Presentasjoner.
-* AI som gir deg et forsprang: "Hva er nytt i Google Workspace med Gemini om bord?" [cite: 1] og hvordan du kan bruke det aktivt.
+* AI som gir deg et forsprang: "Hva er nytt i Google Workspace med Gemini om bord?" og hvordan du kan bruke det aktivt.
 * Er det lønnsomt å bytte? Konkrete fordeler og eksempler for din bransje (SMB, entreprenør, kommune m.fl.).
 
 Vi serverer kaffe og enkel bevertning. Det blir også god tid til spørsmål og mingling etter programmet.
 
 **Agenda:**
 
-* 08:00: Dørene åpner (kaffe og enkel bevertning serveres) [cite: 1]
-* 08:30: Programstart [cite: 1]
-* 09:00: Kort pause [cite: 1]
-* 09:15: Program del 2 [cite: 1]
-* 09:45: Avslutning [cite: 1]
-* Frem til 10:00 (eller så lenge vi måtte trenge): Spørsmål og mingling [cite: 1]
+* 08:00: Dørene åpner (kaffe og enkel bevertning serveres)
+* 08:30: Programstart
+* 09:00: Kort pause
+* 09:15: Program del 2
+* 09:45: Avslutning
+* Frem til 10:00 (eller så lenge vi måtte trenge): Spørsmål og mingling
 
 Seminaret er gratis. Påmelding i skjema under.
 Velkommen skal du være!
