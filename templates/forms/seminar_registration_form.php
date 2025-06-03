@@ -57,8 +57,8 @@
     </div>
 
     <div class="form-group">
-        <label for="dietary_restrictions_seminar">Eventuelle mathensyn/allergier</label>
-        <textarea id="dietary_restrictions_seminar" name="dietary_restrictions" rows="3" placeholder="F.eks. vegetar, glutenfri, nøtteallergi..."><?php echo old_value('dietary_restrictions', $submittedData); ?></textarea>
+        <label for="dietary_restrictions_seminar">Kommentar eller spørsmål</label>
+        <textarea id="dietary_restrictions_seminar" name="dietary_restrictions" rows="3" placeholder=""><?php echo old_value('dietary_restrictions', $submittedData); ?></textarea>
     </div>
 
     <div class="form-group checkbox-group">
