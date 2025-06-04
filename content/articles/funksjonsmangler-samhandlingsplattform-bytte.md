@@ -1,5 +1,5 @@
 ---
-title: "Kan ikke plattformen min gjøre DET?: Slik løser du kritiske funksjonsmangler ved bytte av samhandlingsplattform"
+title: "Kan ikke plattformen min gjøre DET?"
 author: "Kenneth Bæver Bjerke"
 date: "2025-06-03"
 slug: "funksjonsmangler-samhandlingsplattform-bytte"
@@ -8,7 +8,7 @@ meta_description: "Lær å håndtere funksjonsmangler når du bytter samhandling
 image: "/assets/img/articles/funksjonsmangler-samhandling-featured.jpg"
 ---
 
-## "Kan ikke plattformen min gjøre DET?": Slik løser du kritiske funksjonsmangler ved bytte av samhandlingsplattform
+## Slik løser du kritiske funksjonsmangler ved bytte av samhandlingsplattform
 
 Følelsen er frustrerende kjent for mange: Du prøver å utføre en oppgave, bare for å oppdage at samhandlingsplattformen din har begrensninger du ikke var klar over, eller som rett og slett hindrer effektivt arbeid. Slike funksjonsmangler er en vanlig drivkraft bak ønsket om å bytte plattform. Enten du vurderer å gå fra Microsoft 365 til Google Workspace, eller omvendt, er det viktig å forstå hvordan du kan identifisere og løse disse manglene.
 

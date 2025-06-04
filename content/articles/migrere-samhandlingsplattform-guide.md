@@ -1,5 +1,5 @@
 ---
-title: "Den store migreringen: Din handlingsplan for et smidig og sikkert bytte av samhandlingsplattform"
+title: "Den store migreringen"
 author: "Kenneth Bæver Bjerke"
 date: "2025-06-03"
 slug: "migrere-samhandlingsplattform-guide"
@@ -8,7 +8,7 @@ meta_description: "En komplett guide til migrering av samhandlingsplattformer. L
 image: "/assets/img/articles/migrering-samhandling-featured.jpg"
 ---
 
-## Den store migreringen: Din handlingsplan for et smidig og sikkert bytte av samhandlingsplattform
+## Din handlingsplan for et smidig og sikkert bytte av samhandlingsplattform
 
 Å bytte samhandlingsplattform er en betydelig avgjørelse for enhver bedrift. Utover valg av teknologi, er selve migreringsprosessen kritisk for suksess. En dårlig planlagt migrering kan føre til tap av data, produktivitetstap, frustrerte ansatte og sikkerhetsrisikoer. Men med en god handlingsplan kan overgangen bli en positiv transformasjon. Dette gjelder enten du flytter fra et eldre system, Microsoft 365, eller en annen løsning, og vurderer Google Workspace som din nye plattform.
 
