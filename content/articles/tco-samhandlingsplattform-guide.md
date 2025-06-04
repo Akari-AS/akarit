@@ -8,7 +8,7 @@ meta_description: "En dybdeanalyse av TCO for Google Workspace og Microsoft 365.
 image: "/assets/img/articles/tco-samhandlingsplattform-featured.jpg"
 ---
 
-## En guide for ledere til de virkelige kostnadene ved bytte av samhandlingsplattform"
+## En guide for ledere til de virkelige kostnadene ved bytte av samhandlingsplattform
 
 Når bedrifter vurderer å bytte samhandlingsplattform, er lisenskostnader ofte det første som fanger oppmerksomheten. Men for å virkelig forstå den økonomiske påvirkningen av et slikt skifte, må ledere se utover den umiddelbare prislappen og analysere de totale eierkostnadene (TCO – Total Cost of Ownership). Dette gjelder spesielt når man sammenligner giganter som Google Workspace og Microsoft 365, samt vurderer andre alternativer.
 
