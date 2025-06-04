@@ -28,20 +28,20 @@
     ?>
     <link rel="canonical" href="<?php echo rtrim($baseCanonicalUrl, '/') . $canonicalPath; ?>" />
 
-    <link rel="icon" href="/assets/img/favicon_akari.png" type="image/png">
-    <script id="cookieyes" type="text/javascript" src="https://cdn-cookieyes.com/client_data/deeb08dcea17bd80d94b1dd6/script.js"></script>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-592LJ3YFKH"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-592LJ3YFKH');
-    </script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&family=Red+Hat+Display:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-    
-    <link rel="stylesheet" href="/assets/css/style.css?v=<?php echo filemtime(__DIR__.'/../public/assets/css/style.css'); ?>">
+  <link rel="icon" href="/assets/img/favicon_akari.png" type="image/png">
+  <script id="cookieyes" type="text/javascript" src="https://cdn-cookieyes.com/client_data/deeb08dcea17bd80d94b1dd6/script.js"></script>
+  <script defer data-domain="googleworkspace.akari.no" src="https://plausible.akarisafari.no/js/script.js"></script>   <script async src="https://www.googletagmanager.com/gtag/js?id=G-592LJ3YFKH"></script>
+  <script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-592LJ3YFKH');
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&family=Red+Hat+Display:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="/assets/css/style.css?v=<?php echo filemtime(__DIR__.'/../public/assets/css/style.css'); ?>">
 
 
     <script type="application/ld+json">
