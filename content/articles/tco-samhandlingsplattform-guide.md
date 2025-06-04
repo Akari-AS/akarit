@@ -1,6 +1,5 @@
 ---
 title: "Mer enn prislappen: En guide til TCO"
-title: "Guide for ledere til de virkelige kostnadene ved bytte av samhandlingsplattform"
 author: "Kenneth Bæver Bjerke"
 date: "2025-06-03"
 slug: "tco-samhandlingsplattform-guide"
