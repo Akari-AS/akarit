@@ -5,7 +5,7 @@ date: "2025-06-03"
 slug: "tco-samhandlingsplattform-guide"
 excerpt: "Forstå de totale eierkostnadene (TCO) når du vurderer å bytte samhandlingsplattform. Vi ser på Google Workspace vs. Microsoft 365 og skjulte kostnader."
 meta_description: "En dybdeanalyse av TCO for Google Workspace og Microsoft 365. Utforsk direkte og indirekte kostnader for å ta en informert beslutning for din bedrift."
-image: "/assets/img/articles/tco-samhandlingsplattform-featured.jpg"
+image: "/assets/img/articles/tco.png"
 ---
 
 ## En guide for ledere til de virkelige kostnadene ved bytte av samhandlingsplattform
