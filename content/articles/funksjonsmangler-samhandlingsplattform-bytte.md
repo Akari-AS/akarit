@@ -5,7 +5,7 @@ date: "2025-06-03"
 slug: "funksjonsmangler-samhandlingsplattform-bytte"
 excerpt: "Frustrert over begrensninger i din nåværende samhandlingsplattform? Se hvordan du identifiserer og løser funksjonsmangler ved bytte fra Microsoft 365 eller Google Workspace."
 meta_description: "Lær å håndtere funksjonsmangler når du bytter samhandlingsplattform. Vi ser på vanlige utfordringer med Microsoft 365 og Google Workspace, og hvordan du finner riktig løsning."
-image: "/assets/img/articles/funksjonsmangler-samhandling-featured.jpg"
+image: "/assets/img/articles/funksjonsmangler.png"
 ---
 
 ## Slik løser du kritiske funksjonsmangler ved bytte av samhandlingsplattform

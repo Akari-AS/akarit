@@ -5,7 +5,7 @@ date: "2025-06-03"
 slug: "migrere-samhandlingsplattform-guide"
 excerpt: "Planlegger du å bytte samhandlingsplattform? Få en detaljert handlingsplan for en vellykket migrering til f.eks. Google Workspace, med fokus på data, sikkerhet og brukeradopsjon."
 meta_description: "En komplett guide til migrering av samhandlingsplattformer. Lær stegene for en smidig overgang til Google Workspace fra Microsoft 365 eller andre systemer."
-image: "/assets/img/articles/migrering-samhandling-featured.jpg"
+image: "/assets/img/articles/migrering.png"
 ---
 
 ## Din handlingsplan for et smidig og sikkert bytte av samhandlingsplattform
