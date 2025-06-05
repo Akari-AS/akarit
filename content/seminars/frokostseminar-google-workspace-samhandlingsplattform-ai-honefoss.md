@@ -5,7 +5,7 @@ location: "HM49, Hønefoss"
 slug: "frokostseminar-google-workspace-samhandlingsplattform-ai-honefoss"
 excerpt: "Lei av Microsoft 365? Oppdag Google Workspace: moderne e-post (Gmail for bedrift), samhandling med Disk & Dokumenter, pluss AI. For SMB, kommuner m.fl. i Hønefoss."
 meta_description: "Hønefoss frokostseminar: Er Microsoft 365 utdatert for din bedrift? Se Google Workspace for e-post, samhandling (Disk, Dokumenter) og AI."
-image: "/assets/img/seminars/Kenneth_Google_Workspace-3.jpg"
+image: "/assets/img/seminars/honefoss-1.jpg"
 status: "upcoming"
 registration_open: true
 max_attendees: 150
