@@ -1,0 +1,303 @@
+
+<!DOCTYPE html>
+<html lang="no" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forslag: markedsføring av Google Workspace</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Red+Hat+Display:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Chosen Palette: Akari Brand Palette (Teal, Turquoise, Glacier) -->
+    <!-- Application Structure Plan: A single-page narrative dashboard guiding a decision-maker through a persuasive argument. The structure is thematic: 1. Hero (The Ask), 2. Opportunity (The Asset), 3. Market Context, 4. Solution (Interactive Tabs), 5. ROI (Interactive Chart), and 6. Next Steps. This top-down flow is better for a persuasive memo than a complex dashboard, making the case clear and compelling. -->
+    <!-- Visualization & Content Choices: Report Info: Budget & Break-even -> Goal: Show low risk -> Viz: Bar Chart -> Interaction: Hover for details -> Justification: Visualizes the small number of users (14) needed for ROI, making the investment seem highly achievable. Library: Chart.js. Report Info: Two main initiatives -> Goal: Organize -> Viz: Tabbed Component -> Interaction: Click to switch -> Justification: Separates the two main actions cleanly, improving clarity and adding simple engagement. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            background-color: #F3FCF8;
+            color: #1a202c;
+            font-family: 'DM Sans', sans-serif;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Red Hat Display', sans-serif;
+        }
+        .text-akari-teal { color: #064F55; }
+        .bg-akari-teal { background-color: #064F55; }
+        .text-akari-turquoise { color: #1DD1B6; }
+        .bg-akari-turquoise { background-color: #1DD1B6; }
+        .border-akari-turquoise { border-color: #1DD1B6; }
+        .ring-akari-turquoise { --tw-ring-color: #1DD1B6; }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
+        }
+        @media (max-width: 640px) {
+            .chart-container {
+                height: 300px;
+            }
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="bg-white/80 backdrop-blur-md sticky top-0 z-50 shadow-sm">
+        <nav class="container mx-auto px-6 py-3">
+            <div class="flex items-center justify-between">
+                <div class="text-2xl font-bold text-akari-teal">
+                    Akari <span class="font-light">| GW satsning</span>
+                </div>
+                <div class="hidden md:flex items-center space-x-6">
+                    <a href="#muligheten" class="text-gray-700 hover:text-akari-teal transition-colors duration-300">Muligheten</a>
+                    <a href="#markedet" class="text-gray-700 hover:text-akari-teal transition-colors duration-300">Markedet</a>
+                    <a href="#planen" class="text-gray-700 hover:text-akari-teal transition-colors duration-300">Planen</a>
+                    <a href="#investeringen" class="text-gray-700 hover:text-akari-teal transition-colors duration-300">Investeringen</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section id="hero" class="py-20 md:py-32">
+            <div class="container mx-auto px-6 text-center">
+                <h1 class="text-4xl md:text-6xl font-black text-akari-teal mb-4">Satsning på Google workspace</h1>
+                <p class="text-lg md:text-xl text-gray-700 max-w-3xl mx-auto">Et forslag om å aktivere en uutnyttet ressurs, kapitalisere på markedsmomentum og sikre fremtidig vekst gjennom en målrettet markedsføringsinnsats.</p>
+                <div class="mt-8">
+                    <a href="#investeringen" class="bg-akari-turquoise text-white font-bold py-3 px-8 rounded-full text-lg hover:bg-opacity-90 transition-transform duration-300 inline-block transform hover:scale-105">Se budsjettforslag: 60 000,-</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="muligheten" class="py-16 bg-white">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-akari-teal">En sovende gigant</h2>
+                    <p class="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">Vi har en betydelig, men fullstendig uutnyttet, ressurs i vår SEO-optimaliserte landingsside. Den er fundamentet for denne satsningen.</p>
+                </div>
+                <div class="grid md:grid-cols-3 gap-8 text-center">
+                    <div class="bg-gray-50 p-8 rounded-lg shadow-sm hover:shadow-lg transition-shadow duration-300">
+                        <span class="text-5xl">🥇</span>
+                        <h3 class="text-xl font-bold text-akari-teal mt-4 mb-2">Dominant seo</h3>
+                        <p class="text-gray-600">Landingssiden vår dominerer organiske søk for "google workspace leverandør" i hele Norge.</p>
+                    </div>
+                    <div class="bg-gray-50 p-8 rounded-lg shadow-sm hover:shadow-lg transition-shadow duration-300">
+                        <span class="text-5xl">📉</span>
+                        <h3 class="text-xl font-bold text-akari-teal mt-4 mb-2">Null utbytte</h3>
+                        <p class="text-gray-600">Til tross for topprangering, genererer siden i dag ingen trafikk, ingen leads og ingen forretning.</p>
+                    </div>
+                    <div class="bg-gray-50 p-8 rounded-lg shadow-sm hover:shadow-lg transition-shadow duration-300">
+                        <span class="text-5xl">🚀</span>
+                        <h3 class="text-xl font-bold text-akari-teal mt-4 mb-2">Strategisk ressurs</h3>
+                        <p class="text-gray-600">Dette er en nøkkelinvestering, forankret i styret, for å utvide vårt tilbud med IT-løsninger.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="markedet" class="py-16">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-akari-teal">Markedet kaller</h2>
+                    <p class="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">Momentumet er på vår side. Flere signaler viser at timingen for en Google Workspace-satsning med fokus på AI er perfekt akkurat nå.</p>
+                </div>
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="bg-white p-8 rounded-lg shadow-sm">
+                        <h3 class="text-xl font-bold text-akari-teal mb-3">NRK velger Google</h3>
+                        <p class="text-gray-600">NRKs nylige overgang til Google Workspace er et sterkt signal som bygger tillit og relevans i det norske markedet.</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-lg shadow-sm">
+                        <h3 class="text-xl font-bold text-akari-teal mb-3">Konkurrentene mobiliserer</h3>
+                        <p class="text-gray-600">Microsoft 365-leverandører har stor suksess med fulle hus på frokostseminarer om Copilot AI, som viser en enorm interesse for temaet.</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-lg shadow-sm">
+                        <h3 class="text-xl font-bold text-akari-teal mb-3">Vårt sterke svar: Gemini AI</h3>
+                        <p class="text-gray-600">Med Gemini integrert i Workspace har vi en fantastisk historie å fortelle. Vi må svare på konkurrentenes AI-fokus og vise styrken i vårt produkt.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="planen" class="py-16 bg-white">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-akari-teal">Fra potensial til resultater</h2>
+                    <p class="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">For å aktivere dette potensialet foreslås to konkrete, parallelle tiltak. Velg en fane for å se detaljene for hvert tiltak.</p>
+                </div>
+
+                <div>
+                    <div class="mb-4 flex justify-center border-b border-gray-200">
+                        <button id="tab-btn-1" class="tab-btn px-6 py-3 text-lg font-semibold border-b-2 border-akari-turquoise text-akari-teal">1. "Always-on" kampanje</button>
+                        <button id="tab-btn-2" class="tab-btn px-6 py-3 text-lg font-semibold border-b-2 border-transparent text-gray-500 hover:border-gray-300">2. Frokostseminar Hønefoss</button>
+                    </div>
+
+                    <div id="tab-content-1" class="tab-content p-6">
+                        <h3 class="text-2xl font-bold text-akari-teal mb-4 text-center">Pilotkampanje (3 måneder)</h3>
+                        <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                            <div>
+                                <h4 class="font-bold text-lg mb-2">Mål</h4>
+                                <p class="text-gray-600">Konvertere den eksisterende SEO-styrken til faktiske, målbare leads og kunder.</p>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-lg mb-2">Kanaler og budsjett</h4>
+                                <p class="text-gray-600">Google Ads (2-3k kr/mnd) og Meta/LinkedIn (5-10k kr/mnd). Fokus på søkeord som "microsoft 365 alternativ" og innhold som fremhever Gemini AI.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="tab-content-2" class="tab-content p-6 hidden">
+                        <h3 class="text-2xl font-bold text-akari-teal mb-4 text-center">Lokalt arrangement (17. juni)</h3>
+                        <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                            <div>
+                                <h4 class="font-bold text-lg mb-2">Mål</h4>
+                                <p class="text-gray-600">Introdusere Google Workspace med Gemini til Ringeriksregionen, generere lokale leads og styrke vår posisjon som en komplett partner.</p>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-lg mb-2">Promotering og servering</h4>
+                                <p class="text-gray-600">Målrettede annonser via Meta/LinkedIn-budsjettet. Enkel servering som kaffe og boller/snitter for å skape en hyggelig ramme.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="investeringen" class="py-16">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-akari-teal">En lavterskel investering med høy avkastning</h2>
+                    <p class="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">Med et totalbudsjett på 60 000 kr er veien til lønnsomhet overraskende kort. Dette diagrammet illustrerer hvor få brukere som trengs for å gå i null.</p>
+                </div>
+                <div class="chart-container">
+                    <canvas id="roiChart"></canvas>
+                </div>
+                 <p class="text-center mt-4 text-gray-600">Beregningen er basert på en "medium"-pakke med 2-års kontrakt.</p>
+            </div>
+        </section>
+
+        <footer class="bg-akari-teal text-white">
+             <div class="container mx-auto px-6 py-12 text-center">
+                <h2 class="text-3xl font-bold">Dette er en lavthengende frukt</h2>
+                <p class="mt-4 text-lg max-w-2xl mx-auto text-gray-300">La oss godkjenne budsjettet, aktivere vår SEO-kapital og posisjonere Akari for fremtidig suksess som en ledende leverandør av både markedsføring og IT-løsninger.</p>
+                <div class="mt-8">
+                     <p class="text-xl font-bold text-akari-turquoise">Neste steg: Godkjenne budsjett på 60 000,-</p>
+                </div>
+             </div>
+        </footer>
+
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const tabs = document.querySelectorAll('.tab-btn');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const targetContentId = 'tab-content-' + tab.id.split('-')[2];
+                    
+                    tabs.forEach(t => {
+                        t.classList.remove('border-akari-turquoise', 'text-akari-teal');
+                        t.classList.add('border-transparent', 'text-gray-500');
+                    });
+                    
+                    tab.classList.add('border-akari-turquoise', 'text-akari-teal');
+                    tab.classList.remove('border-transparent', 'text-gray-500');
+
+                    tabContents.forEach(content => {
+                        if (content.id === targetContentId) {
+                            content.classList.remove('hidden');
+                        } else {
+                            content.classList.add('hidden');
+                        }
+                    });
+                });
+            });
+
+            const roiCtx = document.getElementById('roiChart').getContext('2d');
+            const roiChart = new Chart(roiCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Brukere for break-even'],
+                    datasets: [{
+                        label: 'Antall brukere',
+                        data: [14],
+                        backgroundColor: [
+                            '#1DD1B6'
+                        ],
+                        borderColor: [
+                            '#064F55'
+                        ],
+                        borderWidth: 2,
+                        borderRadius: 5,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed.y !== null) {
+                                        label += context.parsed.y + ' brukere';
+                                    }
+                                    return label;
+                                }
+                            }
+                        },
+                         title: {
+                            display: true,
+                            text: 'Antall brukere for å dekke investeringen',
+                            font: {
+                                size: 16,
+                                family: "'DM Sans', sans-serif"
+                            },
+                            color: '#064F55'
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 20,
+                            title: {
+                                display: true,
+                                text: 'Antall brukere',
+                                color: '#333'
+                            }
+                        },
+                        x: {
+                             grid: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            });
+
+            const navLinks = document.querySelectorAll('a[href^="#"]');
+            navLinks.forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>

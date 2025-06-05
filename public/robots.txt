@@ -1,5 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /internal/gw.html
 Disallow: /personvernerklaering.html
 Disallow: /admin_submissions.php
 Sitemap: https://googleworkspace.akari.no/sitemap.xml
