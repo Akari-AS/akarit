@@ -36,7 +36,7 @@
     
     <?php 
     // Bestem hvilket bilde som skal brukes for og:image
-    $ogImage = $baseCanonicalUrl . '/assets/img/Akari_GoogleWorkspace_SocialShare.png'; // Standard delebilde
+    $ogImage = $baseCanonicalUrl . '/assets/img/seminars/banner.png'; // MIDLERTIDIG Standard delebilde
     if ($pageType === 'seminar_single' && isset($contentData['image']) && !empty($contentData['image'])) {
         // Bruk seminarspesifikt bilde hvis det finnes
         $ogImage = $baseCanonicalUrl . htmlspecialchars($contentData['image']);
