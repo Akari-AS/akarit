@@ -12,7 +12,7 @@ max_attendees: 150
 contact_person_email: "kenneth@akari.no"
 ---
 
-## Google Workspace: er du nysgjerrig på å bytte ut Microsoft 365?
+## Google Workspace: nysgjerrig på å bytte ut Microsoft 365?
 
 Sitter din bedrift fast med tradisjonell Microsoft e-post og er du nysgjerrig på et mer moderne og intuitivt alternativ? Har dere virkelig utforsket hva Gmail for bedrifter og Google Workspace kan tilby som en helhetlig plattform? Opplev forskjellen med Google Disk som nav for samhandling, og verktøy som Google Dokumenter, Regneark og Presentasjoner bygget for skyen – nå med banebrytende Gemini AI integrert.
 
