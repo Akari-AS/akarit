@@ -131,10 +131,15 @@
         margin-bottom: 25px; 
     }
 
+    /* CHECKBOX-REGEL MED !important FOR FEILSØKING */
     .modern-contact-form .checkbox-group input[type="checkbox"] {
-        transform: scale(1.4); /* Gjør checkboxen 40% større */
-        margin-right: 12px;   /* Øk avstanden til teksten litt */
-        top: 0; /* Juster denne om nødvendig for perfekt vertikal linjering med teksten */
+        transform: scale(1.6) !important; /* Økt litt mer for å være tydelig */
+        margin-right: 14px !important;   
+        position: relative; /* Behold denne hvis du trenger 'top' justering */
+        top: 0px !important; /* Prøv med 0px først, juster så */
+        /* For å være helt sikker på at den treffer, kan du midlertidig legge til:
+           outline: 2px solid red !important; 
+        */
     }
 
     .modern-contact-form .checkbox-group label {
@@ -166,37 +171,37 @@
     .articles-grid {
         grid-template-columns: 1fr;
     }
-    .article-card-content { /* Lagt til for å matche _articles.css mobil-styling */
+    .article-card-content { 
         padding: 15px 20px 20px 20px; 
     }
     .seminar-listing-page h2, 
     .seminar-registration-section h2,
-    section#seminarer-teaser h2 { /* Lagt til for å matche _seminars.css mobil-styling */
+    section#seminarer-teaser h2 { 
         font-size: 2em; 
     }
     .seminar-listing-page > .container > p,
-    .seminar-teaser-section .seminar-teaser-content p { /* Lagt til for å matche _seminars.css mobil-styling */
+    .seminar-teaser-section .seminar-teaser-content p { 
         font-size: 1em; 
     }
-    .seminar-single-page .seminar-main-title { /* Lagt til for å matche _seminars.css mobil-styling */
+    .seminar-single-page .seminar-main-title { 
         font-size: 2.2em;
     }
-    .seminar-single-page .seminar-main-meta { /* Lagt til for å matche _seminars.css mobil-styling */
+    .seminar-single-page .seminar-main-meta { 
         font-size: 0.9em;
     }
-    .seminar-single-page .seminar-content { /* Lagt til for å matche _seminars.css mobil-styling */
+    .seminar-single-page .seminar-content { 
         font-size: 1em; 
     }
-    .seminars-grid { /* Lagt til for å matche _seminars.css mobil-styling */
+    .seminars-grid { 
         grid-template-columns: 1fr;
     }
-    .seminar-card-content { /* Lagt til for å matche _seminars.css mobil-styling */
+    .seminar-card-content { 
         padding: 15px 20px 20px 20px;
     }
-    .modern-contact-form.seminar-form { /* Lagt til for å matche _seminars.css mobil-styling */
+    .modern-contact-form.seminar-form { 
         padding: 25px 20px;
     }
-    .past-seminars-section h2 { /* Lagt til for å matche _seminars.css mobil-styling */
+    .past-seminars-section h2 { 
         font-size: 1.6em;
     }
 }
@@ -235,13 +240,22 @@
         margin-top: 25px;
     }
 
-    section#seminarer-teaser h2 { /* Lagt til for å matche _seminars.css mobil-styling */
+    section#seminarer-teaser h2 { 
         font-size: 1.8em; 
     }
-    section#seminarer-teaser > .container > p { /* Lagt til for å matche _seminars.css mobil-styling */
+    section#seminarer-teaser > .container > p { 
         font-size: 1em;
     }
-    .seminar-teaser-section .seminar-teaser-content p { /* Lagt til for å matche _seminars.css mobil-styling */
+    .seminar-teaser-section .seminar-teaser-content p { 
          font-size: 0.95em;
     }
+    
+    /* Du kan vurdere en enda litt annen justering her hvis 767px-regelen
+       ikke er helt optimal for de aller minste skjermene.
+       F.eks. hvis 1.6 er for stort:
+    .modern-contact-form .checkbox-group input[type="checkbox"] {
+        transform: scale(1.4) !important; 
+        margin-right: 12px !important;
+    }
+    */
 }
