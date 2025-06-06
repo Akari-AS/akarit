@@ -1,6 +1,6 @@
 <?php // index.php
 
-// --------- AUTOLOADER & GRUNNLEGGENDE OPPSETT ---------
+// -------- AUTOLOADER & GRUNNLEGGENDE OPPSETT --------
 require __DIR__ . '/../vendor/autoload.php'; 
 
 // --------- LOKASJONSDATA ---------
