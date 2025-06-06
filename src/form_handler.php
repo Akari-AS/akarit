@@ -246,7 +246,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($num_attendees === false || $num_attendees < 1) {
             $num_attendees = 1;
         }
-        $dietary_restrictions = htmlspecialchars(trim($_POST['dietary_restrictions'] ?? ''), ENT_QUOTES, 'UTF-8');
+        $dietary_restrictions = htmlspecialchars(trim($_POST['dietary_restrictions'] ?? ''), ENT_QUOTES, 'UTF-8'); // Dette feltet er nå "Kommentar"
 
         $formResult['data']['seminar_slug'] = $seminar_slug;
         $formResult['data']['seminar_title'] = $seminar_title;
@@ -290,7 +290,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $emailBodyToAdmin .= "E-post: " . $email . "\n";
                     $emailBodyToAdmin .= "Telefon: " . $phone . "\n";
                     $emailBodyToAdmin .= "Antall deltakere: " . $num_attendees . "\n";
-                    $emailBodyToAdmin .= "Mathensyn: " . (!empty($dietary_restrictions) ? $dietary_restrictions : "Ingen") . "\n\n";
+                    $emailBodyToAdmin .= "Kommentar: " . (!empty($dietary_restrictions) ? $dietary_restrictions : "Ingen") . "\n\n"; // Endret fra Mathensyn
                     $emailBodyToAdmin .= "Personvern godtatt: " . ($privacy_policy_agreed ? "Ja" : "Nei") . "\n";
                     $adminMail->Body = $emailBodyToAdmin;
 
@@ -331,8 +331,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             $receiptBody .= " for " . htmlspecialchars($num_attendees) . " personer";
                         }
                         $receiptBody .= ".</p>";
-                        if (!empty($dietary_restrictions)) {
-                             $receiptBody .= "<p>Mathensyn registrert: " . nl2br(htmlspecialchars($dietary_restrictions)) . "</p>";
+                        if (!empty($dietary_restrictions)) { // Dette er nå "Kommentar" feltet
+                             $receiptBody .= "<p>Kommentar registrert: " . nl2br(htmlspecialchars($dietary_restrictions)) . "</p>"; // Endret fra Mathensyn
                         }
                         $receiptBody .= "<p>En kalenderinvitasjon (.ics-fil) er lagt ved denne e-posten. ";
                         if ($google_calendar_link !== '#') {

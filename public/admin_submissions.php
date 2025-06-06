@@ -87,7 +87,7 @@ if ($currentSource === 'contact') {
         ['db' => 'email', 'label' => 'E-post', 'is_mailto' => true],
         ['db' => 'phone', 'label' => 'Telefon', 'is_tel' => true],
         ['db' => 'num_attendees', 'label' => 'Antall', 'default' => '1'],
-        ['db' => 'dietary_restrictions', 'label' => 'Mathensyn', 'default' => '-', 'nl2br' => true, 'class' => 'message-col'],
+        ['db' => 'dietary_restrictions', 'label' => 'Kommentar', 'default' => '-', 'nl2br' => true, 'class' => 'message-col'], // Endret label her
         ['db' => 'privacy_agreed', 'label' => 'Personvern', 'format_bool' => true],
     ];
 } else {
