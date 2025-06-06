@@ -133,7 +133,7 @@
 
     /* CHECKBOX-REGEL MED !important FOR FEILSØKING */
     .modern-contact-form .checkbox-group input[type="checkbox"] {
-        transform: scale(3.6) !important; /* Økt litt mer for å være tydelig */
+        transform: scale(2.6) !important; /* Økt litt mer for å være tydelig */
         margin-right: 14px !important;   
         position: relative; /* Behold denne hvis du trenger 'top' justering */
         top: 0px !important; /* Prøv med 0px først, juster så */
