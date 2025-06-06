@@ -21,31 +21,34 @@
     box-shadow: 0 6px 12px rgba(0, 169, 157, 0.3); 
 }
 
+/* Standard sekundærknapp - designet for LYSE bakgrunner */
 .cta-button.secondary { 
     background-color: transparent; 
-    color: var(--text-color-light); /* For bruk på mørk bakgrunn (hero) */
-    border: 2px solid var(--text-color-light); 
+    color: var(--primary-color); /* Primærfarge for tekst på lys bakgrunn */
+    border: 2px solid var(--primary-color); /* Primærfarge for border på lys bakgrunn */
     box-shadow: none; 
 }
 .cta-button.secondary:hover { 
-    background-color: rgba(255, 255, 255, 0.15); 
-    color: #fff; 
-    border-color: #fff; 
+    background-color: var(--primary-color); /* Primærfarge som bakgrunn på hover */
+    color: #fff; /* Hvit tekst på hover */
+    border-color: var(--primary-color); /* Beholder primærfarge for border på hover */
     transform: translateY(-2px); 
 }
 
-/* For sekundærknapper på lys bakgrunn */
-section:not(.hero) .cta-button.secondary { 
+/* Sekundærknapp spesifikt for bruk på MØRK bakgrunn (f.eks. i .hero) */
+.hero .cta-button.secondary { 
     background-color: transparent; 
-    color: var(--primary-color); 
-    border: 2px solid var(--primary-color); 
-    box-shadow: none; 
+    color: var(--text-color-light); /* Lys tekstfarge for mørk bakgrunn */
+    border: 2px solid var(--text-color-light); /* Lys borderfarge for mørk bakgrunn */
+    /* box-shadow: none; arves eller kan spesifiseres om nødvendig */
 }
-section:not(.hero) .cta-button.secondary:hover { 
-    background-color: var(--primary-color); 
-    color: #fff; 
-    border-color: var(--primary-color); 
+.hero .cta-button.secondary:hover { 
+    background-color: rgba(255, 255, 255, 0.15); /* Lett gjennomsiktig hvit bakgrunn på hover */
+    color: #fff; /* Hvit tekst på hover */
+    border-color: #fff; /* Hvit border på hover */
+    /* transform: translateY(-2px); arves eller kan spesifiseres om nødvendig */
 }
+
 
 .hero .cta-button + .cta-button { 
     margin-left: 15px; 
