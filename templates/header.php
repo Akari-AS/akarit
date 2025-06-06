@@ -28,6 +28,38 @@
     ?>
     <link rel="canonical" href="<?php echo rtrim($baseCanonicalUrl, '/') . $canonicalPath; ?>" />
 
+    <!-- Open Graph Meta Tags START -->
+    <meta property="og:title" content="<?php echo htmlspecialchars($pageTitle ?? 'Google Workspace Leverandør | Akari'); ?>" />
+    <meta property="og:description" content="<?php echo htmlspecialchars($pageDescription ?? 'Akari er din erfarne Google Workspace leverandør.'); ?>" />
+    <meta property="og:type" content="<?php echo ($pageType === 'article_single' || $pageType === 'seminar_single') ? 'article' : 'website'; ?>" />
+    <meta property="og:url" content="<?php echo rtrim($baseCanonicalUrl, '/') . $canonicalPath; ?>" />
+    
+    <?php 
+    // Bestem hvilket bilde som skal brukes for og:image
+    $ogImage = $baseCanonicalUrl . '/assets/img/Akari_GoogleWorkspace_SocialShare.png'; // Standard delebilde
+    if ($pageType === 'seminar_single' && isset($contentData['image']) && !empty($contentData['image'])) {
+        // Bruk seminarspesifikt bilde hvis det finnes
+        $ogImage = $baseCanonicalUrl . htmlspecialchars($contentData['image']);
+    } elseif ($pageType === 'article_single' && isset($contentData['image']) && !empty($contentData['image'])) {
+        // Bruk artikkelspesifikt bilde hvis det finnes (du har dette allerede)
+        $ogImage = $baseCanonicalUrl . htmlspecialchars($contentData['image']);
+    }
+    ?>
+    <meta property="og:image" content="<?php echo $ogImage; ?>" />
+    <meta property="og:image:width" content="1200" /> <?php // Anbefalt bredde for LinkedIn/FB ?>
+    <meta property="og:image:height" content="630" /> <?php // Anbefalt høyde for LinkedIn/FB ?>
+    <meta property="og:site_name" content="Akari Google Workspace" />
+    <meta property="og:locale" content="nb_NO" />
+
+    <!-- Twitter Card Tags (kan gjenbruke mye fra OG) -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="<?php echo htmlspecialchars($pageTitle ?? 'Google Workspace Leverandør | Akari'); ?>" />
+    <meta name="twitter:description" content="<?php echo htmlspecialchars($pageDescription ?? 'Akari er din erfarne Google Workspace leverandør.'); ?>" />
+    <meta name="twitter:image" content="<?php echo $ogImage; ?>" /> 
+    <?php // Hvis du har en Twitter-bruker: <meta name="twitter:site" content="@dinTwitterBrukernavn" /> ?>
+    <!-- Open Graph Meta Tags END -->
+
+
   <link rel="icon" href="/assets/img/favicon_akari.png" type="image/png">
   <script id="cookieyes" type="text/javascript" src="https://cdn-cookieyes.com/client_data/deeb08dcea17bd80d94b1dd6/script.js"></script>
   <script defer data-domain="googleworkspace.akari.no" src="https://plausible.akarisafari.no/js/script.js"></script>   <script async src="https://www.googletagmanager.com/gtag/js?id=G-592LJ3YFKH"></script>
