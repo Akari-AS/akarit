@@ -2,3 +2,4 @@ config.php
 deploy.sh
 /vendor/
 Todos.md
+.env
