@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analyse & Rapport: googleworkspace.akari.no</title>
+    <!-- Inkluderer Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Inkluderer fonter fra Google Fonts i henhold til designmanual -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Red+Hat+Display:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* Egendefinerte stiler basert på Akari designmanual */
+        :root {
+            --teal: #064F55;
+            --turquoise: #1DD1B6;
+            --glacier: #F3FCF8;
+            --white: #FFFFFF;
+            --text-main: #374151; /* En mørk grå for lesbarhet */
+        }
+        body {
+            font-family: 'DM Sans', sans-serif; /* Mengdetekst font */
+            background-color: var(--glacier);
+            color: var(--text-main);
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Red Hat Display', sans-serif; /* Tittel font */
+            color: var(--teal);
+            font-weight: 700;
+        }
+        .card {
+            background-color: var(--white);
+            border-radius: 0.75rem; /* 12px */
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            overflow: hidden;
+        }
+        .card-header {
+            background-color: var(--white);
+            border-bottom: 1px solid #e5e7eb; /* litt mørkere enn glacier for kontrast */
+            padding: 1.5rem;
+        }
+        .card-content {
+            padding: 1.5rem;
+        }
+        .highlight-box {
+            background-color: #e0f8f3; /* Lysere variant av turquoise */
+            border-left: 4px solid var(--turquoise);
+            color: var(--teal);
+            padding: 1rem;
+            border-radius: 0 0.5rem 0.5rem 0;
+        }
+        code {
+            background-color: #e5e7eb;
+            color: var(--teal);
+            border-radius: 0.25rem;
+            padding: 0.25rem 0.5rem;
+            font-family: monospace;
+            font-size: 0.9em;
+        }
+        .logo-text {
+            font-family: 'Red Hat Display', sans-serif;
+            font-weight: 800;
+            font-size: 2.5rem;
+            color: var(--teal);
+            letter-spacing: -0.05em;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container mx-auto max-w-4xl p-4 sm:p-8">
+        
+        <!-- Header med logo-tekst -->
+        <header class="text-center mb-10">
+            <div class="logo-text">Akari</div>
+            <p class="text-lg text-gray-600 mt-1">Analyse & Rapport for googleworkspace.akari.no</p>
+        </header>
+
+        <!-- Hovedkonklusjon og Nøkkelprestasjon -->
+        <div class="card mb-8">
+            <div class="card-header">
+                <h2 class="text-2xl">Sammendrag og Konklusjon</h2>
+            </div>
+            <div class="card-content space-y-6">
+                <p class="text-base leading-relaxed">
+                    Nettstedet <a href="https://googleworkspace.akari.no" target="_blank" class="font-semibold" style="color: var(--turquoise);">googleworkspace.akari.no</a> er et fremragende eksempel på en målrettet digital strategi. Det kombinerer et tydelig bruker- og markedsfokus med en teknisk elegant og lettvekts PHP-løsning. Resultatet er en robust plattform med solid SEO-fundament, avansert funksjonalitet og god vedlikeholdbarhet.
+                </p>
+                <div class="highlight-box">
+                    <h3 class="font-bold text-lg mb-2">Eksepsjonell Søkemotorprestasjon</h3>
+                    <p class="text-sm">
+                        En betydelig prestasjon er den dominerende posisjonen i Google-søk for frasen <code>"google workspace leverandør &lt;by/sted&gt;"</code> over hele Norge. Denne synligheten er også oppnådd i Googles nye AI Overviews, noe som bekrefter en svært vellykket SEO-strategi.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Detaljert Analyse -->
+        <div class="card mb-8">
+            <div class="card-header">
+                <h2 class="text-2xl">Detaljert Analyse</h2>
+            </div>
+            <div class="card-content space-y-8">
+
+                <!-- Seksjon: Formål og Strategi -->
+                <div>
+                    <h3 class="text-xl font-semibold border-b pb-3 mb-4" style="border-color: #e5e7eb;">Nettstedets Formål og Strategi</h3>
+                    <ul class="list-disc list-inside space-y-3 text-base">
+                        <li><strong>Hovedmål:</strong> Promotere Akari som en ledende norsk leverandør av Google Workspace.</li>
+                        <li><strong>Tjenester:</strong> Tydelig fremheving av Google Workspace-pakker, Gemini AI, migreringstjenester og lokal support.</li>
+                        <li><strong>Lead-generering:</strong> Effektiv bruk av kontaktskjemaer, CTA-er og invitasjoner til seminarer for å fange opp potensielle kunder.</li>
+                        <li><strong>Innholdsmarkedsføring:</strong> Bygger autoritet og tiltrekker trafikk gjennom fagartikler og seminarer, inkludert et sterkt NRK-case.</li>
+                         <li><strong>Prismodell:</strong> Transparent prissetting med tre definerte pakker rettet mot ulike bedriftsbehov.</li>
+                    </ul>
+                </div>
+
+                <!-- Seksjon: Teknisk Arkitektur -->
+                <div>
+                    <h3 class="text-xl font-semibold border-b pb-3 mb-4" style="border-color: #e5e7eb;">Teknisk Arkitektur og Implementering</h3>
+                    <p class="mb-4 text-base leading-relaxed">Analysen av Git-repoet avslører en skreddersydd, lettvekts og vedlikeholdsvennlig PHP-applikasjon.</p>
+                    <ul class="list-disc list-inside space-y-3 text-base">
+                        <li><strong>Backend:</strong> Egendefinert PHP-struktur. Bruker <code>PHPMailer</code> for e-post og <code>Parsedown</code> for Markdown-prosessering.</li>
+                        <li><strong>Frontend:</strong> Standard og effektiv bruk av HTML, CSS og JavaScript.</li>
+                        <li><strong>Innholdsstyring:</strong> Fleksibelt system med Markdown-filer (<code>.md</code>) for artikler og PHP-arrays for strukturert data (verktøy, lokasjoner).</li>
+                        <li><strong>Database:</strong> MySQL (via PDO) for lagring av innsendinger fra kontaktskjema og seminarregistreringer.</li>
+                        <li><strong>Skjemahåndtering:</strong> Robust logikk i <code>src/form_handler.php</code> som håndterer validering, DB-interaksjon, e-postvarsler og .ics kalenderinvitasjoner.</li>
+                        <li><strong>Sikkerhet:</strong> God praksis med bruk av miljøvariabler for sensitiv konfigurasjon (f.eks. <code>MAILGUN_SMTP_HOST</code>).</li>
+                    </ul>
+                </div>
+
+                <!-- Seksjon: SEO og Innhold -->
+                <div>
+                    <h3 class="text-xl font-semibold border-b pb-3 mb-4" style="border-color: #e5e7eb;">SEO og Innholdsstrategi</h3>
+                    <p class="mb-4 text-base leading-relaxed">Nettstedet har et sterkt teknisk SEO-fundament som er dypt integrert i applikasjonen.</p>
+                    <ul class="list-disc list-inside space-y-3 text-base">
+                        <li><strong>Dynamiske Meta-tags:</strong> Genereres via <code>public/index.php</code> basert på innholdets "front-matter".</li>
+                        <li><strong>Automatisert Sitemap:</strong> Et egendefinert skript, <code>generate_sitemap.php</code>, bygger en alltid oppdatert <code>sitemap.xml</code>.</li>
+                        <li><strong>Indekseringskontroll:</strong> Korrekt konfigurert <code>robots.txt</code> som styrer søkemotor-boter.</li>
+                        <li><strong>Ren URL-struktur:</strong> Logiske og søkemotorvennlige URL-er som forbedrer brukeropplevelse og rangering.</li>
+                        <li><strong>Ytelse:</strong> Den lettvektige PHP-koden gir et godt utgangspunkt for raske lastetider.</li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="text-center text-sm mt-12" style="color: var(--teal); opacity: 0.7;">
+            <p>Rapport generert basert på analyse fullført 9 juni 2025.</p>
+        </footer>
+
+    </div>
+
+</body>
+</html>
