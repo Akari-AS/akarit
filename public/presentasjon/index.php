@@ -1,6 +1,5 @@
 <?php
 // --- Konfigurasjon ---
-// En liste over alle slidene i rekkefølge. Dette er vår "source of truth".
 $slides = [
     'slides/slide-1.php',
     'slides/slide-2.php',
@@ -13,12 +12,9 @@ $slides = [
 $total_slides = count($slides);
 
 // --- Hent og valider nåværende slide ---
-// Hent slide-nummer fra URL (?slide=X). Standard til 0 (første slide).
 $current_slide_index = isset($_GET['slide']) ? (int)$_GET['slide'] : 0;
-
-// Sikkerhetssjekk: Sørg for at slide-nummeret er gyldig.
 if ($current_slide_index < 0 || $current_slide_index >= $total_slides) {
-    $current_slide_index = 0; // Gå til første slide hvis ugyldig
+    $current_slide_index = 0;
 }
 
 // --- Kalkuler navigasjon ---
@@ -57,14 +53,36 @@ $next_slide_index = ($current_slide_index < $total_slides - 1) ? $current_slide_
         ?>
     </main>
 
-    <?php if ($prev_slide_index !== null): ?>
-        <a href="index.php?slide=<?php echo $prev_slide_index; ?>" id="prevBtn" class="nav-button">Forrige</a>
-    <?php endif; ?>
+    <!-- ENDRET: Ny navigasjons-HTML -->
+    <div class="slide-nav">
+        <!-- Forrige-pil -->
+        <?php if ($prev_slide_index !== null): ?>
+            <a href="index.php?slide=<?php echo $prev_slide_index; ?>" id="prevBtn" class="slide-nav-arrow" title="Forrige slide">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
+            </a>
+        <?php else: ?>
+            <span class="slide-nav-arrow disabled">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
+            </span>
+        <?php endif; ?>
+        
+        <!-- Sideteller -->
+        <span class="slide-nav-counter">
+            <?php echo $current_slide_index + 1; ?> / <?php echo $total_slides; ?>
+        </span>
 
-    <?php if ($next_slide_index !== null): ?>
-        <a href="index.php?slide=<?php echo $next_slide_index; ?>" id="nextBtn" class="nav-button">Neste</a>
-    <?php endif; ?>
-
+        <!-- Neste-pil -->
+        <?php if ($next_slide_index !== null): ?>
+            <a href="index.php?slide=<?php echo $next_slide_index; ?>" id="nextBtn" class="slide-nav-arrow" title="Neste slide">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+            </a>
+        <?php else: ?>
+            <span class="slide-nav-arrow disabled">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+            </span>
+        <?php endif; ?>
+    </div>
+    
     <script src="js/script.js" defer></script>
 </body>
 </html>
