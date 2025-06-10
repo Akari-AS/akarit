@@ -1,0 +1,113 @@
+/* Custom styles basert på Akari's designmanual */
+body {
+    font-family: 'DM Sans', sans-serif;
+    background-color: #F3FCF8; /* Glacier */
+}
+h1, h2, h3 {
+    font-family: 'Red Hat Display', sans-serif;
+}
+.slide {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    scroll-snap-align: start;
+    position: relative;
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
+}
+.bg-teal-dark { background-color: #064F55; }
+.bg-teal-light { background-color: #1DD1B6; }
+.bg-glacier { background-color: #F3FCF8; }
+.text-teal-dark { color: #064F55; }
+.text-teal-light { color: #1DD1B6; }
+.text-glacier { color: #F3FCF8; }
+
+.nav-button {
+    position: fixed;
+    bottom: 2rem;
+    transform: translateX(-50%);
+    background-color: #064F55;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 9999px;
+    font-weight: 500;
+    cursor: pointer;
+    z-index: 100;
+    box-shadow: 0 4px 14px 0 rgba(0,0,0,0.1);
+    transition: background-color 0.2s;
+    text-decoration: none;
+}
+.nav-button:hover {
+    background-color: #1DD1B6;
+}
+#prevBtn { left: calc(50% - 100px); }
+#nextBtn { left: calc(50% + 100px); }
+
+/* --- Fragment Animation Styles --- */
+.fragment {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.5s ease-out;
+}
+.fragment.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+.fragment.from-left {
+    transform: translateX(-50px);
+}
+.fragment.from-left.visible {
+    transform: translateX(0);
+}
+
+/* --- Stil for bilde-viewport og zoom-effekt --- */
+#image-viewport {
+    width: 100%;
+    min-height: 450px;
+    background-size: cover;
+    background-position: center center;
+    transition: background-image 0.4s ease-in-out;
+    border-radius: 0.5rem;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+@keyframes ken-burns-zoom {
+    0% {
+        background-size: 100%;
+        background-position: center center;
+    }
+    100% {
+        background-size: 140%;
+        background-position: 50% 25%;
+    }
+}
+.zoom-effect {
+    animation: ken-burns-zoom 8s ease-in-out forwards;
+}
+
+/* --- Shake & Pulse Animation --- */
+@keyframes shake {
+  10%, 90% { transform: translateX(-1px) rotate(2deg); } /* Inkluderer rotasjon i shake */
+  20%, 80% { transform: translateX(2px) rotate(2deg); }
+  30%, 50%, 70% { transform: translateX(-4px) rotate(2deg); }
+  40%, 60% { transform: translateX(4px) rotate(2deg); }
+}
+
+/* NYTT: Definerer den svake "pustende" effekten */
+@keyframes pulse-opacity {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+/* ENDRET: Regel for å kombinere alt */
+.shake-on-visible.visible {
+    /* Den endelige hviletilstanden: flyttet opp og rotert */
+    transform: translateY(0) rotate(2deg);
+
+    /* Sekvensiell animasjon: Først shake, deretter uendelig pulsing */
+    animation: 
+        shake 0.82s cubic-bezier(.36,.07,.19,.97),
+        pulse-opacity 2.5s ease-in-out 0.9s infinite;
+}
