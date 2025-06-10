@@ -2,6 +2,7 @@ User-agent: *
 Allow: /
 Disallow: /internal/*
 Disallow: /presentasjon/*
+Disallow: /lederfilosofi/*
 Disallow: /personvernerklaering.html
 Disallow: /admin_submissions.php
 Sitemap: https://googleworkspace.akari.no/sitemap.xml
