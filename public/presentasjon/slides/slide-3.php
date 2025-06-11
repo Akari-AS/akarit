@@ -10,11 +10,7 @@
             <div class="bg-teal-dark text-white p-8 rounded-lg text-center fragment">
                 <h3 class="text-3xl font-bold mb-4">Maskinrommet: Deres interne motor</h3>
                 <div class="flex justify-center items-center gap-4 my-6">
-                    <img src="https://ssl.gstatic.com/images/branding/product/1x/gmail_48dp.png" alt="Gmail logo" class="h-10">
-                    <img src="https://ssl.gstatic.com/images/branding/product/1x/calendar_48dp.png" alt="Google Kalender logo" class="h-10">
-                    <img src="https://ssl.gstatic.com/images/branding/product/1x/drive_48dp.png" alt="Google Drive logo" class="h-10">
-                    <img src="https://ssl.gstatic.com/images/branding/product/1x/meet_48dp.png" alt="Google Meet logo" class="h-10">
-                    <img src="https://ssl.gstatic.com/images/branding/product/1x/docs_48dp.png" alt="Google Docs logo" class="h-10">
+                    <img src="https://ssl.gstatic.com/images/branding/product/1x/gmail_48dp.png" alt="Gmail logo" class="h-10"><img src="https://ssl.gstatic.com/images/branding/product/1x/calendar_48dp.png" alt="Google Kalender logo" class="h-10"><img src="https://ssl.gstatic.com/images/branding/product/1x/drive_48dp.png" alt="Google Drive logo" class="h-10"><img src="https://ssl.gstatic.com/images/branding/product/1x/meet_48dp.png" alt="Google Meet logo" class="h-10"><img src="https://ssl.gstatic.com/images/branding/product/1x/docs_48dp.png" alt="Google Docs logo" class="h-10">
                 </div>
                 <p class="text-xl">En totalintegrert arbeidsflyt som får bedriften til å gå på skinner.</p>
             </div>
