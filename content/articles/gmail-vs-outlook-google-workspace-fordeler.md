@@ -67,4 +67,5 @@ Gmail og Google Workspace tilbyr en overlegen pakke for produktivitet, sikkerhet
 
 Akari leverer ikke bare Google Workspace-lisenser; vi tilbyr en helhetlig løsning. Vår prismodell inkluderer alt i én brukerpris: personlig rådgivning, implementering, opplæring og norsk support. Vi hjelper deg å transformere arbeidshverdagen og få maksimal verdi ut av din investering.
 
-**Er du klar til å oppleve forskjellen? [Ta kontakt med Akari i dag for en uforpliktende samtale](https://googleworkspace.akari.no/).**
+**Er du klar til å oppleve forskjellen?
+
