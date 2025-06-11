@@ -9,7 +9,7 @@ image: "/assets/img/articles/Kenneth_Google_Workspace-6.jpg"
 ---
 
 ### Liker du best å lytte? Hør denne artikkelen på Spotify:
-<iframe style="border-radius:12px" src="https://open.spotify.com/embed/episode/3prLOY2s0Qj3ECuVOGBf69?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+<iframe style="border-radius:12px" src="https://open.spotify.com/embed/episode/1lxLhnVqmOYPJ2Tgb5PjP0?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
 
 Valget av e-postplattform er avgjørende for bedriftens produktivitet og sikkerhet. Mens mange kjenner til Microsoft Outlook, argumenterer stadig flere for at Gmail, som hjertet i Google Workspace, tilbyr en smartere og mer effektiv løsning for moderne bedrifter. Her er ti grunner til at din bedrift bør velge Gmail.
 
