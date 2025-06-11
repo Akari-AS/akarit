@@ -1,4 +1,4 @@
-<section id="slide-1" class="slide bg-teal-dark text-white">
+<section id="slide-1" class="slide bg-tema">
     <div class="absolute top-8 left-8">
         <img src="assets/icons/akari-logo.svg" alt="Akari logo" class="h-12">
     </div>
