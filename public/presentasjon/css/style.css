@@ -2,8 +2,11 @@
 body {
     font-family: 'DM Sans', sans-serif;
 }
+
+/* ENDRET: Standard fontvekt for overskrifter er nå 'light' (300) */
 h1, h2, h3 {
     font-family: 'Red Hat Display', sans-serif;
+    font-weight: 300; /* Bruker den lette versjonen som standard */
 }
 .slide {
     min-height: 100vh;
@@ -19,16 +22,8 @@ h1, h2, h3 {
 }
 
 /* --- Bakgrunnstemaer --- */
-.bg-tema {
-    background-image: url('../assets/backgrounds/presentasjon-tema.svg');
-    color: #F3FCF8;
-}
 .bg-mork {
     background-image: url('../assets/backgrounds/presentasjon-mork.svg');
-    color: #F3FCF8;
-}
-.bg-mork-basic {
-    background-image: url('../assets/backgrounds/presentasjon-mork-basic.svg');
     color: #F3FCF8;
 }
 .bg-lys {
@@ -56,33 +51,9 @@ h1, h2, h3 {
 @keyframes pulse-opacity { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
 .shake-on-visible.visible { transform: translateY(0) rotate(2deg); animation: shake 0.82s cubic-bezier(.36,.07,.19,.97), pulse-opacity 2.5s ease-in-out 0.9s infinite; }
 
-/* --- ENDRET: Diskret slide-navigasjon (sentrert) --- */
-.slide-nav {
-    position: fixed;
-    bottom: 1rem;
-    left: 50%; /* Ny */
-    transform: translateX(-50%); /* Ny */
-    z-index: 100;
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-}
-
-.slide-nav-arrow {
-    color: rgba(6, 79, 85, 0.6);
-    transition: color 0.2s ease-in-out;
-}
-.slide-nav-arrow:hover {
-    color: rgba(6, 79, 85, 1);
-}
-.slide-nav-arrow.disabled {
-    color: rgba(6, 79, 85, 0.2);
-    pointer-events: none;
-}
-.slide-nav-counter {
-    color: rgba(6, 79, 85, 0.6);
-    font-size: 0.875rem;
-    font-weight: 500;
-    min-width: 40px;
-    text-align: center;
-}
+/* --- Diskret slide-navigasjon (Uendret) --- */
+.slide-nav { position: fixed; bottom: 1rem; left: 50%; transform: translateX(-50%); z-index: 100; display: flex; align-items: center; gap: 0.75rem; }
+.slide-nav-arrow { color: rgba(6, 79, 85, 0.6); transition: color 0.2s ease-in-out; }
+.slide-nav-arrow:hover { color: rgba(6, 79, 85, 1); }
+.slide-nav-arrow.disabled { color: rgba(6, 79, 85, 0.2); pointer-events: none; }
+.slide-nav-counter { color: rgba(6, 79, 85, 0.6); font-size: 0.875rem; font-weight: 500; min-width: 40px; text-align: center; }

@@ -1,6 +1,6 @@
 <section id="slide-4" class="slide bg-lys">
     <div class="text-center max-w-6xl w-full">
-        <h2 class="text-4xl md:text-6xl font-bold text-teal-dark mb-2">Beviset: Slik ble vi #1 i Norge</h2>
+        <h2 class="text-4xl md:text-6xl font-bold text-teal-dark mb-2">Beviset: Slik ble vi <strong>#1 i Norge</strong></h2>
         <p class="text-xl mb-8 max-w-3xl mx-auto">Vi selger ikke bare en tjeneste. Vi har brukt den selv til å dominere markedet.</p>
         <div class="grid md:grid-cols-2 gap-8 items-stretch">
             <div class="bg-white p-6 rounded-lg shadow-lg text-left flex flex-col justify-center">
