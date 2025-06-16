@@ -9,7 +9,7 @@ image: "/assets/img/seminars/banner.png"
 status: "upcoming"
 registration_open: true
 max_attendees: 150
-contact_person_email: "kenneth@akari.no, johannes@akari.no"
+contact_person_email: "kenneth@akari.no"
 ---
 
 ## Google Workspace: nysgjerrig på å bytte ut Microsoft 365?
