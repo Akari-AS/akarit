@@ -1,6 +1,6 @@
 ---
 title: "Frokostseminar: Google Workspace – din neste samhandlingsplattform med AI?"
-date: "2025-06-17 08:30"
+date: "2025-08-26 08:30"
 location: "HM49, Hønefoss, Hvervenmoveien 49, 3511 Hønefoss"
 slug: "frokostseminar-google-workspace-samhandlingsplattform-ai-honefoss"
 excerpt: "Lei av Microsoft 365? Oppdag Google Workspace: moderne e-post (Gmail for bedrift), samhandling med Disk & Dokumenter, pluss AI. For SMB, kommuner m.fl. i Hønefoss."
@@ -9,7 +9,7 @@ image: "/assets/img/seminars/banner.png"
 status: "upcoming"
 registration_open: true
 max_attendees: 150
-contact_person_email: "kenneth@akari.no"
+contact_person_email: "kenneth@akari.no, johannes@akari.no"
 ---
 
 ## Google Workspace: nysgjerrig på å bytte ut Microsoft 365?
