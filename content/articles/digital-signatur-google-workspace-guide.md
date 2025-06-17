@@ -8,7 +8,7 @@ meta_description: "En komplett guide til den nye e-signaturfunksjonen i Google W
 image: "/assets/img/articles/google-workspace-esignatur.jpg"
 ---
 
-**Visste du at du kan sende og motta juridisk bindende signaturer direkte fra Google Docs og Drive? Google har rullet ut en innebygd funksjon for digital signatur (e-signatur) for de fleste Google Workspace-abonnenter. Dette er en funksjon som kan spare bedriften din for både tid og penger.**
+**Visste du at du kan sende og motta juridisk bindende signaturer direkte fra Google Docs og Drive? Google har rullet ut en innebygd funksjon for digital signatur (e-signatur) som kan spare bedriften din for både tid og penger.**
 
 For bedrifter som allerede bruker Google Workspace til daglig, fjerner denne nyheten en stor barriere. Nå slipper dere å bytte til en tredjepartstjeneste for å håndtere avtaler. Alt kan gjøres i det vante og trygge miljøet dere allerede kjenner.
 
@@ -28,9 +28,9 @@ Ved å fjerne manuelle steg som nedlastning, opplastning til en annen tjeneste o
 
 ### 2. Kutt kostnader og bli mer miljøvennlig
 
-For bedrifter med et kvalifisert Google Workspace-abonnement (som Business Standard/Plus og de fleste Enterprise-planer) er **e-signaturfunksjonen inkludert uten ekstra kostnad**.
+Normalt sett inkluderer Google kun e-signatur i sine dyrere planer som Business Standard/Plus. **Men som kunde av Akari er dette annerledes. Vi inkluderer denne funksjonen i alle våre Google Workspace-pakker, selv de som er basert på Business Starter.**
 
-Dette betyr at du kan redusere eller fjerne utgifter til separate abonnementer hos tjenester som DocuSign eller Visma Sign for enklere avtaler. I tillegg sparer du penger på papir, porto og fysisk lagring.
+Dette betyr at du som Akari-kunde kan redusere eller fjerne utgifter til separate abonnementer hos tjenester som DocuSign eller Visma Sign, og samtidig spare penger på papir, porto og fysisk lagring – uansett hvilken pakke du har hos oss.
 
 ## Hvordan fungerer det i praksis?
 
@@ -64,6 +64,7 @@ For avtaler med høy risiko eller der det er strenge formkrav, kreves en sterker
 #### Bruk Google e-signatur for:
 
 ✅ **Lav-risiko, interne dokumenter:** Feriesøknader, timelister, bekreftelse på mottatt personalhåndbok.
+
 ✅ **Enklere, eksterne avtaler:** Ordrebekreftelser, aksept av tilbud, leie av utstyr, taushetserklæringer (NDA).
 
 #### Bruk en tjeneste med BankID for:
