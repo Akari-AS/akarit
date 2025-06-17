@@ -189,7 +189,16 @@ if ($pageType === 'article_single' && $contentSlug) {
     
     if ($contentData && isset($contentData['title']) && isset($contentData['content']) && strlen(strip_tags(trim($contentData['content']))) > 5) { 
         $pageTitle = htmlspecialchars($contentData['title']) . ' | Artikler | Akari';
-        $pageDescription = htmlspecialchars($contentData['meta_description'] ?? $contentData['excerpt'] ?? $defaultMetaDescription);
+        
+        // Optimaliser meta beskrivelse for sosiale medier (maks 160 tegn for beste visning)
+        $rawDescription = $contentData['meta_description'] ?? $contentData['excerpt'] ?? $defaultMetaDescription;
+        $pageDescription = htmlspecialchars($rawDescription, ENT_QUOTES, 'UTF-8');
+        
+        // Kutt beskrivelsen hvis den er for lang (Facebook/LinkedIn anbefaler 160 tegn)
+        if (strlen($pageDescription) > 160) {
+            $pageDescription = substr($pageDescription, 0, 157) . '...';
+        }
+        
         $formSourceOverride = "Artikkel: " . htmlspecialchars($contentData['title']); 
         $articleData = $contentData; // Sett $articleData for templaten
     } else {
@@ -207,7 +216,16 @@ if ($pageType === 'article_single' && $contentSlug) {
     $contentData = get_content_data($contentSlug, 'seminar');
     if ($contentData && isset($contentData['title']) && isset($contentData['content']) && strlen(strip_tags(trim($contentData['content']))) > 5) {
         $pageTitle = htmlspecialchars($contentData['title']) . ' | Seminar | Akari';
-        $pageDescription = htmlspecialchars($contentData['meta_description'] ?? $contentData['excerpt'] ?? 'Delta på vårt seminar: ' . ($contentData['title'] ?? '') . '. Lær mer og meld deg på!');
+        
+        // Optimaliser meta beskrivelse for sosiale medier
+        $rawDescription = $contentData['meta_description'] ?? $contentData['excerpt'] ?? 'Delta på vårt seminar: ' . ($contentData['title'] ?? '') . '. Lær mer og meld deg på!';
+        $pageDescription = htmlspecialchars($rawDescription, ENT_QUOTES, 'UTF-8');
+        
+        // Kutt beskrivelsen hvis den er for lang
+        if (strlen($pageDescription) > 160) {
+            $pageDescription = substr($pageDescription, 0, 157) . '...';
+        }
+        
         $seminarData = $contentData; // Sett $seminarData for templaten (eller bruk $contentData direkte i seminar_single.php)
     } else {
         http_response_code(404);

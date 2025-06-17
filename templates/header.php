@@ -50,6 +50,13 @@
     <meta property="og:image:height" content="630" /> <?php // Anbefalt høyde for LinkedIn/FB ?>
     <meta property="og:site_name" content="Akari Google Workspace" />
     <meta property="og:locale" content="nb_NO" />
+    
+    <?php if ($pageType === 'article_single' && isset($contentData['author'])): ?>
+    <meta property="article:author" content="<?php echo htmlspecialchars($contentData['author']); ?>" />
+    <meta property="article:published_time" content="<?php echo isset($contentData['date']) ? date(DATE_ISO8601, strtotime($contentData['date'])) : ''; ?>" />
+    <meta property="article:section" content="Google Workspace" />
+    <meta property="article:tag" content="Google Workspace, AI, Produktivitet, Samarbeid" />
+    <?php endif; ?>
 
     <!-- Twitter Card Tags (kan gjenbruke mye fra OG) -->
     <meta name="twitter:card" content="summary_large_image" />
