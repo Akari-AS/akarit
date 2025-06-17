@@ -28,7 +28,7 @@ Ved å fjerne manuelle steg som nedlastning, opplastning til en annen tjeneste o
 
 ### 2. Kutt kostnader og bli mer miljøvennlig
 
-Normalt sett inkluderer Google kun e-signatur i sine dyrere planer som Business Standard/Plus. **Men som kunde av Akari er dette annerledes. Vi inkluderer denne funksjonen i alle våre Google Workspace-pakker, selv de som er basert på Business Starter.**
+Google inkluderer e-signatur i sine planer som Business Standard/Plus. **Som kunde av Akari inkluderervi denne funksjonen i alle våre Google Workspace-pakker.**
 
 Dette betyr at du som Akari-kunde kan redusere eller fjerne utgifter til separate abonnementer hos tjenester som DocuSign eller Visma Sign, og samtidig spare penger på papir, porto og fysisk lagring – uansett hvilken pakke du har hos oss.
 
