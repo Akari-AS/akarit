@@ -1,0 +1,541 @@
+
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infografikk: Pilotprosjekt for E-postkoeksistens</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
+        }
+        @media (max-width: 768px) {
+            .chart-container {
+                height: 300px;
+            }
+        }
+        .flow-arrow::after {
+            content: '→';
+            font-size: 2rem;
+            line-height: 1;
+            color: #4d8fac;
+        }
+        .flow-arrow-down::after {
+            content: '↓';
+            font-size: 2rem;
+            line-height: 1;
+            color: #4d8fac;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <div class="container mx-auto p-4 md:p-8">
+
+        <header class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-extrabold text-[#003f5c] mb-2">Pilotprosjekt: Microsoft 365 vs. Google Workspace</h1>
+            <p class="text-lg md:text-xl text-gray-600">En visuell guide til tekniske valg og anbefalinger for e-postkoeksistens.</p>
+        </header>
+
+        <main class="space-y-12">
+            
+            <section id="dilemma" class="bg-white rounded-xl shadow-lg p-6 md:p-8">
+                <h2 class="text-3xl font-bold text-[#003f5c] mb-4 text-center">Pilotens Dilemma: Er Perfekt Synkronisering Mulig?</h2>
+                <p class="text-center text-gray-600 max-w-3xl mx-auto mb-8">
+                    Kunden ønsker å teste Google Workspace (GW) for to brukere, men med et kritisk krav: at e-post for samme adresse skal være fullt og sanntidssynkronisert mellom Outlook (M365) og Gmail (GW). Dette inkluderer lest/ulest-status, sendte elementer og sletting.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-3 items-center gap-6 text-center">
+                    <div class="bg-[#9dbf9e]/20 p-6 rounded-lg">
+                        <p class="text-5xl font-extrabold text-[#003f5c]">2</p>
+                        <p class="text-lg font-semibold text-gray-700 mt-2">Separate Systemer</p>
+                    </div>
+                    <div class="hidden md:block flow-arrow"></div>
+                    <div class="md:hidden text-center flow-arrow-down mx-auto"></div>
+                    <div class="bg-[#f4e0a2]/40 p-6 rounded-lg">
+                        <p class="text-5xl font-extrabold text-[#003f5c]">1</p>
+                        <p class="text-lg font-semibold text-gray-700 mt-2">E-postadresse</p>
+                    </div>
+                    <div class="hidden md:block flow-arrow"></div>
+                     <div class="md:hidden text-center flow-arrow-down mx-auto"></div>
+                    <div class="bg-[#ffab76]/30 p-6 rounded-lg">
+                        <p class="text-5xl font-extrabold text-[#003f5c]">100%?</p>
+                        <p class="text-lg font-semibold text-gray-700 mt-2">Synkronisering</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="reality" class="bg-white rounded-xl shadow-lg p-6 md:p-8">
+                <h2 class="text-3xl font-bold text-[#003f5c] mb-4 text-center">Den Tekniske Realiteten</h2>
+                 <p class="text-center text-gray-600 max-w-3xl mx-auto mb-8">
+                    Analyse viser at en sømløs, toveis sanntidssynkronisering av *alle* e-posthandlinger er teknisk umulig med standardverktøy. Systemene har ulik arkitektur (MAPI vs. IMAP) som forhindrer deling av statusinformasjon.
+                </p>
+                <div class="chart-container">
+                    <canvas id="realityChart"></canvas>
+                </div>
+                 <p class="text-center text-sm text-gray-500 max-w-2xl mx-auto mt-4">
+                    Diagrammet illustrerer at selv om "Dual Delivery" (levering av innkommende e-post til begge systemene) er mulig, vil synkronisering av handlinger som lesing, sletting og organisering av sendte elementer feile.
+                </p>
+            </section>
+            
+            <section id="recommendation" class="bg-[#003f5c] text-white rounded-xl shadow-lg p-6 md:p-8">
+                <h2 class="text-3xl font-bold mb-4 text-center">Anbefalt Pilotstrategi: Scenario A</h2>
+                <p class="text-center text-blue-100 max-w-3xl mx-auto mb-8">
+                    Vi fraråder å forsøke en "perfekt synkronisering". Den beste tilnærmingen for en realistisk evaluering er å migrere pilotbrukerne til Google Workspace og videresende e-post fra Microsoft 365 i en overgangsperiode.
+                </p>
+                <div class="bg-white/90 rounded-lg p-6 text-gray-800 mb-6">
+                    <h3 class="font-bold text-xl text-center mb-6 text-[#003f5c]">Anbefalt E-postflyt</h3>
+                    <div class="flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-4">
+                        <div class="text-center">
+                            <div class="bg-gray-100 p-4 rounded-lg shadow">
+                                <p class="font-bold">Internett</p>
+                            </div>
+                        </div>
+                        <div class="flow-arrow hidden md:block"></div>
+                        <div class="flow-arrow-down md:hidden"></div>
+                        <div class="text-center">
+                             <div class="bg-gray-100 p-4 rounded-lg shadow">
+                                <p class="font-bold">MX-peker</p>
+                                <p class="text-sm">(Peker mot M365)</p>
+                            </div>
+                        </div>
+                        <div class="flow-arrow hidden md:block"></div>
+                        <div class="flow-arrow-down md:hidden"></div>
+                         <div class="text-center">
+                            <div class="bg-[#9dbf9e]/30 p-4 rounded-lg shadow">
+                                <p class="font-bold">Microsoft 365 Server</p>
+                            </div>
+                        </div>
+                        <div class="flow-arrow hidden md:block"></div>
+                        <div class="flow-arrow-down md:hidden"></div>
+                        <div class="flex flex-col space-y-4">
+                            <div class="bg-blue-100 p-4 rounded-lg shadow text-center">
+                               <p class="font-bold">Majoriteten av ansatte</p>
+                               <p class="text-sm">(Fortsetter på Outlook)</p>
+                            </div>
+                             <div class="bg-[#f4e0a2]/50 p-4 rounded-lg shadow text-center">
+                                <p class="font-bold">2 Pilotbrukere</p>
+                                <p class="text-sm">(E-post videresendes til GW)</p>
+                                <div class="flow-arrow-down mt-2"></div>
+                                <div class="bg-white p-2 rounded-md mt-2">
+                                  <p class="font-bold text-[#003f5c]">Google Workspace</p>
+                                  <p class="text-sm text-gray-600">(Primær plattform for test)</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white/90 rounded-lg p-6 text-gray-800 mt-6">
+                    <h3 class="font-bold text-xl text-center mb-6 text-[#003f5c]">Fordeler og Ulemper med Scenario A</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-center">
+                        <div class="bg-[#9dbf9e]/20 p-6 rounded-lg flex flex-col items-center justify-center">
+                            <p class="text-2xl font-bold text-[#003f5c] mb-2">Fordeler</p>
+                            <ul class="list-none text-left space-y-2 text-gray-700 w-full px-4">
+                                <li class="flex items-center"><span class="text-xl mr-2 text-green-600">✔</span> Enkel innkommende e-postflyt til GW.</li>
+                                <li class="flex items-center"><span class="text-xl mr-2 text-green-600">✔</span> Én primær innboks for brukeren (Gmail).</li>
+                                <li class="flex items-center"><span class="text-xl mr-2 text-green-600">✔</span> Forbereder for en potensiell full migrering.</li>
+                                <li class="flex items-center"><span class="text-xl mr-2 text-green-600">✔</span> Reduserer kompleksitet og unngår synkroniseringsproblemer.</li>
+                                <li class="flex items-center"><span class="text-xl mr-2 text-green-600">✔</span> Gir en bedre og mer autentisk brukeropplevelse av GW.</li>
+                            </ul>
+                        </div>
+                        <div class="bg-[#ffab76]/30 p-6 rounded-lg flex flex-col items-center justify-center">
+                            <p class="text-2xl font-bold text-[#003f5c] mb-2">Ulemper</p>
+                            <ul class="list-none text-left space-y-2 text-gray-700 w-full px-4">
+                                <li class="flex items-center"><span class="text-xl mr-2 text-red-600">✖</span> Krever endring av MX-pekere ved eventuell full migrering.</li>
+                                <li class="flex items-center"><span class="text-xl mr-2 text-red-600">✖</span> Historisk data må migreres for tilgang i GW.</li>
+                                <li class="flex items-center"><span class="text-xl mr-2 text-red-600">✖</span> Begrenset direkte sammenligning av *synkronisering* av e-posttilstand.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="alternative-scenario-b" class="bg-white rounded-xl shadow-lg p-6 md:p-8">
+                <h2 class="text-3xl font-bold text-[#003f5c] mb-4 text-center">Alternativ Pilotstrategi: Scenario B</h2>
+                <p class="text-center text-gray-600 max-w-3xl mx-auto mb-8">
+                    Et enklere alternativ for piloten er å opprette en ny, separat e-postadresse i Google Workspace kun for pilotformål. Dette unngår kompleksitet i e-postflyten, men går på bekostning av direkte sammenligning for hoved-e-postadressen.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-center">
+                    <div class="bg-[#9dbf9e]/20 p-6 rounded-lg flex flex-col items-center justify-center">
+                        <p class="text-2xl font-bold text-[#003f5c] mb-2">Fordeler</p>
+                        <ul class="list-none text-left space-y-2 text-gray-700 w-full px-4">
+                            <li class="flex items-center"><span class="text-xl mr-2 text-green-600">✔</span> Minimal risiko for eksisterende produksjonsmiljø.</li>
+                            <li class="flex items-center"><span class="text-xl mr-2 text-green-600">✔</span> Enkel oppsett og konfigurasjon.</li>
+                            <li class="flex items-center"><span class="text-xl mr-2 text-green-600">✔</span> Tydelig skille mellom systemene.</li>
+                            <li class="flex items-center"><span class="text-xl mr-2 text-green-600">✔</span> Ingen DNS-endringer nødvendig for primæradressen.</li>
+                        </ul>
+                    </div>
+                    <div class="bg-[#ffab76]/30 p-6 rounded-lg flex flex-col items-center justify-center">
+                        <p class="text-2xl font-bold text-[#003f5c] mb-2">Ulemper</p>
+                        <ul class="list-none text-left space-y-2 text-gray-700 w-full px-4">
+                            <li class="flex items-center"><span class="text-xl mr-2 text-red-600">✖</span> Ikke direkte sammenligning for *samme* e-postadresse.</li>
+                            <li class="flex items-center"><span class="text-xl mr-2 text-red-600">✖</span> Brukerforvirring med to separate e-postidentiteter.</li>
+                            <li class="flex items-center"><span class="text-xl mr-2 text-red-600">✖</span> Krever bruk av ny adresse for test.</li>
+                            <li class="flex items-center"><span class="text-xl mr-2 text-red-600">✖</span> Ingen migrering av historisk data for primæradressen til GW.</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="comparison" class="bg-white rounded-xl shadow-lg p-6 md:p-8">
+                <h2 class="text-3xl font-bold text-[#003f5c] mb-4 text-center">Sammenligning av Pilot-alternativer</h2>
+                 <p class="text-center text-gray-600 max-w-3xl mx-auto mb-8">
+                    Vår anbefalte løsning (Scenario A) gir den beste balansen mellom å oppnå kundens mål, minimere teknisk risiko og sikre en god brukeropplevelse sammenlignet med det urealistiske "perfekt synk"-idealet, samt enklere alternativer som Scenario B.
+                </p>
+                <div class="chart-container">
+                    <canvas id="comparisonChart"></canvas>
+                </div>
+            </section>
+
+            <section id="roadmap" class="bg-white rounded-xl shadow-lg p-6 md:p-8">
+                <h2 class="text-3xl font-bold text-[#003f5c] mb-4 text-center">Implementerings-veikart</h2>
+                <p class="text-center text-gray-600 max-w-3xl mx-auto mb-8">
+                    En vellykket pilot følger en strukturert plan. Her er et estimert veikart for den anbefalte løsningen.
+                </p>
+                <div class="relative w-full">
+                    <div class="border-l-4 border-[#4d8fac] ml-4 md:border-t-4 md:border-l-0 md:ml-0 md:pt-4">
+                        <div class="grid grid-cols-1 md:grid-cols-4 gap-x-4">
+                            
+                            <div class="mb-8 md:mb-0 relative">
+                                <div class="absolute -left-6 md:top-[-1.25rem] md:left-auto w-5 h-5 bg-[#003f5c] rounded-full border-4 border-white"></div>
+                                <div class="ml-4 md:ml-0 md:mt-4">
+                                    <p class="text-sm text-[#003f5c] font-bold">FASE 1</p>
+                                    <p class="font-bold text-lg">Forberedelse</p>
+                                    <p class="text-gray-600 text-sm">Oppsett av lisenser og testmigrering av historisk data.</p>
+                                    <p class="font-bold text-blue-800 mt-1">1-2 uker</p>
+                                </div>
+                            </div>
+                           
+                            <div class="mb-8 md:mb-0 relative">
+                                <div class="absolute -left-6 md:top-[-1.25rem] md:left-auto w-5 h-5 bg-[#003f5c] rounded-full border-4 border-white"></div>
+                                <div class="ml-4 md:ml-0 md:mt-4">
+                                    <p class="text-sm text-[#003f5c] font-bold">FASE 2</p>
+                                    <p class="font-bold text-lg">Implementering</p>
+                                    <p class="text-gray-600 text-sm">Konfigurasjon av videresending og oppdatering av DNS (SPF).</p>
+                                    <p class="font-bold text-blue-800 mt-1">1-3 dager</p>
+                                </div>
+                            </div>
+
+                            <div class="mb-8 md:mb-0 relative">
+                                <div class="absolute -left-6 md:top-[-1.25rem] md:left-auto w-5 h-5 bg-[#003f5c] rounded-full border-4 border-white"></div>
+                                <div class="ml-4 md:ml-0 md:mt-4">
+                                    <p class="text-sm text-[#003f5c] font-bold">FASE 3</p>
+                                    <p class="font-bold text-lg">Pilot & Evaluering</p>
+                                    <p class="text-gray-600 text-sm">Brukertesting og innsamling av tilbakemeldinger.</p>
+                                    <p class="font-bold text-blue-800 mt-1">4-8 uker</p>
+                                </div>
+                            </div>
+
+                            <div class="relative">
+                               <div class="absolute -left-6 md:top-[-1.25rem] md:left-auto w-5 h-5 bg-[#003f5c] rounded-full border-4 border-white"></div>
+                                <div class="ml-4 md:ml-0 md:mt-4">
+                                    <p class="text-sm text-[#003f5c] font-bold">FASE 4</p>
+                                    <p class="font-bold text-lg">Avslutning</p>
+                                    <p class="text-gray-600 text-sm">Analyse av resultater og beslutning om veien videre.</p>
+                                    <p class="font-bold text-blue-800 mt-1">1-2 dager</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="risk" class="bg-white rounded-xl shadow-lg p-6 md:p-8">
+                <h2 class="text-3xl font-bold text-[#003f5c] mb-4 text-center">Risiko og Compliance</h2>
+                <p class="text-center text-gray-600 max-w-3xl mx-auto mb-8">
+                    Selv med den anbefalte løsningen er det risikoer som må håndteres, spesielt knyttet til brukerforståelse og GDPR. At data midlertidig eksisterer i to systemer krever tydelige retningslinjer.
+                </p>
+                <div class="chart-container">
+                    <canvas id="riskChart"></canvas>
+                </div>
+            </section>
+
+            <section id="ai-advice" class="bg-white rounded-xl shadow-lg p-6 md:p-8">
+                <h2 class="text-3xl font-bold text-[#003f5c] mb-4 text-center">Få AI-drevet Risikoråd ✨</h2>
+                <p class="text-center text-gray-600 max-w-3xl mx-auto mb-8">
+                    Beskriv en bekymring eller utfordring du står overfor i et IT-migrasjonsprosjekt, og få umiddelbar, AI-drevet rådgivning for potensielle løsninger eller forbedringsområder.
+                </p>
+                <div class="max-w-xl mx-auto">
+                    <textarea id="userRiskInput" class="w-full p-3 border rounded-lg focus:ring-[#4d8fac] focus:border-[#4d8fac] text-gray-700" rows="4" placeholder="Beskriv din risiko eller utfordring her, f.eks. 'Vi er bekymret for datatap ved overgang til ny e-postløsning.'"></textarea>
+                    <button id="getAiAdviceBtn" class="mt-4 bg-[#003f5c] text-white font-bold py-3 px-6 rounded-full hover:bg-[#4d8fac] transition-colors shadow-md w-full md:w-auto">Få AI-råd ✨</button>
+                    <div id="aiResponse" class="mt-6 p-4 bg-gray-100 rounded-lg shadow-inner text-gray-700 min-h-[100px]">
+                        AI-rådgivning vil vises her...
+                    </div>
+                </div>
+            </section>
+            
+            <section id="conclusion" class="bg-[#003f5c] text-white rounded-xl shadow-lg p-8 md:p-12 text-center">
+                <h2 class="text-3xl md:text-4xl font-extrabold mb-4">Endelig Anbefaling</h2>
+                <p class="text-lg md:text-xl text-blue-100 max-w-3xl mx-auto">
+                    Fraråd forsøket på en "perfekt synkronisering". Velg en kontrollert migrering av pilotbrukerne (Scenario A) for en realistisk, verdifull og håndterbar evaluering av Google Workspace.
+                </p>
+                <button class="mt-8 bg-white text-[#003f5c] font-bold py-3 px-8 rounded-full hover:bg-gray-200 transition-colors shadow-md">
+                    Start Planlegging av Pilot
+                </button>
+            </section>
+
+        </main>
+
+        <footer class="text-center text-sm text-gray-500 mt-12">
+            <p>Infografikk generert basert på teknisk rapport. &copy; 2025</p>
+        </footer>
+
+    </div>
+
+    <script>
+        const wrapLabels = (label, maxLength) => {
+            if (typeof label !== 'string') return label;
+            if (label.length <= maxLength) return label;
+
+            const words = label.split(' ');
+            const lines = [];
+            let currentLine = '';
+
+            words.forEach(word => {
+                if ((currentLine + word).length > maxLength) {
+                    lines.push(currentLine.trim());
+                    currentLine = '';
+                }
+                currentLine += word + ' ';
+            });
+            lines.push(currentLine.trim());
+            return lines;
+        };
+
+        const tooltipTitleCallback = (tooltipItems) => {
+            const item = tooltipItems[0];
+            let label = item.chart.data.labels[item.dataIndex];
+            if (Array.isArray(label)) {
+                return label.join(' ');
+            } else {
+                return label;
+            }
+        };
+
+        const commonChartOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                    labels: {
+                        font: {
+                            size: 12
+                        },
+                        color: '#374151'
+                    }
+                },
+                tooltip: {
+                    callbacks: {
+                        title: tooltipTitleCallback
+                    }
+                }
+            }
+        };
+        
+        const palette = {
+            blueDark: '#003f5c',
+            blueMid: '#4d8fac',
+            green: '#9dbf9e',
+            yellow: '#f4e0a2',
+            orange: '#ffab76'
+        };
+
+        new Chart(document.getElementById('realityChart'), {
+            type: 'doughnut',
+            data: {
+                labels: ['Innkommende E-post (Mulig)', 'Synk av Lest/Ulest (Umulig)', 'Synk av Sendte (Umulig)', 'Synk av Sletting (Umulig)'],
+                datasets: [{
+                    label: 'Teknisk Mulighet',
+                    data: [25, 25, 25, 25],
+                    backgroundColor: [
+                        palette.green,
+                        palette.orange,
+                        palette.yellow,
+                        '#ef4444' 
+                    ],
+                    borderColor: '#ffffff',
+                    borderWidth: 4
+                }]
+            },
+            options: {
+                 ...commonChartOptions,
+                plugins: {
+                    ...commonChartOptions.plugins,
+                    title: {
+                        display: true,
+                        text: 'Muligheter for E-post Synkronisering',
+                        font: { size: 16, weight: 'bold' },
+                        color: palette.blueDark,
+                        padding: {
+                            bottom: 20
+                        }
+                    }
+                }
+            }
+        });
+
+        new Chart(document.getElementById('comparisonChart'), {
+            type: 'bar',
+            data: {
+                labels: ['Scenario A (Anbefalt)', 'Ideal "Perfekt Synk"', wrapLabels('Scenario B (Ny E-postadresse)', 16)],
+                datasets: [
+                    {
+                        label: 'Brukeropplevelse',
+                        data: [8, 2, 5],
+                        backgroundColor: palette.blueMid,
+                        borderRadius: 4,
+                    },
+                    {
+                        label: 'Teknisk Risiko',
+                        data: [3, 10, 2],
+                        backgroundColor: palette.orange,
+                        borderRadius: 4,
+                    },
+                    {
+                        label: 'Realisme for Mål',
+                        data: [9, 1, 4],
+                        backgroundColor: palette.green,
+                        borderRadius: 4,
+                    }
+                ]
+            },
+            options: {
+                 ...commonChartOptions,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 10,
+                        title: {
+                            display: true,
+                            text: 'Poeng (1=Dårlig, 10=Bra)'
+                        }
+                    }
+                },
+                plugins: {
+                    ...commonChartOptions.plugins,
+                    title: {
+                        display: true,
+                        text: 'Vurdering av Pilotstrategier',
+                        font: { size: 16, weight: 'bold' },
+                        color: palette.blueDark,
+                        padding: {
+                            bottom: 20
+                        }
+                    }
+                }
+            }
+        });
+
+        new Chart(document.getElementById('riskChart'), {
+            type: 'radar',
+            data: {
+                labels: ['Brukerforvirring', 'Data-inkonsistens', 'GDPR Kompleksitet', 'Tekniske Feil', 'Admin Byrde'],
+                datasets: [{
+                    label: 'Risikonivå (Scenario A)',
+                    data: [6, 5, 4, 3, 4],
+                    fill: true,
+                    backgroundColor: 'rgba(255, 171, 118, 0.4)',
+                    borderColor: palette.orange,
+                    pointBackgroundColor: palette.orange,
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: palette.orange
+                }, {
+                    label: 'Risikonivå ("Perfekt Synk")',
+                    data: [10, 10, 9, 9, 10],
+                    fill: true,
+                    backgroundColor: 'rgba(239, 68, 68, 0.4)',
+                    borderColor: '#ef4444',
+                    pointBackgroundColor: '#ef4444',
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: '#ef4444'
+                }]
+            },
+            options: {
+                ...commonChartOptions,
+                scales: {
+                    r: {
+                        beginAtZero: true,
+                        max: 10,
+                        angleLines: { color: 'rgba(0, 0, 0, 0.1)' },
+                        grid: { color: 'rgba(0, 0, 0, 0.1)' },
+                        pointLabels: { font: { size: 12 }, color: '#374151' },
+                        ticks: {
+                            backdropColor: 'rgba(255, 255, 255, 0.75)',
+                            color: '#6b7280'
+                        }
+                    }
+                },
+                plugins: {
+                     ...commonChartOptions.plugins,
+                     title: {
+                        display: true,
+                        text: 'Sammenligning av Risikoprofil',
+                        font: { size: 16, weight: 'bold' },
+                        color: palette.blueDark,
+                        padding: {
+                            bottom: 20
+                        }
+                    }
+                }
+            }
+        });
+
+        document.getElementById('getAiAdviceBtn').addEventListener('click', async () => {
+            const userRiskInput = document.getElementById('userRiskInput').value;
+            const aiResponseDiv = document.getElementById('aiResponse');
+            
+            if (!userRiskInput.trim()) {
+                aiResponseDiv.innerHTML = '<span class="text-red-600">Vennligst skriv inn din bekymring.</span>';
+                return;
+            }
+
+            aiResponseDiv.innerHTML = 'Laster AI-råd...';
+
+            try {
+                let chatHistory = [];
+                chatHistory.push({ role: "user", parts: [{ text: `Gi et kort og konkret råd for følgende IT-prosjektutfordring: "${userRiskInput}". Fokuser på tekniske eller strategiske aspekter. Svar i Norwegian.` }] });
+                const payload = { contents: chatHistory };
+                const apiKey = ""; 
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+                
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                
+                const result = await response.json();
+
+                if (result.candidates && result.candidates.length > 0 &&
+                    result.candidates[0].content && result.candidates[0].content.parts &&
+                    result.candidates[0].content.parts.length > 0) {
+                    const text = result.candidates[0].content.parts[0].text;
+                    aiResponseDiv.innerHTML = text;
+                } else {
+                    aiResponseDiv.innerHTML = '<span class="text-red-600">Kunne ikke hente AI-råd. Prøv igjen.</span>';
+                }
+            } catch (error) {
+                console.error('Feil ved henting av AI-råd:', error);
+                aiResponseDiv.innerHTML = '<span class="text-red-600">Det oppstod en feil. Kontroller nettverkstilkoblingen eller prøv igjen senere.</span>';
+            }
+        });
+    </script>
+</body>
+</html>
