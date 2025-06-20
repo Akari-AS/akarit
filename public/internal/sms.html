@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="no" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infografikk: Velge Riktig SMS-Leverandør for Byråer i Norge</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 320px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+        .flow-arrow::after {
+            content: '→';
+            font-size: 2rem;
+            color: #F5B700;
+            margin: 0 0.5rem;
+        }
+        .flow-arrow-down::after {
+            content: '↓';
+            font-size: 2rem;
+            color: #F5B700;
+        }
+    </style>
+</head>
+<body class="bg-slate-100 text-slate-800">
+
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-3">
+            <div class="flex justify-between items-center">
+                <div class="text-xl font-bold text-slate-800">SMS for Byråer</div>
+                <div class="hidden md:flex space-x-6">
+                    <a href="#market" class="text-slate-600 hover:text-[#00A6FB]">Markedet</a>
+                    <a href="#models" class="text-slate-600 hover:text-[#00A6FB]">Forretningsmodeller</a>
+                    <a href="#comparison" class="text-slate-600 hover:text-[#00A6FB]">Sammenligning</a>
+                    <a href="#recommendations" class="text-slate-600 hover:text-[#00A6FB]">Anbefalinger</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container mx-auto p-4 md:p-8">
+
+        <section id="intro" class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-extrabold mb-4 text-[#00A6FB]">Naviger i SMS-jungelen</h1>
+            <p class="text-lg md:text-xl text-slate-600 max-w-3xl mx-auto">En visuell guide for byråer som vil tilby SMS-tjenester i Norge. Ta datadrevne beslutninger for å velge riktig partner og strategi.</p>
+        </section>
+
+        <section id="market" class="mb-12 scroll-mt-20">
+            <h2 class="text-3xl font-bold text-center mb-8">Markedslandskapet i Norge</h2>
+            <div class="bg-white rounded-lg shadow-lg p-6 md:p-8">
+                <h3 class="text-xl font-bold text-center mb-2">Fra operatør til sluttbruker</h3>
+                <p class="text-center text-slate-600 mb-6">All SMS-trafikk i Norge må gå gjennom mobilnetteierne (MNO), men byråer kobler seg nesten alltid på via en mellomliggende leverandør (aggregator/CPaaS).</p>
+                <div class="flex flex-col md:flex-row justify-center items-center text-center gap-4">
+                    <div class="p-4 bg-slate-200 rounded-lg w-full md:w-auto">
+                        <p class="font-bold text-lg">Mobilnetteiere (MNO)</p>
+                        <p class="text-sm">Telenor & Telia</p>
+                    </div>
+                    <div class="flow-arrow-down md:flow-arrow"></div>
+                    <div class="p-4 bg-sky-200 rounded-lg w-full md:w-auto">
+                        <p class="font-bold text-lg text-[#00A6FB]">Aggregatør / CPaaS</p>
+                        <p class="text-sm">(LINK, Twilio, Sveve, etc.)</p>
+                    </div>
+                    <div class="flow-arrow-down md:flow-arrow"></div>
+                    <div class="p-4 bg-purple-200 rounded-lg w-full md:w-auto">
+                        <p class="font-bold text-lg text-violet-600">Ditt Byrå</p>
+                        <p class="text-sm">(Som videreselger)</p>
+                    </div>
+                     <div class="flow-arrow-down md:flow-arrow"></div>
+                    <div class="p-4 bg-pink-200 rounded-lg w-full md:w-auto">
+                        <p class="font-bold text-lg text-[#DC0073]">Dine Kunder</p>
+                        <p class="text-sm">(Bedrifter)</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="models" class="mb-12 scroll-mt-20">
+            <h2 class="text-3xl font-bold text-center mb-8">Velg Riktig Forretningsmodell</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <h3 class="text-2xl font-bold text-[#DC0073] mb-4">Partner / Referral</h3>
+                    <p class="text-slate-600 mb-6">Dere fungerer som en agent for leverandøren. Lav risiko og lav operasjonell byrde, men mindre kontroll og lavere marginer.</p>
+                    <ul class="space-y-3">
+                        <li class="flex items-start"><span class="text-green-500 mr-2">✓</span> <span>**Ansvar:** Leverandøren tar seg av fakturering og teknisk support.</span></li>
+                        <li class="flex items-start"><span class="text-green-500 mr-2">✓</span> <span>**Inntektsmodell:** Provisjonsbasert.</span></li>
+                        <li class="flex items-start"><span class="text-green-500 mr-2">✓</span> <span>**Branding:** Co-branded. Kunden vet de bruker en tredjepart.</span></li>
+                        <li class="flex items-start"><span class="text-red-500 mr-2">✗</span> <span>**Ulempe:** Ingen kontroll over prissetting og kundeopplevelse.</span></li>
+                        <li class="flex items-start"><span class="text-blue-500 mr-2 font-bold">→</span> <span>**Passer for:** Rask markedstilgang med minimale ressurser.</span></li>
+                    </ul>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <h3 class="text-2xl font-bold text-[#00EBB3] mb-4">White-Label Reseller</h3>
+                    <p class="text-slate-600 mb-6">Dere kjøper tjenester engros og videreselger dem under eget merkenavn. Mer kontroll, høyere marginer, men også mer ansvar.</p>
+                     <ul class="space-y-3">
+                        <li class="flex items-start"><span class="text-green-500 mr-2">✓</span> <span>**Ansvar:** Dere håndterer all kundekontakt, support (nivå 1) og fakturering.</span></li>
+                        <li class="flex items-start"><span class="text-green-500 mr-2">✓</span> <span>**Inntektsmodell:** Dere setter egne priser og beholder hele marginen.</span></li>
+                        <li class="flex items-start"><span class="text-green-500 mr-2">✓</span> <span>**Branding:** Full kontroll. Tjenesten er deres egen.</span></li>
+                        <li class="flex items-start"><span class="text-red-500 mr-2">✗</span> <span>**Ulempe:** Krever mer ressurser for support og administrasjon.</span></li>
+                        <li class="flex items-start"><span class="text-blue-500 mr-2 font-bold">→</span> <span>**Passer for:** Byråer som vil eie kundeforholdet og bygge egen merkevare.</span></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="comparison" class="mb-12 scroll-mt-20">
+            <h2 class="text-3xl font-bold text-center mb-8">Sammenligning av Leverandører</h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <h3 class="text-xl font-bold text-center mb-2">Estimert Månedspris (TCO)</h3>
+                    <p class="text-center text-slate-600 mb-4">Total kostnad for en liten kunde med 2.000 SMS/måned. Lavere er bedre.</p>
+                    <div class="chart-container">
+                        <canvas id="tcoBarChart"></canvas>
+                    </div>
+                    <p class="text-center text-xs mt-4 text-slate-500">Priser er estimater basert på offentlig informasjon, ekskl. MVA.</p>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <h3 class="text-xl font-bold text-center mb-2">Kvalitativ Vurdering</h3>
+                    <p class="text-center text-slate-600 mb-4">En sammenligning av leverandørene på tvers av nøkkelegenskaper. Større område er bedre.</p>
+                     <div class="chart-container">
+                        <canvas id="providerRadarChart"></canvas>
+                    </div>
+                    <p class="text-center text-xs mt-4 text-slate-500">Vurderinger (1-5) er basert på rapportens analyse.</p>
+                </div>
+
+                <div class="lg:col-span-2 bg-white rounded-lg shadow-lg p-6">
+                    <h3 class="text-xl font-bold text-center mb-4">Funksjonsoversikt</h3>
+                     <div class="overflow-x-auto">
+                        <table class="w-full text-sm text-left">
+                            <thead class="text-xs text-slate-700 uppercase bg-slate-100">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3">Funksjon</th>
+                                    <th scope="col" class="px-6 py-3 text-center">LINK Mobility</th>
+                                    <th scope="col" class="px-6 py-3 text-center">Twilio</th>
+                                    <th scope="col" class="px-6 py-3 text-center">Sveve</th>
+                                    <th scope="col" class="px-6 py-3 text-center">KeySMS</th>
+                                    <th scope="col" class="px-6 py-3 text-center">Intellipush</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="bg-white border-b">
+                                    <td class="px-6 py-4 font-medium">Partner/Reseller Program</td>
+                                    <td class="px-6 py-4 text-center text-green-500 font-bold">Ja (Tiered)</td>
+                                    <td class="px-6 py-4 text-center text-yellow-500">Indirekte</td>
+                                    <td class="px-6 py-4 text-center text-red-500">Nei</td>
+                                    <td class="px-6 py-4 text-center text-red-500">Nei</td>
+                                    <td class="px-6 py-4 text-center text-green-500 font-bold">Ja</td>
+                                </tr>
+                                <tr class="bg-slate-50 border-b">
+                                    <td class="px-6 py-4 font-medium">API Type</td>
+                                    <td class="px-6 py-4 text-center">REST</td>
+                                    <td class="px-6 py-4 text-center">REST</td>
+                                    <td class="px-6 py-4 text-center">REST/HTTP</td>
+                                    <td class="px-6 py-4 text-center">Multi</td>
+                                    <td class="px-6 py-4 text-center">REST (OAuth 2)</td>
+                                </tr>
+                                 <tr class="bg-white border-b">
+                                    <td class="px-6 py-4 font-medium">Toveis-SMS</td>
+                                    <td class="px-6 py-4 text-center text-green-500">Ja</td>
+                                    <td class="px-6 py-4 text-center text-green-500">Ja</td>
+                                    <td class="px-6 py-4 text-center text-green-500">Ja</td>
+                                    <td class="px-6 py-4 text-center text-green-500">Ja</td>
+                                    <td class="px-6 py-4 text-center text-green-500">Ja</td>
+                                </tr>
+                                 <tr class="bg-slate-50 border-b">
+                                    <td class="px-6 py-4 font-medium">RCS Support</td>
+                                    <td class="px-6 py-4 text-center text-green-500 font-bold">Ja</td>
+                                    <td class="px-6 py-4 text-center text-green-500">Ja</td>
+                                    <td class="px-6 py-4 text-center text-red-500">Nei</td>
+                                    <td class="px-6 py-4 text-center text-red-500">Nei</td>
+                                    <td class="px-6 py-4 text-center text-red-500">Nei</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="recommendations" class="mb-12 scroll-mt-20">
+            <h2 class="text-3xl font-bold text-center mb-8">Strategiske Anbefalinger</h2>
+            <div class="bg-white rounded-lg shadow-lg p-6 md:p-8">
+                <h3 class="text-xl font-bold text-center mb-6">Hvilken vei passer for dere?</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-center">
+
+                    <div>
+                        <div class="p-6 bg-rose-100 border-2 border-dashed border-[#DC0073] rounded-lg h-full flex flex-col justify-center">
+                            <h4 class="text-xl font-bold text-[#DC0073]">MÅL: Lav Risiko & Rask Start</h4>
+                            <p class="text-slate-700 my-4">Dere vil minimere operasjonell byrde og levere en anerkjent tjeneste raskt.</p>
+                            <div class="text-4xl my-4">↓</div>
+                            <h5 class="font-bold text-lg">Velg en Partner-strategi</h5>
+                            <div class="p-4 mt-4 bg-white rounded-lg shadow-md">
+                                <p class="font-bold text-xl text-blue-600">ANBEFALING: LINK Mobility</p>
+                                <p class="text-sm mt-2">Deres modne partnerprogram gir solid støtte og en troverdig merkevare. Gir en klar oppgraderingsvei til andre kanaler (RCS, WhatsApp).</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="p-6 bg-emerald-100 border-2 border-dashed border-[#00EBB3] rounded-lg h-full flex flex-col justify-center">
+                            <h4 class="text-xl font-bold text-[#00EBB3]">MÅL: Maksimal Kontroll & Profit</h4>
+                            <p class="text-slate-700 my-4">Dere vil eie kundeforholdet, bygge egen merkevare og kontrollere prissettingen.</p>
+                             <div class="text-4xl my-4">↓</div>
+                            <h5 class="font-bold text-lg">Velg en White-Label strategi</h5>
+                            <div class="p-4 mt-4 bg-white rounded-lg shadow-md">
+                                <p class="font-bold text-xl text-green-600">ANBEFALING: Intellipush</p>
+                                <p class="text-sm mt-2">Norsk leverandør som aktivt søker partnere. Moderne API og en fleksibel prismodell uten faste kostnader gir en lav-risiko inngang til en fullverdig reseller-modell.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+    </main>
+    
+    <footer class="text-center p-6 bg-slate-800 text-white">
+        <p>Infografikk generert basert på markedsanalyse. Alle data er hentet fra offentlig tilgjengelig informasjon per juni 2025.</p>
+    </footer>
+
+    <script>
+        const chartTooltipOptions = {
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        title: function(tooltipItems) {
+                            const item = tooltipItems[0];
+                            let label = item.chart.data.labels[item.dataIndex];
+                            if (Array.isArray(label)) {
+                              return label.join(' ');
+                            } else {
+                              return label;
+                            }
+                        }
+                    }
+                }
+            }
+        };
+
+        const tcoBarCtx = document.getElementById('tcoBarChart').getContext('2d');
+        const tcoBarChart = new Chart(tcoBarCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Sveve', 'KeySMS (Premium)', 'Twilio', 'Intellipush'],
+                datasets: [{
+                    label: 'Estimert månedskostnad (NOK)',
+                    data: [1169, 1279, 1310, 1880],
+                    backgroundColor: [
+                        '#DC0073',
+                        '#F5B700',
+                        '#00A6FB',
+                        '#00EBB3'
+                    ],
+                    borderColor: [
+                        '#DC0073',
+                        '#F5B700',
+                        '#00A6FB',
+                        '#00EBB3'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                ...chartTooltipOptions,
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Kostnad i NOK'
+                        }
+                    }
+                },
+                plugins: {
+                    ...chartTooltipOptions.plugins,
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        });
+
+        const providerRadarCtx = document.getElementById('providerRadarChart').getContext('2d');
+        const providerRadarChart = new Chart(providerRadarCtx, {
+            type: 'radar',
+            data: {
+                labels: ['API & Docs', 'Partnerprogram', 'Pris/TCO', 'Lokal Support', 'Skalerbarhet (RCS+)'],
+                datasets: [{
+                    label: 'LINK Mobility',
+                    data: [4, 5, 3, 4, 5],
+                    fill: true,
+                    backgroundColor: 'rgba(0, 166, 251, 0.2)',
+                    borderColor: '#00A6FB',
+                    pointBackgroundColor: '#00A6FB',
+                }, {
+                    label: 'Intellipush',
+                    data: [4, 4, 4, 5, 2],
+                    fill: true,
+                    backgroundColor: 'rgba(0, 235, 179, 0.2)',
+                    borderColor: '#00EBB3',
+                    pointBackgroundColor: '#00EBB3',
+                },
+                {
+                    label: 'Twilio',
+                    data: [5, 3, 3, 2, 5],
+                    fill: true,
+                    backgroundColor: 'rgba(245, 183, 0, 0.2)',
+                    borderColor: '#F5B700',
+                    pointBackgroundColor: '#F5B700',
+                }]
+            },
+            options: {
+                ...chartTooltipOptions,
+                responsive: true,
+                maintainAspectRatio: false,
+                elements: {
+                  line: {
+                    borderWidth: 3
+                  }
+                },
+                scales: {
+                    r: {
+                        angleLines: {
+                            display: false
+                        },
+                        suggestedMin: 0,
+                        suggestedMax: 5,
+                         pointLabels: {
+                            font: {
+                                size: 11
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
