@@ -900,8 +900,6 @@
                 chatHistory.push({ role: "user", parts: [{ text: `Basert på følgende forskningskontekst om IT-prosjekter og e-postmigrering:\n\n${researchContext}\n\nGi et kort og konkret råd for følgende IT-prosjektutfordring: "${userRiskInput}". Fokuser på tekniske eller strategiske aspekter og referer gjerne til relevant innsikt fra konteksten om nødvendig. Svar i Norwegian.` }] });
                 const payload = { contents: chatHistory };
                 // Sett inn API-nøkkelen din her
-                const apiKey = "AIzaSyB8LgO6TZckgaccEtvDVofbL82ZkhRy5gw"; 
-                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
                 
                 const response = await fetch(apiUrl, {
                     method: 'POST',
