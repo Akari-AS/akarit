@@ -1,0 +1,59 @@
+/* Custom styles basert på Akari's designmanual */
+body {
+    font-family: 'DM Sans', sans-serif;
+}
+
+/* ENDRET: Standard fontvekt for overskrifter er nå 'light' (300) */
+h1, h2, h3 {
+    font-family: 'Red Hat Display', sans-serif;
+    font-weight: 300; /* Bruker den lette versjonen som standard */
+}
+.slide {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    position: relative;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+/* --- Bakgrunnstemaer --- */
+.bg-mork {
+    background-image: url('../assets/backgrounds/presentasjon-mork.svg');
+    color: #F3FCF8;
+}
+.bg-lys {
+    background-image: url('../assets/backgrounds/presentasjon-lys.svg');
+    color: #064F55;
+}
+
+/* --- Diverse stiler --- */
+.bg-teal-dark { background-color: #064F55; }
+.bg-teal-light { background-color: #1DD1B6; }
+.bg-glacier { background-color: #F3FCF8; }
+.text-teal-dark { color: #064F55; }
+.text-teal-light { color: #1DD1B6; }
+.text-glacier { color: #F3FCF8; }
+
+/* --- Fragmenter og animasjoner (Uendret) --- */
+.fragment { opacity: 0; transform: translateY(20px); transition: all 0.5s ease-out; }
+.fragment.visible { opacity: 1; transform: translateY(0); }
+.fragment.from-left { transform: translateX(-50px); }
+.fragment.from-left.visible { transform: translateX(0); }
+#image-viewport { width: 100%; min-height: 450px; background-size: cover; background-position: center center; transition: background-image 0.4s ease-in-out; border-radius: 0.5rem; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); }
+@keyframes ken-burns-zoom { 0% { background-size: 100%; background-position: center center; } 100% { background-size: 140%; background-position: 50% 25%; } }
+.zoom-effect { animation: ken-burns-zoom 8s ease-in-out forwards; }
+@keyframes shake { 10%, 90% { transform: translateX(-1px) rotate(2deg); } 20%, 80% { transform: translateX(2px) rotate(2deg); } 30%, 50%, 70% { transform: translateX(-4px) rotate(2deg); } 40%, 60% { transform: translateX(4px) rotate(2deg); } }
+@keyframes pulse-opacity { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
+.shake-on-visible.visible { transform: translateY(0) rotate(2deg); animation: shake 0.82s cubic-bezier(.36,.07,.19,.97), pulse-opacity 2.5s ease-in-out 0.9s infinite; }
+
+/* --- Diskret slide-navigasjon --- */
+.slide-nav { position: fixed; bottom: 1rem; left: 50%; transform: translateX(-50%); z-index: 100; display: flex; align-items: center; gap: 0.75rem; }
+.slide-nav-arrow { color: rgba(6, 79, 85, 0.6); transition: color 0.2s ease-in-out; }
+.slide-nav-arrow:hover { color: rgba(6, 79, 85, 1); }
+.slide-nav-arrow.disabled { color: rgba(6, 79, 85, 0.2); pointer-events: none; }
+.slide-nav-counter { color: rgba(6, 79, 85, 0.6); font-size: 0.875rem; font-weight: 500; min-width: 40px; text-align: center; }
