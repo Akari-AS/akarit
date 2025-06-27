@@ -1,7 +1,7 @@
 <section id="slide-5" class="slide bg-mork">
     <div class="grid md:grid-cols-2 gap-12 items-center max-w-6xl">
         <div class="fragment">
-             <img src="assets/akari-team.jpg" alt="Personer i et møte hos Akari" class="rounded-lg shadow-2xl w-full h-auto object-cover">
+             <img src="assets/honefoss-2.jpg" alt="Personer i et møte hos Akari" class="rounded-lg shadow-2xl w-full h-auto object-cover">
         </div>
         <div class="text-left">
             <h2 class="text-4xl md:text-5xl font-black mb-6">Steg 2: Fra digitalt til <em class="font-normal text-teal-light">fysisk</em></h2>
