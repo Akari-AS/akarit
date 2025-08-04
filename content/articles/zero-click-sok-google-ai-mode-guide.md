@@ -38,7 +38,7 @@ Den nye førstepremien i SEO er å bli sitert som kilde i et AI Overview. Dette 
 
 * **Svar direkte på spørsmål:** Strukturer innholdet ditt for å gi klare, konsise og faktabaserte svar, gjerne tidlig i artikkelen. Bruk overskrifter som stiller spørsmål.
 * **Bruk strukturerte data (Schema Markup):** Hjelp Google med å forstå innholdet ditt ved å implementere schema for "FAQ", "HowTo" og lignende. Dette gjør det enklere for AI-en å hente ut informasjonen din.
-* **Doble ned på E-E-A-T:** Vis din Erfaring, Ekspertise, Autoritet og Troverdighet (Experience, Expertise, Authoritativeness, Trust). Dette er viktigere enn noensinne for at Google skal stole på innholdet ditt.
+* **Doble fokuset på E-E-A-T:** Vis din Erfaring, Ekspertise, Autoritet og Troverdighet (Experience, Expertise, Authoritativeness, Trust). Dette er viktigere enn noensinne for at Google skal stole på innholdet ditt.
 
 #### Strategi 2: Fokuser på innhold AI ikke kan erstatte
 
