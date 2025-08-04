@@ -5,7 +5,7 @@ date: "2025-08-04"
 slug: "google-gemini-sommer-2025-oppdateringer"
 excerpt: "Mens vi har nytt sommeren, har Google skrudd opp tempoet. Her er en oversikt over de viktigste Gemini-oppdateringene fra juni til august 2025, inkludert Gemini 2.5, AI i Søk og nye app-funksjoner."
 meta_description: "En komplett guide til sommerens nyheter i Google Gemini. Lær om de nye AI-modellene, store endringer i Google Søk, og hvordan de nye funksjonene kan påvirke din bedrift."
-image: "/assets/img/articles/google-gemini-sommer-2025.jpg"
+image: "/assets/img/articles/google-gemini-sommer-2025.jpeg"
 ---
 
 **Velkommen tilbake fra sommerferie! Mens du har koblet av, har Googles AI-utviklingsteam jobbet på høygir. Sommeren 2025 har brakt med seg en bølge av betydelige oppdateringer til Gemini-økosystemet, fra kraftigere AI-modeller til fundamentale endringer i hvordan vi bruker Google Søk.**
