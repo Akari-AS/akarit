@@ -5,7 +5,7 @@ date: "2025-08-29"
 slug: "nis2-google-workspace-guide"
 excerpt: "NIS2-direktivet kommer, og det stiller strenge krav til cybersikkerhet. Oppdag hvordan Google Workspace gir deg verktøyene du trenger for risikostyring, rapportering og sikkerhet."
 meta_description: "En praktisk guide til hvordan norske SMB-er kan bruke Google Workspace for å oppfylle kravene i EUs NIS2-direktiv. Lær om sikkerhetstiltak, rapportering og risikohåndtering."
-image: "/assets/img/articles/nis2-google-workspace.jpg"
+image: "/assets/img/articles/nis2-google-workspace.png"
 ---
 
 **Et nytt og omfattende EU-direktiv om cybersikkerhet er på vei. Det heter NIS2, og det vil snart stille strenge krav til tusenvis av norske bedrifter. Mange ledere er usikre på hva det innebærer, men den gode nyheten er at hvis du allerede bruker Google Workspace, har du et solid fundament for å møte kravene.**
