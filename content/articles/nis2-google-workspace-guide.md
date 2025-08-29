@@ -34,6 +34,15 @@ Plattformen er bygget på en "security-first"-modell og gir deg verktøy for å 
 * **2-trinns bekreftelse (2SV):** Dette er det viktigste enkelttiltaket for å sikre brukerkontoer. Du kan kreve at alle ansatte bruker 2SV for å forhindre uautorisert tilgang.
 * **Kontekstbevisst tilgang:** (Context-Aware Access) Gå et skritt videre og sett regler for *hvor* og *hvordan* ansatte kan logge på. For eksempel kan du blokkere pålogginger fra ukjente land eller kreve at enheten er kryptert.
 
+
+<br>
+<video width="100%" controls>
+  <source src="/public/assets/video/nis4.mp4" type="video/mp4">
+  Nettleseren din støtter ikke video-avspilling.
+</video>
+<br>
+
+
 ### 2. Hendelseshåndtering og rapportering
 
 **Kravet:** Ved en alvorlig sikkerhetshendelse, må du varsle myndighetene innen 24 timer (første varsel) og levere en detaljert rapport innen 72 timer. Dette krever at du har systemer for å oppdage og analysere trusler raskt.
