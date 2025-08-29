@@ -37,7 +37,7 @@ Plattformen er bygget på en "security-first"-modell og gir deg verktøy for å 
 
 <br>
 <video width="100%" controls>
-  <source src="/public/assets/video/nis2.mp4" type="video/mp4">
+  <source src="/assets/video/nis2.mp4" type="video/mp4">
   Nettleseren din støtter ikke video-avspilling.
 </video>
 <br>
