@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salgsprognose Dashbord V4</title>
+    <!-- Tailwind CSS CDN for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+            color: #1f2937;
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+    <div class="container mx-auto max-w-7xl">
+        <!-- Main Dashboard Card -->
+        <div class="bg-white rounded-2xl shadow-xl p-6 md:p-10 mb-8">
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-2">Salgsprognose og Ressursanalyse V4 (12 mnd)</h1>
+            <p class="text-lg text-gray-600 mb-8">
+                En oversikt over planlagt salg, pipeline og ressurser basert på dine data.
+            </p>
+
+            <!-- Charts and Data Visualization Section -->
+            <div id="content">
+                <!-- Sales and Pipeline Chart -->
+                <div class="bg-gray-50 rounded-xl p-4 md:p-6 mb-8 shadow-sm">
+                    <h2 class="text-xl md:text-2xl font-semibold mb-4 text-gray-800">Salg og Pipeline over tid</h2>
+                    <div class="w-full h-80">
+                        <canvas id="salesPipelineChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Resource Visualization Section -->
+                <div class="bg-gray-50 rounded-xl p-4 md:p-6 shadow-sm">
+                    <h2 class="text-xl md:text-2xl font-semibold mb-4 text-gray-800">Ressursdata</h2>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full bg-white rounded-lg shadow-sm">
+                            <thead class="bg-gray-200">
+                                <tr id="resourceTableHead" class="text-left"></tr>
+                            </thead>
+                            <tbody id="resourceTableBody" class="divide-y divide-gray-200">
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="mt-8">
+                        <h3 class="text-xl font-medium mb-2 text-gray-800">Mulig Omsetning</h3>
+                        <div id="revenueCards" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                            <!-- Revenue cards will be injected here -->
+                        </div>
+                    </div>
+                    <div class="mt-8">
+                        <h3 class="text-xl font-medium mb-2 text-gray-800">Månedlig Salg og Pipeline</h3>
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full bg-white rounded-lg shadow-sm">
+                                <thead class="bg-gray-200">
+                                    <tr id="monthlyTotalsTableHead" class="text-left"></tr>
+                                </thead>
+                                <tbody id="monthlyTotalsTableBody" class="divide-y divide-gray-200">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Papa Parse for CSV parsing -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+    <!-- Chart.js for data visualization -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script>
+        // LEGG INN INNHOLDET FRA DINE CSV-FILER MELLOM TIL FØLGENDE VARIABLER
+
+        // Lim inn innholdet fra 'Rullerende pipeline - Salg - Salg.csv' her
+        const salesText = `Avtaletype (Solgt),august 2025,september 2025,oktober 2025,november 2025,desember 2025,januar 2026,februar 2026,mars 2026,april 2026,mai 2026,juni 2026,juli 2026,august 2026,september 2026,oktober 2026,november 2026,desember 2026,januar 2027,februar 2027,mars 2027,april 2027,mai 2027,juni 2027,juli 2027,august 2027,september 2027,oktober 2027,november 2027,desember 2027
+Rammeavtale 12 mnd
+Prosjekt 2 mnd,1 255 600 kr,,130 000 kr
+Prosjekt 6 mnd,139 000 kr
+Fastprisavtale 12 mnd,598 100 kr,1 200 000 kr
+Anbud 12 mnd
+Anbud 24 mnd
+Anbud 36 mnd
+Driftsavtaler 12 mnd,23 760 kr
+Totalt,1 992 760 kr,1 200 000 kr,130 000 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr`;
+
+        // Lim inn innholdet fra 'Rullerende pipeline - Salg - Pipeline.csv' her
+        const pipelineText = `Avtaletype,august 2025,september 2025,oktober 2025,november 2025,desember 2025,januar 2026,februar 2026,mars 2026,april 2026,mai 2026,juni 2026,juli 2026,august 2026,september 2026,oktober 2026,november 2026,desember 2026,januar 2027,februar 2027,mars 2027,april 2027,mai 2027,juni 2027,juli 2027,august 2027,september 2027,oktober 2027,november 2027,desember 2027
+Rammeavtale 12 mnd,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr
+Prosjekt 2 mnd,0 kr,627 800 kr,627 800 kr,65 000 kr,65 000 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr
+Prosjekt 6 mnd,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr
+Fastprisavtale 12 mnd,0 kr,73 000 kr,73 000 kr,73 000 kr,73 000 kr,73 000 kr,73 000 kr,73 000 kr,73 000 kr,73 000 kr,73 000 kr,73 000 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr
+Anbud 12 mnd,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr
+Anbud 24 mnd,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr
+Anbud 36 mnd,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr
+Nye driftsavtaler,0 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr
+Totalt,0 kr,702 788 kr,802 788 kr,239 988 kr,239 988 kr,174 988 kr,174 988 kr,151 822 kr,151 822 kr,151 822 kr,151 822 kr,151 822 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr
+`;
+
+        // Lim inn innholdet fra 'Rullerende pipeline - Salg - Ressurser.csv' her
+        const resourcesText = `Stillingstype,Stillingsprosent,Fakturerbar %,Fakturerbare timer,Antall ansatte,Totalt antall fakturerbare timer,Mulig omsetning
+Produksjon,100%,90%,1485,9,13365,16 305 300 kr
+Produksjon,80%,90%,1188,2,2376,2 898 720 kr
+Produksjon,60%,90%,891,1,891,1 087 020 kr
+Teamleder,100%,60%,990,3,2970,3 623 400 kr
+Kundeutvikler,100%,60%,990,3,2970,3 623 400 kr
+Totalt,,,,18,22572,27 537 840 kr
+
+
+Årsverk,1650
+Timepris,1 220 kr,1 320 kr,1 420 kr
+
+Mulig omsetning pr. år,27 537 840 kr,29 795 040 kr,32 052 240 kr
+Mulig omsetning pr. mnd,2 503 440 kr,2 708 640 kr,2 913 840 kr`;
+        
+        // ------------- Koden starter her (ingen endringer nødvendig under) ----------------
+
+        // Utility function to format numbers as Norwegian currency
+        const formatCurrency = (number) => {
+            return new Intl.NumberFormat('no-NO', {
+                style: 'currency',
+                currency: 'NOK',
+                minimumFractionDigits: 0
+            }).format(number);
+        };
+
+        // Utility function to clean and parse number strings from the CSV
+        const parseNumber = (str) => {
+            if (!str) return 0;
+            // Trim whitespace and remove 'kr', spaces, and replace comma with dot
+            return parseFloat(str.trim().replace(/kr/g, '').replace(/\s/g, '').replace(',', '.'));
+        };
+
+        // Main function to load all data and initialize the dashboard
+        async function loadDashboard() {
+            try {
+                // Parse the CSV data using PapaParse
+                const salesData = Papa.parse(salesText, { header: false, skipEmptyLines: true }).data;
+                const pipelineData = Papa.parse(pipelineText, { header: false, skipEmptyLines: true }).data;
+                const resourceData = Papa.parse(resourcesText, { header: false, skipEmptyLines: true }).data;
+                
+                // Check if data was parsed successfully
+                if (!salesData || !pipelineData || !resourceData) {
+                    throw new Error("Kunne ikke parse alle datafiler.");
+                }
+
+                // Parse and visualize Sales & Pipeline data
+                renderSalesAndPipelineChart(salesData, pipelineData);
+
+                // Parse and visualize Resource data
+                renderResourceData(resourceData);
+
+                // Render monthly totals table
+                renderMonthlyTotals(salesData, pipelineData);
+                
+                // Remove loading spinner
+                const loadingSpinner = document.getElementById('loading');
+                if(loadingSpinner) loadingSpinner.remove();
+
+            } catch (error) {
+                console.error("En feil oppstod under lasting av dashbordet:", error);
+                document.getElementById('content').innerHTML = `<p class="text-red-500">Klarte ikke å laste inn data. Sjekk konsollen for detaljer.</p>`;
+            }
+        }
+
+        function renderSalesAndPipelineChart(salesData, pipelineData) {
+            // Extract month labels from the header row (index 0) of the sales data
+            const labels = salesData[0].slice(1, 13).map(label => {
+                // Capitalize the first letter and return
+                return label.charAt(0).toUpperCase() + label.slice(1);
+            });
+
+            // Find the "Totalt" row in both datasets to get the total values
+            const totalSalesRow = salesData.find(row => row[0].trim() === 'Totalt');
+            const totalPipelineRow = pipelineData.find(row => row[0].trim() === 'Totalt');
+
+            if (!totalSalesRow || !totalPipelineRow) {
+                console.error("Kunne ikke finne 'Totalt'-raden i salgs- eller pipeline-data.");
+                return;
+            }
+
+            // Extract the numerical data, parsing the strings and skipping the first column (label)
+            const salesValues = totalSalesRow.slice(1, 13).map(parseNumber);
+            const pipelineValues = totalPipelineRow.slice(1, 13).map(parseNumber);
+
+            // Get the context of the canvas element
+            const ctx = document.getElementById('salesPipelineChart').getContext('2d');
+
+            // Check if a chart already exists on the canvas and destroy it to avoid duplicates
+            if (Chart.getChart(ctx)) {
+                Chart.getChart(ctx).destroy();
+            }
+
+            // Create a new Chart.js instance
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Totalt salg',
+                        data: salesValues,
+                        backgroundColor: 'rgba(59, 130, 246, 0.8)', // Tailwind blue-500
+                        borderColor: 'rgba(59, 130, 246, 1)',
+                        borderWidth: 1,
+                        borderRadius: 8
+                    }, {
+                        label: 'Totalt pipeline',
+                        data: pipelineValues,
+                        backgroundColor: 'rgba(16, 185, 129, 0.8)', // Tailwind emerald-500
+                        borderColor: 'rgba(16, 185, 129, 1)',
+                        borderWidth: 1,
+                        borderRadius: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Verdi (NOK)',
+                                color: '#4b5563'
+                            },
+                            ticks: {
+                                callback: function(value, index, values) {
+                                    return formatCurrency(value);
+                                }
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Måned',
+                                color: '#4b5563'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                usePointStyle: true,
+                                boxWidth: 10,
+                                font: {
+                                    size: 14
+                                }
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed.y !== null) {
+                                        label += formatCurrency(context.parsed.y);
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function renderResourceData(data) {
+            // Find the header row (Stillingstype, Stillingsprosent, etc.)
+            const headerRow = data[0];
+            const tableHead = document.getElementById('resourceTableHead');
+            tableHead.innerHTML = '';
+            headerRow.forEach(text => {
+                const th = document.createElement('th');
+                th.textContent = text;
+                th.className = "py-3 px-4 font-semibold text-sm text-gray-700 whitespace-nowrap";
+                tableHead.appendChild(th);
+            });
+
+            // Find the data rows and render them
+            const tableBody = document.getElementById('resourceTableBody');
+            tableBody.innerHTML = '';
+            // Exclude the header and any empty/summary rows
+            const dataRows = data.filter(row => row.length > 1 && row[0] && row[0].trim() !== 'Totalt' && row[0].trim() !== 'Stillingstype' && row[0].trim() !== 'Årsverk' && row[0].trim() !== 'Timepris' && row[0].trim() !== 'Mulig omsetning pr. år' && row[0].trim() !== 'Mulig omsetning pr. mnd');
+            dataRows.forEach(row => {
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-gray-50 transition-colors duration-200";
+                row.forEach(cell => {
+                    const td = document.createElement('td');
+                    td.className = "py-3 px-4 text-sm text-gray-600 whitespace-nowrap";
+                    // Format currency for the 'Mulig omsetning' column
+                    if (cell && cell.includes('kr')) {
+                        td.textContent = formatCurrency(parseNumber(cell));
+                    } else {
+                        td.textContent = cell;
+                    }
+                    tr.appendChild(td);
+                });
+                tableBody.appendChild(tr);
+            });
+
+            // Render "Mulig omsetning pr. år" and "Mulig omsetning pr. mnd" as cards
+            const revenueCardsContainer = document.getElementById('revenueCards');
+            revenueCardsContainer.innerHTML = '';
+
+            // Find the "Mulig omsetning pr. år" and "Mulig omsetning pr. mnd" rows
+            const annualRevenueRow = data.find(row => row[0].trim() === 'Mulig omsetning pr. år');
+            const monthlyRevenueRow = data.find(row => row[0].trim() === 'Mulig omsetning pr. mnd');
+
+            if (annualRevenueRow) {
+                const card = document.createElement('div');
+                card.className = "bg-white p-6 rounded-xl shadow-md border border-gray-200";
+                const title = document.createElement('h4');
+                title.className = "text-md font-medium text-gray-500 mb-2";
+                title.textContent = "Mulig Omsetning (pr. år)";
+                const value = document.createElement('p');
+                value.className = "text-3xl font-bold text-gray-800";
+                // Get the first numerical value after the label
+                value.textContent = formatCurrency(parseNumber(annualRevenueRow[1]));
+                card.appendChild(title);
+                card.appendChild(value);
+                revenueCardsContainer.appendChild(card);
+            }
+
+            if (monthlyRevenueRow) {
+                const card = document.createElement('div');
+                card.className = "bg-white p-6 rounded-xl shadow-md border border-gray-200";
+                const title = document.createElement('h4');
+                title.className = "text-md font-medium text-gray-500 mb-2";
+                title.textContent = "Mulig Omsetning (pr. mnd)";
+                const value = document.createElement('p');
+                value.className = "text-3xl font-bold text-gray-800";
+                value.textContent = formatCurrency(parseNumber(monthlyRevenueRow[1]));
+                card.appendChild(title);
+                card.appendChild(value);
+                revenueCardsContainer.appendChild(card);
+            }
+        }
+
+        function renderMonthlyTotals(salesData, pipelineData) {
+            const labels = salesData[0].slice(1, 13);
+            const totalSalesRow = salesData.find(row => row[0].trim() === 'Totalt');
+            const totalPipelineRow = pipelineData.find(row => row[0].trim() === 'Totalt');
+
+            if (!totalSalesRow || !totalPipelineRow) {
+                console.error("Kunne ikke finne 'Totalt'-raden i salgs- eller pipeline-data for månedlig tabell.");
+                return;
+            }
+
+            const salesValues = totalSalesRow.slice(1, 13).map(parseNumber);
+            const pipelineValues = totalPipelineRow.slice(1, 13).map(parseNumber);
+
+            const tableHead = document.getElementById('monthlyTotalsTableHead');
+            const tableBody = document.getElementById('monthlyTotalsTableBody');
+            tableHead.innerHTML = '';
+            tableBody.innerHTML = '';
+
+            // Create header
+            const headerRow = document.createElement('tr');
+            const headers = ['Måned', 'Salg', 'Pipeline', 'Totalt'];
+            headers.forEach(text => {
+                const th = document.createElement('th');
+                th.textContent = text;
+                th.className = "py-3 px-4 font-semibold text-sm text-gray-700 whitespace-nowrap";
+                headerRow.appendChild(th);
+            });
+            tableHead.appendChild(headerRow);
+
+            // Create body rows
+            labels.forEach((label, index) => {
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-gray-50 transition-colors duration-200";
+                
+                const monthCell = document.createElement('td');
+                monthCell.className = "py-3 px-4 text-sm text-gray-600 whitespace-nowrap";
+                monthCell.textContent = label.charAt(0).toUpperCase() + label.slice(1);
+                tr.appendChild(monthCell);
+
+                const salesCell = document.createElement('td');
+                salesCell.className = "py-3 px-4 text-sm text-gray-600 whitespace-nowrap";
+                salesCell.textContent = formatCurrency(salesValues[index]);
+                tr.appendChild(salesCell);
+
+                const pipelineCell = document.createElement('td');
+                pipelineCell.className = "py-3 px-4 text-sm text-gray-600 whitespace-nowrap";
+                pipelineCell.textContent = formatCurrency(pipelineValues[index]);
+                tr.appendChild(pipelineCell);
+
+                const totalCell = document.createElement('td');
+                totalCell.className = "py-3 px-4 text-sm text-gray-800 font-semibold whitespace-nowrap";
+                totalCell.textContent = formatCurrency(salesValues[index] + pipelineValues[index]);
+                tr.appendChild(totalCell);
+
+                tableBody.appendChild(tr);
+            });
+        }
+        
+        // Load the dashboard when the window is loaded
+        window.onload = loadDashboard;
+    </script>
+</body>
+</html>
