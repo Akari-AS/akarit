@@ -7,7 +7,6 @@ const config = {
     sheets: {
         sales: 'Salg',
         pipeline: 'Pipeline',
-        resources: 'Ressurser',
-        budget: 'Budsjett'
+        resources: 'Ressurser'
     }
 };

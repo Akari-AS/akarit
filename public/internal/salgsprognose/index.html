@@ -124,14 +124,13 @@
             try {
                 document.getElementById('content').innerHTML = '<p class="text-center text-gray-600">Laster data fra Google Sheets...</p>';
 
-                const [salesData, pipelineData, resourceData, budgetData] = await Promise.all([
+                const [salesData, pipelineData, resourceData] = await Promise.all([
                     fetchSheetData(config.sheets.sales),
                     fetchSheetData(config.sheets.pipeline),
-                    fetchSheetData(config.sheets.resources),
-                    fetchSheetData(config.sheets.budget)
+                    fetchSheetData(config.sheets.resources)
                 ]);
                 
-                if (!salesData || !pipelineData || !resourceData || !budgetData) {
+                if (!salesData || !pipelineData || !resourceData) {
                     throw new Error("En eller flere datakilder fra Google Sheets er tomme eller utilgjengelige.");
                 }
 
@@ -164,7 +163,7 @@
                 `;
 
                 renderSalesAndPipelineChart(salesData, pipelineData);
-                renderBudgetData(salesData, pipelineData, budgetData);
+                renderBudgetData(salesData, pipelineData); // Pass only pipelineData for budget
                 renderResourceData(resourceData);
                 renderMonthlyTotals(salesData, pipelineData);
 
@@ -227,14 +226,27 @@
             });
         }
 
-        function renderBudgetData(salesData, pipelineData, budgetData) {
+        function renderBudgetData(salesData, pipelineData) {
             const labels = salesData[0].slice(1, 13).map(label => (label.charAt(0).toUpperCase() + label.slice(1)));
             const totalSalesRow = salesData.find(row => row[0] && row[0].trim().toLowerCase() === 'totalt');
             const totalPipelineRow = pipelineData.find(row => row[0] && row[0].trim().toLowerCase() === 'totalt');
-            const budgetRow = budgetData.find(row => row[0] && row[0].trim().toLowerCase() === 'budsjett');
+            // Fetch budget row from within the pipeline data
+            const budgetRow = pipelineData.find(row => row[0] && row[0].trim().toLowerCase() === 'budsjett');
 
             if (!totalSalesRow || !totalPipelineRow || !budgetRow) {
-                console.error("Kunne ikke finne 'Totalt'-raden i salgs/pipeline-data eller 'Budsjett'-raden i budsjett-data.");
+                console.error("Kunne ikke finne 'Totalt'-raden i salgs/pipeline-data eller 'Budsjett'-raden i pipeline-data.");
+                // Clear the canvas or show a message if data is missing
+                const canvas = document.getElementById('budgetChart');
+                if (canvas) {
+                    const ctx = canvas.getContext('2d');
+                    if (Chart.getChart(ctx)) {
+                        Chart.getChart(ctx).destroy();
+                    }
+                    ctx.font = "16px 'Inter', sans-serif";
+                    ctx.fillStyle = '#6b7280';
+                    ctx.textAlign = 'center';
+                    ctx.fillText("Budsjett-data ikke funnet i 'Pipeline'-arket.", canvas.width / 2, canvas.height / 2);
+                }
                 return;
             }
 
