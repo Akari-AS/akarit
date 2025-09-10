@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salgsprognose dashbord v6</title>
+    <!-- Tailwind CSS CDN for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+            color: #1f2937;
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+    <div class="container mx-auto max-w-7xl">
+        <!-- Main Dashboard Card -->
+        <div class="bg-white rounded-2xl shadow-xl p-6 md:p-10 mb-8">
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-2">Salgsprognose og ressursanalyse v6 (12 mnd)</h1>
+            <p class="text-lg text-gray-600 mb-8">
+                En oversikt over planlagt salg, pipeline og ressurser basert på dine data.
+            </p>
+
+            <!-- Charts and Data Visualization Section -->
+            <div id="content">
+                <!-- Sales and Pipeline Chart -->
+                <div class="bg-gray-50 rounded-xl p-4 md:p-6 mb-8 shadow-sm">
+                    <h2 class="text-xl md:text-2xl font-semibold mb-4 text-gray-800">Salg og pipeline over tid</h2>
+                    <div class="w-full h-80">
+                        <canvas id="salesPipelineChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Resource Visualization Section -->
+                <div class="bg-gray-50 rounded-xl p-4 md:p-6 shadow-sm">
+                    <h2 class="text-xl md:text-2xl font-semibold mb-4 text-gray-800">Ressursdata</h2>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full bg-white rounded-lg shadow-sm">
+                            <thead class="bg-gray-200">
+                                <tr id="resourceTableHead" class="text-left"></tr>
+                            </thead>
+                            <tbody id="resourceTableBody" class="divide-y divide-gray-200">
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="mt-8">
+                        <h3 class="text-xl font-medium mb-2 text-gray-800">Mulig omsetning</h3>
+                        <div id="revenueCards" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                            <!-- Revenue cards will be injected here -->
+                        </div>
+                    </div>
+                    <div class="mt-8">
+                        <h3 class="text-xl font-medium mb-2 text-gray-800">Månedlig salg og pipeline</h3>
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full bg-white rounded-lg shadow-sm">
+                                <thead class="bg-gray-200">
+                                    <tr id="monthlyTotalsTableHead"></tr>
+                                </thead>
+                                <tbody id="monthlyTotalsTableBody" class="divide-y divide-gray-200">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Papa Parse for CSV parsing -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+    <!-- Chart.js for data visualization -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script>
+        // LEGG INN INNHOLDET FRA DINE CSV-FILER MELLOM TIL FØLGENDE VARIABLER
+        const salesText = `Avtaletype (Solgt),august 2025,september 2025,oktober 2025,november 2025,desember 2025,januar 2026,februar 2026,mars 2026,april 2026,mai 2026,juni 2026,juli 2026,august 2026,september 2026,oktober 2026,november 2026,desember 2026,januar 2027,februar 2027,mars 2027,april 2027,mai 2027,juni 2027,juli 2027,august 2027,september 2027,oktober 2027,november 2027,desember 2027
+Rammeavtale 12 mnd
+Prosjekt 2 mnd,1 255 600 kr,,130 000 kr
+Prosjekt 6 mnd,139 000 kr
+Fastprisavtale 12 mnd,598 100 kr,1 200 000 kr
+Anbud 12 mnd
+Anbud 24 mnd
+Anbud 36 mnd
+Driftsavtaler 12 mnd,23 760 kr
+Totalt,1 992 760 kr,1 200 000 kr,130 000 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr`;
+
+        const pipelineText = `Avtaletype,august 2025,september 2025,oktober 2025,november 2025,desember 2025,januar 2026,februar 2026,mars 2026,april 2026,mai 2026,juni 2026,juli 2026,august 2026,september 2026,oktober 2026,november 2026,desember 2026,januar 2027,februar 2027,mars 2027,april 2027,mai 2027,juni 2027,juli 2027,august 2027,september 2027,oktober 2027,november 2027,desember 2027
+Rammeavtale 12 mnd,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr
+Prosjekt 2 mnd,0 kr,627 800 kr,627 800 kr,65 000 kr,65 000 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr
+Prosjekt 6 mnd,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr
+Fastprisavtale 12 mnd,0 kr,73 000 kr,73 000 kr,73 000 kr,73 000 kr,73 000 kr,73 000 kr,73 000 kr,73 000 kr,73 000 kr,73 000 kr,73 000 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr
+Anbud 12 mnd,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr
+Anbud 24 mnd,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr
+Anbud 36 mnd,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr
+Nye driftsavtaler,0 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr
+Totalt,0 kr,702 788 kr,802 788 kr,239 988 kr,239 988 kr,174 988 kr,174 988 kr,151 822 kr,151 822 kr,151 822 kr,151 822 kr,151 822 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr
+`;
+
+        const resourcesText = `Stillingstype,Stillingsprosent,Fakturerbar %,Fakturerbare timer,Antall ansatte,Totalt antall fakturerbare timer,Mulig omsetning
+Produksjon,100%,90%,1485,9,13365,16 305 300 kr
+Produksjon,80%,90%,1188,2,2376,2 898 720 kr
+Produksjon,60%,90%,891,1,891,1 087 020 kr
+Teamleder,100%,60%,990,3,2970,3 623 400 kr
+Kundeutvikler,100%,60%,990,3,2970,3 623 400 kr
+Totalt,,,,18,22572,27 537 840 kr
+
+
+Årsverk,1650
+Timepris,1 220 kr,1 320 kr,1 420 kr
+
+Mulig omsetning pr. år,27 537 840 kr,29 795 040 kr,32 052 240 kr
+Mulig omsetning pr. mnd,2 503 440 kr,2 708 640 kr,2 913 840 kr`;
+
+        // Utility function to format numbers as Norwegian currency
+        const formatCurrency = (number) => {
+            return new Intl.NumberFormat('no-NO', {
+                style: 'currency',
+                currency: 'NOK',
+                minimumFractionDigits: 0
+            }).format(number);
+        };
+
+        // Utility function to clean and parse number strings from the CSV
+        const parseNumber = (str) => {
+            if (!str) return 0;
+            return parseFloat(String(str).trim().replace(/kr/g, '').replace(/\s/g, '').replace(',', '.'));
+        };
+
+        // Main function to load all data and initialize the dashboard
+        function loadDashboard() {
+            try {
+                const salesData = Papa.parse(salesText, { header: false, skipEmptyLines: true }).data;
+                const pipelineData = Papa.parse(pipelineText, { header: false, skipEmptyLines: true }).data;
+                const resourceData = Papa.parse(resourcesText, { header: false, skipEmptyLines: true }).data;
+                
+                if (!salesData.length || !pipelineData.length || !resourceData.length) {
+                    throw new Error("En eller flere av de hardkodede dataene er tomme eller feilformatert.");
+                }
+
+                renderSalesAndPipelineChart(salesData, pipelineData);
+                renderResourceData(resourceData);
+                renderMonthlyTotals(salesData, pipelineData);
+
+            } catch (error) {
+                console.error("En feil oppstod under lasting av dashbordet:", error);
+                document.getElementById('content').innerHTML = `<p class="text-red-500">Klarte ikke å laste inn data. Sjekk konsollen for detaljer. Feil: ${error.message}</p>`;
+            }
+        }
+
+        function renderSalesAndPipelineChart(salesData, pipelineData) {
+            const labels = salesData[0].slice(1, 13).map(label => (label.charAt(0).toUpperCase() + label.slice(1)));
+            const totalSalesRow = salesData.find(row => row[0] && row[0].trim().toLowerCase() === 'totalt');
+            const totalPipelineRow = pipelineData.find(row => row[0] && row[0].trim().toLowerCase() === 'totalt');
+
+            if (!totalSalesRow || !totalPipelineRow) {
+                console.error("Kunne ikke finne 'Totalt'-raden i salgs- eller pipeline-data.");
+                return;
+            }
+
+            const salesValues = totalSalesRow.slice(1, 13).map(parseNumber);
+            const pipelineValues = totalPipelineRow.slice(1, 13).map(parseNumber);
+
+            const ctx = document.getElementById('salesPipelineChart').getContext('2d');
+            if (Chart.getChart(ctx)) {
+                Chart.getChart(ctx).destroy();
+            }
+
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Totalt salg',
+                        data: salesValues,
+                        backgroundColor: 'rgba(59, 130, 246, 0.8)',
+                        borderColor: 'rgba(59, 130, 246, 1)',
+                        borderWidth: 1,
+                        borderRadius: 8
+                    }, {
+                        label: 'Totalt pipeline',
+                        data: pipelineValues,
+                        backgroundColor: 'rgba(16, 185, 129, 0.8)',
+                        borderColor: 'rgba(16, 185, 129, 1)',
+                        borderWidth: 1,
+                        borderRadius: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: { beginAtZero: true, title: { display: true, text: 'Verdi (NOK)', color: '#4b5563' }, ticks: { callback: (value) => formatCurrency(value) } },
+                        x: { title: { display: true, text: 'Måned', color: '#4b5563' } }
+                    },
+                    plugins: {
+                        legend: { position: 'top', labels: { usePointStyle: true, boxWidth: 10, font: { size: 14 } } },
+                        tooltip: { callbacks: { label: (context) => `${context.dataset.label || ''}: ${formatCurrency(context.parsed.y || 0)}` } }
+                    }
+                }
+            });
+        }
+
+        function renderResourceData(data) {
+            const headerRow = data[0];
+            const tableHead = document.getElementById('resourceTableHead');
+            tableHead.innerHTML = '';
+            headerRow.forEach(text => {
+                const th = document.createElement('th');
+                th.textContent = text;
+                th.className = "py-3 px-4 font-semibold text-sm text-gray-700 whitespace-nowrap";
+                tableHead.appendChild(th);
+            });
+
+            const tableBody = document.getElementById('resourceTableBody');
+            tableBody.innerHTML = '';
+            const dataRows = data.filter(row => row.length > 1 && row[0] && !['totalt', 'stillingstype', 'årsverk', 'timepris', 'mulig omsetning pr. år', 'mulig omsetning pr. mnd'].includes(row[0].trim().toLowerCase()));
+            dataRows.forEach(row => {
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-gray-50 transition-colors duration-200";
+                row.forEach(cell => {
+                    const td = document.createElement('td');
+                    td.className = "py-3 px-4 text-sm text-gray-600 whitespace-nowrap";
+                    td.textContent = (cell && String(cell).includes('kr')) ? formatCurrency(parseNumber(cell)) : cell;
+                    tr.appendChild(td);
+                });
+                tableBody.appendChild(tr);
+            });
+
+            const revenueCardsContainer = document.getElementById('revenueCards');
+            revenueCardsContainer.innerHTML = '';
+            const annualRevenueRow = data.find(row => row[0] && row[0].trim().toLowerCase() === 'mulig omsetning pr. år');
+            const monthlyRevenueRow = data.find(row => row[0] && row[0].trim().toLowerCase() === 'mulig omsetning pr. mnd');
+
+            if (annualRevenueRow) {
+                const card = document.createElement('div');
+                card.className = "bg-white p-6 rounded-xl shadow-md border border-gray-200";
+                card.innerHTML = `<h4 class="text-md font-medium text-gray-500 mb-2">Mulig omsetning (pr. år)</h4><p class="text-3xl font-bold text-gray-800">${formatCurrency(parseNumber(annualRevenueRow[1]))}</p>`;
+                revenueCardsContainer.appendChild(card);
+            }
+
+            if (monthlyRevenueRow) {
+                const card = document.createElement('div');
+                card.className = "bg-white p-6 rounded-xl shadow-md border border-gray-200";
+                card.innerHTML = `<h4 class="text-md font-medium text-gray-500 mb-2">Mulig omsetning (pr. mnd)</h4><p class="text-3xl font-bold text-gray-800">${formatCurrency(parseNumber(monthlyRevenueRow[1]))}</p>`;
+                revenueCardsContainer.appendChild(card);
+            }
+        }
+
+        function renderMonthlyTotals(salesData, pipelineData) {
+            const labels = salesData[0].slice(1, 13);
+            const totalSalesRow = salesData.find(row => row[0] && row[0].trim().toLowerCase() === 'totalt');
+            const totalPipelineRow = pipelineData.find(row => row[0] && row[0].trim().toLowerCase() === 'totalt');
+
+            if (!totalSalesRow || !totalPipelineRow) return;
+
+            const salesValues = totalSalesRow.slice(1, 13).map(parseNumber);
+            const pipelineValues = totalPipelineRow.slice(1, 13).map(parseNumber);
+
+            const tableHead = document.getElementById('monthlyTotalsTableHead');
+            const tableBody = document.getElementById('monthlyTotalsTableBody');
+            tableHead.innerHTML = '';
+            tableBody.innerHTML = '';
+
+            const headers = ['Måned', 'Salg', 'Pipeline', 'Totalt'];
+            headers.forEach((text, index) => {
+                const th = document.createElement('th');
+                th.textContent = text;
+                th.className = `py-3 px-4 font-semibold text-sm text-gray-700 whitespace-nowrap ${index === 0 ? 'text-left' : 'text-right'}`;
+                tableHead.appendChild(th);
+            });
+
+            labels.forEach((label, index) => {
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-gray-50 transition-colors duration-200";
+                
+                const totalValue = salesValues[index] + pipelineValues[index];
+
+                tr.innerHTML = `
+                    <td class="py-3 px-4 text-sm text-gray-600 whitespace-nowrap text-left">${label.charAt(0).toUpperCase() + label.slice(1)}</td>
+                    <td class="py-3 px-4 text-sm text-gray-600 whitespace-nowrap text-right">${formatCurrency(salesValues[index])}</td>
+                    <td class="py-3 px-4 text-sm text-gray-600 whitespace-nowrap text-right">${formatCurrency(pipelineValues[index])}</td>
+                    <td class="py-3 px-4 text-sm text-gray-800 font-semibold whitespace-nowrap text-right">${formatCurrency(totalValue)}</td>
+                `;
+                tableBody.appendChild(tr);
+            });
+        }
+
+        window.onload = loadDashboard;
+    </script>
+</body>
+</html>
