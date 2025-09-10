@@ -34,6 +34,14 @@
                     </div>
                 </div>
 
+                <!-- Budget vs Actual Chart -->
+                <div class="bg-gray-50 rounded-xl p-4 md:p-6 mb-8 shadow-sm">
+                    <h2 class="text-xl md:text-2xl font-semibold mb-4 text-gray-800">Budsjett vs. Omsetning (Salg + Pipeline)</h2>
+                    <div class="w-full h-80">
+                        <canvas id="budgetChart"></canvas>
+                    </div>
+                </div>
+
                 <!-- Resource Visualization Section -->
                 <div class="bg-gray-50 rounded-xl p-4 md:p-6 shadow-sm">
                     <h2 class="text-xl md:text-2xl font-semibold mb-4 text-gray-800">Ressursdata</h2>
@@ -73,46 +81,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
     <!-- Chart.js for data visualization -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <!-- Config file -->
+    <script src="config.js"></script>
     <script>
-        // LEGG INN INNHOLDET FRA DINE CSV-FILER MELLOM TIL FØLGENDE VARIABLER
-        const salesText = `Avtaletype (Solgt),august 2025,september 2025,oktober 2025,november 2025,desember 2025,januar 2026,februar 2026,mars 2026,april 2026,mai 2026,juni 2026,juli 2026,august 2026,september 2026,oktober 2026,november 2026,desember 2026,januar 2027,februar 2027,mars 2027,april 2027,mai 2027,juni 2027,juli 2027,august 2027,september 2027,oktober 2027,november 2027,desember 2027
-Rammeavtale 12 mnd
-Prosjekt 2 mnd,1 255 600 kr,,130 000 kr
-Prosjekt 6 mnd,139 000 kr
-Fastprisavtale 12 mnd,598 100 kr,1 200 000 kr
-Anbud 12 mnd
-Anbud 24 mnd
-Anbud 36 mnd
-Driftsavtaler 12 mnd,23 760 kr
-Totalt,1 992 760 kr,1 200 000 kr,130 000 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr`;
-
-        const pipelineText = `Avtaletype,august 2025,september 2025,oktober 2025,november 2025,desember 2025,januar 2026,februar 2026,mars 2026,april 2026,mai 2026,juni 2026,juli 2026,august 2026,september 2026,oktober 2026,november 2026,desember 2026,januar 2027,februar 2027,mars 2027,april 2027,mai 2027,juni 2027,juli 2027,august 2027,september 2027,oktober 2027,november 2027,desember 2027
-Rammeavtale 12 mnd,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr
-Prosjekt 2 mnd,0 kr,627 800 kr,627 800 kr,65 000 kr,65 000 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr
-Prosjekt 6 mnd,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr
-Fastprisavtale 12 mnd,0 kr,73 000 kr,73 000 kr,73 000 kr,73 000 kr,73 000 kr,73 000 kr,73 000 kr,73 000 kr,73 000 kr,73 000 kr,73 000 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr
-Anbud 12 mnd,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr
-Anbud 24 mnd,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr
-Anbud 36 mnd,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr,0 kr
-Nye driftsavtaler,0 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr
-Totalt,0 kr,702 788 kr,802 788 kr,239 988 kr,239 988 kr,174 988 kr,174 988 kr,151 822 kr,151 822 kr,151 822 kr,151 822 kr,151 822 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr,1 980 kr
-`;
-
-        const resourcesText = `Stillingstype,Stillingsprosent,Fakturerbar %,Fakturerbare timer,Antall ansatte,Totalt antall fakturerbare timer,Mulig omsetning
-Produksjon,100%,90%,1485,9,13365,16 305 300 kr
-Produksjon,80%,90%,1188,2,2376,2 898 720 kr
-Produksjon,60%,90%,891,1,891,1 087 020 kr
-Teamleder,100%,60%,990,3,2970,3 623 400 kr
-Kundeutvikler,100%,60%,990,3,2970,3 623 400 kr
-Totalt,,,,18,22572,27 537 840 kr
-
-
-Årsverk,1650
-Timepris,1 220 kr,1 320 kr,1 420 kr
-
-Mulig omsetning pr. år,27 537 840 kr,29 795 040 kr,32 052 240 kr
-Mulig omsetning pr. mnd,2 503 440 kr,2 708 640 kr,2 913 840 kr`;
-
         // Utility function to format numbers as Norwegian currency
         const formatCurrency = (number) => {
             return new Intl.NumberFormat('no-NO', {
@@ -122,30 +93,84 @@ Mulig omsetning pr. mnd,2 503 440 kr,2 708 640 kr,2 913 840 kr`;
             }).format(number);
         };
 
-        // Utility function to clean and parse number strings from the CSV
+        // Utility function to clean and parse number strings
         const parseNumber = (str) => {
             if (!str) return 0;
             return parseFloat(String(str).trim().replace(/kr/g, '').replace(/\s/g, '').replace(',', '.'));
         };
 
-        // Main function to load all data and initialize the dashboard
-        function loadDashboard() {
+        // Function to fetch data from Google Sheets
+        async function fetchSheetData(sheetName) {
+            const sheetId = config.sheetId;
+            const apiKey = config.apiKey;
+            const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${sheetName}?key=${apiKey}`;
+            
             try {
-                const salesData = Papa.parse(salesText, { header: false, skipEmptyLines: true }).data;
-                const pipelineData = Papa.parse(pipelineText, { header: false, skipEmptyLines: true }).data;
-                const resourceData = Papa.parse(resourcesText, { header: false, skipEmptyLines: true }).data;
+                const response = await fetch(url);
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(`Google Sheets API error for sheet "${sheetName}": ${errorData.error.message}`);
+                }
+                const data = await response.json();
+                return data.values;
+            } catch (error) {
+                console.error(`Could not fetch data for sheet: ${sheetName}.`, error);
+                throw error;
+            }
+        }
+
+        // Main function to load all data and initialize the dashboard
+        async function loadDashboard() {
+            try {
+                document.getElementById('content').innerHTML = '<p class="text-center text-gray-600">Laster data fra Google Sheets...</p>';
+
+                const [salesData, pipelineData, resourceData, budgetData] = await Promise.all([
+                    fetchSheetData(config.sheets.sales),
+                    fetchSheetData(config.sheets.pipeline),
+                    fetchSheetData(config.sheets.resources),
+                    fetchSheetData(config.sheets.budget)
+                ]);
                 
-                if (!salesData.length || !pipelineData.length || !resourceData.length) {
-                    throw new Error("En eller flere av de hardkodede dataene er tomme eller feilformatert.");
+                if (!salesData || !pipelineData || !resourceData || !budgetData) {
+                    throw new Error("En eller flere datakilder fra Google Sheets er tomme eller utilgjengelige.");
                 }
 
+                // Restore original content structure before rendering
+                document.getElementById('content').innerHTML = `
+                    <div class="bg-gray-50 rounded-xl p-4 md:p-6 mb-8 shadow-sm">
+                        <h2 class="text-xl md:text-2xl font-semibold mb-4 text-gray-800">Salg og pipeline over tid</h2>
+                        <div class="w-full h-80"><canvas id="salesPipelineChart"></canvas></div>
+                    </div>
+                    <div class="bg-gray-50 rounded-xl p-4 md:p-6 mb-8 shadow-sm">
+                        <h2 class="text-xl md:text-2xl font-semibold mb-4 text-gray-800">Budsjett vs. Omsetning (Salg + Pipeline)</h2>
+                        <div class="w-full h-80"><canvas id="budgetChart"></canvas></div>
+                    </div>
+                    <div class="bg-gray-50 rounded-xl p-4 md:p-6 shadow-sm">
+                        <h2 class="text-xl md:text-2xl font-semibold mb-4 text-gray-800">Ressursdata</h2>
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full bg-white rounded-lg shadow-sm"><thead class="bg-gray-200"><tr id="resourceTableHead"></tr></thead><tbody id="resourceTableBody"></tbody></table>
+                        </div>
+                        <div class="mt-8">
+                            <h3 class="text-xl font-medium mb-2 text-gray-800">Mulig omsetning</h3>
+                            <div id="revenueCards" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+                        </div>
+                        <div class="mt-8">
+                            <h3 class="text-xl font-medium mb-2 text-gray-800">Månedlig salg og pipeline</h3>
+                            <div class="overflow-x-auto">
+                                <table class="min-w-full bg-white rounded-lg shadow-sm"><thead class="bg-gray-200"><tr id="monthlyTotalsTableHead"></tr></thead><tbody id="monthlyTotalsTableBody"></tbody></table>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
                 renderSalesAndPipelineChart(salesData, pipelineData);
+                renderBudgetData(salesData, pipelineData, budgetData);
                 renderResourceData(resourceData);
                 renderMonthlyTotals(salesData, pipelineData);
 
             } catch (error) {
                 console.error("En feil oppstod under lasting av dashbordet:", error);
-                document.getElementById('content').innerHTML = `<p class="text-red-500">Klarte ikke å laste inn data. Sjekk konsollen for detaljer. Feil: ${error.message}</p>`;
+                document.getElementById('content').innerHTML = `<p class="text-red-500">Klarte ikke å laste inn data fra Google Sheets. Sjekk at arket er delt riktig og at API-nøkkelen er gyldig. Feil: ${error.message}</p>`;
             }
         }
 
@@ -185,6 +210,62 @@ Mulig omsetning pr. mnd,2 503 440 kr,2 708 640 kr,2 913 840 kr`;
                         borderColor: 'rgba(16, 185, 129, 1)',
                         borderWidth: 1,
                         borderRadius: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: { beginAtZero: true, title: { display: true, text: 'Verdi (NOK)', color: '#4b5563' }, ticks: { callback: (value) => formatCurrency(value) } },
+                        x: { title: { display: true, text: 'Måned', color: '#4b5563' } }
+                    },
+                    plugins: {
+                        legend: { position: 'top', labels: { usePointStyle: true, boxWidth: 10, font: { size: 14 } } },
+                        tooltip: { callbacks: { label: (context) => `${context.dataset.label || ''}: ${formatCurrency(context.parsed.y || 0)}` } }
+                    }
+                }
+            });
+        }
+
+        function renderBudgetData(salesData, pipelineData, budgetData) {
+            const labels = salesData[0].slice(1, 13).map(label => (label.charAt(0).toUpperCase() + label.slice(1)));
+            const totalSalesRow = salesData.find(row => row[0] && row[0].trim().toLowerCase() === 'totalt');
+            const totalPipelineRow = pipelineData.find(row => row[0] && row[0].trim().toLowerCase() === 'totalt');
+            const budgetRow = budgetData.find(row => row[0] && row[0].trim().toLowerCase() === 'budsjett');
+
+            if (!totalSalesRow || !totalPipelineRow || !budgetRow) {
+                console.error("Kunne ikke finne 'Totalt'-raden i salgs/pipeline-data eller 'Budsjett'-raden i budsjett-data.");
+                return;
+            }
+
+            const salesValues = totalSalesRow.slice(1, 13).map(parseNumber);
+            const pipelineValues = totalPipelineRow.slice(1, 13).map(parseNumber);
+            const actualValues = salesValues.map((val, i) => val + pipelineValues[i]);
+            const budgetValues = budgetRow.slice(1, 13).map(parseNumber);
+
+            const ctx = document.getElementById('budgetChart').getContext('2d');
+            if (Chart.getChart(ctx)) {
+                Chart.getChart(ctx).destroy();
+            }
+
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Budsjett',
+                        data: budgetValues,
+                        borderColor: 'rgba(239, 68, 68, 1)',
+                        backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                        fill: true,
+                        tension: 0.4
+                    }, {
+                        label: 'Omsetning (Salg + Pipeline)',
+                        data: actualValues,
+                        borderColor: 'rgba(34, 197, 94, 1)',
+                        backgroundColor: 'rgba(34, 197, 94, 0.1)',
+                        fill: true,
+                        tension: 0.4
                     }]
                 },
                 options: {
