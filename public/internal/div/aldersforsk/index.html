@@ -44,6 +44,17 @@
             border: 2px dashed var(--akari-medium-grey);
         }
         .brand-turquoise { color: var(--akari-turquoise); }
+
+        /* Animasjonsstiler */
+        .animated-section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .animated-section.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
     </style>
 </head>
 <body>
@@ -55,7 +66,7 @@
 
     <main class="container mx-auto max-w-7xl p-4 md:p-8">
 
-        <section id="status" class="bg-white rounded-lg shadow-lg p-6 md:p-8 mb-12 text-center">
+        <section id="status" class="bg-white rounded-lg shadow-lg p-6 md:p-8 mb-12 text-center animated-section">
             <h2 class="text-3xl font-bold mb-4">Dagens situasjon: et skattkammer av kunnskap</h2>
             <p class="max-w-3xl mx-auto text-lg text-gray-600 mb-8">
                 Nettsiden er rik på verdifullt innhold, men presentasjonen kan forbedres for å engasjere publikum og styrke deres posisjon som en ledende autoritet.
@@ -79,13 +90,13 @@
             </div>
         </section>
 
-        <div class="text-center mb-12">
+        <div class="text-center mb-12 animated-section">
             <h2 class="text-3xl font-bold">En reise i tre deler for økt gjennomslagskraft</h2>
             <p class="max-w-2xl mx-auto text-lg text-gray-600 mt-2">Vi foreslår en strategisk utvikling som bygger stein på stein.</p>
         </div>
 
         <!-- DEL 1: FØRSTEINNTRYKKET -->
-        <section id="del1" class="bg-white rounded-lg shadow-lg p-6 md:p-8 mb-12">
+        <section id="del1" class="bg-white rounded-lg shadow-lg p-6 md:p-8 mb-12 animated-section">
             <div class="text-center mb-8">
                 <span class="text-white font-bold py-1 px-3 rounded-full text-sm" style="background-color: var(--akari-turquoise);">DEL 1</span>
                 <h3 class="text-3xl font-bold mt-4">Førsteinntrykket teller</h3>
@@ -152,7 +163,7 @@
         </section>
 
         <!-- DEL 2: ENGASJEMENT -->
-        <section id="del2" class="bg-white rounded-lg shadow-lg p-6 md:p-8 mb-12">
+        <section id="del2" class="bg-white rounded-lg shadow-lg p-6 md:p-8 mb-12 animated-section">
             <div class="text-center mb-8">
                 <span class="text-white font-bold py-1 px-3 rounded-full text-sm" style="background-color: var(--akari-turquoise);">DEL 2</span>
                 <h3 class="text-3xl font-bold mt-4">Fra passivt innhold til aktive ressurser</h3>
@@ -186,7 +197,7 @@
         </section>
         
         <!-- DEL 3: VISJON -->
-        <section id="del3" class="bg-white rounded-lg shadow-lg p-6 md:p-8 mb-12">
+        <section id="del3" class="bg-white rounded-lg shadow-lg p-6 md:p-8 mb-12 animated-section">
             <div class="text-center mb-8">
                 <span class="text-white font-bold py-1 px-3 rounded-full text-sm" style="background-color: var(--akari-turquoise);">DEL 3</span>
                 <h3 class="text-3xl font-bold mt-4">Visjonen om et digitalt kunnskapssenter</h3>
@@ -220,7 +231,7 @@
         </section>
 
         <!-- NY SEKSJON: AKARI-TJENESTER -->
-        <section id="akari-services" class="bg-white rounded-lg shadow-lg p-6 md:p-8 mb-12">
+        <section id="akari-services" class="bg-white rounded-lg shadow-lg p-6 md:p-8 mb-12 animated-section">
             <div class="text-center mb-8">
                 <h3 class="text-3xl font-bold">Mer enn bare en nettside</h3>
                  <p class="max-w-3xl mx-auto text-lg text-gray-600 mt-2">
@@ -274,158 +285,196 @@
     </footer>
 
 <script>
-    const akariColors = {
-        teal: '#064F55',
-        turquoise: '#1DD1B6',
-        mint: '#D3FBEF',
-        glacier: '#F3FCF8',
-        mediumGrey: '#D8D8D8'
-    };
-    
-    const sharedTooltipOptions = {
-        plugins: {
-            tooltip: {
-                callbacks: {
-                    title: function(tooltipItems) {
-                        const item = tooltipItems[0];
-                        let label = item.chart.data.labels[item.dataIndex];
-                        if (Array.isArray(label)) {
-                          return label.join(' ');
-                        } else {
-                          return label;
+    document.addEventListener('DOMContentLoaded', () => {
+        const akariColors = {
+            teal: '#064F55',
+            turquoise: '#1DD1B6',
+            mint: '#D3FBEF',
+            glacier: '#F3FCF8',
+            mediumGrey: '#D8D8D8'
+        };
+        
+        const sharedTooltipOptions = {
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        title: function(tooltipItems) {
+                            const item = tooltipItems[0];
+                            let label = item.chart.data.labels[item.dataIndex];
+                            if (Array.isArray(label)) {
+                              return label.join(' ');
+                            } else {
+                              return label;
+                            }
                         }
                     }
                 }
             }
-        }
-    };
-    
-    const trustCtx = document.getElementById('trustChart').getContext('2d');
-    new Chart(trustCtx, {
-        type: 'doughnut',
-        data: {
-            labels: ['Økt tillit fra visuelt design', 'Innhold'],
-            datasets: [{
-                data: [46, 54],
-                backgroundColor: [akariColors.turquoise, akariColors.glacier],
-                borderColor: ['#ffffff'],
-                borderWidth: 4,
-                hoverOffset: 4
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            cutout: '70%',
-            plugins: {
-                legend: {
-                    display: false
-                },
-                tooltip: sharedTooltipOptions.plugins.tooltip,
-                title: {
-                    display: true,
-                    text: '46% av brukere baserer tillit på design',
-                    position: 'bottom'
-                }
-            },
-            elements: {
-                arc: {
-                    borderRadius: 5
-                }
-            }
-        }
-    });
+        };
 
-    const functionalityCtx = document.getElementById('functionalityChart').getContext('2d');
-    new Chart(functionalityCtx, {
-        type: 'bar',
-        data: {
-            labels: ["Søkbarhet for innhold"],
-            datasets: [
-                {
-                    label: 'Nå (Statisk liste)',
-                    data: [30],
-                    backgroundColor: akariColors.mediumGrey,
-                    borderRadius: 5
-                },
-                {
-                    label: 'Etter (Søk & filter)',
-                    data: [95],
-                    backgroundColor: akariColors.turquoise,
-                    borderRadius: 5
-                }
-            ]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    max: 100,
-                     ticks: {
-                        callback: function(value) {
-                            return value + '%'
+        const chartInitializers = {
+            'trustChart': () => {
+                const ctx = document.getElementById('trustChart').getContext('2d');
+                new Chart(ctx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Økt tillit fra visuelt design', 'Innhold'],
+                        datasets: [{
+                            data: [46, 54],
+                            backgroundColor: [akariColors.turquoise, akariColors.glacier],
+                            borderColor: ['#ffffff'],
+                            borderWidth: 4,
+                            hoverOffset: 4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        cutout: '70%',
+                        plugins: {
+                            legend: {
+                                display: false
+                            },
+                            tooltip: sharedTooltipOptions.plugins.tooltip,
+                            title: {
+                                display: true,
+                                text: '46% av brukere baserer tillit på design',
+                                position: 'bottom'
+                            }
+                        },
+                        elements: {
+                            arc: {
+                                borderRadius: 5
+                            }
+                        },
+                        animation: {
+                           animateScale: true,
+                           animateRotate: true
                         }
                     }
-                },
-                 x: {
-                    grid: {
-                        display: false
+                });
+            },
+            'functionalityChart': () => {
+                const ctx = document.getElementById('functionalityChart').getContext('2d');
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ["Søkbarhet for innhold"],
+                        datasets: [
+                            {
+                                label: 'Nå (Statisk liste)',
+                                data: [30],
+                                backgroundColor: akariColors.mediumGrey,
+                                borderRadius: 5
+                            },
+                            {
+                                label: 'Etter (Søk & filter)',
+                                data: [95],
+                                backgroundColor: akariColors.turquoise,
+                                borderRadius: 5
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                max: 100,
+                                 ticks: {
+                                    callback: function(value) {
+                                        return value + '%'
+                                    }
+                                }
+                            },
+                             x: {
+                                grid: {
+                                    display: false
+                                }
+                            }
+                        },
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                            },
+                            tooltip: sharedTooltipOptions.plugins.tooltip
+                        }
+                    }
+                });
+            },
+            'impactChart': () => {
+                const ctx = document.getElementById('impactChart').getContext('2d');
+                new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: ['Steg 1', 'Steg 2', 'Steg 3'],
+                        datasets: [
+                            {
+                                label: 'Brukeropplevelse',
+                                data: [60, 85, 95],
+                                borderColor: akariColors.turquoise,
+                                backgroundColor: 'rgba(29, 209, 182, 0.1)',
+                                fill: true,
+                                tension: 0.4
+                            },
+                            {
+                                label: 'Verdi som ressurs',
+                                data: [50, 80, 98],
+                                borderColor: akariColors.teal,
+                                backgroundColor: 'rgba(6, 79, 85, 0.1)',
+                                fill: true,
+                                tension: 0.4
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                         scales: {
+                            y: {
+                                beginAtZero: true,
+                                max: 100
+                            }
+                        },
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                            },
+                            tooltip: sharedTooltipOptions.plugins.tooltip
+                        }
+                    }
+                });
+            }
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Animate sections
+                    if (entry.target.classList.contains('animated-section')) {
+                        entry.target.classList.add('is-visible');
+                    }
+                    
+                    // Animate charts
+                    if (entry.target.tagName === 'CANVAS' && chartInitializers[entry.target.id]) {
+                        chartInitializers[entry.target.id]();
+                        observer.unobserve(entry.target); // Animate only once
                     }
                 }
-            },
-            plugins: {
-                legend: {
-                    position: 'top',
-                },
-                tooltip: sharedTooltipOptions.plugins.tooltip
-            }
-        }
-    });
+            });
+        }, { threshold: 0.1 });
 
-    const impactCtx = document.getElementById('impactChart').getContext('2d');
-    new Chart(impactCtx, {
-        type: 'line',
-        data: {
-            labels: ['Steg 1', 'Steg 2', 'Steg 3'],
-            datasets: [
-                {
-                    label: 'Brukeropplevelse',
-                    data: [60, 85, 95],
-                    borderColor: akariColors.turquoise,
-                    backgroundColor: 'rgba(29, 209, 182, 0.1)',
-                    fill: true,
-                    tension: 0.4
-                },
-                {
-                    label: 'Verdi som ressurs',
-                    data: [50, 80, 98],
-                    borderColor: akariColors.teal,
-                    backgroundColor: 'rgba(6, 79, 85, 0.1)',
-                    fill: true,
-                    tension: 0.4
-                }
-            ]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-             scales: {
-                y: {
-                    beginAtZero: true,
-                    max: 100
-                }
-            },
-            plugins: {
-                legend: {
-                    position: 'top',
-                },
-                tooltip: sharedTooltipOptions.plugins.tooltip
-            }
-        }
-    });
+        // Observe sections
+        document.querySelectorAll('.animated-section').forEach(section => {
+            observer.observe(section);
+        });
 
+        // Observe chart canvases
+        document.querySelectorAll('canvas').forEach(canvas => {
+            observer.observe(canvas);
+        });
+    });
 </script>
 </body>
 </html>
