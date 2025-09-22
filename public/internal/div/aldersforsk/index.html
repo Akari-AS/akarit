@@ -99,6 +99,7 @@
                      <div class="chart-container">
                         <canvas id="trustChart"></canvas>
                     </div>
+                    <p class="text-xs text-gray-400 mt-2">Kilde: Stanford University Web Credibility Research</p>
                 </div>
                 <div>
                     <h4 class="text-2xl font-bold mb-4">Visuelle grep med høy effekt</h4>
@@ -193,7 +194,7 @@
                     Posisjoner Aldersforsk.no som den ubestridte digitale autoriteten på sitt felt.
                 </p>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
                  <div>
                      <h4 class="text-2xl font-bold mb-4">Fra nettside til kunnskapshub</h4>
                      <p class="text-gray-600 mb-6">Utvikle siden til å bli mer enn bare en informasjonsside. Tilby interaktive verktøy, datavisualiseringer og dypdykk i sentrale temaer.</p>
@@ -339,7 +340,7 @@
     new Chart(functionalityCtx, {
         type: 'bar',
         data: {
-            labels: ["Finnbarhet av innhold"],
+            labels: ["Søkbarhet for innhold"],
             datasets: [
                 {
                     label: 'Nå (Statisk liste)',
