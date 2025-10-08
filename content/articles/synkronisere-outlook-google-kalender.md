@@ -5,6 +5,7 @@ date: "2025-10-08"
 slug: "synkronisere-outlook-google-kalender"
 excerpt: "En komplett guide til hvordan du kan synkronisere kalendere mellom Outlook og Google Workspace. Vi dekker alt fra enkle, gratis metoder til robuste tredjepartsløsninger for å unngå dobbeltbookinger."
 meta_description: "Lær hvordan du synkroniserer Outlook og Google Kalender. Guide til enveis-abonnement, toveis-synk via tredjepartsverktøy, og Google Workspace Sync (GWSMO)."
+image: "/assets/img/articles/google-microsoft-calendar-sync.png"
 ---
 
 ## Slik synkroniserer du Outlook og Google Kalender – en komplett guide
