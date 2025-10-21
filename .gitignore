@@ -3,3 +3,4 @@ deploy.sh
 /vendor/
 Todos.md
 .env
+public/nonindex/konvertering_logg.txt
