@@ -7,44 +7,43 @@ import logging
 
 # --- Configuration ---
 SOURCE_URL = "https://zederkof.dk/eksport/utleiepartner.xml"
-# Bruk os.path.dirname for å sikre at filene lagres i samme mappe som skriptet
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 OUTPUT_FILE = os.path.join(SCRIPT_DIR, "korrigert_feed.xml")
 LOG_FILE = os.path.join(SCRIPT_DIR, "konvertering_logg.txt")
 
+# --- Namespace Registration (VIKTIG ENDRING) ---
+# Registrerer 'tax' navnerommet for å kunne finne taggen korrekt.
+ET.register_namespace('tax', 'tax')
+
 def setup_logging():
     """Konfigurerer logging til fil."""
-    # Sjekk om handlers allerede er satt opp for å unngå duplikater
     if not logging.getLogger().handlers:
         logging.basicConfig(
             level=logging.INFO,
             format='%(asctime)s - %(levelname)s - %(message)s',
             handlers=[
                 logging.FileHandler(LOG_FILE),
-                logging.StreamHandler() # Viser også loggen i terminalen
+                logging.StreamHandler()
             ]
         )
 
 def get_child_text(parent_element, tag_name):
-    """Safely gets text from a child element, returns empty string if not found."""
+    """Safely gets text from a child element."""
     child = parent_element.find(tag_name)
     return child.text if child is not None and child.text else ""
 
 def set_child_text(parent_element, tag_name, text):
-    """Safely sets text for a child element, creates it if it doesn't exist."""
+    """Safely sets text for a child element."""
     child = parent_element.find(tag_name)
     if child is None:
         child = ET.SubElement(parent_element, tag_name)
     child.text = text
 
 def run_conversion():
-    """
-    Main function to fetch, process, and save the converted XML feed.
-    """
+    """Main function to fetch, process, and save the converted XML feed."""
     logging.info("--- Starter konverteringsjobb ---")
     
     try:
-        # --- Steg 1: Hent og Pars Data ---
         logging.info(f"Henter feed fra {SOURCE_URL}...")
         response = requests.get(SOURCE_URL, timeout=30)
         response.raise_for_status()
@@ -55,51 +54,46 @@ def run_conversion():
         root = ET.fromstring(xml_content)
         logging.info("XML parset successfully.")
 
-        # --- Steg 2: Indekser Morprodukter ---
         logging.info("Indekserer mor- og enkeltprodukter...")
-        parents = {}
-        for product in root.findall('Product'):
-            if product.find('post_parent') is None or not product.find('post_parent').text:
-                product_id = get_child_text(product, 'id')
-                if product_id:
-                    parents[product_id] = product
+        parents = {p.find('id').text: p for p in root.findall('Product') if p.find('post_parent') is None or not p.find('post_parent').text}
         logging.info(f"Fant {len(parents)} potensielle mor/enkelt-produkter.")
 
-        # --- Steg 3: Prosesser og Bygg Ny Produktliste ---
         logging.info("Prosesserer produkter og bygger ny feed...")
         final_products = []
         for product in root.findall('Product'):
             is_valid_product = False
-            # Behandle variant
             post_parent_id = get_child_text(product, 'post_parent')
-            if post_parent_id:
+
+            if post_parent_id: # Produktet er en variant
                 parent_product = parents.get(post_parent_id)
                 if parent_product:
                     if not get_child_text(product, 'post_content'):
                         set_child_text(product, 'post_content', get_child_text(parent_product, 'post_content'))
-                    variant_cat_element = product.find('tax:product_cat')
-                    if variant_cat_element is not None and not variant_cat_element.text:
-                         parent_cat_element = parent_product.find('tax:product_cat')
-                         if parent_cat_element is not None and parent_cat_element.text:
-                             variant_cat_element.text = parent_cat_element.text
+                    
+                    # --- KORRIGERT LOGIKK FOR KATEGORI ---
+                    # Finner kategorien fra morproduktet og kopierer den til varianten
+                    parent_cat_element = parent_product.find('tax:product_cat', {'tax': 'tax'})
+                    if parent_cat_element is not None and parent_cat_element.text:
+                        variant_cat_element = product.find('tax:product_cat', {'tax': 'tax'})
+                        if variant_cat_element is None:
+                            variant_cat_element = ET.SubElement(product, '{tax}product_cat')
+                        variant_cat_element.text = parent_cat_element.text
+                    # --- SLUTT PÅ KORRIGERING ---
+                        
                     set_child_text(product, 'post_parent', None)
                     set_child_text(product, 'parent_sku', None)
                     is_valid_product = True
-            # Behandle enkeltprodukt
-            else:
-                if get_child_text(product, 'stock'):
-                    is_valid_product = True
+            elif get_child_text(product, 'stock'): # Produktet er et enkeltprodukt
+                is_valid_product = True
             
-            # Hvis produktet er valid, fjern tilbudspris og legg til i listen
             if is_valid_product:
                 sale_price_element = product.find('sale_price')
                 if sale_price_element is not None:
-                    product.remove(sale_price_element) # <<<--- HER ER ENDRINGEN
+                    product.remove(sale_price_element)
                 final_products.append(product)
         
         logging.info(f"Prosessering ferdig. Total antall produkter i ny feed: {len(final_products)}")
 
-        # --- Steg 4: Generering av Output-fil ---
         logging.info(f"Skriver den nye feeden til filen '{OUTPUT_FILE}'...")
         new_root = ET.Element("Products")
         new_root.extend(final_products)
@@ -116,7 +110,6 @@ def run_conversion():
         logging.error(f"En feil oppstod: {e}", exc_info=True)
         logging.error("--- Konverteringsjobb feilet: FAIL ---")
         sys.exit(1)
-
 
 if __name__ == "__main__":
     setup_logging()
