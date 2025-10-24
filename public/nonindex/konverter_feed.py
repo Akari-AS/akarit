@@ -1,3 +1,17 @@
+# ---
+# Author: Gemini (Google AI) for Zederkof.no
+# Created: 2025-10-24
+#
+# Changelog:
+# v1.0.0 - Initial script to merge parent/variant products from an XML feed.
+# v1.1.0 - Added logging to a file (konvertering_logg.txt) with SUCCESS/FAIL status.
+# v1.2.0 - Added removal of all <sale_price> tags to prevent sales in NO store.
+# v1.3.0 - Fixed critical bug with XML namespaces to correctly copy <tax:product_cat>.
+# v1.4.0 - Added replacement of 'zederkof.dk/' with 'zederkof.no/' in product descriptions.
+# v1.5.0 - Made link replacement more targeted. Now only replaces URLs inside href=""
+#          attributes within <post_content> and explicitly ignores <images> content.
+# ---
+
 import requests
 import xml.etree.ElementTree as ET
 from xml.dom import minidom
@@ -11,8 +25,7 @@ SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 OUTPUT_FILE = os.path.join(SCRIPT_DIR, "korrigert_feed.xml")
 LOG_FILE = os.path.join(SCRIPT_DIR, "konvertering_logg.txt")
 
-# --- Namespace Registration (VIKTIG ENDRING) ---
-# Registrerer 'tax' navnerommet for å kunne finne taggen korrekt.
+# --- Namespace Registration ---
 ET.register_namespace('tax', 'tax')
 
 def setup_logging():
@@ -27,14 +40,14 @@ def setup_logging():
             ]
         )
 
-def get_child_text(parent_element, tag_name):
+def get_child_text(parent_element, tag_name, namespaces=None):
     """Safely gets text from a child element."""
-    child = parent_element.find(tag_name)
+    child = parent_element.find(tag_name, namespaces)
     return child.text if child is not None and child.text else ""
 
-def set_child_text(parent_element, tag_name, text):
+def set_child_text(parent_element, tag_name, text, namespaces=None):
     """Safely sets text for a child element."""
-    child = parent_element.find(tag_name)
+    child = parent_element.find(tag_name, namespaces)
     if child is None:
         child = ET.SubElement(parent_element, tag_name)
     child.text = text
@@ -60,36 +73,47 @@ def run_conversion():
 
         logging.info("Prosesserer produkter og bygger ny feed...")
         final_products = []
+        namespaces = {'tax': 'tax'}
         for product in root.findall('Product'):
             is_valid_product = False
             post_parent_id = get_child_text(product, 'post_parent')
 
-            if post_parent_id: # Produktet er en variant
+            if post_parent_id:
                 parent_product = parents.get(post_parent_id)
                 if parent_product:
                     if not get_child_text(product, 'post_content'):
                         set_child_text(product, 'post_content', get_child_text(parent_product, 'post_content'))
                     
-                    # --- KORRIGERT LOGIKK FOR KATEGORI ---
-                    # Finner kategorien fra morproduktet og kopierer den til varianten
-                    parent_cat_element = parent_product.find('tax:product_cat', {'tax': 'tax'})
+                    parent_cat_element = parent_product.find('tax:product_cat', namespaces)
                     if parent_cat_element is not None and parent_cat_element.text:
-                        variant_cat_element = product.find('tax:product_cat', {'tax': 'tax'})
+                        variant_cat_element = product.find('tax:product_cat', namespaces)
                         if variant_cat_element is None:
                             variant_cat_element = ET.SubElement(product, '{tax}product_cat')
                         variant_cat_element.text = parent_cat_element.text
-                    # --- SLUTT PÅ KORRIGERING ---
                         
                     set_child_text(product, 'post_parent', None)
                     set_child_text(product, 'parent_sku', None)
                     is_valid_product = True
-            elif get_child_text(product, 'stock'): # Produktet er et enkeltprodukt
+            elif get_child_text(product, 'stock'):
                 is_valid_product = True
             
             if is_valid_product:
                 sale_price_element = product.find('sale_price')
                 if sale_price_element is not None:
                     product.remove(sale_price_element)
+                
+                # --- NY OG FORBEDRET LINK-ERSTATNING ---
+                post_content_element = product.find('post_content')
+                if post_content_element is not None:
+                    original_content = str(post_content_element.text or '')
+                    
+                    # Erstatter kun linker som er i en href-attributt. Dette er tryggere.
+                    # Eksempel: href="https://zederkof.dk/..." blir til href="https://zederkof.no/..."
+                    if 'href="https://zederkof.dk' in original_content:
+                        modified_content = original_content.replace('href="https://zederkof.dk', 'href="https://zederkof.no')
+                        post_content_element.text = modified_content
+                # --- SLUTT PÅ NY LOGIKK ---
+
                 final_products.append(product)
         
         logging.info(f"Prosessering ferdig. Total antall produkter i ny feed: {len(final_products)}")
